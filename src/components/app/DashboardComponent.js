@@ -13,8 +13,8 @@ import HeaderDashboard from '../shared/HeaderDashboard';
 
 const DashboardComponent = () => {
     const[userstatus, setUserstatus] = useState('');
-  const { push } = useRouter();
-  const rewardspoints = TotalrewardpointsComponent();
+    const { push } = useRouter();
+    const rewardspoints = TotalrewardpointsComponent();
 
 
   useEffect(() => {

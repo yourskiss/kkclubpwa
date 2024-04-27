@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from 'next/navigation';
 import Loader from "../shared/LoaderComponent";
 import { toast } from 'react-toastify';
-import { setUserCookies, isUserToken } from "@/config/userauth";
+import { setUserCookies, isUserToken, isBearerToken } from "@/config/userauth";
 import { encryptText } from "@/config/crypto";
 import { setCouponeCode, isCouponeCode } from "@/config/validecoupone";
 import Otpcountdown from "../core/timer";
@@ -65,12 +65,12 @@ export default function LoginComponent() {
       setIsMobile(false)
     }
 
-  const router = useRouter();
+  const { push } = useRouter();
   const searchParams = useSearchParams();
   const getqrcode = searchParams.get('code');
-  const isUser = isUserToken();
   const isCC = isCouponeCode();
- 
+  const userToken   =  isUserToken();
+  const bearerToken = isBearerToken();
  
   const checkboxHandler = () => {
     agree === false ? setAgree(true) : setAgree(false);
@@ -85,9 +85,10 @@ export default function LoginComponent() {
   
 
   useEffect(() => {
-    if(isUser && !isCC) { router.push("/dashboard"); return }
-    if(isUser && isCC) { router.push("/getcoupone"); return }
-  }, [isUser]);
+    if(!bearerToken) { push("/"); return  }
+    if(userToken && !isCC) { push("/dashboard"); return }
+    if(userToken && isCC) { push("/getcoupone"); return }
+  }, []);
 
  
 
@@ -111,12 +112,12 @@ export default function LoginComponent() {
             setUserCookies('usertoken', encryptText(userinfo));       
             if(res.data.result && isCC)
             { 
-              router.push('/getcoupone');
+              push('/getcoupone');
               toast.success('Coupon Added Successfully'); 
             }
             else if(res.data.result && !isCC)  
             {
-              router.push("/dashboard");
+              push("/dashboard");
               toast.success('Login Successfully'); 
             }
             else

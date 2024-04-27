@@ -1,14 +1,16 @@
 "use client";
 import Image from 'next/image'
-import {  isUserToken } from "@/config/userauth";
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import {  isUserToken, isBearerToken } from "@/config/userauth";
+
 export default  function HeaderProfile() {
 const { push } = useRouter();
 const userToken   =  isUserToken();
+const bearerToken = isBearerToken();
 useEffect(() => {
-    // console.log(userToken, " Profile");
-    if(!userToken) { push("/"); return  }
+  if(!userToken) { push("/login"); return  }
+  if(!bearerToken) { push("/"); return  }
 }, []);
 
   return (

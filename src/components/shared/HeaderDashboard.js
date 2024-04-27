@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
-import { isUserToken } from '@/config/userauth';
+import { isUserToken, isBearerToken } from '@/config/userauth';
  
 export default  function HeaderDashboard() {
 
@@ -16,10 +16,10 @@ export default  function HeaderDashboard() {
 
   const { push } = useRouter();
   const userToken  =  isUserToken();
-
+  const bearerToken = isBearerToken();
 useEffect(() => {
-  // console.log(userToken, "dashboard")
-  if(!userToken) { push("/"); return  }
+  if(!userToken) { push("/login"); return  }
+  if(!bearerToken) { push("/"); return  }
 }, []);
 
 useEffect(() => {

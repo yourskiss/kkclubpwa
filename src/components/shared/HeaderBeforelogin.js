@@ -1,16 +1,17 @@
 "use client";
 import Image from 'next/image';
-import {  isUserToken } from "@/config/userauth";
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import {  isUserToken, isBearerToken } from "@/config/userauth";
+
 export default  function HeaderBeforeLogin() {
   const { push } = useRouter();
   const  userToken   =  isUserToken();
-
+  const bearerToken = isBearerToken();
   useEffect(() => {
-    // console.log(userToken, "before login")
     if(userToken) { push("/dashboard"); return }
-  }, [userToken]);
+    if(!bearerToken) { push("/"); return  }
+  }, []);
   
   return (
     <>
