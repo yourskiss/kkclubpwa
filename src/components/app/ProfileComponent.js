@@ -12,11 +12,12 @@ import ProgressComponent from "../shared/ProgressComponent";
 
 export default function ProfileComponent() {
   const { push } = useRouter();
-  const rewardspoints = TotalrewardpointsComponent();
+  const rewardspoints = parseInt(TotalrewardpointsComponent());
   const[username, setUsername] = useState('');
   const[userdp, setUserdp] = useState('');
   const[userstatus, setUserstatus] = useState('');
   const profileProgress = ProgressComponent();
+  const redeemminimumpoint = process.env.NEXT_PUBLIC_REDEEM_MIN_POINT;
 
   useEffect(() => {
     if (typeof localStorage !== 'undefined') 
@@ -30,12 +31,15 @@ export default function ProfileComponent() {
   const redeemprompt = () => {
     if(userstatus === "PENDING")
     {
-      toast.success('Points will redeem after profile approval.'); 
+      toast.info('Reward points will redeem after profile approval.'); 
+      return
     }
-    else if(userstatus === "APPROVE" && rewardspoints < 150)
+    if(userstatus === "APPROVE" && rewardspoints <= redeemminimumpoint)
     {
-      toast.success('You can redeem Min. 150 Points.'); 
+      toast.info(`You can redeem min. ${redeemminimumpoint} reward points.`);
+      return 
     }
+    push("/redeempoints");
   }
 
   const logoutnow = () => {
@@ -70,7 +74,7 @@ export default function ProfileComponent() {
 
             <div className="profile_menu">
                 <ul>
-                  <li onClick={rewardspoints >= 150 &&  userstatus === "APPROVE" ? ()=> push("/redeempoints") : redeemprompt}>
+                  <li onClick={redeemprompt}>
                      REDEEM POINTS <em><CountUp duration={2} start={0}  delay={1}  end={rewardspoints} /> PTS</em>
                      </li>
                   <li onClick={()=> push('/rewards')}>REWARD HISTORY</li>
@@ -87,5 +91,7 @@ export default function ProfileComponent() {
         </div>
 
     </div>
+
+    
 </>)
 }

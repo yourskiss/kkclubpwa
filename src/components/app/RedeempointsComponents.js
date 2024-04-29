@@ -1,50 +1,34 @@
 "use client";
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
 import CountUp from 'react-countup';
 import { toast } from 'react-toastify';
 import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
 import HeaderAfterLogin from "../shared/HeaderAfterlogin";
+import Rewardform from '../shared/Rewardform';
+import BankdetailAdd from '../shared/BankdetailAdd';
+import { useEffect, useState } from 'react';
+import { _get } from "@/config/apiClient";
+import { getUserID } from '@/config/userauth';
+import Loader from '../shared/LoaderComponent';
 
 export default function RedeempointsComponents() {
-    const { push } = useRouter();
+    const [loading, setLoading] = useState(false);
+    const [resultcode, setResultcode] = useState(false);
     const rewardspoints = TotalrewardpointsComponent();
-    const pointvalue = process.env.NEXT_PUBLIC_POINT_VALUE;
-    const[userstatus, setUserstatus] = useState('');
-    const[redeempoint, setRedeempoint] = useState('');
-    const[redeemerror, setRedeemerror] = useState('');
-
+    const userid = getUserID();
+   
     useEffect(() => {
-        if (typeof localStorage !== 'undefined') 
-        {
-            setUserstatus(localStorage.getItem('verificationstatus'));
-        } 
-    }, []);
-
-    useEffect(() => {
-      if(rewardspoints <= 150 && userstatus !== "APPROVE")
-      {
-        push('/dashboard');
-      }
-    }, [userstatus]);
-
-    const pointvalueChange = (e) => {
-        setRedeempoint(e.target.value);
-    }
-    const pointvalueSubmit = (e) => {
-        e.preventDefault();
-        if(redeempoint < 150)
-        {
-            setRedeemerror('You can redeem min. 150 point');
-            return;
-        }
-        else
-        {
-            setRedeemerror('');
-            toast.success('Thank you'); 
-        }
-    }
+        setLoading(true);
+        _get("/Payment/GetUserPayoutInfo?userid="+userid)
+        .then((res) => {
+            setLoading(false);
+            console.log(" response - ", res);
+            setResultcode(res.data.resultcode);
+        }).catch((error) => {
+            setLoading(false);
+            toast.info(error); 
+        });
+    }, [resultcode]);
 
   return (<>
     <HeaderAfterLogin />
@@ -65,25 +49,20 @@ export default function RedeempointsComponents() {
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,<br /> sed do eiusmod tempor incididunt</p>
             </div>
             
-            <div className='redeemforms'>
-                <p>1 PT = {pointvalue} INR</p>
-                <input type='number' placeholder='ENTER POINTS' name="redeempoint" value={redeempoint} onChange={pointvalueChange} />
-                { redeemerror && <span>{redeemerror}</span> } 
-                <aside>
-                    <button type='submit' onClick={pointvalueSubmit}>Redeem Points</button>
-                </aside>
-            </div>
-
-
-
+            {
+                resultcode === 0 ? <Rewardform /> : <BankdetailAdd />
+            }
+            
+        
         </div>
 
-        
-
+    
         <div className="profile_logobottom">
             <Image src="/assets/images/logo.png" width={448} height={80} alt="logo" quality={100} />
         </div>
 
     </div>
+
+    { loading ? <Loader message="Validating bank information" /> : null }
 </>)
 }

@@ -152,6 +152,7 @@ export default function RegistationComponent() {
                     className="registerinput"
                     type="text"
                     name="firstname"
+                    autoComplete="off"
                     maxLength={20}
                     value={firstname}
                     onInput={onInputmaxLength}
@@ -165,6 +166,7 @@ export default function RegistationComponent() {
                     className="registerinput"
                     type="text"
                     name="lastname"
+                    autoComplete="off"
                     maxLength={20}
                     value={lastname}
                     onInput={onInputmaxLength}
@@ -199,6 +201,7 @@ export default function RegistationComponent() {
                     className="registerinput"
                     type="number"
                     name="aadhaarinfo"
+                    autoComplete="off"
                     maxLength={12}
                     value={aadhaarinfo}
                     onInput={onInputmaxLength}
@@ -223,6 +226,7 @@ export default function RegistationComponent() {
                     className="registerinput"
                     type="number"
                     name="mobilenumber"
+                    autoComplete="off"
                     maxLength={10}
                     value={mobilenumber}
                     onInput={onInputmaxLength}
@@ -249,6 +253,6 @@ export default function RegistationComponent() {
 
 
 
-    { loading ? <Loader /> : null }
+    { loading ? <Loader message="Information Savings" /> : null }
 </>)
 }

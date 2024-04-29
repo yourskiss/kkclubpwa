@@ -14,8 +14,8 @@ import HeaderDashboard from '../shared/HeaderDashboard';
 const DashboardComponent = () => {
     const[userstatus, setUserstatus] = useState('');
     const { push } = useRouter();
-    const rewardspoints = TotalrewardpointsComponent();
-
+    const rewardspoints = parseInt(TotalrewardpointsComponent());
+    const redeemminimumpoint = process.env.NEXT_PUBLIC_REDEEM_MIN_POINT;
 
   useEffect(() => {
     if (typeof localStorage !== 'undefined') 
@@ -27,13 +27,15 @@ const DashboardComponent = () => {
   const redeemprompt = () => {
     if(userstatus === "PENDING")
     {
-        toast.success('Points will redeem after profile approval.'); 
+        toast.info('Reward points will redeem after profile approval.'); 
+        return
     }
-    else if(userstatus === "APPROVE" && rewardspoints < 150)
+    if(userstatus === "APPROVE" && rewardspoints <= redeemminimumpoint)
     {
-        toast.success('You can redeem Min. 150 Points.'); 
+        toast.info(`You can redeem min. ${redeemminimumpoint} reward points.`); 
+        return
     }
-    
+    push("/redeempoints");
   }
  
   var settingsDashboard = {
@@ -79,7 +81,7 @@ const DashboardComponent = () => {
                     <h2>Scan QR Code</h2>
                     <p>FOR YOUR KERAKOLL PRODUCTS</p>
               </section>
-              <section className='dashboard_redeempointbg' onClick={ rewardspoints >= 150 &&  userstatus === "APPROVE" ? ()=> push("/redeempoints") : redeemprompt }>
+              <section className='dashboard_redeempointbg' onClick={redeemprompt }>
                     <aside ><Image src="/assets/images/redeempoints.png" width={99} height={115} alt="redeempoints" quality={100} /></aside>
                     <h5><CountUp duration={2} start={0}  delay={1}  end={rewardspoints} /> <em>pt</em></h5>
                     <h2>Redeem Points</h2>

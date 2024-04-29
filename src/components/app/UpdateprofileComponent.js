@@ -222,7 +222,7 @@ export default function UpdateprofileComponent() {
  
 
 
-        { loading ? <Loader /> : null }
+        { loading ? <Loader message="Getting response" /> : null }
     </>
   )
 }

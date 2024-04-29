@@ -25,8 +25,12 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
  
 
 /* ################### loader ################### */
-.loader {display: block;position: fixed;left: 0;top: 0;z-index: 9;width: 100%;height: 100%;margin: 0;padding: 0;background: #000000; background: rgba(0, 0, 0, 0.7);text-align: center;}
-.loader div {position: absolute;left: 50%;top: 50%; margin: -37px 0 0 -37px; border:7px solid #fff; border-radius: 50%; border-top:7px solid #afcdaf;width:60px;height:60px;-webkit-animation: spin 2s linear infinite; animation: spin 2s linear infinite; }
+.loader {display: block;position: fixed;left: 0;top: 0;z-index: 9;width: 100%;height: 100%;margin: 0;padding: 0;background: #000000; background: rgba(0, 0, 0, 0.8);text-align: center;}
+.loader div { position: absolute; left: 50%;top: 50%; transform: translate(-50%, -50%); width: 260px; height: auto; display: flex; justify-content: center; align-items: center; flex-direction: column; }
+.loader div aside { border:7px solid #fff; border-radius: 50%; border-top:7px solid #afcdaf;width:60px;height:60px;-webkit-animation: spin 2s linear infinite; animation: spin 2s linear infinite; }
+.loader div h2 {  width: 100%; float: left; margin: 2rem 0 0 0; padding: 0; text-align: center; color:#fff; line-height: 1; font-size:18px; font-weight:normal;  text-transform: none; } 
+.loader div p  { width: 100%; float: left; margin:0; padding:1rem 0 0 0; text-align: center; color:#ddd; line-height: 1; font-size:24px;  font-weight:normal;  opacity:1;  animation: blinkerloader 1s linear infinite; }
+@keyframes blinkerloader {  50% {opacity: 0;} }
 @-webkit-keyframes spin { 0% { -webkit-transform: rotate(0deg); }  100% { -webkit-transform: rotate(360deg); } }
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
  
@@ -56,14 +60,17 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 
 
 /* ################### msg-popup ################### */
-.pwaPromptPopup { display: block; z-index:99998; position: fixed; left: 0; top: 0; height: 100%; width: 100%; background-color: #000; background: rgba(0,0,0,0.6); }
-.pwaPromptPopup section { display: block; z-index:99999;  position:absolute; left:50%; top:10%; transform: translateX(-50%); width: 95%; max-width:350px; height: auto; max-height: 95%; background-color: #fff; overflow:visible; border-radius:5px; margin:0 auto; padding:2rem 1rem; box-sizing: border-box; }
-.pwaPromptPopup h2 {  width: 100%; float: left; margin:0; padding: 0; text-align: center; color:#000; line-height: 1.2; font-size:18px;  text-transform: none; } 
-.pwaPromptPopup h3 {  width: 100%; float: left; margin:0.5rem 0 0 0; padding: 0; text-align: center; color:#414141; line-height: 1.2; font-size:14px;  text-transform: none; } 
-.pwaPromptPopup p {  width: 100%; float: left; margin:1rem 0 0 0; padding: 0;  text-align: center;  } 
-.pwaPromptPopup p .pwaPromptButton { width:auto; display: inline-block;  margin: 0 5px;  padding:0.9rem 2.5rem;  text-align: center;  background: #AFCDAF;  font-weight: 700;  font-size: 16px;  color:#383C3D;  border: solid 2px #383C3D; transition: all 0.5s ease-out;  border-radius: 0;  text-decoration: none;   cursor: pointer;  text-transform: none; }
-.pwaPromptPopup p .pwaPromptButton:hover { background: #383C3D;  color: #fff;  border-color: #AFCDAF; transition: all 0.5s ease-in; }
-
+.pwaPromptPopup { z-index:99998; position: fixed; left: 0; top: 0; height: 100%; width: 100%; background-color: #000; background: rgba(0,0,0,0.6); }
+.pwaPromptPopup section { display: block; z-index:99999;  position:absolute; left:50%; top:10%; transform: translateX(-50%); width: 95%; max-width:350px; height: auto; max-height: 95%; background-color: #AFCDAF; overflow:visible; border-radius:10px; margin:0 auto; padding:1.5rem; box-sizing: border-box; }
+.pwaPromptPopup div { width: 100%; float: left; margin:0; padding: 0; display: flex; justify-content:flex-start; align-items: center; }
+.pwaPromptPopup div img { background: #fff;  border-radius: 50%; width: 70px; height: auto; margin: 0 20px 0 0; }
+.pwaPromptPopup div h2 {  width:calc(100% - 90px); float: left; margin:0; padding: 0; text-align: left; color:#000; line-height: 1.2; font-size:18px;  text-transform: none; } 
+.pwaPromptPopup div h2 span { margin-top: 0.3rem; display: block; color:#464646; line-height: 1.2; font-size:14px;  text-transform: none; } 
+.pwaPromptPopup p {  width: 100%; float: left; margin:1rem 0 0 0; padding: 0;  text-align: right;  } 
+.pwaPromptButton { width:auto; display:block; float:right;  margin: 0 0 0 1rem; padding:0.7rem 1.2rem 0.5rem 1.2rem;  text-align: center;  background: #fff;  font-weight: normal; line-height: 1; font-size: 16px;  color:#383C3D;  border:none; transition: all 0.5s ease-out;  border-radius:25px;  text-decoration: none;   cursor: pointer;  text-transform: none; }
+.pwaPromptButton:hover { background: #383C3D;  color: #fff; transition: all 0.5s ease-in; }
+.pwaPromptButton.pwacancelBtn {  margin: 0;  background: none; color:#383C3D; }
+.pwaPromptButton.pwacancelBtn:hover { background: none; color:#fff; }
 
 /* ################### alertPopup ################### */
 .alertPopup { display: block; z-index:99998; position: fixed; left: 0; top: 0; height: 100%; width: 100%; background-color: #000; background: rgba(0,0,0,0.6); }
@@ -455,6 +462,21 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 .redeemforms span { width: 100%; float: left; margin:0.7rem 0 0 0; padding:0; text-align: left;  font-weight: normal; color:#AFCDAF; font-size:16px;  }
 .redeemforms button { width: 100%; display:block; float: left;  margin:2rem 0 0 0;  padding:1.1rem 2.5rem; box-sizing: border-box; text-align: center;  background:#F5F0EB;  font-weight: 700;  font-size: 22px;  color:#191919;  border: solid 2px #414141; transition: all 0.5s ease-out;  border-radius: 0;  text-decoration: none;   cursor: pointer; outline: none; text-transform: none; }
 .redeemforms button:hover { background: #AFCDAF;  color: #191919;   transition: all 0.5s ease-in; }
+
+.bankInfosavecontainer { width: 100%; float: left; }
+.bankInfosavecontainer h2 { margin:0 0 1rem 0; padding:0; width: 100%; float: left; text-align: left; text-transform: none;  }
+.bankInfosavecontainer h2 em { display: block; font-style: normal; font-family:var(--font-lneue); font-weight: normal;color: #AFCDAF; font-size: 24px;  }
+.bankInfosavecontainer h2 span { display: block; margin-top: 0.5rem; color: #ddd; font-size: 18px; font-weight:normal; }
+.bankInfoField { position: relative; width: 100%; float: left; text-align: center; margin-top:1.5rem;}
+.bankInfoField p { margin:0; padding:0; width: 100%; float: left; text-align: left; text-transform: none; font-weight: 500;color: rgba(175, 205, 175, 0.6); font-size: 18px;  }
+.bankInfoField input {  float: left;  width: 100%;  padding: 0.5rem 1rem;  border: 0; border-bottom: solid 2px #F5F0EB; outline: none;  background:transparent;  border-radius: 0;  text-align: left; font-weight: 500;  color: rgba(245, 240, 235,0.6);  font-size:18px;  box-shadow:none; box-sizing: border-box; }
+.bankInfoField input:disabled {user-select: none; pointer-events: none;}
+.bankInfoField span { display: block; margin-top:0.5rem; padding: 0; float: left; width: 100%; text-align: left; font-weight: 500; color: #f30; font-size: 14px;}
+.bankInfoField button { width: 100%; display:block; float: left; margin: 0;  padding:1rem 2rem; box-sizing: border-box; text-align: center;  background:#F5F0EB;  font-weight: 700;  font-size: 18px;  color:#191919;  border: solid 2px #414141; transition: all 0.5s ease-out;  border-radius: 0;  text-decoration: none;   cursor: pointer; outline: none; text-transform: uppercase; }
+.bankInfoField button:hover { background: #AFCDAF;  color: #191919;   transition: all 0.5s ease-in; }
+.bankInfoField button[disabled], .bankInfoField button:disabled { user-select: none;  pointer-events: none;   opacity: 0.6; }
+
+
 
 
 @media only screen and (max-width:1023px)

@@ -169,8 +169,8 @@ export default function LoginComponent() {
   const verifyotp = () => {
     // setOTPVerified(true); // tesing
 
-    loginnow(); // tesing
-    /*
+   // loginnow(); // tesing
+    
       setLoading(true);
       _get("Sms/VerifyOTP?&mobile="+mobileValues+"&otp="+otpValues)
       .then((res) => {
@@ -193,7 +193,7 @@ export default function LoginComponent() {
         toast.error(err.message);
         setLoading(false); 
       });
-    */
+    
   }
 
 
@@ -210,16 +210,13 @@ export default function LoginComponent() {
     <section className="screencontainer">
 
 
-          
-          
-          
           { !isDisabled ? (<div className="registercontainer">
               <div className="registerHead">Welcome!</div>
               <div className="registerField">
                 <div className="registertext">Enter mobile number *</div>
                 <div className="registerinputformobile">
                   <span>+91-</span>
-                  <input className="registerinput" type="number" name="mobile" maxLength={10} minLength={10} value={mobileValues} onChange={mobileChange} disabled={isDisabled} onInput={onInputmaxLength} />
+                  <input className="registerinput" type="number" name="mobile" autoComplete="off" maxLength={10} minLength={10} value={mobileValues} onChange={mobileChange} disabled={isDisabled} onInput={onInputmaxLength} />
                 </div>
                 { mobileError && <span className='registerError'>{mobileError}</span> } 
               </div>
@@ -241,7 +238,7 @@ export default function LoginComponent() {
               </div>
               <div className="registerOtp">
                 <div><aside>
-                  <input type="number" name="otpnumber" maxLength={6} minLength={6}  value={otpValues} onChange={otpChange}  onInput={onInputmaxLength} />
+                  <input type="number" name="otpnumber" autoComplete="off" maxLength={6} minLength={6}  value={otpValues} onChange={otpChange}  onInput={onInputmaxLength} />
                 </aside></div> 
               </div>
               { otpError && <span className='registerError'>{otpError}</span>  }
@@ -267,7 +264,7 @@ export default function LoginComponent() {
     </section>
     </div>
 
-    { loading ? <Loader /> : null }
+    { loading ? <Loader message="Request submitting" /> : null }
   </>
   )
 }

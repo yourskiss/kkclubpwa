@@ -79,7 +79,7 @@ export default function GetcouponeComponent() {
       </div> 
  
 
-      { loading ? <Loader /> : null }
+      { loading ? <Loader message="Validating Coupon" /> : null }
     </div>
   )
 }

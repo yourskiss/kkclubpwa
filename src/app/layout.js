@@ -47,6 +47,8 @@ export default function RootLayout({ children }) {
           <ToastContainer position="top-center" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored"  />
           {children}
         </main>
+
+        
         <Script src="/service-worker.js" />
       </body>
     </html>

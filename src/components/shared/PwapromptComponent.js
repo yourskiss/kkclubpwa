@@ -1,16 +1,31 @@
  
 export default function Pwaprompt() {
-    return (
-      <div className="pwaPromptPopup">
+    return (<>
+   
+      <div className="pwaPromptPopup" id="pwaPromptPopup">
           <section>
-              <h2>Install PWA</h2>
-              <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut, voluptates tempore dicta sed officia quaerat, ut similique dolor voluptatum aliquid sapiente culpa nostrum! Nam eos quos deleniti atque accusamus ipsam.</h3>
+            <div>
+                <img src="/assets/images/icons/pwa-prompt.png" alt="pwa" />
+                <h2>
+                    Kerakoll Club
+                    <span>Get our app. It won't tak up space on your phone</span>
+                </h2>
+            </div>
+
               <p>
                   <span id="pwaInstall" className="pwaPromptButton">Install</span>
-                  <span id="pwaCancel" className="pwaPromptButton">Cancel</span>
+                  <span id="pwaCancel" className="pwaPromptButton pwacancelBtn">Not now</span>
               </p>
           </section>
       </div>
-    )
+
+      <div className="loader" id="pwaLoader" style={{'display':'none'}}>
+          <div>
+            <aside></aside>
+            <p>Please wait...</p>
+          </div>
+      </div>
+
+    </>)
   }
   

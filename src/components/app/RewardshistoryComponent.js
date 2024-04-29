@@ -76,7 +76,7 @@ export default function RewardshistoryComponent () {
 
 
 
-    { loading ? <Loader /> : null }
+    { loading ? <Loader message="Getting response" /> : null }
   </div>
   )
 }

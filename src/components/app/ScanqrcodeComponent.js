@@ -130,7 +130,7 @@ export default function ScanqrcodeComponent() {
  
 
       
-      { loading ? <Loader /> : null }
+      { loading ? <Loader message="Validating Coupon" /> : null }
     </div>
   )
 }

@@ -1,7 +1,6 @@
 "use client";
 import Cookies from 'js-cookie';
 import { decryptText } from "@/config/crypto";
-import { _get } from "@/config/apiClient";
  
 const getUserID = () => {
   const isToken = !!Cookies.get('usertoken');
@@ -9,8 +8,8 @@ const getUserID = () => {
   if(isToken)
   {
     const decryptUserToken = decryptText(isValue)
-    const userID = decryptUserToken.split("|")[0];
-    return userID
+    const userID = decryptUserToken.split("|");
+    return userID[0];
   }
 }
 
@@ -20,8 +19,8 @@ const getUserMobile = () => {
   if(isToken)
   {
     const decryptUserToken = decryptText(isValue)
-    const userMobile = decryptUserToken.split("|")[1];
-    return userMobile
+    const userMobile = decryptUserToken.split("|");
+    return userMobile[1];
   }
 }
 
