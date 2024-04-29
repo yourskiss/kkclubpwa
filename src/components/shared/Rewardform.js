@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
 import { getUserID } from '@/config/userauth';
 import Loader from '../shared/LoaderComponent';
+import { ipaddress, osname  } from "../core/jio";
+import { _get } from "@/config/apiClient";
 
 export default function Rewardform() {
     const[userstatus, setUserstatus] = useState('');
@@ -16,7 +18,9 @@ export default function Rewardform() {
     const [loading, setLoading] = useState(false);
     const userid = getUserID();
     const { push } = useRouter();
-
+    const ipInfo = ipaddress();
+    const osn = osname();
+    
     useEffect(() => {
         if (typeof localStorage !== 'undefined') 
         {
@@ -51,9 +55,21 @@ export default function Rewardform() {
             return;
         }
 
-    toast.success('Thank you'); 
-    setLoading(true);
+        setLoading(true);
+        _get(`/Payment/UserPayout?userID=${userid}&points=${redeempoint}&amount=${redeempoint * pointvalue}&ipaddress=${ipInfo}&osdetails=${osn}`)
+        .then((res) => {
+            setLoading(false);
+           console.log("payout response - ", res);
+           toast.success('Request sending'); 
+        }).catch((error) => {
+            setLoading(false);
+            toast.info(error); 
+        });
+        
     }
+
+
+
 
   return (<>
         <div className='redeemforms'>

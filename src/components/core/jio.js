@@ -2,6 +2,13 @@
 import platform from 'platform';
 import { useState, useEffect } from 'react';
 
+
+const osname = () => {
+  const osn = `${platform.os.family || ''}`;
+  return osn;
+}
+
+
 const osdetails = () => {
   const os = `${platform.os.family || ''}  ${platform.os.version || ''}`;
   return os;
@@ -50,5 +57,5 @@ const ipaddress = () => {
   return ip;
 };
 
-export { ipaddress, osdetails, browserdetails, geoLatitude, geoLongitude };
+export { ipaddress, osname, osdetails, browserdetails, geoLatitude, geoLongitude };
  
