@@ -62,15 +62,15 @@ export default function BankaddComponents() {
     {
       const bankinfo = {
         userid: userid,
-        bankname: data.bankname,
-        ifcscode: data.ifsccode,
-        accountnumber: data.accountnumber,
-        upicode: data.upicode,
-        aadhaar: data.aadhaar,
-        pan:data.pan,
-        username: data.username,
-        rmn: data.rmn,
-        locationpage: "/redeempoints",
+        bankname: data.bankname.trim(),
+        ifcscode: data.ifsccode.trim(),
+        accountnumber: data.accountnumber.trim(),
+        upicode: data.upicode.trim(),
+        aadhaar: data.aadhaar.trim(),
+        pan:data.pan.trim(),
+        username: data.username.trim(),
+        rmn: data.rmn.trim(),
+        locationpage: "/bankdetailsadd",
         ipaddress: ipInfo,
         osdetails: osInfo,
         browserdetails: browserInfo
@@ -80,7 +80,7 @@ export default function BankaddComponents() {
       _post("/Payment/SaveUserPayoutInfo", bankinfo)
       .then((res) => {
           setLoading(false);
-          console.log("Response after save bank details - ", res);
+        //  console.log("Response after save bank details - ", res);
           toast.success("Bank Details Successfully Save."); 
           checkpath === "yes" ? push('/redeempoints') : push('/profile');
       }).catch((error) => {

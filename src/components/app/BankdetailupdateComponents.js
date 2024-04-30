@@ -23,7 +23,7 @@ export default function BankdetailupdateComponents() {
         _get("/Payment/GetUserPayoutInfo?userid="+userid)
         .then((res) => {
             setLoading(false);
-            console.log(" response - ", res);
+           // console.log(" response - ", res);
             setUserdata(res.data.result);
         }).catch((error) => {
             setLoading(false);
@@ -71,14 +71,14 @@ export default function BankdetailupdateComponents() {
       
       const bankinfo = {
         userid: userid,
-        bankname: data.bankname,
-        ifcscode: data.ifsccode,
-        accountnumber: data.accountnumber,
-        upicode: data.upicode,
-        aadhaar: data.aadhaar,
-        pan:data.pan,
-        username: data.username,
-        rmn: data.rmn,
+        bankname: data.bankname.trim(),
+        ifcscode: data.ifsccode.trim(),
+        accountnumber: data.accountnumber.trim(),
+        upicode: data.upicode.trim(),
+        aadhaar: data.aadhaar.trim(),
+        pan:data.pan.trim(),
+        username: data.username.trim(),
+        rmn: data.rmn.trim(),
         locationpage: "/bankdetailupdate",
         ipaddress: ipInfo,
         osdetails: osInfo,
