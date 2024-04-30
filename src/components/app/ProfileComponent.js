@@ -104,8 +104,9 @@ useEffect(() => {
                   }
                   <li onClick={redeemprompt}>
                      REDEEM POINTS <em><CountUp duration={2} start={0}  delay={1}  end={rewardspoints} /> PTS</em>
-                     </li>
+                  </li>
                   <li onClick={()=> push('/rewards')}>REWARD HISTORY</li>
+                  <li onClick={()=> push('/redemptionhistory')}>REDEMPTION HISTORY</li>
                   <li onClick={logoutnow}>SIGN OUT</li>
                 </ul>
             </div>

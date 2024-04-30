@@ -9,14 +9,17 @@ import { ipaddress, osname  } from "../core/jio";
 import { _get } from "@/config/apiClient";
 
 export default function Rewardform() {
+    const [loading, setLoading] = useState(false);
+    const [userOrderID, setUserOrderID] = useState('');
     const[userstatus, setUserstatus] = useState('');
     const[redeempoint, setRedeempoint] = useState('');
+    const[isclose, setIsclose] = useState('');
+    const[ispayment, setIspayment] = useState('');
+    const[pgrequeystatus, setPgrequeystatus] = useState('');
     const rewardspoints = parseInt(TotalrewardpointsComponent());
     const pointvalue = process.env.NEXT_PUBLIC_POINT_VALUE;
     const redeemminimumpoint = process.env.NEXT_PUBLIC_REDEEM_MIN_POINT;
 
-    const [loading, setLoading] = useState(false);
-    const [orderID, setOrderID] = useState('');
     const userid = getUserID();
     const { push } = useRouter();
     const ipInfo = ipaddress();
@@ -31,7 +34,7 @@ export default function Rewardform() {
 
 
     const pointvalueChange = (e) => {
-        setRedeempoint(e.target.value);
+        setRedeempoint(e.target.value.trim());
     }
     const pointvalueSubmit = (e) => {
         e.preventDefault();
@@ -60,9 +63,9 @@ export default function Rewardform() {
         _get(`/Payment/UserPayout?userID=${userid}&points=${redeempoint}&amount=${redeempoint * pointvalue}&ipaddress=${ipInfo}&osdetails=${osn}`)
         .then((res) => {
             setLoading(false);
-           console.log("payout response - ", res);
-           toast.success('Request sending'); 
-           setOrderID('');
+           console.log("UserPayout - ", res);
+           setUserOrderID(res.data.userorderid);
+          // if(userOrderID !== '') { payoutstatus(); }
         }).catch((error) => {
             setLoading(false);
             toast.info(error); 
@@ -70,26 +73,41 @@ export default function Rewardform() {
         
     }
 
-    useEffect(() => {
-        
-        setLoading(true);
-        _get(`/Payment/UserPayoutStatus?userID=${userid}&orderID=${orderID}`)
-        .then((res) => {
-            setLoading(false);
-           console.log("UserPayoutStatus - ", res);
-           toast.success('Request sending'); 
+    const payoutstatus = () => {
+        _get(`/Payment/UserPayoutStatus?userID=${userid}&orderID=${userOrderID}`)
+        .then((res) => {   
+           console.log("Payout Status - ", res.data.isclose, res.data.ispayment, res.data.pgrequeystatus, res); 
+           setIsclose(res.data.isclose);
+           setIspayment(res.data.ispayment);
+           setPgrequeystatus(res.data.pgrequeystatus);
         }).catch((error) => {
-            setLoading(false);
             toast.info(error); 
         });
-    }, [orderID]);
+    }
  
-
+    useEffect(() => {
+        if(userOrderID !== '') 
+        {
+            setLoading(true);
+            const interval = setInterval(() => {
+                payoutstatus();
+            }, 5000);  
+        
+            setTimeout(() => {
+                setLoading(false);
+                clearInterval(interval);
+            }, 30000);
+        
+            return () => {
+                clearInterval(interval); 
+            };
+        }
+    }, [userOrderID]);
 
   return (<>
         <div className='redeemforms'>
                 <p>1 PT = {pointvalue} INR</p>
-                <input type='number' placeholder='ENTER POINTS' name="redeempoint" value={redeempoint} onChange={pointvalueChange} />
+                <input type="number" placeholder="ENTER POINTS" name="redeempoint" value={redeempoint} onChange={pointvalueChange} />
                 <aside>
                     <button type='submit' onClick={pointvalueSubmit}>Redeem Points</button>
                 </aside>
