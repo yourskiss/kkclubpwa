@@ -16,6 +16,7 @@ export default function Rewardform() {
     const redeemminimumpoint = process.env.NEXT_PUBLIC_REDEEM_MIN_POINT;
 
     const [loading, setLoading] = useState(false);
+    const [orderID, setOrderID] = useState('');
     const userid = getUserID();
     const { push } = useRouter();
     const ipInfo = ipaddress();
@@ -61,6 +62,7 @@ export default function Rewardform() {
             setLoading(false);
            console.log("payout response - ", res);
            toast.success('Request sending'); 
+           setOrderID('');
         }).catch((error) => {
             setLoading(false);
             toast.info(error); 
@@ -68,7 +70,20 @@ export default function Rewardform() {
         
     }
 
-
+    useEffect(() => {
+        
+        setLoading(true);
+        _get(`/Payment/UserPayoutStatus?userID=${userid}&orderID=${orderID}`)
+        .then((res) => {
+            setLoading(false);
+           console.log("UserPayoutStatus - ", res);
+           toast.success('Request sending'); 
+        }).catch((error) => {
+            setLoading(false);
+            toast.info(error); 
+        });
+    }, [orderID]);
+ 
 
 
   return (<>
@@ -81,6 +96,6 @@ export default function Rewardform() {
         </div>
 
 
-        { loading ? <Loader message="Request submitting" /> : null }
+        { loading ? <Loader message="Payment Initiation" /> : null }
   </>)
 }

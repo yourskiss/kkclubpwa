@@ -5,13 +5,13 @@ import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
 import HeaderAfterLogin from "../shared/HeaderAfterlogin";
-import Rewardform from '../shared/Rewardform';
+import BankdetailAdd from '../shared/BankdetailAdd';
 import { useEffect, useState } from 'react';
 import { _get } from "@/config/apiClient";
 import { getUserID } from '@/config/userauth';
 import Loader from '../shared/LoaderComponent';
 
-export default function RedeempointsComponents() {
+export default function BankaddComponents() {
     const [loading, setLoading] = useState(false);
     const [resultcode, setResultcode] = useState('');
     const rewardspoints = TotalrewardpointsComponent();
@@ -23,7 +23,7 @@ export default function RedeempointsComponents() {
         _get("/Payment/GetUserPayoutInfo?userid="+userid)
         .then((res) => {
             setLoading(false);
-           // console.log(" response - ", res);
+          //  console.log(" response - ", res);
             setResultcode(res.data.resultcode);
         }).catch((error) => {
             setLoading(false);
@@ -31,9 +31,9 @@ export default function RedeempointsComponents() {
         });
     }, []);
 
- 
+
     useEffect(() => {
-        resultcode === '' || resultcode === 0 ? null : push('/bankdetailsadd')
+        resultcode === '' || resultcode !== 0 ? null : push('/redeempoints')
      }, [resultcode]);
 
   return (<>
@@ -52,10 +52,11 @@ export default function RedeempointsComponents() {
                 </aside>
                 <h2>Redeem your points</h2>
                 <h3><CountUp duration={2} start={0}  delay={1} end={rewardspoints} /> <b>pts</b> </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,<br /> sed do eiusmod tempor incididunt</p>
             </div>
             
-            <Rewardform />
+
+            
+            <BankdetailAdd />
             
         
         </div>
