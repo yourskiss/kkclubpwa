@@ -9,6 +9,8 @@ import { useEffect, useState } from 'react';
 import HeaderProfile from "../shared/HeaderProfile";
 import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
 import ProgressComponent from "../shared/ProgressComponent";
+import { getUserID } from '@/config/userauth';
+import { _get } from "@/config/apiClient";
 
 export default function ProfileComponent() {
   const { push } = useRouter();
@@ -18,6 +20,8 @@ export default function ProfileComponent() {
   const[userstatus, setUserstatus] = useState('');
   const profileProgress = ProgressComponent();
   const redeemminimumpoint = process.env.NEXT_PUBLIC_REDEEM_MIN_POINT;
+  const userid = getUserID();
+  const [resultcode, setResultcode] = useState('');
 
   useEffect(() => {
     if (typeof localStorage !== 'undefined') 
@@ -27,6 +31,8 @@ export default function ProfileComponent() {
         setUserstatus(localStorage.getItem('verificationstatus'));
     } 
   }, []);
+
+  
 
   const redeemprompt = () => {
     if(userstatus === "PENDING")
@@ -52,6 +58,18 @@ export default function ProfileComponent() {
     toast.success('Logout Successfully'); 
 }
 
+
+
+useEffect(() => {
+  _get("/Payment/GetUserPayoutInfo?userid="+userid)
+  .then((res) => {
+     // console.log(" response - ", res);
+      setResultcode(res.data.resultcode);
+  }).catch((error) => {
+      toast.info(error); 
+  });
+}, []);
+
   return (<>
     <HeaderProfile />
     <div className="screenmain screenprofile"> 
@@ -74,6 +92,10 @@ export default function ProfileComponent() {
 
             <div className="profile_menu">
                 <ul>
+                resultcode
+                  {
+                    resultcode === '' || resultcode === 0 ? <li onClick={()=> push('/bankdetailupdate')}>UPDATE BANK DETAILS</li> : null
+                  }
                   <li onClick={redeemprompt}>
                      REDEEM POINTS <em><CountUp duration={2} start={0}  delay={1}  end={rewardspoints} /> PTS</em>
                      </li>
