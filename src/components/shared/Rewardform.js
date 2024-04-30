@@ -10,11 +10,11 @@ import { _get } from "@/config/apiClient";
 
 export default function Rewardform() {
     const [loading, setLoading] = useState(false);
-    const [pendingorder, setPendingorder] = useState('');
+    const [pendingorder, setPendingorder] = useState(0);
     const [userOrderID, setUserOrderID] = useState('');
     const[userstatus, setUserstatus] = useState('');
-    const[redeempoint, setRedeempoint] = useState('');
-    const[isclose, setIsclose] = useState('');
+    const[redeempoint, setRedeempoint] = useState(''); 
+    const[isclose, setIsclose] = useState(''); 
     const[ispayment, setIspayment] = useState('');
     const[pgrequeystatus, setPgrequeystatus] = useState('');
     const rewardspoints = parseInt(TotalrewardpointsComponent());
@@ -36,7 +36,7 @@ export default function Rewardform() {
     useEffect(() => {
         _get(`/Payment/UserPendingOrder?userID=${userid}`)
         .then((res) => {
-         //  console.log(" Previous order - ", res);
+           console.log(" Previous order - ", res);
           setPendingorder(res.data.result[0].pendingorder);
         }).catch((error) => {
             toast.info(error); 
@@ -69,7 +69,7 @@ export default function Rewardform() {
             toast.info(`You can redeem min. ${redeemminimumpoint} reward points.`); 
             return;
         }
-        if(pendingorder !== 0)
+        if(pendingorder > 0)
         {
             toast.info('Your Previous order is already in pending.'); 
             push("/redemptionhistory");
@@ -82,7 +82,7 @@ export default function Rewardform() {
             setLoading(false);
            console.log("UserPayout - ", res);
            setUserOrderID(res.data.userorderid);
-          // if(userOrderID !== '') { payoutstatus(); }
+          if(userOrderID !== '') { payoutstatus(); }
         }).catch((error) => {
             setLoading(false);
             toast.info(error); 
@@ -112,6 +112,7 @@ export default function Rewardform() {
         
             setTimeout(() => {
                 setLoading(false);
+                push("/redemptionhistory");
                 clearInterval(interval);
             }, 30000);
         
@@ -120,6 +121,13 @@ export default function Rewardform() {
             };
         }
     }, [userOrderID]);
+
+    // useEffect(() => {
+    //     if(userOrderID !== '' && isclose !== '' && ispayment !== '' && pgrequeystatus !== '') 
+    //     {
+    //         console.log(isclose, ispayment, pgrequeystatus);
+    //     }
+    // }, [userOrderID, isclose, ispayment, pgrequeystatus]);
 
   return (<>
         <div className='redeemforms'>

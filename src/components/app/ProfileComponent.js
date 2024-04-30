@@ -98,7 +98,6 @@ useEffect(() => {
 
             <div className="profile_menu">
                 <ul>
-                resultcode
                   {
                      resultcode === 0 ? <li onClick={()=> push('/bankdetailupdate')}>UPDATE BANK DETAILS</li> : <li onClick={()=> push('/bankdetailsadd')}>ADD BANK DETAILS</li>
                   }
