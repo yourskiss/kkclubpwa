@@ -24,12 +24,18 @@ export default function ProfileComponent() {
   const [resultcode, setResultcode] = useState('');
 
   useEffect(() => {
+    sessionStorage.getItem('addbankfromredeempoint')
     if (typeof localStorage !== 'undefined') 
     {
         setUsername(localStorage.getItem('userprofilename'));
         setUserdp(localStorage.getItem('userprofilepic'));
         setUserstatus(localStorage.getItem('verificationstatus'));
     } 
+
+    if (typeof sessionStorage !== 'undefined') 
+    {
+      sessionStorage.removeItem('addbankfromredeempoint');
+    }
   }, []);
 
   
@@ -68,7 +74,7 @@ useEffect(() => {
   }).catch((error) => {
       toast.info(error); 
   });
-}, []);
+}, [resultcode]);
 
   return (<>
     <HeaderProfile />
@@ -94,7 +100,7 @@ useEffect(() => {
                 <ul>
                 resultcode
                   {
-                    resultcode === '' || resultcode === 0 ? <li onClick={()=> push('/bankdetailupdate')}>UPDATE BANK DETAILS</li> : null
+                     resultcode === 0 ? <li onClick={()=> push('/bankdetailupdate')}>UPDATE BANK DETAILS</li> : <li onClick={()=> push('/bankdetailsadd')}>ADD BANK DETAILS</li>
                   }
                   <li onClick={redeemprompt}>
                      REDEEM POINTS <em><CountUp duration={2} start={0}  delay={1}  end={rewardspoints} /> PTS</em>

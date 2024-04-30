@@ -33,7 +33,11 @@ export default function RedeempointsComponents() {
 
  
     useEffect(() => {
-        resultcode === '' || resultcode === 0 ? null : push('/bankdetailsadd')
+        if (typeof sessionStorage !== 'undefined') 
+        {
+          sessionStorage.removeItem('addbankfromredeempoint');
+        }
+        resultcode === '' || resultcode === 0 ? null : (sessionStorage.setItem('addbankfromredeempoint','yes'), push('/bankdetailsadd'))
      }, [resultcode]);
 
   return (<>

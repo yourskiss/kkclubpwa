@@ -103,11 +103,12 @@ export default function LoginComponent() {
       _get("Customer/UserInfo?userid=0&phonenumber="+ mobileValues)
       .then(res => {
         //  console.log("login success - ", res);
-        localStorage.setItem("userprofilename",res.data.result.fullname);
-        localStorage.setItem("userprofilepic",res.data.result.profilepictureurl);
-        localStorage.setItem("verificationstatus",res.data.result.verificationstatus);
+
         if(res.data.result.verificationstatus === "APPROVE" || res.data.result.verificationstatus === "PENDING")
         {
+          localStorage.setItem("userprofilename",res.data.result.fullname);
+          localStorage.setItem("userprofilepic",res.data.result.profilepictureurl);
+          localStorage.setItem("verificationstatus",res.data.result.verificationstatus);
             const userinfo = res.data.result.userid + "|" + res.data.result.phonenumber
             setUserCookies('usertoken', encryptText(userinfo));       
             if(res.data.result && isCC)

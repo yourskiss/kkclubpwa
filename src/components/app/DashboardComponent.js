@@ -9,20 +9,33 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import HeaderDashboard from '../shared/HeaderDashboard';
-
+import { getUserMobile } from '@/config/userauth';
+import { _get } from "@/config/apiClient";
+import Loader from "../shared/LoaderComponent";
 
 const DashboardComponent = () => {
+    const [loading, setLoading] = useState(false);
     const[userstatus, setUserstatus] = useState('');
     const { push } = useRouter();
+    const userMobile = getUserMobile();
     const rewardspoints = parseInt(TotalrewardpointsComponent());
     const redeemminimumpoint = process.env.NEXT_PUBLIC_REDEEM_MIN_POINT;
-
-  useEffect(() => {
-    if (typeof localStorage !== 'undefined') 
-    {
-        setUserstatus(localStorage.getItem('verificationstatus'));
-    } 
-  }, []);
+ 
+    useEffect(() => {
+        setLoading(true);
+        _get("Customer/UserInfo?userid=0&phonenumber="+ userMobile)
+        .then((res) => {
+            setLoading(false);
+           // console.log(" response - ", res);
+           localStorage.setItem("userprofilename",res.data.result.fullname);
+           localStorage.setItem("userprofilepic",res.data.result.profilepictureurl);
+           localStorage.setItem("verificationstatus",res.data.result.verificationstatus);
+           setUserstatus(localStorage.getItem('verificationstatus'));
+        }).catch((error) => {
+            setLoading(false);
+            toast.info(error); 
+        });
+      }, []);
 
   const redeemprompt = () => {
     if(userstatus === "PENDING")
@@ -56,6 +69,7 @@ const DashboardComponent = () => {
     ]
   };
 
+ 
   return (<>
     <HeaderDashboard />
     <div className="screenmain screendashboard"> 
@@ -131,6 +145,8 @@ const DashboardComponent = () => {
       </div>
     </div> 
 
+
+    { loading ? <Loader message="Details updating" /> : null }
   </>)
 }
 export default DashboardComponent;  
