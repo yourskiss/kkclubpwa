@@ -29,14 +29,16 @@ export default function RedeempointsComponents() {
             setLoading(false);
             toast.info(error); 
         });
-    }, []);
 
- 
-    useEffect(() => {
         if (typeof sessionStorage !== 'undefined') 
         {
           sessionStorage.removeItem('addbankfromredeempoint');
         }
+    }, []);
+
+ 
+    useEffect(() => {
+        
         resultcode === '' || resultcode === 0 ? null : (sessionStorage.setItem('addbankfromredeempoint','yes'), push('/bankdetailsadd'))
      }, [resultcode]);
 
