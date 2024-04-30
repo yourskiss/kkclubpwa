@@ -10,6 +10,7 @@ import { _get } from "@/config/apiClient";
 
 export default function Rewardform() {
     const [loading, setLoading] = useState(false);
+    const [pendingorder, setPendingorder] = useState('');
     const [userOrderID, setUserOrderID] = useState('');
     const[userstatus, setUserstatus] = useState('');
     const[redeempoint, setRedeempoint] = useState('');
@@ -31,6 +32,16 @@ export default function Rewardform() {
             setUserstatus(localStorage.getItem('verificationstatus'));
         } 
     }, [userstatus]);
+
+    useEffect(() => {
+        _get(`/Payment/UserPendingOrder?userID=${userid}`)
+        .then((res) => {
+         //  console.log(" Previous order - ", res);
+          setPendingorder(res.data.result[0].pendingorder);
+        }).catch((error) => {
+            toast.info(error); 
+        });
+    }, [pendingorder]);
 
 
     const pointvalueChange = (e) => {
@@ -56,6 +67,12 @@ export default function Rewardform() {
         if(redeempoint < redeemminimumpoint)
         {
             toast.info(`You can redeem min. ${redeemminimumpoint} reward points.`); 
+            return;
+        }
+        if(pendingorder !== 0)
+        {
+            toast.info('Your Previous order is already in pending.'); 
+            push("/redemptionhistory");
             return;
         }
 
