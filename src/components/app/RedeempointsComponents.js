@@ -23,7 +23,7 @@ export default function RedeempointsComponents() {
         _get("/Payment/GetUserPayoutInfo?userid="+userid)
         .then((res) => {
             setLoading(false);
-           // console.log(" response - ", res);
+           // console.log(" GetUserPayoutInfo - ", res);
             setResultcode(res.data.resultcode);
         }).catch((error) => {
             setLoading(false);
@@ -38,7 +38,6 @@ export default function RedeempointsComponents() {
 
  
     useEffect(() => {
-        
         resultcode === '' || resultcode === 0 ? null : (sessionStorage.setItem('addbankfromredeempoint','yes'), push('/bankdetailsadd'))
      }, [resultcode]);
 

@@ -2,7 +2,7 @@
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
+import TotalrewardpointsComponent from './TotalrewardpointsComponent';
 import { getUserID } from '@/config/userauth';
 import Loader from '../shared/LoaderComponent';
 import { ipaddress, osname  } from "../core/jio";
@@ -69,20 +69,20 @@ export default function Rewardform() {
             toast.info(`You can redeem min. ${redeemminimumpoint} reward points.`); 
             return;
         }
-        if(pendingorder > 0)
-        {
-            toast.info('Your Previous order is already in pending.'); 
-            push("/redemptionhistory");
-            return;
-        }
+        // if(pendingorder > 0)
+        // {
+        //     toast.info('Your Previous order is already in pending.'); 
+        //     push("/redemptionhistory");
+        //     return;
+        // }
 
         setLoading(true);
         _get(`/Payment/UserPayout?userID=${userID}&points=${redeempoint}&amount=${redeempoint * pointvalue}&ipaddress=${ipInfo}&osdetails=${osn}`)
         .then((res) => {
             setLoading(false);
-           console.log("Payout request - ", res);
-           setUserOrderID(res.data.userorderid);
-           // payoutstatus(res.data.userorderid);
+           console.log("Payout request - ", res.data.userorderid, res);
+            setUserOrderID(res.data.userorderid);
+            payoutstatus(res.data.userorderid);
         }).catch((error) => {
             setLoading(false);
             toast.info(error); 
@@ -90,20 +90,24 @@ export default function Rewardform() {
         
     }
 
-    const payoutstatus = (od) => {
-        _get(`/Payment/UserPayoutStatus?userID=${userID}&orderID=${od}`)
-        .then((res) => {   
-           console.log("Payout Status - ", res.data.isclose, res.data.ispayment, res.data.pgrequeystatus, res); 
-           setIsclose(res.data.isclose);
-           setIspayment(res.data.ispayment);
-           setPgrequeystatus(res.data.pgrequeystatus);
-        }).catch((error) => {
-            toast.info(error); 
-        });
+    const payoutstatus = (val) => {
+            _get(`/Payment/UserPayoutStatus?userID=${userID}&orderID=${val}`)
+            .then((res) => {   
+            console.log("function Status - ", res.data.isclose, res.data.ispayment, res.data.pgrequeystatus, res); 
+            setIsclose(res.data.isclose);
+            setIspayment(res.data.ispayment);
+            setPgrequeystatus(res.data.pgrequeystatus);
+            }).catch((error) => {
+                toast.info(error); 
+            });
     }
  
     useEffect(() => {
-        if(userOrderID !== '') 
+        if(userOrderID === '' || userOrderID === ' ' || userOrderID === undefined || userOrderID === null) 
+        {
+            // nothing
+        }
+        else 
         {
             setLoading(true);
             const interval = setInterval(() => {
@@ -113,10 +117,12 @@ export default function Rewardform() {
             setTimeout(() => {
                 setLoading(false);
                 clearInterval(interval);
+                toast.success("Payment Initiated"); 
                 push("/redemptionhistory");    
             }, 30000);
         
             return () => {
+                setLoading(false);
                 clearInterval(interval); 
             };
         }

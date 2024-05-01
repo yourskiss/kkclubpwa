@@ -8,6 +8,7 @@ import CountUp from 'react-countup';
 import { _get } from "@/config/apiClient";
 import HeaderAfterLogin from "../shared/HeaderAfterlogin";
 import { toast } from 'react-toastify';
+import TotalRedeemedPoints from '../shared/totalredemption';
  
 
 export default function RedemptionhistoryComponemt () {
@@ -16,22 +17,13 @@ export default function RedemptionhistoryComponemt () {
   const[pgrequeystatus, setPgrequeystatus] = useState('');
   const [btnload, setBtnload] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [redeemedpoints,setRedeemedPoints] = useState('');
   const [pointhistory, setPointhistory] = useState({});
   const [nodata, setNodata] = useState('');
   const userID = getUserID();
   const { push } = useRouter();
-
+  const redeemedpointTotal = TotalRedeemedPoints();
  
-  useEffect(() => {
-    _get(`Customer/UserTotalRedeemedPoints?userid=${userID}`)
-    .then((res) => {
-       // console.log("UserTotalRedeemedPoints - ", res);
-        setRedeemedPoints(res.data.result[0].totalredeempoints)
-    }).catch((error) => {
-        toast.error(error); 
-    });
-  }, [redeemedpoints]);
+ 
 
   useEffect(() => {
       setLoading(true);
@@ -55,27 +47,28 @@ export default function RedemptionhistoryComponemt () {
 
 
   const payoutstatus = (od) => {
-    //setBtnload(true);
+    debugger;
     setLoading(true);
+    setBtnload(true);
     _get(`/Payment/UserPayoutStatus?userID=${userID}&orderID=${od}`)
     .then((res) => { 
-       
-
+      console.log("Status inside - ", res.data.isclose, res.data.ispayment, res.data.pgrequeystatus, res); 
       if(res.status === 200)
       {
-       // setBtnload(false); 
         setLoading(false);
-        console.log("Status inside - ", res.data.isclose, res.data.ispayment, res.data.pgrequeystatus, res); 
-
+        setBtnload(false);
         setIsclose(res.data.isclose);
         setIspayment(res.data.ispayment);
         setPgrequeystatus(res.data.pgrequeystatus);
         push("/redemptionhistory");
+       // toast.info(res.statusText); 
       }
- 
-       
+      else
+      {
+        toast.info(res.statusText); 
+      }
     }).catch((error) => {
-       // setLoading(false);
+        setLoading(false);
         setBtnload(false);
         toast.info(error); 
     });
@@ -92,7 +85,7 @@ export default function RedemptionhistoryComponemt () {
           <div className="rewardscontainer">
             <h2>Redemption History</h2>
             <h3>
-              <CountUp duration={2} start={0}  delay={1} end={redeemedpoints} /> <b>PTS</b> 
+              <CountUp duration={2} start={0}  delay={1} end={redeemedpointTotal} /> <b>PTS</b> 
               <em>Redeemed Points</em>
             </h3>
           </div>
@@ -125,7 +118,7 @@ export default function RedemptionhistoryComponemt () {
 
 
 
-    { loading ? <Loader message="Payment Initiation" /> : null }
+    { loading ? <Loader message="Validating information" /> : null }
   </div>
   )
 }

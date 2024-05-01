@@ -11,6 +11,7 @@ import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
 import ProgressComponent from "../shared/ProgressComponent";
 import { getUserID } from '@/config/userauth';
 import { _get } from "@/config/apiClient";
+import TotalRedeemedPoints from '../shared/totalredemption';
 
 export default function ProfileComponent() {
   const { push } = useRouter();
@@ -22,6 +23,7 @@ export default function ProfileComponent() {
   const redeemminimumpoint = process.env.NEXT_PUBLIC_REDEEM_MIN_POINT;
   const userid = getUserID();
   const [resultcode, setResultcode] = useState('');
+  const redeemedpointTotal = TotalRedeemedPoints();
 
   useEffect(() => {
     if (typeof localStorage !== 'undefined') 
@@ -104,7 +106,9 @@ useEffect(() => {
                      REDEEM POINTS <em><CountUp duration={2} start={0}  delay={1}  end={rewardspoints} /> PTS</em>
                   </li>
                   <li onClick={()=> push('/rewards')}>REWARD HISTORY</li>
-                  <li onClick={()=> push('/redemptionhistory')}>REDEMPTION HISTORY</li>
+                  <li onClick={()=> push('/redemptionhistory')}>
+                    REDEMPTION HISTORY <em><CountUp duration={2} start={0}  delay={1}  end={redeemedpointTotal} /> PTS</em>
+                  </li>
                   <li onClick={logoutnow}>SIGN OUT</li>
                 </ul>
             </div>

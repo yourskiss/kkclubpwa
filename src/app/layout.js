@@ -14,7 +14,7 @@ import Starfield from 'react-starfield';
 export const metadata = {
   title: "KerakollClub",
   description: "KerakollClub",
-  manifest:'./manifest.json',
+  manifest:'/manifest.json',
   icons: [
     {
       rel: 'icon',
