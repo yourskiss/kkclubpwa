@@ -104,7 +104,7 @@ export default function RedemptionhistoryComponemt () {
                 <li>
                   <p><b>SN.</b></p>
                   <p><b>Points</b><br /><small>Date</small></p>
-                  <p><b>Amount</b><br /><small>Amount/ID</small></p>
+                  <p><b>Transaction</b><br /><small>Amount/ID</small></p>
                   <p><b>Status</b><br /><small>Orderid</small></p>
                   <p></p>
                 </li>
