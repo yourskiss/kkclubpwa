@@ -6,7 +6,8 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
 import { isUserToken, isBearerToken } from '@/config/userauth';
- 
+import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
+
 export default  function HeaderDashboard() {
 
   const [logout, setLogout] = useState(false);
@@ -17,6 +18,10 @@ export default  function HeaderDashboard() {
   const { push } = useRouter();
   const userToken  =  isUserToken();
   const bearerToken = isBearerToken();
+
+  const rewardspoints = parseInt(TotalrewardpointsComponent());
+  const redeemminimumpoint = process.env.NEXT_PUBLIC_REDEEM_MIN_POINT;
+
 useEffect(() => {
   if(!userToken) { push("/login"); return  }
   if(!bearerToken) { push("/"); return  }
@@ -46,6 +51,21 @@ useEffect(() => {
       push("/") ;
       toast.success('Logout Successfully'); 
   }
+
+  const redeemprompt = () => {
+    if(userstatus === "PENDING")
+    {
+      toast.info('Reward points will redeem after profile approval.'); 
+      return
+    }
+    if(userstatus === "APPROVE" && rewardspoints <= redeemminimumpoint)
+    {
+      toast.info(`You can redeem min. ${redeemminimumpoint} reward points.`);
+      return 
+    }
+    push("/redeempoints");
+  }
+
   return (
     <>
       <header className="headersection headerDashboard">
@@ -63,9 +83,11 @@ useEffect(() => {
             </aside>
             { logout === true ?
               <ul className='header_menu'>
-                  <li>Welcome<br /> <Link href='/dashboard'><b>{username}</b></Link></li>
+                  <li>Welcome <Link href='/dashboard'><b>{username}</b></Link></li>
                   <li><Link href='/profile'>Profile</Link></li>
+                  <li><span onClick={redeemprompt}>REDEEM POINTS</span></li>
                   <li><Link href='/rewards'>Rewards History</Link></li>
+                  <li><Link href='/redemptionhistory'>Redemption  History</Link></li>
                   <li><span onClick={logoutnow}>Logout</span></li>
               </ul>
               : null }

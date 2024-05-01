@@ -24,7 +24,6 @@ export default function ProfileComponent() {
   const [resultcode, setResultcode] = useState('');
 
   useEffect(() => {
-    sessionStorage.getItem('addbankfromredeempoint')
     if (typeof localStorage !== 'undefined') 
     {
         setUsername(localStorage.getItem('userprofilename'));

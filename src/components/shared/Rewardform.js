@@ -21,7 +21,7 @@ export default function Rewardform() {
     const pointvalue = process.env.NEXT_PUBLIC_POINT_VALUE;
     const redeemminimumpoint = process.env.NEXT_PUBLIC_REDEEM_MIN_POINT;
 
-    const userid = getUserID();
+    const userID = getUserID();
     const { push } = useRouter();
     const ipInfo = ipaddress();
     const osn = osname();
@@ -34,9 +34,9 @@ export default function Rewardform() {
     }, [userstatus]);
 
     useEffect(() => {
-        _get(`/Payment/UserPendingOrder?userID=${userid}`)
+        _get(`/Payment/UserPendingOrder?userID=${userID}`)
         .then((res) => {
-           console.log(" Previous order - ", res);
+          console.log("Previous order - ", res.data.result[0].pendingorder,  res);
           setPendingorder(res.data.result[0].pendingorder);
         }).catch((error) => {
             toast.info(error); 
@@ -77,12 +77,12 @@ export default function Rewardform() {
         }
 
         setLoading(true);
-        _get(`/Payment/UserPayout?userID=${userid}&points=${redeempoint}&amount=${redeempoint * pointvalue}&ipaddress=${ipInfo}&osdetails=${osn}`)
+        _get(`/Payment/UserPayout?userID=${userID}&points=${redeempoint}&amount=${redeempoint * pointvalue}&ipaddress=${ipInfo}&osdetails=${osn}`)
         .then((res) => {
             setLoading(false);
-           console.log("UserPayout - ", res);
+           console.log("Payout request - ", res);
            setUserOrderID(res.data.userorderid);
-          if(userOrderID !== '') { payoutstatus(); }
+           // payoutstatus(res.data.userorderid);
         }).catch((error) => {
             setLoading(false);
             toast.info(error); 
@@ -90,8 +90,8 @@ export default function Rewardform() {
         
     }
 
-    const payoutstatus = () => {
-        _get(`/Payment/UserPayoutStatus?userID=${userid}&orderID=${userOrderID}`)
+    const payoutstatus = (od) => {
+        _get(`/Payment/UserPayoutStatus?userID=${userID}&orderID=${od}`)
         .then((res) => {   
            console.log("Payout Status - ", res.data.isclose, res.data.ispayment, res.data.pgrequeystatus, res); 
            setIsclose(res.data.isclose);
@@ -107,13 +107,13 @@ export default function Rewardform() {
         {
             setLoading(true);
             const interval = setInterval(() => {
-                payoutstatus();
+                payoutstatus(userOrderID);
             }, 5000);  
         
             setTimeout(() => {
                 setLoading(false);
-                push("/redemptionhistory");
                 clearInterval(interval);
+                push("/redemptionhistory");    
             }, 30000);
         
             return () => {
@@ -122,12 +122,7 @@ export default function Rewardform() {
         }
     }, [userOrderID]);
 
-    // useEffect(() => {
-    //     if(userOrderID !== '' && isclose !== '' && ispayment !== '' && pgrequeystatus !== '') 
-    //     {
-    //         console.log(isclose, ispayment, pgrequeystatus);
-    //     }
-    // }, [userOrderID, isclose, ispayment, pgrequeystatus]);
+ 
 
   return (<>
         <div className='redeemforms'>
