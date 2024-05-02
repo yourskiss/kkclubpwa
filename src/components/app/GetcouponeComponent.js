@@ -55,7 +55,7 @@ export default function GetcouponeComponent() {
 
   return (
     <div className='outsidescreen'>
-      <HeaderAfterLogin />
+      <HeaderAfterLogin backrouter="/dashboard"  />
       <div className="screenmain screenqrcode" > 
         <div className="screencontainer">
 

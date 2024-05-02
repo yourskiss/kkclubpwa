@@ -210,26 +210,31 @@ export default function LoginComponent() {
     <section className="screencontainer">
 
 
-          { !isDisabled ? (<div className="registercontainer">
-              <div className="registerHead">Welcome!</div>
-              <div className="registerField">
-                <div className="registertext">Enter mobile number *</div>
-                <div className="registerinputformobile">
-                  <span>+91-</span>
-                  <input className="registerinput" type="number" name="mobile" autoComplete="off" maxLength={10} minLength={10} value={mobileValues} onChange={mobileChange} disabled={isDisabled} onInput={onInputmaxLength} />
+          { !isDisabled ? (<form onSubmit={mobileSubmit}>
+              <div className="registercontainer">
+                <div className="registerHead">Welcome!</div>
+                <div className="registerField">
+                  <div className="registertext">Enter mobile number *</div>
+                  <div className="registerinputformobile">
+                    <span>+91-</span>
+                    <input className="registerinput" type="number" name="mobile" autoComplete="off" maxLength={10} minLength={10} value={mobileValues} onChange={mobileChange} disabled={isDisabled} onInput={onInputmaxLength} />
+                  </div>
+                  { mobileError && <span className='registerError'>{mobileError}</span> } 
                 </div>
-                { mobileError && <span className='registerError'>{mobileError}</span> } 
+                <div className="registerTncAccept">
+                  <input id="accepttnc" type="checkbox" onChange={checkboxHandler}  />
+                  <label htmlFor="accepttnc"><span>Accept Term and Condition</span></label>
+                </div>
               </div>
-              <div className="registerTncAccept">
-                 <input id="accepttnc" type="checkbox" onChange={checkboxHandler}  />
-                 <label htmlFor="accepttnc"><span>Accept Term and Condition</span></label>
+              <div className="registerSubmit">
+                <button disabled={agree} className="register_button">SEND OTP</button>
               </div>
-              </div>) : null }
+            </form>) : null }
           
-          
+              
 
         { mobileError === '' && isMobile ? (
-        <>
+        <form onSubmit={otpSubmit}>
             <div className="registercontainer">
               <div className="registerHead">Verify with OTP</div>
               <div className="registerMsgOtp">
@@ -246,17 +251,13 @@ export default function LoginComponent() {
                 !otpsent ? (<div className="registerOtpText">Resend OTP in  <Otpcountdown expiryTimestamp={otpcountertime} onSuccess={getOtpTimer} /> Seconds </div>) : (<div className="registerOtpText">Not reveived?  <span onClick={sendotp}>Resend OTP</span></div>)
               }
             </div>
-        </>
+            <div className="registerSubmit">
+                <button className="register_button">Sign In</button>
+            </div>
+        </form>
         ) : null }
 
-            <div className="registerSubmit">
-              { 
-                !isMobile && !isOTP ?
-                (<button disabled={agree} className="register_button" onClick={mobileSubmit}>SEND OTP</button>) 
-                :
-                (<button className="register_button" onClick={otpSubmit}>Sign In</button>)
-              }
-            </div>
+ 
 
  
       

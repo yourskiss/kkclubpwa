@@ -1,6 +1,6 @@
 "use client";;
 import { toast } from 'react-toastify';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import HeaderAfterLogin from "../shared/HeaderAfterlogin";
 import { useState, useEffect } from 'react';
 import { _get, _post } from "@/config/apiClient";
@@ -10,14 +10,19 @@ import { ipaddress, osdetails, browserdetails  } from "../core/jio";
 import { useForm } from "react-hook-form";
 
 export default function BankaddComponents() {
-    const[checkpath, setCheckpath] = useState('');
     const [loading, setLoading] = useState(false);
+    const [backroutepath, setbackroutepath] = useState('');
     const userid = getUserID();
     const { push } = useRouter();
+    const searchParams = useSearchParams()
     const ipInfo = ipaddress();
     const osInfo = osdetails();
     const browserInfo = browserdetails();
-  
+    const getpathfrom = searchParams.get('q') ?? "0";
+    useEffect(()=>{
+      getpathfrom === '1' || getpathfrom === 1 ? setbackroutepath('/redeempoints') : setbackroutepath('/profile')
+    },[backroutepath])
+
     const { register, handleSubmit, formState: { errors } } = useForm();
     const handleError = (errors) => { };
   
@@ -51,12 +56,7 @@ export default function BankaddComponents() {
       }
     }
 
-    useEffect(() => {
-        if (typeof sessionStorage !== 'undefined') 
-        {
-            setCheckpath(sessionStorage.getItem('addbankfromredeempoint'));
-        } 
-    }, []);
+ 
   
     const handleRegistration = (data) => 
     {
@@ -82,7 +82,7 @@ export default function BankaddComponents() {
           setLoading(false);
         //  console.log("Response after save bank details - ", res);
           toast.success("Bank Details Successfully Save."); 
-          checkpath === "yes" ? push('/redeempoints') : push('/profile');
+          push(backroutepath);
       }).catch((error) => {
           setLoading(false);
           toast.info(error); 
@@ -90,10 +90,10 @@ export default function BankaddComponents() {
     }
 
 
- 
 
+ 
   return (<>
-    <HeaderAfterLogin />
+    <HeaderAfterLogin backrouter={backroutepath} />
     <div className="screenmain"> 
         <div className="screencontainer">
 

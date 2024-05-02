@@ -141,7 +141,7 @@ export default function UpdateprofileComponent() {
      
   return (
     <>
-    <HeaderAfterLogin />
+    <HeaderAfterLogin  backrouter="/profile" />
     <div className='screenmain'>
         <section className="screencontainer">
         <form onSubmit={handleSubmit}>

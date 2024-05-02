@@ -33,7 +33,7 @@ export default function EarnedComponent() {
     }, []);
 
   return (<div className='outsidescreen'>
-      <HeaderAfterLogin />
+      <HeaderAfterLogin  backrouter="/profile" />
       <div className="screenmain screenqrcode" > 
         <div className="screencontainer">
 

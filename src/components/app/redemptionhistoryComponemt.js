@@ -77,7 +77,7 @@ export default function RedemptionhistoryComponemt () {
  
   return (
   <div className="outsiderewads">
-    <HeaderAfterLogin />
+    <HeaderAfterLogin backrouter="/profile" />
     <div className="screenmain screenrewads"> 
       <div className="screencontainer">
  

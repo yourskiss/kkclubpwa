@@ -39,7 +39,7 @@ export default function RewardshistoryComponent () {
  const points = TotalrewardpointsComponent();
   return (
   <div className="outsiderewads">
-    <HeaderAfterLogin />
+    <HeaderAfterLogin  backrouter="/profile" />
     <div className="screenmain screenrewads"> 
       <div className="screencontainer">
  

@@ -29,20 +29,15 @@ export default function RedeempointsComponents() {
             setLoading(false);
             toast.info(error); 
         });
-
-        if (typeof sessionStorage !== 'undefined') 
-        {
-          sessionStorage.removeItem('addbankfromredeempoint');
-        }
     }, []);
 
  
     useEffect(() => {
-        resultcode === '' || resultcode === 0 ? null : (sessionStorage.setItem('addbankfromredeempoint','yes'), push('/bankdetailsadd'))
+        resultcode === '' || resultcode === 0 ? null : push('/bankdetailsadd?q=1')
      }, [resultcode]);
 
   return (<>
-    <HeaderAfterLogin />
+    <HeaderAfterLogin  backrouter="/dashboard" />
     <div className="screenmain redeemscreen"> 
         <div className="screencontainer">
 

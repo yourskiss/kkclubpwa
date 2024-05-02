@@ -27,7 +27,7 @@ export default function HomeComponent() {
             push("/login");
           }).catch((err) => {
             toast.error(err.message); 
-           // push("/");
+            push("/");
           });
     }
     else

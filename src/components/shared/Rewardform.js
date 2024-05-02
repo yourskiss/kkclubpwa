@@ -132,11 +132,13 @@ export default function Rewardform() {
 
   return (<>
         <div className='redeemforms'>
+            <form onSubmit={pointvalueSubmit}>
                 <p>1 PT = {pointvalue} INR</p>
                 <input type="number" placeholder="ENTER POINTS" name="redeempoint" value={redeempoint} onChange={pointvalueChange} />
                 <aside>
-                    <button type='submit' onClick={pointvalueSubmit}>Redeem Points</button>
+                    <button type='submit'>Redeem Points</button>
                 </aside>
+            </form>
         </div>
 
 

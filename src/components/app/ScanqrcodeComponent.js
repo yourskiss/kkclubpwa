@@ -94,7 +94,7 @@ export default function ScanqrcodeComponent() {
 
   return (
     <div className='outsidescreen'>
-      <HeaderAfterLogin />
+      <HeaderAfterLogin  backrouter="/dashboard" />
       <div className="screenmain screenqrcode" > 
         <div className="screencontainer">
           { 

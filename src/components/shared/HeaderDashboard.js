@@ -88,7 +88,7 @@ useEffect(() => {
                   <li><span onClick={redeemprompt}>REDEEM POINTS</span></li>
                   <li><Link href='/rewards'>REWARDS HISTORY</Link></li>
                   <li><Link href='/redemptionhistory'>REDEEMPTION HISTORY</Link></li>
-                  <li><span onClick={logoutnow}>Logout</span></li>
+                  <li><span onClick={logoutnow}>LOGOUT</span></li>
               </ul>
               : null }
         </section>

@@ -43,23 +43,23 @@ export default function BankdetailupdateComponents() {
     }
   
     const registerOptions = {
-      bankname : { required: "Bank Name is required" },
-      ifsccode: { required: "IFSC Code is required" },
-      accountnumber: { required: "Account Number is required" },
-      upicode: { required: "UPI ID is required" },
+      bankname : { required: "Please validate Bank Name" },
+      ifsccode: { required: "Please validate IFSC Code" },
+      accountnumber: { required: "Please validate Account Number" },
+      upicode: { required: "Please validate UPI ID" },
       aadhaar: {
-        required: "Aadhaar number is required",
+        required: "Please validate Aadhaar number",
         minLength: { value: 12, message: "Aadhaar must have at least 12 Digit" },
         maxLength: { value: 12, message: "Aadhaar not more then 12 Digit" },
         pattern: { value: /^[0-9]{12}$/i, message: "Invalid Aadhaar" }
       },
       pan: { 
-        required: "Pan Number is required",
+        required: "Please validate Pan Number",
         minLength: { value: 10, message: "Pan Number must have at least 10 Digit" },
       },
-      username: { required: "Name is required" },
+      username: { required: "Please validate Name" },
       rmn: {
-        required: "RMN is required",
+        required: "Please validate RMN",
         minLength: { value: 10, message: "RMN must have at least 10 Digit" },
         maxLength: { value: 10, message: "RMN not more then 10 Digit" },
         pattern: { value: /^[6-9]{1}[0-9]{9}$/i, message: "Invalid RMN" }
@@ -100,7 +100,7 @@ export default function BankdetailupdateComponents() {
 
 
   return (<>
-    <HeaderAfterLogin />
+    <HeaderAfterLogin backrouter="/profile" />
     <div className="screenmain"> 
         <div className="screencontainer">
             <div className='bankInfosavecontainer'>

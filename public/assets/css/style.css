@@ -154,7 +154,7 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 .header_notification img { float: left; width: 100%; height:auto; border: 0; border-radius: 0; margin: 0;padding: 0;  transition: all 0.5s ease-out; }
 .header_notification img:hover {  transition: all 0.5s ease-in; }
 .header_notification span { z-index: 1; position: absolute; top:-4px; right:-4px;width: 14px; height: 14px;border-radius: 50%; background:transparent;text-align: center;line-height: 20px;font-size: 10px; background: #AFCDAF; }
-.header_menu  { display: block; z-index: 5; position: absolute; top: 110%; right: 0; background: #afcdaf; padding:0; width:200px; box-shadow: 0px 3px 12px rgb(0 0 0 / 8%); box-sizing:border-box; transition: all 0.5s ease-in-out; }
+.header_menu  { display: block; z-index: 5; position: absolute; top: 110%; right: 0; background: #afcdaf; padding:0; width:220px; box-shadow: 0px 3px 12px rgb(0 0 0 / 8%); box-sizing:border-box; transition: all 0.5s ease-in-out; }
 .header_menu:after { z-index:2; position:absolute; right: 20%; top:-13px; content: "\f0d8"; font-family:'FontAwesome'; color: #afcdaf; line-height:1; font-weight:400; font-size:20px; }
 .header_menu li { list-style: none; width: 100%; float: left; padding:10px; margin: 0;  border: none;   border-top: solid 1px #fff; background:transparent;text-decoration: none; border-radius: 0; box-sizing: border-box;   text-align: center; font-size: 16px; color: #414141; }
 .header_menu li:first-child { border-top: none;}
