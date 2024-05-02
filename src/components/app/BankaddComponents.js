@@ -2,7 +2,7 @@
 import { toast } from 'react-toastify';
 import { useRouter, useSearchParams } from 'next/navigation';
 import HeaderAfterLogin from "../shared/HeaderAfterlogin";
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect } from 'react';
 import { _get, _post } from "@/config/apiClient";
 import { getUserID } from '@/config/userauth';
 import Loader from '../shared/LoaderComponent';
@@ -94,7 +94,7 @@ export default function BankaddComponents() {
  
   return (<>
     <HeaderAfterLogin backrouter={backroutepath} />
-    <Suspense fallback="Loading">
+
     <div className="screenmain"> 
         <div className="screencontainer">
 
@@ -152,7 +152,7 @@ export default function BankaddComponents() {
         
         </div>
     </div>
-    </Suspense>
+    
     { loading ? <Loader message="Bank infomation saving" /> : null }
 </>)
 }
