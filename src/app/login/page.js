@@ -1,4 +1,10 @@
-import Login from "@/components/app/Login";
+import { Suspense} from 'react';
+import LoginComponent from '@/components/app/LoginComponent';
 export default function login() {
-  return (<Login />)
+  return (
+    <Suspense fallback={<p>...Loading</p>}>
+      <LoginComponent />
+    </Suspense>
+  
+)
 }
