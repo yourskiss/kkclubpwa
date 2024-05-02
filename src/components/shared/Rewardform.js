@@ -69,12 +69,12 @@ export default function Rewardform() {
             toast.info(`You can redeem min. ${redeemminimumpoint} reward points.`); 
             return;
         }
-        // if(pendingorder > 0)
-        // {
-        //     toast.info('Your Previous order is already in pending.'); 
-        //     push("/redemptionhistory");
-        //     return;
-        // }
+        if(pendingorder > 0)
+        {
+            toast.info('Your Previous order is already in pending.'); 
+            push("/redemptionhistory");
+            return;
+        }
 
         setLoading(true);
         _get(`/Payment/UserPayout?userID=${userID}&points=${redeempoint}&amount=${redeempoint * pointvalue}&ipaddress=${ipInfo}&osdetails=${osn}`)
