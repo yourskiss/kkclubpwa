@@ -24,11 +24,12 @@ export default function HomeComponent() {
           }).then((res) => {
             // console.log("Bearer Token - ", res);
             Cookies.set('bearertoken',  res.data.token, { expires: new Date(new Date().getTime() + 3600000), secure: true });
-            push("/login");
+            window.location.reload();
           }).catch((err) => {
             toast.error(err.message); 
-            push("/");
+            window.location.reload();
           });
+          
     }
     else
     {

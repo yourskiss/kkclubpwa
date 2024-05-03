@@ -10,15 +10,16 @@ import { encryptText } from "@/config/crypto";
 import { setCouponeCode, isCouponeCode } from "@/config/validecoupone";
 import Otpcountdown from "../core/timer";
 import { _get } from "@/config/apiClient";
+  
  
-
 export default function LoginComponent() {  
     const[loading, setLoading] = useState(false);
-    const [agree, setAgree] = useState(true);
     const [isDisabled, setIsDisabled] = useState(false);
     const [mobileValues, setMobileValues] = useState('');
     const [otpValues, setOtpValues] = useState('');
+    const [tnc, setTnc] = useState(false);
     const [mobileError, setMobileError] = useState('');
+    const [tncError, setTncError] = useState('');
     const [otpError, setOtpError] = useState('');
     const [isMobile, setIsMobile] = useState(false);
     const [isOTP, setIsOTP] = useState(false);
@@ -35,10 +36,13 @@ export default function LoginComponent() {
     const mobileSubmit =(e) =>{
       e.preventDefault();
       const regexMobile = /^[6789][0-9]{9}$/i;
-      if (!mobileValues){setMobileError("Mobile number is required!");}
+      if (!mobileValues && !tnc){setMobileError("Mobile number is required!"); setTncError("Please agree with our Terms & conditions");}
+      else if (!mobileValues){setMobileError("Please enter your mobile number"); }
       else if(mobileValues.length < 10){setMobileError("Mobile Number  must have at least 10 Digit");}
       else if(!regexMobile.test(mobileValues)){setMobileError("Invalid mobile number!");}
+      else if(!tnc) { setTncError("Please accept Terms & conditions."); }
       else { 
+        setTncError("");
         setMobileError("");
         setIsMobile(true);   
         setIsDisabled(true);
@@ -57,13 +61,7 @@ export default function LoginComponent() {
         verifyotp();
       }
     }
-    const changeNumber = (e) => {
-      e.preventDefault();
-      setAgree(true);
-      setIsDisabled(false);
-      setIsOTP(false);
-      setIsMobile(false)
-    }
+
 
   const { push } = useRouter();
   const searchParams = useSearchParams();
@@ -73,7 +71,8 @@ export default function LoginComponent() {
   const bearerToken = isBearerToken();
  
   const checkboxHandler = () => {
-    agree === false ? setAgree(true) : setAgree(false);
+    tnc === false ? setTnc(true) : setTnc(false);
+    setTncError("");
   }
   const otpcountertime = new Date();
   otpcountertime.setSeconds(otpcountertime.getSeconds() + 60);  
@@ -196,8 +195,8 @@ export default function LoginComponent() {
     */
   }
 
-
-
+  
+ 
   return (
   <>
     <header className='headersection'>
@@ -222,12 +221,13 @@ export default function LoginComponent() {
                   { mobileError && <span className='registerError'>{mobileError}</span> } 
                 </div>
                 <div className="registerTncAccept">
-                  <input id="accepttnc" type="checkbox" onChange={checkboxHandler}  />
-                  <label htmlFor="accepttnc"><span>Accept Term and Condition</span></label>
+                  <input id="accepttnc" type="checkbox" value={tnc} onChange={checkboxHandler}  />
+                  <label htmlFor="accepttnc"><span>By signing you agree to our Terms & condition</span></label>
+                  { tncError && <span className='registerError'>{tncError}</span> } 
                 </div>
               </div>
               <div className="registerSubmit">
-                <button disabled={agree} className="register_button">SEND OTP</button>
+                <button className="register_button">SEND OTP</button>
               </div>
             </form>) : null }
           
@@ -239,7 +239,6 @@ export default function LoginComponent() {
               <div className="registerHead">Verify with OTP</div>
               <div className="registerMsgOtp">
                 <span>We have sent an OTP to +91-{mobileValues}</span>
-                <em className="numberedit" onClick={changeNumber}>Change</em>
               </div>
               <div className="registerOtp">
                 <div><aside>
@@ -269,3 +268,7 @@ export default function LoginComponent() {
   </>
   )
 }
+
+
+
+ 
