@@ -11,32 +11,26 @@ import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
 import ProgressComponent from "../shared/ProgressComponent";
 import { getUserID } from '@/config/userauth';
 import { _get } from "@/config/apiClient";
-// import TotalRedeemedPoints from '../shared/totalredemption';
-
+ 
 export default function ProfileComponent() {
   const { push } = useRouter();
   const rewardspoints = parseInt(TotalrewardpointsComponent());
   const[username, setUsername] = useState('');
-  const[userdp, setUserdp] = useState('');
+  const[usershort, setUsershort] = useState('');
   const[userstatus, setUserstatus] = useState('');
   const profileProgress = ProgressComponent();
   const redeemminimumpoint = process.env.NEXT_PUBLIC_REDEEM_MIN_POINT;
   const userid = getUserID();
   const [resultcode, setResultcode] = useState('');
-  // const redeemedpointTotal = TotalRedeemedPoints();
-
+ 
   useEffect(() => {
     if (typeof localStorage !== 'undefined') 
     {
         setUsername(localStorage.getItem('userprofilename'));
-        setUserdp(localStorage.getItem('userprofilepic'));
+        setUsershort(localStorage.getItem('userprofilesn'));
         setUserstatus(localStorage.getItem('verificationstatus'));
     } 
 
-    if (typeof sessionStorage !== 'undefined') 
-    {
-      sessionStorage.removeItem('addbankfromredeempoint');
-    }
   }, []);
 
   
@@ -56,7 +50,7 @@ export default function ProfileComponent() {
   }
 
   const logoutnow = () => {
-    localStorage.removeItem("userprofilepic");
+    localStorage.removeItem("userprofilesn");
     localStorage.removeItem("userprofilename");
     localStorage.removeItem('verificationstatus')
     Cookies.remove('couponecodecookies');
@@ -86,7 +80,7 @@ useEffect(() => {
             <div className="profile_status">
                 <dl>
                   <dt className={ userstatus === "APPROVE" ? "status_approve" : "status_pending" }>
-                    <Image src={userdp} width={64} height={64} alt="profile" quality={100} />
+                    <span>{usershort}</span>
                   </dt>
                   <dd>
                     <h2>{username}</h2>
@@ -103,7 +97,7 @@ useEffect(() => {
                      resultcode === 0 ? <li onClick={()=> push('/bankdetailupdate')}>UPDATE BANK DETAILS</li> : <li onClick={()=> push('/bankdetailsadd?q=0')}>ADD BANK DETAILS</li>
                   }
                   <li onClick={redeemprompt}>
-                     REDEEM POINTS <em><CountUp duration={2} start={0}  delay={1}  end={rewardspoints} /> PTS</em>
+                     EARN POINTS <em><CountUp duration={2} start={0}  delay={1}  end={rewardspoints} /> PTS</em>
                   </li>
                   <li onClick={()=> push('/rewards')}>REWARD HISTORY</li>
                   <li onClick={()=> push('/redemptionhistory')}>REDEMPTION HISTORY</li>

@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { isUserToken, isBearerToken } from '@/config/userauth';
 
 export default  function HeaderDashboard() {
-  const[userdp, setUserdp] = useState('');
+  const[usershort, setUsershort] = useState('');
   const[userstatus, setUserstatus] = useState('');
 
   const { push } = useRouter();
@@ -22,12 +22,12 @@ useEffect(() => {
   if (typeof localStorage !== 'undefined') 
   {
       // setUsername(localStorage.getItem('userprofilename'));
-      setUserdp(localStorage.getItem('userprofilepic'));
+      setUsershort(localStorage.getItem('userprofilesn'));
       setUserstatus(localStorage.getItem('verificationstatus'));
   } 
 }, []);
 
-
+ 
 
   return (
     <>
@@ -42,7 +42,7 @@ useEffect(() => {
               <span></span>
             </span>
             <aside className={ userstatus === "APPROVE" ? "header_userdp status_approve" : "header_userdp status_pending" } >
-              <img src={userdp}  alt="profile" title={userstatus} onClick={() => push("/profile") } />
+              <span onClick={() => push("/profile") }>{usershort}</span>
             </aside>
         </section>
       </header>

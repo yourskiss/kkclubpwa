@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation';
 import Loader from "../shared/LoaderComponent";
 import { getUserID, getUserMobile } from "@/config/userauth";
 import { toast } from 'react-toastify';
-import ImageCropperUpdate from "../core/ImageCropperUpdate";
 import { ipaddress, osdetails, browserdetails  } from "../core/jio";
 import CitystateUpdateComponent from "../shared/CitystateUpdateComponent";
 import { ErrorBoundary } from "next/dist/client/components/error-boundary";
@@ -13,7 +12,6 @@ import HeaderAfterLogin from "../shared/HeaderAfterlogin";
 
 export default function UpdateprofileComponent() {
     const[loading, setLoading] = useState(false);
-    const[ismount, setIsmount] = useState(false);
     const { push } = useRouter();
     const userID = getUserID();
     const userMobile = getUserMobile();
@@ -26,8 +24,7 @@ export default function UpdateprofileComponent() {
     const [formValue, setFormValue] = useState({});
     const [formError, setFormError] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
-    const [filedata, setFiledata] = useState('');
-    const getFilePath = (data)=>{setFiledata(data);}
+
 
     const [cityStateName, setCityStateName] = useState('');
     const [stateName, setStateName] = useState('');
@@ -45,28 +42,23 @@ export default function UpdateprofileComponent() {
             setCityStateName(`${res.data.result.city} (${res.data.result.state})`)
             setStateName(res.data.result.state);
             setCityName(res.data.result.city);
-            setFiledata(res.data.result.profilepictureurl);
         }).catch((err) => {
             toast.warn(err.message);
             setLoading(false); 
         });
-      // console.log("onload - ", cityStateName, " ==== ", stateName, " - ", cityName);
-    }, [ismount]);
+    }, []);
  
  
     useEffect(() => {
         setFormValue({
-            'profilepictureurl': userdata.profilepictureurl,
             'firstname':  userdata.firstname,
             'lastname':  userdata.lastname,
             'aadhaarinfo': userdata.aadhaarinfo
         });
-      //  console.log("after load - ", cityStateName, " ==== ", stateName, " - ", cityName);
     }, [data]);
 
     const validateHandler =(val) =>{
         const error = {};
-        if(val.profilepictureurl===''){error.profilepictureurl = "Profile Picture is required"}
         if(val.firstname===''){error.firstname = "First name is required"}
         if(val.lastname===''){error.lastname = "Last name is required"}
         if(val.aadhaarinfo===''){error.aadhaarinfo = "Aadhaar number is required"}
@@ -88,7 +80,6 @@ export default function UpdateprofileComponent() {
 
     const onChangeField = (e) => { 
         setFormValue({ ...formValue, [e.target.name] : e.target.value }); 
-        if(e.target.name === "profilepictureurl"){ setFiledata(e.target.value);  }
     }
     useEffect(()=>{
         if(Object.keys(formError).length === 0 && isSubmit)
@@ -108,7 +99,7 @@ export default function UpdateprofileComponent() {
             state: stateName,
             country: "India",
             postalcode: "",
-            profilepictureurl: filedata,
+            profilepictureurl: '',
             dateofbirth: "",
             languagepreference: "English",
             locationpage: "/update-profile",
@@ -122,9 +113,9 @@ export default function UpdateprofileComponent() {
             .then((res) => {
                // console.log(res);
                 setLoading(false);
-                localStorage.setItem('userprofilepic', res.data.result.profilepictureurl);
+                localStorage.setItem('userprofilesn', res.data.result.shortname);
                 localStorage.setItem('userprofilename',  res.data.result.firstname + " " + res.data.result.lastname);
-                res.data.result ? (toast.success("Profile Updated Successfully."),push("/dashboard")) : toast.warn(res.data.resultmessage);
+                res.data.result ? (toast.success("Profile Updated Successfully."),push("/profile")) : toast.warn(res.data.resultmessage);
             }).catch((err) => {
                 setLoading(false); 
                 toast.error(err.message);
@@ -147,17 +138,7 @@ export default function UpdateprofileComponent() {
         <form onSubmit={handleSubmit}>
             <div className="registercontainer">
                 <div className="registerHead">Update your profile</div>
-                <ImageCropperUpdate picvalue={ filedata } filePath={getFilePath} />
-                <div style={{   position:"absolute", top:"-99999px", left:"-99999px"  }}>
-                    <input 
-                        className="registerinput"
-                        type="text" 
-                        name="profilepictureurl" 
-                        value={ filedata } 
-                        onChange={onChangeField}  
-                    />
-                    <span className="registerError">{ formError.profilepictureurl ? formError.profilepictureurl : '' }</span>
-                </div>
+                 
                 
                 <div className="registerField">
                     <div className="registertext">First name <small>*</small></div>

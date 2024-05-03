@@ -9,19 +9,14 @@ import HeaderBeforeLogin from "../shared/HeaderBeforelogin";
 
 export default function ApprovalComponent() {
     const[username, setUsername] = useState('');
-    const[userdp, setUserdp] = useState('');
+    const[usersn, setUsersn] = useState('');
 
     useEffect(() => {
         if (typeof localStorage !== 'undefined') 
         {
             setUsername(localStorage.getItem('userprofilename'));
-            setUserdp(localStorage.getItem('userprofilepic'));
+            setUsersn(localStorage.getItem('userprofilesn'));
         } 
-        else
-        {
-            setUsername('Demmy Account');
-            setUserdp('/assets/images/profile/dp.png');
-        }
     }, []);
 
     var settingsApproval = {
@@ -40,7 +35,7 @@ export default function ApprovalComponent() {
                 <div className="approvalcontainer">
                         <dl>
                             <dt>
-                                <aside><img src={userdp}  alt="product"  /></aside>
+                                <aside><span>{usersn}</span></aside>
                             </dt>
                             <dd>
                                 <p>
