@@ -3,7 +3,6 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { toast } from 'react-toastify';
 import Pageloading from '../shared/PageloadingComponent'
 
 const apiURL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -26,7 +25,7 @@ export default function HomeComponent() {
             Cookies.set('bearertoken',  res.data.token, { expires: new Date(new Date().getTime() + 3600000), secure: true });
             window.location.reload();
           }).catch((err) => {
-            toast.error(err.message); 
+            console.log(err.message); 
             window.location.reload();
           });
           

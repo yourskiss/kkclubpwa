@@ -26,7 +26,7 @@ const getUserMobile = () => {
 
 
 const setUserCookies = (name, val) => {
-   return Cookies.set(name, val, { expires: new Date(new Date().getTime() + 3600000), secure: true });
+   return Cookies.set(name, val, { expires: 365, secure: true });
 }
 
 

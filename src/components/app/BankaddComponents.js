@@ -111,17 +111,17 @@ export default function BankaddComponents() {
                 </div>
                 <div className="bankInfoField">
                     <p>IFSC Code</p>
-                    <input type='text' name="ifsccode" maxLength={20} autoComplete="off" onInput={onInputmaxLength} {...register('ifsccode', registerOptions.ifsccode)} />
+                    <input type='text' name="ifsccode" maxLength={11} autoComplete="off" onInput={onInputmaxLength} {...register('ifsccode', registerOptions.ifsccode)} />
                     {errors?.ifsccode && <span> {errors.ifsccode.message}</span> } 
                 </div>
                 <div className="bankInfoField">
                     <p>Account Number</p>
-                    <input type='number' name="accountnumber" maxLength={20} autoComplete="off" onInput={onInputmaxLength} {...register('accountnumber', registerOptions.accountnumber)} />
+                    <input type='number' name="accountnumber" maxLength={16} autoComplete="off" onInput={onInputmaxLength} {...register('accountnumber', registerOptions.accountnumber)} />
                     {errors?.accountnumber && <span> {errors.accountnumber.message}</span> } 
                 </div>
                 <div className="bankInfoField">
                     <p>UPI ID</p>
-                    <input type='text' name="upicode" maxLength={25} autoComplete="off" onInput={onInputmaxLength} {...register('upicode', registerOptions.upicode)} />
+                    <input type='text' name="upicode" maxLength={50} autoComplete="off" onInput={onInputmaxLength} {...register('upicode', registerOptions.upicode)} />
                     {errors?.upicode && <span> {errors.upicode.message}</span> } 
                 </div>
                 <div className="bankInfoField">

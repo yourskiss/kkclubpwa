@@ -78,7 +78,7 @@ export default function UpdateprofileComponent() {
         setCityStateName(sc);
         setStateName(st);
         setCityName(ct);
-        console.log("change update - ", cityStateName, " - ", stateName, " - ", cityName);
+        // console.log("change update - ", cityStateName, " - ", stateName, " - ", cityName);
      };
 
     const onChangeField = (e) => { 
