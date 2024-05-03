@@ -53,7 +53,8 @@ export default function UpdateprofileComponent() {
         setFormValue({
             'firstname':  userdata.firstname,
             'lastname':  userdata.lastname,
-            'aadhaarinfo': userdata.aadhaarinfo
+            'aadhaarinfo': userdata.aadhaarinfo,
+            'postalcode':userdata.postalcode
         });
     }, [data]);
 
@@ -63,6 +64,8 @@ export default function UpdateprofileComponent() {
         if(val.lastname===''){error.lastname = "Last name is required"}
         if(val.aadhaarinfo===''){error.aadhaarinfo = "Aadhaar number is required"}
         else if(val.aadhaarinfo.length < 12){error.aadhaarinfo = "Aadhaar must have at least 12 Digit"}
+        if(val.postalcode===''){error.postalcode = "Postal code is required"}
+        else if(val.postalcode.length !== 6){error.postalcode = "Postal code have at least 6 Digit"}
         return error;
     }
     const handleSubmit = (e) =>{
@@ -98,7 +101,7 @@ export default function UpdateprofileComponent() {
             city: cityName,
             state: stateName,
             country: "India",
-            postalcode: "",
+            postalcode: formValue.postalcode,
             profilepictureurl: '',
             dateofbirth: "",
             languagepreference: "English",
@@ -191,6 +194,21 @@ export default function UpdateprofileComponent() {
                         onChange={onChangeField}
                     />
                     <span className="registerError">{ formError.aadhaarinfo  ?  formError.aadhaarinfo : '' }</span> 
+                </div>
+
+
+                <div className="registerField">
+                    <div className="registertext">Postal Code <small>*</small></div>
+                    <input
+                        className="registerinput"
+                        type="number"
+                        name="postalcode"
+                        maxLength={6}
+                        onInput={onInputmaxLength}
+                        value={ formValue.postalcode || '' }
+                        onChange={onChangeField}
+                    />
+                    <span className="registerError">{ formError.postalcode  ?  formError.postalcode : '' }</span> 
                 </div>
        
                 <div className="registerSubmit">

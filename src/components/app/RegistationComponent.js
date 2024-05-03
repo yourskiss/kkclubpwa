@@ -25,6 +25,8 @@ export default function RegistationComponent() {
   const[lnErrors, setlnErrors] = useState('');
   const[aadhaarinfo, setAadhaarinfo] = useState('');
   const[aadhaarErrors, setAadhaarErrors] = useState('');
+  const[pincode, setPincode] = useState('');
+  const[pincodeErrors, setPincodeErrors] = useState('');
   const[mobilenumber, setMobilenumber] = useState('');
   const[mobileErrors, setMobileErrors] = useState('');
 
@@ -81,7 +83,11 @@ export default function RegistationComponent() {
     e.preventDefault();
     const regexMobile = /^[6789][0-9]{9}$/i;
     setMobileErrors('');
-    if(mobilenumber === '') { setMobileErrors('Mobile Number is required.'); }
+    setPincodeErrors('');
+    if(mobilenumber === '' && pincode === '') { setMobileErrors('Mobile Number is required.'); setPincodeErrors('Pin code in required'); }
+    else if(pincode === '') {  setPincodeErrors('Pin code in required'); }
+    else if(pincode.length !== 6) { setPincodeErrors('Pin code  must have at least 6 Digits.'); }
+    else if(mobilenumber === '') { setMobileErrors('Mobile Number is required.'); }
     else if(mobilenumber.length !== 10) { setMobileErrors('Mobile Number must have at least 10 Digits.'); }
     else if(!regexMobile.test(mobilenumber)){setMobileErrors("Invalid mobile number!");}
     else { 
@@ -106,7 +112,7 @@ export default function RegistationComponent() {
       city: cityName,
       state: stateName,
       country: "India",
-      postalcode: "",
+      postalcode: pincode,
       profilepictureurl: '',
       dateofbirth: "",
       languagepreference: "English",
@@ -120,7 +126,7 @@ export default function RegistationComponent() {
  
       _post("Customer/SaveUser", datafinal)
       .then((res) => {
-        console.log(res);
+       // console.log(res);
         setLoading(false);
         localStorage.setItem('userprofilesn',res.data.result.shortname);
         localStorage.setItem('userprofilename',  res.data.result.firstname + " " + res.data.result.lastname);
@@ -215,10 +221,25 @@ export default function RegistationComponent() {
                 </div>
               </form>) : null }
               </>
-
+              
 
               <>
               { step === 3 ? (<form onSubmit={handleStep3}>
+                <div className="registerField">
+                  <div className="registertext">Pin Code <small>*</small></div>
+                  <input
+                    className="registerinput"
+                    type="number"
+                    name="pincode"
+                    autoComplete="off"
+                    maxLength={6}
+                    value={pincode}
+                    onInput={onInputmaxLength}
+                    onChange={(e) => { setPincode(e.target.value);  }}
+                  />
+                  {pincodeErrors && <span className="registerError">{pincodeErrors}</span> }
+                </div>
+
                 <div className="registerField">
                   <div className="registertext">Mobile Number <small>*</small></div>
                   <input
