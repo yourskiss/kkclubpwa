@@ -11,7 +11,8 @@ import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
 import ProgressComponent from "../shared/ProgressComponent";
 import { getUserID } from '@/config/userauth';
 import { _get } from "@/config/apiClient";
- 
+import { motion } from "framer-motion";
+
 export default function ProfileComponent() {
   const { push } = useRouter();
   const rewardspoints = parseInt(TotalrewardpointsComponent());
@@ -72,6 +73,7 @@ useEffect(() => {
 }, [resultcode]);
 
   return (<>
+  <motion.div initial={{ x: "100vw" }} animate={{  x: 0 }} transition={{ duration: 0.8, delay: 0.1, origin: 1, ease: [0, 0.71, 0.2, 1.01] }}>
     <HeaderProfile />
     <div className="screenmain screenprofile"> 
         <div className="screencontainer">
@@ -115,6 +117,6 @@ useEffect(() => {
 
     </div>
 
-    
+  </motion.div>
 </>)
 }

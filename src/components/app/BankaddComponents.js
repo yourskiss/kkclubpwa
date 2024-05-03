@@ -93,7 +93,7 @@ export default function BankaddComponents() {
 
  
   return (<>
-    <HeaderAfterLogin backrouter={backroutepath} />
+    <HeaderAfterLogin backrouter="/profile" />
 
     <div className="screenmain"> 
         <div className="screencontainer">
