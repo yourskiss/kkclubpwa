@@ -73,7 +73,7 @@ useEffect(() => {
 }, [resultcode]);
 
   return (<>
-  <motion.div initial={{ x: "100vw" }} animate={{  x: 0 }} transition={{ duration: 0.8, delay: 0.1, origin: 1, ease: [0, 0.71, 0.2, 1.01] }}>
+  <motion.div initial={{ x: "100vw" }} animate={{  x: 0 }} exit={{ x: "100vw" }} transition={{ duration: 0.8, delay: 0.1, origin: 1, ease: [0, 0.71, 0.2, 1.01] }}>
     <HeaderProfile />
     <div className="screenmain screenprofile"> 
         <div className="screencontainer">
