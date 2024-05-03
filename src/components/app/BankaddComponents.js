@@ -100,7 +100,7 @@ export default function BankaddComponents() {
 
             <div className='bankInfosavecontainer'>
                 <h2>
-                <em>Save Bank Details</em>
+                <em>Add Bank Details</em>
                 <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</span>
                 </h2>  
                 <form onSubmit={handleSubmit(handleRegistration, handleError)}>
@@ -140,7 +140,7 @@ export default function BankaddComponents() {
                     {errors?.username && <span> {errors.username.message}</span> } 
                 </div>
                 <div className="bankInfoField">
-                    <p>RMN with Bank</p>
+                    <p>RMN with Bank Account</p>
                     <input type='number' name="rmn" maxLength={10} autoComplete="off" onInput={onInputmaxLength} {...register('rmn', registerOptions.rmn)} />
                     {errors?.rmn && <span> {errors.rmn.message}</span> } 
                 </div>

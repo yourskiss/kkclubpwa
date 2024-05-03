@@ -21,7 +21,7 @@ useEffect(() => {
 useEffect(() => {
   if (typeof localStorage !== 'undefined') 
   {
-      setUsername(localStorage.getItem('userprofilename'));
+      // setUsername(localStorage.getItem('userprofilename'));
       setUserdp(localStorage.getItem('userprofilepic'));
       setUserstatus(localStorage.getItem('verificationstatus'));
   } 
@@ -41,8 +41,8 @@ useEffect(() => {
               <Image src="/assets/images/notification.png" width={100} height={100} alt="notification" quality={90} />
               <span></span>
             </span>
-            <aside className={ userstatus === "APPROVE" ? "header_userdp status_approve" : "header_userdp status_pending" }>
-              <img src={userdp}  alt="profile" title={userstatus} />
+            <aside className={ userstatus === "APPROVE" ? "header_userdp status_approve" : "header_userdp status_pending" } >
+              <img src={userdp}  alt="profile" title={userstatus} onClick={() => push("/profile") } />
             </aside>
         </section>
       </header>
