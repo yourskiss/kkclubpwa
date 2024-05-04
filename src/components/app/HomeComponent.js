@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Pageloading from '../shared/PageloadingComponent'
+import { isUserToken  } from "@/config/userauth";
 
 const apiURL = process.env.NEXT_PUBLIC_BASE_URL;
 const apiUsername = process.env.NEXT_PUBLIC_API_USERNAME;
@@ -11,6 +12,8 @@ const apiPassword = process.env.NEXT_PUBLIC_API_PASSWORD;
 
 export default function HomeComponent() {
   const { push } = useRouter();
+  const userToken = isUserToken();
+
   useEffect(() => {
     const isBearerToken = !!Cookies.get('bearertoken');
     if(!isBearerToken)
@@ -32,7 +35,7 @@ export default function HomeComponent() {
     }
     else
     {
-      push("/login");
+      userToken ? push("/dashboard") : push("/login");
     }
    },[]);
 

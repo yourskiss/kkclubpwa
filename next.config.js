@@ -6,7 +6,11 @@ const withPWA = require("@ducanh2912/next-pwa").default({
     swcMinify: true,
     dest: "public",
     fallbacks: {
-      document: "/offline", 
+      //image: "/static/images/fallback.png",
+      document: "/offline", // if you want to fallback to a custom page rather than /_offline
+      // font: '/static/font/fallback.woff2',
+      // audio: ...,
+      // video: ...,
     },
     workboxOptions: {
       disableDevLogs: false,
@@ -17,4 +21,5 @@ const withPWA = require("@ducanh2912/next-pwa").default({
     reactStrictMode: true,
   };
   module.exports = withPWA(nextConfig);
+ 
  
