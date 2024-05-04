@@ -13,7 +13,7 @@ const withPWA = require("@ducanh2912/next-pwa").default({
       // video: ...,
     },
     workboxOptions: {
-      disableDevLogs: false,
+      disableDevLogs: true,
     },
   });
   /** @type {import('next').NextConfig} */
