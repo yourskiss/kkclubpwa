@@ -6,8 +6,8 @@
       "display": "standalone",
       "orientation": "portrait",
       "scope": "/",
-      "background_color": "green",
-      "theme_color": "black",
+      "background_color": "#141414",
+      "theme_color": "#AFCDAF",
       "screenshots": [
         {
           "src": "/assets/images/screen.png",

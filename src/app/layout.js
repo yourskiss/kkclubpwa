@@ -4,16 +4,15 @@
 import localFont from 'next/font/local';
 const lneue = localFont({ weight: 'normal', variable: '--font-lneue', src: './LarishNeueSemiboldRegular.woff2' });
 const arialmt = localFont({ weight: 'normal', variable: '--font-arialmt', src: './arialmt.woff2' });
-
-import Script from "next/script";
+ 
 import "./globals.css";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Starfield from 'react-starfield';
  
 export const metadata = {
-  title: "KerakollClub",
-  description: "KerakollClub",
+  title: "Kerakoll Club",
+  description: "Kerakoll is the international leader in sustainable building",
   manifest:'/manifest.json',
   icons: [
     {
@@ -39,8 +38,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <meta name="background_color" content="#AFCDAF"/>
-      <meta name="theme-color" content="#414141"/>
+      <meta name="background_color" content="#141414"/>
+      <meta name="theme-color" content="#AFCDAF"/>
       <body className={`${lneue.variable} ${arialmt.variable}`}>
         <main className="main">
           <Starfield starCount={1000} starColor={[255, 255, 255]} speedFactor={0.05} />
@@ -49,7 +48,7 @@ export default function RootLayout({ children }) {
         </main>
 
         
-        <Script src="/service-worker.js" />
+ 
       </body>
     </html>
   );
