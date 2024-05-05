@@ -129,7 +129,7 @@ const savebankdetail = () =>
    console.log(" bank update  -",bankinfo);
 
   setLoading(true);
-  _post("/Payment/SaveUserPayoutInfo", bankinfo)
+  _post("/Payment/UpdateUserPayoutInfo", bankinfo)
   .then((res) => {
       setLoading(false);
       console.log("update bank details - ", res);
