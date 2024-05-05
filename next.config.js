@@ -1,7 +1,7 @@
 
 const withPWA = require("@ducanh2912/next-pwa").default({
-    cacheOnFrontEndNav: true,
-    aggressiveFrontEndNavCaching: true,
+    cacheOnFrontEndNav: false,
+    aggressiveFrontEndNavCaching: false,
     reloadOnOnline: true,
     swcMinify: true,
     dest: "public",
@@ -14,6 +14,7 @@ const withPWA = require("@ducanh2912/next-pwa").default({
     },
     workboxOptions: {
       disableDevLogs: true,
+     // exclude: ['/','/login','/register','/dashboard','/profile']
     },
   });
   /** @type {import('next').NextConfig} */

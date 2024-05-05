@@ -112,7 +112,7 @@ useEffect(() => {
         </div>
 
         <div className="profile_logobottom">
-                <Image src="/assets/images/logo.png" width={448} height={80} alt="logo" quality={100} />
+            <Image src="/assets/images/logo.png" width={448} height={80} alt="logo" quality={100} />
         </div>
 
     </div>

@@ -9,7 +9,7 @@ import "./globals.css";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Starfield from 'react-starfield';
- 
+
 export const metadata = {
   title: "Kerakoll Club",
   description: "Kerakoll is the international leader in sustainable building",
@@ -44,11 +44,8 @@ export default function RootLayout({ children }) {
         <main className="main">
           <Starfield starCount={1000} starColor={[255, 255, 255]} speedFactor={0.05} />
           <ToastContainer position="top-center" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored"  />
-          {children}
+            {children}
         </main>
-
-        
- 
       </body>
     </html>
   );

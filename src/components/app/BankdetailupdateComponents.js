@@ -1,4 +1,5 @@
 "use client";
+import Image from 'next/image';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
@@ -10,11 +11,17 @@ import HeaderAfterLogin from '../shared/HeaderAfterlogin';
 
 export default function BankdetailupdateComponents() {
     const [loading, setLoading] = useState(false);
-    const [userdata, setUserdata] = useState({});
-    const [data, setData] = useState(false);
-    const [formValue, setFormValue] = useState({});
-    const [formError, setFormError] = useState({});
-    const [isSubmit, setIsSubmit] = useState(false);
+    const [step, setStep] = useState(0);
+    const [option, setOption] = useState('');
+    const[bankname,setBankname] = useState('');
+    const[ifsccode,setIfsccode] = useState('');
+    const[accountnumber,setAccountnumber] = useState('');
+    const[upicode,setUpicode] = useState('');
+    const[aadhaar,setAadhaar] = useState('');
+    const[pan,setPan] = useState('');
+    const[username,setUsername] = useState('');
+    const[rmn,setRmn] = useState('');
+
     const userid = getUserID();
     const { push } = useRouter();
     const ipInfo = ipaddress();
@@ -26,96 +33,120 @@ export default function BankdetailupdateComponents() {
         _get("/Payment/GetUserPayoutInfo?userid="+userid)
         .then((res) => {
             setLoading(false);
-           // console.log(" response - ", res);
-            setData(true);
-            setUserdata(res.data.result);
-
+          //  console.log("bank update response - ", res);
+            setBankname(res.data.result.bankname);
+            setIfsccode(res.data.result.ifcscode);
+            setAccountnumber(res.data.result.accountnumber);
+            setUpicode(res.data.result.upicode);
+            setAadhaar(res.data.result.aadhaar);
+            setPan(res.data.result.pan);
+            setUsername(res.data.result.username);
+            setRmn(res.data.result.rmn);
         }).catch((error) => {
             setLoading(false);
             toast.info(error); 
         });
     }, []);
-
-
-
+ 
     useEffect(() => {
-      setFormValue({
-        'bankname': userdata.bankname,
-        'ifsccode': userdata.ifcscode,
-        'accountnumber': userdata.accountnumber,
-        'upicode': userdata.upicode,
-        'aadhaar': userdata.aadhaar,
-        'pan': userdata.pan,
-        'username': userdata.username,
-        'rmn': userdata.rmn,
-      });
-  }, [data]);
+        if(upicode !== '')
+        {
+            setStep(2);
+            setOption('upi');
+        }
+        else
+        {
+          setStep(1);
+          setOption('bank');
+        }
+    }, [upicode]); 
 
-  const validateHandler =(val) =>{
-    const error = {};
-    if(val.bankname === '') {  error.bankname ='Bank Name is required' }
-    else if(val.ifsccode === '') { error.ifsccode ='IFSC Code is required'}
-    else if(val.ifsccode.length !== 11) { error.ifsccode ='IFSC must have at least 11 Characters'}
-    else if(!val.accountnumber) { error.accountnumber ='Account Number is required' }
-    else if(!val.upicode) {error.upicode ='UPI ID is required' }
-    else if(!val.aadhaar) {error.aadhaar ='Aadhaar number is required' }
-    else if(val.aadhaar.length !== 12) {  error.aadhaar ='Aadhaar must have at least 12 Characters' }
-    else if(!val.pan) { error.pan ='Pan Number is required' }
-    else if(val.pan.length !== 10) { error.pan ='Pan must have at least 10 Characters' }
-    else if(!val.username) { error.username ='Name is required' }
-    else if(!val.rmn) { error.rmn ='RMN is required' }
-    else if(val.rmn.length !== 10) { error.rmn ='RMN must have at least 10 Digit' }
-    return error;
-}
-const handleSubmit = (e) =>{
-  e.preventDefault();
-  setFormError(validateHandler(formValue));
-  setIsSubmit(true);
- // console.log("formValue on submit", formValue);
-}
-const onChangeField = (e) => { 
-  setFormValue({ ...formValue, [e.target.name] : e.target.value }); 
-}
 const onInputmaxLength = (e) => {
   if(e.target.value.length > e.target.maxLength)
   {
     e.target.value = e.target.value.slice(0, e.target.maxLength);
   }
 }
-useEffect(()=>{
-  if(Object.keys(formError).length === 0 && isSubmit)
-  {
-    const bankinfo = {
-      userid: userid,
-      bankname: formValue.bankname.trim(),
-      ifcscode: formValue.ifsccode.trim(),
-      accountnumber: formValue.accountnumber.trim(),
-      upicode: formValue.upicode.trim(),
-      aadhaar: formValue.aadhaar.trim(),
-      pan: formValue.pan.trim(),
-      username: formValue.username.trim(),
-      rmn: formValue.rmn.trim(),
-      locationpage: "/bankdetailupdate",
-      ipaddress: ipInfo,
-      osdetails: osInfo,
-      browserdetails: browserInfo
+const editHandler = () => {
+  if(option === 'bank') { setStep(1); }
+  if(option === 'upi') { setStep(2); }
+}
+const stepHandler = (val) => {
+  if(val ===  'bank') { setStep(1);  }
+  if(val ===  'upi') { setStep(2);  }
+  setOption(val);
+}
+const handleBankInfo = (e) => {
+  e.preventDefault();
+    if(bankname === '') { toast.error('Bank Name is required'); }
+    else if(ifsccode === '') { toast.error('IFSC Code is required'); }
+    else if(accountnumber === '') { toast.error('Account Number is required'); }
+    else { 
+      setStep(3); 
+      setUpicode('');
     }
-   // console.log("update bank details -",bankinfo);
-    setLoading(true);
-    _post("/Payment/UpdateUserPayoutInfo", bankinfo)
-    .then((res) => {
-        setLoading(false);
-     //   console.log("Response after save bank details - ", res);
-        toast.success("Bank Details Successfully updated."); 
-        push('/profile');
-    }).catch((error) => {
-        setLoading(false);
-        toast.info(error); 
-    });
+}
+const handleUpiId = (e) => {
+  e.preventDefault();
+  if(upicode === '') { toast.error('UPI ID is required'); }
+  else { 
+    setStep(3);
+    setBankname('');
+    setIfsccode('');
+    setAccountnumber(''); 
   }
-},[formError, isSubmit]);
+}
+const handleSubmit= (e) => {
+  e.preventDefault();
+    if(username === '') { toast.error('Name is required'); }
+    else if(rmn === '') { toast.error('RMN is required'); }
+    else if(rmn.length !== 10) { toast.error('RMN must have 10 Digit'); }
+    else if(aadhaar === '') { toast.error('Aadhaar number is required'); }
+    else if(aadhaar.length !== 12) { toast.error('Aadhaar number must have 12 Digit'); }
+    else if(pan === '') { toast.error('Pan number is required'); }
+    else if(pan.length !== 10) { toast.error('Pan Number must have 10 Digit'); }
+    else { 
+      savebankdetail(); 
+    }
+}
+const savebankdetail = () => 
+{
+  const bankinfo = {
+    userid: userid,
+    bankname: bankname.trim(),
+    ifcscode: ifsccode.trim(),
+    accountnumber: accountnumber.trim(),
+    upicode: upicode.trim(),
+    aadhaar: aadhaar.trim(),
+    pan:pan.trim(),
+    username: username.trim(),
+    rmn: rmn.trim(),
+    locationpage: "/bankdetailsupdate",
+    ipaddress: ipInfo,
+    osdetails: osInfo,
+    browserdetails: browserInfo
+  }
+   console.log(" bank update  -",bankinfo);
 
-
+  setLoading(true);
+  _post("/Payment/SaveUserPayoutInfo", bankinfo)
+  .then((res) => {
+      setLoading(false);
+      console.log("update bank details - ", res);
+      if(res.data.result === null)
+      {
+        toast.error(res.data.resultmessage);
+      }
+      else
+      {
+        toast.success("Details Successfully updated."); 
+        push('/profile');
+      }
+  }).catch((error) => {
+      setLoading(false);
+      toast.info(error); 
+  });
+}
  
 
   return (<>
@@ -123,56 +154,92 @@ useEffect(()=>{
     <div className="screenmain"> 
         <div className="screencontainer">
             <div className='bankInfosavecontainer'>
-                <h2>
-                <em>Update Bank Details</em>
+              <h2>
+                <em>Update Bank / UPI ID </em>
                 <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</span>
-                </h2>  
+              </h2>  
                         
-                <form onSubmit={handleSubmit}>
-                    <div className="bankInfoField">
-                        <p>Bank Name</p>
-                        <input type='text' name="bankname" maxLength={50} autoComplete="off" value={formValue.bankname || ''} onChange={onChangeField} onInput={onInputmaxLength} />
-                        { formError.bankname  ? <span>{formError.bankname}</span> : null }
-                    </div>
-                    <div className="bankInfoField">
-                        <p>IFSC Code</p>
-                        <input type='text' name="ifsccode" maxLength={11} autoComplete="off" value={formValue.ifsccode || ''} onChange={onChangeField} onInput={onInputmaxLength} />
-                        { formError.ifsccode  ? <span>{formError.ifsccode}</span> : null }
-                    </div>
-                    <div className="bankInfoField">
-                        <p>Account Number</p>
-                        <input type='number' name="accountnumber" maxLength={16} autoComplete="off" value={formValue.accountnumber || ''} onChange={onChangeField} onInput={onInputmaxLength} />
-                        { formError.accountnumber  ? <span>{formError.accountnumber}</span> : null }
-                    </div>
-                    <div className="bankInfoField">
-                        <p>UPI ID</p>
-                        <input type='text' name="upicode" maxLength={50} autoComplete="off" value={formValue.upicode || ''} onChange={onChangeField} onInput={onInputmaxLength} />
-                        { formError.upicode  ? <span>{formError.upicode}</span> : null }
-                    </div>
-                    <div className="bankInfoField">
-                        <p>Aadhaar Number</p>
-                        <input type='number' name="aadhaar" maxLength={12} autoComplete="off" value={formValue.aadhaar || ''} onChange={onChangeField} onInput={onInputmaxLength} />
-                        { formError.aadhaar  ? <span>{formError.aadhaar}</span> : null }
-                    </div>
-                    <div className="bankInfoField">
-                        <p>Pan Number</p>
-                        <input type='text' name="pan" maxLength={10} autoComplete="off" value={formValue.pan || ''} onChange={onChangeField} onInput={onInputmaxLength} /> 
-                        { formError.pan  ? <span>{formError.pan}</span> : null }
-                    </div>
-                    <div className="bankInfoField">
-                        <p>Name in Bank Account</p>
-                        <input type='text' name="username" maxLength={50} autoComplete="off" value={formValue.username || ''} onChange={onChangeField} onInput={onInputmaxLength} />
-                        { formError.username  ? <span>{formError.username}</span> : null }
-                    </div>
-                    <div className="bankInfoField">
-                        <p>RMN with Bank Account</p>
-                        <input type='number' name="rmn" maxLength={10} autoComplete="off" value={formValue.rmn || ''} onChange={onChangeField} onInput={onInputmaxLength} />
-                        { formError.rmn  ? <span>{formError.rmn}</span> : null }
-                    </div>
-                    <div className="bankInfoField">
-                        <button>Update Bank Details</button>
-                    </div>
-                </form>
+                 
+              {
+                step === 3 ? null : (<ul>
+                  <li className={ option==='bank' ? 'active' : null } onClick={()=>stepHandler('bank')}>Add Bank Info</li>
+                  <li><span>OR</span></li>
+                  <li className={ option==='upi' ? 'active' : null } onClick={()=>stepHandler('upi')}>Add UPI ID</li>
+                </ul>) 
+              }
+              
+              { step === 1 ? (<form onSubmit={handleBankInfo}>
+                  <div className="bankInfoField">
+                      <p>Bank Name</p>
+                      <input type='text' name="bankname" maxLength={50} autoComplete="off" value={bankname || ''} onInput={onInputmaxLength} onChange={(e)=>setBankname(e.target.value)} />
+                  </div>
+                  <div className="bankInfoField">
+                      <p>IFSC Code</p>
+                      <input type='text' name="ifsccode" maxLength={11} autoComplete="off" value={ifsccode || ''} onInput={onInputmaxLength}  onChange={(e)=>setIfsccode(e.target.value)} />
+                  </div>
+                  <div className="bankInfoField">
+                      <p>Account Number</p>
+                      <input type='number' name="accountnumber" maxLength={16} autoComplete="off" value={accountnumber || ''} onInput={onInputmaxLength}  onChange={(e)=>setAccountnumber(e.target.value)} />
+                  </div>
+                  <div className="bankInfoField">
+                    <button>CONTINUE</button>
+                  </div>
+                </form>) : null }
+
+
+                { step === 2 ? (<form onSubmit={handleUpiId}>
+                  <div className="bankInfoField">
+                      <p>UPI ID</p>
+                      <input type='text' name="upicode" maxLength={50} autoComplete="off" value={upicode || ''} onInput={onInputmaxLength}  onChange={(e)=>setUpicode(e.target.value)} />
+                  </div>
+                  <div className="bankInfoField">
+                    <button>CONTINUE</button>
+                  </div>
+                </form>): null }
+
+
+                { step === 3 ? (<form onSubmit={handleSubmit}>
+                  <div className='bankinfo'>
+                    {
+                      option === 'bank' ? <>
+                        <h4>
+                          <Image src="/assets/images/icon_bank.png" width={25} height={25} quality={99} alt={bankname  || ''} />
+                          <span>{bankname  || ''}</span>
+                        </h4>
+                        <h5>IFSC: {ifsccode  || ''}</h5>
+                        <h6>A/c: {accountnumber  || ''}</h6>
+                      </> : <h4>
+                          <Image src="/assets/images/icon_upi.png" width={25} height={25} quality={99} alt={upicode  || ''} />
+                          <span>{upicode}</span>
+                        </h4>
+                    }
+                    <aside onClick={editHandler} title="Edit">Edit</aside>
+                  </div>
+
+                  <div className="bankInfoField">
+                      <p>Full Name</p>
+                      <input type='text' name="username" maxLength={50} autoComplete="off" value={username || ''} onInput={onInputmaxLength}  onChange={(e)=>setUsername(e.target.value)} />
+                  </div>
+                  <div className="bankInfoField">
+                      <p>RMN</p>
+                      <input type='number' name="rmn" maxLength={10} autoComplete="off" value={rmn || ''} onInput={onInputmaxLength}  onChange={(e)=>setRmn(e.target.value)} />
+                  </div>
+                  <div className="bankInfoField">
+                      <p>Aadhaar Number</p>
+                      <input type='number' name="aadhaar" maxLength={12} autoComplete="off" value={aadhaar || ''} onInput={onInputmaxLength}  onChange={(e)=>setAadhaar(e.target.value)} />
+                  </div>
+                  <div className="bankInfoField">
+                      <p>Pan Number</p>
+                      <input type='text' name="pan" maxLength={10} autoComplete="off" value={pan || ''} onInput={onInputmaxLength}  onChange={(e)=> setPan(e.target.value)} />
+                  </div>
+                  <div className="bankInfoField">
+                    <button>Update</button>
+                  </div>
+                </form>) : null }
+
+                
+
+
             </div>
         </div>
     </div>
