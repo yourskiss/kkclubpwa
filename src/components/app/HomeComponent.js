@@ -5,20 +5,19 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Pageloading from '../shared/PageloadingComponent'
  
+
 const apiURL = process.env.NEXT_PUBLIC_BASE_URL;
 const apiUsername = process.env.NEXT_PUBLIC_API_USERNAME;
 const apiPassword = process.env.NEXT_PUBLIC_API_PASSWORD;
 
-console.log(apiURL, apiUsername, apiPassword); 
-
 export default function HomeComponent() {
   const { push } = useRouter();
 
-
   useEffect(() => {
     const isBearerToken = !!Cookies.get('bearertoken');
-   // if(!isBearerToken)
-  //  {
+    const isUserToken = !!Cookies.get('usertoken');
+    if(!isBearerToken)
+    {
           axios({
             url: apiURL +"ApiAuth/authtoken",
             method: "POST",
@@ -29,15 +28,15 @@ export default function HomeComponent() {
             Cookies.set('bearertoken',  res.data.token, { expires: new Date(new Date().getTime() + 3600000), secure: true });
             setTimeout(function(){  window.location.reload(); }, 1000);
           }).catch((err) => {
-            console.log("Error - ", err.message); 
+            console.log(err.message); 
            // window.location.reload();
           });
-  //  }
-  //  else
-  //  {
-  //    isBearerToken ? push("/dashboard") : push("/login");
-  //  }
-   },[]);
+    }
+    else
+    {
+      isUserToken ? push("/dashboard") : push("/login");
+    }
+  },[]);
 
   return (<Pageloading />)
 }
