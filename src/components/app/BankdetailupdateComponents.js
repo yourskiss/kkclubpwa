@@ -103,7 +103,7 @@ const handleSubmit= (e) => {
     else if(rmn.length !== 10) { toast.error('RMN must have 10 Digit'); }
     else if(aadhaar === '') { toast.error('Aadhaar number is required'); }
     else if(aadhaar.length !== 12) { toast.error('Aadhaar number must have 12 Digit'); }
-    else if(pan === '') { toast.error('Pan number is required'); }
+    else if(pan === '') { toast.error('Pan Number is required'); }
     else if(pan.length !== 10) { toast.error('Pan Number must have 10 Digit'); }
     else { 
       savebankdetail(); 
@@ -126,20 +126,20 @@ const savebankdetail = () =>
     osdetails: osInfo,
     browserdetails: browserInfo
   }
-   console.log(" bank update  -",bankinfo);
+  // console.log(" bank update  -",bankinfo);
 
   setLoading(true);
   _post("/Payment/UpdateUserPayoutInfo", bankinfo)
   .then((res) => {
       setLoading(false);
-      console.log("update bank details - ", res);
+      // console.log("update bank details - ", res);
       if(res.data.result === null)
       {
         toast.error(res.data.resultmessage);
       }
       else
       {
-        toast.success("Details Successfully updated."); 
+        toast.success("Bank Details Successfully updated."); 
         push('/profile');
       }
   }).catch((error) => {

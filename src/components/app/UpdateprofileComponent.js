@@ -60,9 +60,9 @@ export default function UpdateprofileComponent() {
 
     const validateHandler =(val) =>{
         const error = {};
-        if(val.firstname===''){error.firstname = "First name is required"}
-        if(val.lastname===''){error.lastname = "Last name is required"}
-        if(val.aadhaarinfo===''){error.aadhaarinfo = "Aadhaar number is required"}
+        if(val.firstname===''){error.firstname = "First name is required."}
+        if(val.lastname===''){error.lastname = "Last name is required."}
+        if(val.aadhaarinfo===''){error.aadhaarinfo = "Aadhaar is required."}
         else if(val.aadhaarinfo.length < 12){error.aadhaarinfo = "Aadhaar must have at least 12 Digit"}
         if(val.postalcode===''){error.postalcode = "Postal code is required"}
         else if(val.postalcode.length !== 6){error.postalcode = "Postal code have at least 6 Digit"}

@@ -56,17 +56,17 @@ export default function Rewardform() {
         }
         if(redeempoint === '')
         {
-            toast.info('Please enter your reward points.'); 
+            toast.info('Please enter your reward points'); 
             return;
         }
         if(redeempoint > rewardspoints)
         {
-            toast.info('You can redeem max. your reward points.'); 
+            toast.info('You can redeem maximum to your reward points.'); 
             return;
         }
         if(redeempoint < redeemminimumpoint)
         {
-            toast.info(`You can redeem min. ${redeemminimumpoint} reward points.`); 
+            toast.info(`‘You can redeem minimum ${redeemminimumpoint} reward points.`); 
             return;
         }
         if(pendingorder > 0)
@@ -93,7 +93,7 @@ export default function Rewardform() {
     const payoutstatus = (val) => {
             _get(`/Payment/UserPayoutStatus?userID=${userID}&orderID=${val}`)
             .then((res) => {   
-            console.log("function Status - ", res.data.isclose, res.data.ispayment, res.data.pgrequeystatus, res); 
+            console.log("Payout Status - ", res.data.isclose, res.data.ispayment, res.data.pgrequeystatus, res); 
             setIsclose(res.data.isclose);
             setIspayment(res.data.ispayment);
             setPgrequeystatus(res.data.pgrequeystatus);

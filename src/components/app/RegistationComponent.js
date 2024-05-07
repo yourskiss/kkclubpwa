@@ -84,10 +84,10 @@ export default function RegistationComponent() {
     const regexMobile = /^[6789][0-9]{9}$/i;
     setMobileErrors('');
     setPincodeErrors('');
-    if(mobilenumber === '' && pincode === '') { setMobileErrors('Mobile Number is required.'); setPincodeErrors('Pin code in required'); }
-    else if(pincode === '') {  setPincodeErrors('Pin code in required'); }
-    else if(pincode.length !== 6) { setPincodeErrors('Pin code  must have at least 6 Digits.'); }
-    else if(mobilenumber === '') { setMobileErrors('Mobile Number is required.'); }
+    if(mobilenumber === '' && pincode === '') { setMobileErrors('Mobile number is required!'); setPincodeErrors('Postal code in required.'); }
+    else if(pincode === '') {  setPincodeErrors('Postal code in required.'); }
+    else if(pincode.length !== 6) { setPincodeErrors('Postal code  must have at least 6 Digits.'); }
+    else if(mobilenumber === '') { setMobileErrors('Mobile number is required!'); }
     else if(mobilenumber.length !== 10) { setMobileErrors('Mobile Number must have at least 10 Digits.'); }
     else if(!regexMobile.test(mobilenumber)){setMobileErrors("Invalid mobile number!");}
     else { 
@@ -130,7 +130,7 @@ export default function RegistationComponent() {
         setLoading(false);
         localStorage.setItem('userprofilesn',res.data.result.shortname);
         localStorage.setItem('userprofilename',  res.data.result.firstname + " " + res.data.result.lastname);
-        res.data.result ? (toast.success('Registation Successfully'), push("/approval")) : toast.warn(res.data.resultmessage);
+        res.data.result ? (toast.success('Registation Successfully.'), push("/approval")) : toast.warn(res.data.resultmessage);
       }).catch((err) => {
         toast.error(err.message);
         setLoading(false); 

@@ -23,7 +23,7 @@ export default function RedeempointsComponents() {
         _get("/Payment/GetUserPayoutInfo?userid="+userid)
         .then((res) => {
             setLoading(false);
-           // console.log(" GetUserPayoutInfo - ", res);
+            console.log("User payout info - ", res);
             setResultcode(res.data.resultcode);
         }).catch((error) => {
             setLoading(false);

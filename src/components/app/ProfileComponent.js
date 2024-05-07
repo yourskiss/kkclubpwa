@@ -57,7 +57,7 @@ export default function ProfileComponent() {
     Cookies.remove('couponecodecookies');
     Cookies.remove('usertoken');
     push("/") ;
-    toast.success('Logout Successfully'); 
+    toast.success('Logout Successfully.'); 
 }
 
 
