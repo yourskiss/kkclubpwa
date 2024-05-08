@@ -52,13 +52,16 @@ export default function BankaddComponents() {
     const handleBankInfo = (e) => {
       e.preventDefault();
         if(bankname === '') { toast.error('Bank Name is required'); }
+        else if(bankname.length <= 4) { toast.error('Bank Name length must be at least 5 characters long'); }
         else if(ifsccode === '') { toast.error('IFSC Code is required'); }
+        else if(ifsccode.length <= 10) { toast.error('IFSC Code length must be at least 11 characters long'); }
         else if(accountnumber === '') { toast.error('Account Number is required'); }
         else { 
           setStep(3); 
          // setUpicode('');
         }
     }
+ 
     const handleUpiId = (e) => {
       e.preventDefault();
       if(upicode === '') { toast.error('UPI ID is required'); }

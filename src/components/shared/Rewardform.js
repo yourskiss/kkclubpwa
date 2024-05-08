@@ -86,9 +86,17 @@ export default function Rewardform() {
         _get(`/Payment/UserPayout?userID=${userID}&points=${redeempoint}&amount=${redeempoint * pointvalue}&ipaddress=${ipInfo}&osdetails=${osn}`)
         .then((res) => {
             setLoading(false);
-           console.log("Payout request - ", res.data.userorderid, res);
-            setUserOrderID(res.data.userorderid);
-            payoutstatus(res.data.userorderid);
+           console.log("Payout request - ", res);
+           if(res.data.status === 0)
+            {
+                toast.info(res.data.data.error); 
+            }
+            else
+            {
+              //  console.log("id- ", res.data.userorderid);
+                setUserOrderID(res.data.userorderid);
+                payoutstatus(res.data.userorderid);
+            }
         }).catch((error) => {
             setLoading(false);
             toast.info(error); 
@@ -97,15 +105,18 @@ export default function Rewardform() {
     }
 
     const payoutstatus = (val) => {
-            _get(`/Payment/UserPayoutStatus?userID=${userID}&orderID=${val}`)
-            .then((res) => {   
-            console.log("Payout Status - ", res.data.isclose, res.data.ispayment, res.data.pgrequeystatus, res); 
-            setIsclose(res.data.isclose);
-            setIspayment(res.data.ispayment);
-            setPgrequeystatus(res.data.pgrequeystatus);
-            }).catch((error) => {
-                toast.info(error); 
-            });
+            if(val !== undefined || val !== null || val !== '')
+            {
+                _get(`/Payment/UserPayoutStatus?userID=${userID}&orderID=${val}`)
+                .then((res) => {   
+                console.log("Payout Status - ", res.data.isclose, res.data.ispayment, res.data.pgrequeystatus, res); 
+                setIsclose(res.data.isclose);
+                setIspayment(res.data.ispayment);
+                setPgrequeystatus(res.data.pgrequeystatus);
+                }).catch((error) => {
+                    toast.info(error); 
+                });
+            }
     }
  
     useEffect(() => {
