@@ -20,6 +20,7 @@ export default function Rewardform() {
     const rewardspoints = parseInt(TotalrewardpointsComponent());
     const pointvalue = process.env.NEXT_PUBLIC_POINT_VALUE;
     const redeemminimumpoint = process.env.NEXT_PUBLIC_REDEEM_MIN_POINT;
+    const redeemmaximumpoint = process.env.NEXT_PUBLIC_REDEEM_MAX_POINT;
 
     const userID = getUserID();
     const { push } = useRouter();
@@ -68,6 +69,11 @@ export default function Rewardform() {
         {
             toast.info(`‘You can redeem minimum ${redeemminimumpoint} reward points.`); 
             return;
+        }
+        if(redeempoint > redeemmaximumpoint)
+        {
+                toast.info(`‘You can redeem maximum ${redeemmaximumpoint} reward points.`); 
+                return;
         }
         if(pendingorder > 0)
         {

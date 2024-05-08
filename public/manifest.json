@@ -1,7 +1,7 @@
 {
       "id":"1",
-      "name": "Kerakoll Club",
-      "short_name": "Kerakoll Club",
+      "name": "Club",
+      "short_name": "Club",
       "start_url": "/",
       "display": "standalone",
       "orientation": "portrait",
@@ -10,8 +10,8 @@
       "theme_color": "#AFCDAF",
       "screenshots": [
         {
-          "src": "/assets/images/screen.png",
-          "sizes": "370x406",
+          "src": "/assets/images/screen.jpg",
+          "sizes": "512x512",
           "type": "image/png",
           "purpose": "any"
         } 

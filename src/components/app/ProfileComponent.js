@@ -99,7 +99,7 @@ useEffect(() => {
                      resultcode === 0 ? <li onClick={()=> push('/bankdetailupdate')}>UPDATE BANK DETAILS</li> : <li onClick={()=> push('/bankdetailsadd?q=0')}>ADD BANK DETAILS</li>
                   }
                   <li onClick={redeemprompt}>
-                     EARN POINTS <em><CountUp duration={2} start={0}  delay={1}  end={rewardspoints} /> PTS</em>
+                    REWARD POINTS <em><CountUp duration={2} start={0}  delay={1}  end={rewardspoints} /> PTS</em>
                   </li>
                   <li onClick={()=> push('/rewards')}>REWARD HISTORY</li>
                   <li onClick={()=> push('/redemptionhistory')}>REDEMPTION HISTORY</li>

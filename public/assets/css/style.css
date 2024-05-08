@@ -403,9 +403,11 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 .rewardstables ol li p b { font-weight: normal; color: #fff; font-size: 16px; text-transform: uppercase;  }
 .rewardstables ol li p span { margin-top: 0.4rem; display: block; font-size:14px; color: #646464; word-break: break-all; }
 .rewardstables ol li p small { margin-top: 0.2rem; display: block; font-size:14px; color: #646464; word-break: break-all; }
-.rewardstables ol li p img { float:right; width: 16px; height: 16px; padding: 9px; box-sizing: content-box; background-color: #AFCDAF; border-radius: 50%; text-decoration: none; cursor: pointer; transition: all 0.5s ease-out; border: 0; overflow: visible; }
-.rewardstables ol li p img:hover { background-color: #F5EFEB; transition: all 0.5s ease-in; }
-.rewardstables ol li p img.rotedrefreshimg { animation: refreshbtn 7s linear infinite; }
+.rewardstables ol li p img { float:right; width: 16px; height: 16px; padding: 9px; box-sizing: content-box; background-color: #F5EFEB; border-radius: 50%; text-decoration: none;   border: 0; overflow: visible;  cursor: pointer; transition: all 0.5s ease-out; }
+.rewardstables ol li p img.transition_success { cursor: auto; background-color: #AFCDAF; }
+.rewardstables ol li p img.transition_failed { cursor: auto; background-color: #f74b4b; }
+.rewardstables ol li p img.rotedrefreshimg { animation: refreshbtn 7s linear infinite;  transition: all 0.5s ease-in; }
+.rewardstables ol li p img.rotedrefreshimg:hover { background-color: #F5EFEB; }
 @keyframes refreshbtn {  
   0% {   transform:rotate(0deg);  }
   100% {   transform:rotate(360deg);  }

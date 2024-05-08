@@ -52,16 +52,18 @@ export default function RedemptionhistoryComponemt () {
     setBtnload(true);
     _get(`/Payment/UserPayoutStatus?userID=${userID}&orderID=${od}`)
     .then((res) => { 
-      console.log("Status inside - ", res.data.isclose, res.data.ispayment, res.data.pgrequeystatus, res); 
+     // console.log("Status inside - ", res.data.isclose, res.data.ispayment, res.data.pgrequeystatus, res); 
       if(res.status === 200)
       {
-        setLoading(false);
-        setBtnload(false);
         setIsclose(res.data.isclose);
         setIspayment(res.data.ispayment);
         setPgrequeystatus(res.data.pgrequeystatus);
-        push("/redemptionhistory");
-       // toast.info(res.statusText); 
+        setTimeout(function(){
+          setLoading(false);
+          setBtnload(false);
+          window.location.reload();
+          // toast.info(res.statusText); 
+        }, 10000);
       }
       else
       {
@@ -97,8 +99,8 @@ export default function RedemptionhistoryComponemt () {
                 <li>
                   <p><b>SN.</b></p>
                   <p><b>Points</b><br /><small>Date</small></p>
-                  <p><b>Transaction</b><br /><small>Amount/ID</small></p>
-                  <p><b>Status</b><br /><small>Orderid</small></p>
+                  <p><b>Amount</b><br /><small>Transaction ID</small></p>
+                  <p><b>Status</b><br /><small>Order ID</small></p>
                   <p></p>
                 </li>
                 {  pointhistory.map &&  pointhistory.map((val, index) => <li key={val.transactionid} data-id={val.status}>
@@ -106,7 +108,9 @@ export default function RedemptionhistoryComponemt () {
                   <p>{val.pointsredeemed} <span>{val.redemptiondate}</span></p>
                   <p>{ val.transactionamount } <span>{val.transactionid}</span></p>
                   <p>{val.status} <span>{val.orderid}</span></p>
-                  <p><Image className={ btnload ? "rotedrefreshimg" : null } src="/assets/images/refresh_icon.png" onClick={()=> payoutstatus(val.orderid)}  width={20} height={20} alt="product" quality={99}  /></p>
+                  {
+                    val.status === 'Pending' ? <><p><Image className={ btnload ? "rotedrefreshimg" : null } src="/assets/images/refresh_icon.png" onClick={()=> payoutstatus(val.orderid)}  width={20} height={20} alt="Pending" quality={99}  /></p></> :  val.status === 'Success' ? <p><Image src="/assets/images/success_icon.png"  width={20} height={20} alt="Success" quality={99} className='transition_success'  /></p> : <p><Image src="/assets/images/failed_icon.png"  width={20} height={20} alt="Failed" quality={99}  className='transition_failed' /></p>
+                  }
                 </li>) }
               </ol>
             </div>

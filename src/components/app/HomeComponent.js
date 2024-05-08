@@ -29,7 +29,7 @@ export default function HomeComponent() {
             setTimeout(function(){  window.location.reload(); }, 1000);
           }).catch((err) => {
             console.log(err.message); 
-           // window.location.reload();
+            window.location.reload();
           });
     }
     else
