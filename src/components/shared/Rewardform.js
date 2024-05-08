@@ -67,12 +67,12 @@ export default function Rewardform() {
         }
         if(redeempoint < redeemminimumpoint)
         {
-            toast.info(`‘You can redeem minimum ${redeemminimumpoint} reward points.`); 
+            toast.info(`You can redeem minimum ${redeemminimumpoint} reward points.`); 
             return;
         }
         if(redeempoint > redeemmaximumpoint)
         {
-                toast.info(`‘You can redeem maximum ${redeemmaximumpoint} reward points.`); 
+                toast.info(`You can redeem maximum ${redeemmaximumpoint} reward points.`); 
                 return;
         }
         if(pendingorder > 0)

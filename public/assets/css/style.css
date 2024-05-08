@@ -492,9 +492,10 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 .bankInfosavecontainer h2 em { display: block; font-style: normal; font-family:var(--font-lneue); font-weight: normal;color: #AFCDAF; font-size: 24px;  }
 .bankInfosavecontainer h2 span { display: block; margin-top: 0.5rem; color: #ddd; font-size: 18px; font-weight:normal; }
 .bankInfosavecontainer ul { position: relative; width: 100%; float: left; margin:1.5rem 0 1rem 0; display: flex; justify-content: center; align-items: center; }
-.bankInfosavecontainer ul li { list-style: none; border-top: solid 1px #2f2d2d; border-bottom: solid 1px #2f2d2d; padding: 1rem 0; margin: 0; color: #5d5d5d;  font-family:var(--font-lneue); font-weight: normal;  font-size: 17px;   text-transform: uppercase; }
-.bankInfosavecontainer ul li:nth-of-type(2) {  color: #AFCDAF; padding-right:1rem; padding-left: 1rem;  } 
+.bankInfosavecontainer ul li { list-style: none; border-top: solid 1px #2f2d2d; border-bottom: solid 1px #2f2d2d; padding: 1rem 0; margin: 0; color: #5d5d5d;  font-family:var(--font-lneue); font-weight: normal;  font-size: 17px;   text-transform: uppercase;  cursor: pointer;  }
+.bankInfosavecontainer ul li:nth-of-type(2) {  cursor: auto;  color: #AFCDAF; padding-right:1rem; padding-left: 1rem;  } 
 .bankInfosavecontainer ul li.active { list-style: none; color: #fff ; border-top-color:#ccc; border-bottom-color:#ccc; user-select: none; pointer-events: none; }
+
 
 .bankinfo  { position: relative; width: 100%; float: left; text-align: center; margin:2rem 0 1rem 0; padding: 0 3rem 0 0; }
 .bankinfo h4 { position: relative; width: 100%; float: left; text-align: left; display: flex; justify-content: flex-start; align-items: center; font-family:var(--font-lneue); font-weight: normal;color: #AFCDAF; font-size: 24px;   text-transform: uppercase; overflow-wrap: break-word; overflow: hidden; }
