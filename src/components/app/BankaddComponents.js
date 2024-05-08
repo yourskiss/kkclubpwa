@@ -56,7 +56,7 @@ export default function BankaddComponents() {
         else if(accountnumber === '') { toast.error('Account Number is required'); }
         else { 
           setStep(3); 
-          setUpicode('');
+         // setUpicode('');
         }
     }
     const handleUpiId = (e) => {
@@ -64,9 +64,9 @@ export default function BankaddComponents() {
       if(upicode === '') { toast.error('UPI ID is required'); }
       else { 
         setStep(3);
-        setBankname('');
-        setIfsccode('');
-        setAccountnumber(''); 
+      //  setBankname('');
+      //  setIfsccode('');
+       // setAccountnumber(''); 
       }
     }
     const handleSubmit= (e) => {

@@ -90,7 +90,7 @@ const DashboardComponent = () => {
                 </dl>
           </div>
           <div className="dashboard_content">
-              <section onClick={()=> push("/scanqrcode")}>
+              <section className='dashboard_scanbg' onClick={()=> push("/scanqrcode")}>
                     <aside><Image className='dashboard_scan_img' src="/assets/images/dash-qr.png" width={100} height={100} alt="qr" quality={100} /></aside>
                     <h2>Scan QR Code</h2>
                     <p>FOR YOUR KERAKOLL PRODUCTS</p>
@@ -112,31 +112,31 @@ const DashboardComponent = () => {
                 <Slider className="dashboard_slider" {...settingsDashboard}>
                     <div className="db_item">
                         <aside><Image src="/assets/images/products/img.png" width={500} height={500} alt="product" quality={99} /></aside>
-                        <h2>
+                        <p>
                             <span>Learn more</span>
-                            <Image src="/assets/images/arrows.png" width={57} height={18} alt="product" quality={99} />
-                        </h2>
+                            <Image src="/assets/images/arrows.png" width={45} height={14} alt="product" quality={99} />
+                        </p>
                     </div>
                     <div className="db_item">
                         <aside><Image src="/assets/images/products/img.png" width={500} height={500} alt="product" quality={99} /></aside>
-                        <h2>
+                        <p>
                             <span>Learn more</span>
-                            <Image src="/assets/images/arrows.png" width={57} height={18} alt="product" quality={99} />
-                        </h2>
+                            <Image src="/assets/images/arrows.png" width={45} height={14} alt="product" quality={99} />
+                        </p>
                     </div>
                     <div className="db_item">
                         <aside><Image src="/assets/images/products/img.png" width={500} height={500} alt="product" quality={99} /></aside>
-                        <h2>
+                        <p>
                             <span>Learn more</span>
-                            <Image src="/assets/images/arrows.png" width={57} height={18} alt="product" quality={99} />
-                        </h2>
+                            <Image src="/assets/images/arrows.png" width={45} height={14} alt="product" quality={99} />
+                        </p>
                     </div>
                     <div className="db_item">
                         <aside><Image src="/assets/images/products/img.png" width={500} height={500} alt="product" quality={99} /></aside>
-                        <h2>
+                        <p>
                             <span>Learn more</span>
-                            <Image src="/assets/images/arrows.png" width={57} height={18} alt="product" quality={99} />
-                        </h2>
+                            <Image src="/assets/images/arrows.png" width={45} height={14} alt="product" quality={99} />
+                        </p>
                     </div>                
                 </Slider>
             </div>
