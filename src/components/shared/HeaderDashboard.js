@@ -37,10 +37,12 @@ useEffect(() => {
         </aside>
         <section>
             <Link href="/scanqrcode" className='header_scanqrcode'><Image src="/assets/images/QR.png" width={100} height={100} alt="qr" quality={90} /></Link>
+            {/*             
             <span className='header_notification'>
               <Image src="/assets/images/notification.png" width={100} height={100} alt="notification" quality={90} />
               <span></span>
-            </span>
+            </span> 
+            */}
             <aside className={ userstatus === "APPROVE" ? "header_userdp status_approve" : "header_userdp status_pending" } >
               <span onClick={() => push("/profile") }>{usershort}</span>
             </aside>

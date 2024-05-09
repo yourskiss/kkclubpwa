@@ -25,8 +25,8 @@ const getUserMobile = () => {
 }
 
 
-const setUserCookies = (name, val) => {
-   return Cookies.set(name, val, { expires: 365, secure: true });
+const setUserCookies = (val) => {
+   return Cookies.set('usertoken', val, { expires: 365, secure: true });
 }
 
 
@@ -47,6 +47,16 @@ const isBearerToken = () => {
   return isBT;
 }
  
- 
 
-export {  getUserID, getUserMobile, setUserCookies, getUserToken, isUserToken, isBearerToken };
+const setLoginNumber = (val) => {
+  return Cookies.set('loginnumber',  val, { expires: new Date(new Date().getTime() + 900000), secure: true });
+}
+const isLoginNumber = () => {
+  const isToken = !!Cookies.get('loginnumber');
+  return isToken;
+}
+const getLoginNumber = () => {
+  return Cookies.get('loginnumber');
+}
+
+export {  getUserID, getUserMobile, setUserCookies, getUserToken, isUserToken, isBearerToken, setLoginNumber, isLoginNumber, getLoginNumber };

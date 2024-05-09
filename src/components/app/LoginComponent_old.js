@@ -5,12 +5,11 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from 'next/navigation';
 import Loader from "../shared/LoaderComponent";
 import { toast } from 'react-toastify';
-import {isBearerToken, setUserCookies, isUserToken, setLoginNumber } from "@/config/userauth";
+import { setUserCookies, isUserToken, isBearerToken } from "@/config/userauth";
 import { encryptText } from "@/config/crypto";
 import { setCouponeCode, isCouponeCode } from "@/config/validecoupone";
 import Otpcountdown from "../core/timer";
 import { _get } from "@/config/apiClient";
-import HeaderFirst from "../shared/HeaderFirst";
   
  
 export default function LoginComponent() {  
@@ -18,37 +17,16 @@ export default function LoginComponent() {
     const [isDisabled, setIsDisabled] = useState(false);
     const [mobileValues, setMobileValues] = useState('');
     const [otpValues, setOtpValues] = useState('');
+    const [tnc, setTnc] = useState(false);
     const [mobileError, setMobileError] = useState('');
+    const [tncError, setTncError] = useState('');
     const [otpError, setOtpError] = useState('');
     const [isMobile, setIsMobile] = useState(false);
+    const [isOTP, setIsOTP] = useState(false);
+    const [OTPVerified, setOTPVerified] = useState(false);
     const [otpsent, setOtpsent] = useState(false);
     const mobileChange = (e) =>{setMobileValues(e.target.value); setMobileError(""); }
     const otpChange = (e) =>{setOtpValues(e.target.value); setOtpError(''); }
-
-    const { push } = useRouter();
-    const searchParams = useSearchParams();
-    const getqrcode = searchParams.get('code');
-    const isCC = isCouponeCode();
-    const userToken   =  isUserToken();
-    const bearerToken = isBearerToken();
-
-
-    const otpcountertime = new Date();
-    otpcountertime.setSeconds(otpcountertime.getSeconds() + 60);  
-    const getOtpTimer =(val) =>{ setOtpsent(val); }
-  
-     useEffect(() => {
-       if(getqrcode !== null) { setCouponeCode(getqrcode); }
-     }, [getqrcode]);
-    
-  
-    useEffect(() => {
-      if(!bearerToken) { push("/"); return  }
-      if(userToken && !isCC) { push("/dashboard"); return }
-      if(userToken && isCC) { push("/getcoupone"); return }
-    }, []);
-  
-
     const onInputmaxLength = (e) => {
         if(e.target.value.length > e.target.maxLength)
         {
@@ -58,10 +36,13 @@ export default function LoginComponent() {
     const mobileSubmit =(e) =>{
       e.preventDefault();
       const regexMobile = /^[6789][0-9]{9}$/i;
-      if (!mobileValues){setMobileError("Please enter your mobile number"); }
+      if (!mobileValues && !tnc){setMobileError("Mobile number is required!"); setTncError("Please agree with our Terms & conditions");}
+      else if (!mobileValues){setMobileError("Please enter your mobile number"); }
       else if(mobileValues.length < 10){setMobileError("Mobile Number  must have at least 10 Digit");}
       else if(!regexMobile.test(mobileValues)){setMobileError("Invalid mobile number!");}
+      else if(!tnc) { setTncError("Please accept Terms & conditions."); }
       else { 
+        setTncError("");
         setMobileError("");
         setIsMobile(true);   
         setIsDisabled(true);
@@ -76,23 +57,59 @@ export default function LoginComponent() {
       else if(!regexOTP.test(otpValues)){setOtpError("Invalid otp");}
       else{ 
         setOtpError('');
+        setIsOTP(true); 
         verifyotp();
       }
     }
 
+
+  const { push } = useRouter();
+  const searchParams = useSearchParams();
+  const getqrcode = searchParams.get('code');
+  const isCC = isCouponeCode();
+  const userToken   =  isUserToken();
+  const bearerToken = isBearerToken();
+ 
+  const checkboxHandler = () => {
+    tnc === false ? setTnc(true) : setTnc(false);
+    setTncError("");
+  }
+  const otpcountertime = new Date();
+  otpcountertime.setSeconds(otpcountertime.getSeconds() + 60);  
+  const getOtpTimer =(val) =>{ setOtpsent(val); }
+
+   useEffect(() => {
+     if(getqrcode !== null) { setCouponeCode('couponecodecookies',getqrcode); }
+   }, [getqrcode]);
+  
+
+  useEffect(() => {
+    if(!bearerToken) { push("/"); return  }
+    if(userToken && !isCC) { push("/dashboard"); return }
+    if(userToken && isCC) { push("/getcoupone"); return }
+  }, []);
+
+ 
+
+ 
+ 
+ 
+
+ 
     function loginnow()
     {
       setLoading(true);
       _get("Customer/UserInfo?userid=0&phonenumber="+ mobileValues)
       .then(res => {
         //  console.log("login success - ", res);
+
         if(res.data.result.verificationstatus === "APPROVE" || res.data.result.verificationstatus === "PENDING")
         {
           localStorage.setItem("userprofilename",res.data.result.fullname);
           localStorage.setItem("userprofilesn",res.data.result.shortname);
           localStorage.setItem("verificationstatus",res.data.result.verificationstatus);
             const userinfo = res.data.result.userid + "|" + res.data.result.phonenumber
-            setUserCookies(encryptText(userinfo));       
+            setUserCookies('usertoken', encryptText(userinfo));       
             if(res.data.result && isCC)
             { 
               push('/getcoupone');
@@ -108,14 +125,17 @@ export default function LoginComponent() {
                 toast.error(res.data.resultmessage);
             }
         }
+        // else if(res.data.result.verificationstatus === "PENDING")
+        // {
+        //    res.data.result ? push("/approval") : toast.error(res.data.resultmessage);
+        // }
         else if(res.data.result.verificationstatus === "REJECT")
         {
-          toast.warn("Your request has been rejected. please Try with another mobile number.");
+          toast.warn("Your request has been rejected. please register with another mobile number.");
         }
         else
         {
-          setLoginNumber(mobileValues);
-          push('/register');
+           toast.warn("Your are not registered user. please register after login");
         }
         setLoading(false);
       })
@@ -136,6 +156,7 @@ export default function LoginComponent() {
         setLoading(false);
         setOtpValues('');
         setOtpsent(false);
+        setIsOTP(false);
        // console.log("send otp  - ", res);
         toast.success(res.data.resultmessage);
       }).catch((err) => {
@@ -156,12 +177,15 @@ export default function LoginComponent() {
         if(res.data.isValid)
         {
           toast.success("OTP Successfully Verify");
+          setOTPVerified(res.data.isOTPVerified); 
           loginnow();
         }
         else
         {
           toast.error("Invalid OTP");
           setOtpValues('');
+          setIsOTP(false);
+          setOTPVerified(false);
         }
       }).catch((err) => {
         toast.error(err.message);
@@ -174,7 +198,11 @@ export default function LoginComponent() {
  
   return (
   <>
-    <HeaderFirst />
+    <header className='headersection'>
+        <aside className="logo">
+          <Image src="/assets/images/logo.png" width={270} height={50} alt="logo" quality={99} />
+        </aside>
+    </header>
 
     <div className='screenmain'>
     <section className="screencontainer">
@@ -191,7 +219,11 @@ export default function LoginComponent() {
                   </div>
                   { mobileError && <span className='registerError'>{mobileError}</span> } 
                 </div>
- 
+                <div className="registerTncAccept">
+                  <input id="accepttnc" type="checkbox" value={tnc} onChange={checkboxHandler}  />
+                  <label htmlFor="accepttnc"><span>By signing you agree to our Terms & condition</span></label>
+                  { tncError && <span className='registerError'>{tncError}</span> } 
+                </div>
               </div>
               <div className="registerSubmit">
                 <button className="register_button">SEND OTP</button>
@@ -224,6 +256,10 @@ export default function LoginComponent() {
         ) : null }
 
  
+
+ 
+      
+        <div className="registerBottomText">Haven’t signed up yet? <Link href='/register'>Sign Up</Link></div>
     </section>
     </div>
 

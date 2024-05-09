@@ -1,19 +1,15 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Cookies from 'js-cookie';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Loader from '../shared/LoaderComponent';
 import { toast } from 'react-toastify';
 import { ipaddress, osdetails, browserdetails  } from "../core/jio";
 import CityStateComponent from "../shared/CitystateComponent";
 import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 import { _post } from "@/config/apiClient";
-import { isBearerToken, isUserToken, getLoginNumber,  isLoginNumber, setUserCookies } from "@/config/userauth";
-import HeaderFirst from "../shared/HeaderFirst";
-import { encryptText } from "@/config/crypto";
-import { setCouponeCode, isCouponeCode } from "@/config/validecoupone";
-
+import HeaderBeforeLogin from "../shared/HeaderBeforelogin";
+ 
 export default function RegistationComponent() {
   const [step, setStep] = useState(1);
   const[loading, setLoading] = useState(false);
@@ -31,9 +27,8 @@ export default function RegistationComponent() {
   const[aadhaarErrors, setAadhaarErrors] = useState('');
   const[pincode, setPincode] = useState('');
   const[pincodeErrors, setPincodeErrors] = useState('');
-  const [tnc, setTnc] = useState(false);
-  const [tncError, setTncError] = useState('');
-  const [mobilenumber, setMobilenumber] = useState('');
+  const[mobilenumber, setMobilenumber] = useState('');
+  const[mobileErrors, setMobileErrors] = useState('');
 
   const onInputmaxLength = (e) => {
     if(e.target.value.length > e.target.maxLength)
@@ -41,39 +36,16 @@ export default function RegistationComponent() {
       e.target.value = e.target.value.slice(0, e.target.maxLength);
     }
   }
- 
+  const { push } = useRouter();
   const ipInfo = ipaddress();
   const osInfo = osdetails();
   const browserInfo = browserdetails();
-  const getLoginID = getLoginNumber();
-  const isLoginID = isLoginNumber();
-  const userToken =  isUserToken();
-  const bearerToken = isBearerToken();
-  const { push } = useRouter();
-  const searchParams = useSearchParams();
-  const getqrcode = searchParams.get('code');
-  const isCC = isCouponeCode();
  
-
-  useEffect(() => {
-    if(getqrcode !== null) { setCouponeCode(getqrcode); }
-  }, [getqrcode]);
- 
-
- useEffect(() => {
-   if(!bearerToken) { push("/"); return  }
-   if(userToken) { push("/dashboard"); return }
-   if(isLoginID) { setMobilenumber(getLoginID) } else { push('/login');}
- }, []);
-
-  const checkboxHandler = () => {
-    tnc === false ? setTnc(true) : setTnc(false);
-    setTncError("");
-  }
  
 
  
-
+ 
+  
   const handleOptionChange = (sc, st, ct) => {
      setCityStateName(sc);
      setStateName(st);
@@ -99,21 +71,25 @@ export default function RegistationComponent() {
   } 
   const handleStep2 = (e) => {
     e.preventDefault();
-    setPincodeErrors('');
+    setAadhaarErrors(''); 
     setCitystateErrors(''); 
-    if(cityStateName  === '' && pincode === '') { setCitystateErrors('City is required.'); setPincodeErrors('Postal code in required.'); }
+    if(cityStateName  === '' && aadhaarinfo === '') { setCitystateErrors('City is required.'); setAadhaarErrors('Aadhaar is required.'); }
     else if(cityStateName  === '') { setCitystateErrors('City is required.'); }
-    else if(pincode === '') {  setPincodeErrors('Postal code in required.'); }
-    else if(pincode.length !== 6) { setPincodeErrors('Postal code  must have at least 6 Digits.'); }
+    else if(aadhaarinfo === '') { setAadhaarErrors('Aadhaar is required.'); }
+    else if(aadhaarinfo .length !== 12) { setAadhaarErrors('Aadhaar must have at least 12 Digits.'); }
     else { setStep(3); }
   } 
   const handleStep3 = (e) => {
     e.preventDefault();
-    setAadhaarErrors(''); 
-    if (!aadhaarinfo && !tnc) { setAadhaarErrors("Mobile number is required!"); setTncError("Please agree with our Terms & conditions");}
-    if(aadhaarinfo === '') { setAadhaarErrors('Aadhaar is required.'); }
-    else if(aadhaarinfo.length !== 12) { setAadhaarErrors('Aadhaar must have at least 12 Digits.'); }
-    else if(!tnc) { setTncError("Please agree with our Terms & conditions"); }
+    const regexMobile = /^[6789][0-9]{9}$/i;
+    setMobileErrors('');
+    setPincodeErrors('');
+    if(mobilenumber === '' && pincode === '') { setMobileErrors('Mobile number is required!'); setPincodeErrors('Postal code in required.'); }
+    else if(pincode === '') {  setPincodeErrors('Postal code in required.'); }
+    else if(pincode.length !== 6) { setPincodeErrors('Postal code  must have at least 6 Digits.'); }
+    else if(mobilenumber === '') { setMobileErrors('Mobile number is required!'); }
+    else if(mobilenumber.length !== 10) { setMobileErrors('Mobile Number must have at least 10 Digits.'); }
+    else if(!regexMobile.test(mobilenumber)){setMobileErrors("Invalid mobile number!");}
     else { 
         // setStep(1);
         handleRegistration();
@@ -152,30 +128,9 @@ export default function RegistationComponent() {
       .then((res) => {
        // console.log(res);
         setLoading(false);
-        if(res.data.result)
-        {
-          localStorage.setItem("userprofilename",res.data.result.fullname);
-          localStorage.setItem("userprofilesn",res.data.result.shortname);
-          localStorage.setItem("verificationstatus",res.data.result.verificationstatus);
-          const userinfo = res.data.result.userid + "|" + res.data.result.phonenumber
-          setUserCookies(encryptText(userinfo));
-          Cookies.remove('loginnumber');
-            if(isCC)
-              { 
-                toast.success('Coupon Added Successfully'); 
-                push('/getcoupone');
-                
-              }
-              else 
-              {
-                toast.success('Registation Successfully.'); 
-                push("/dashboard");
-              }
-        }
-        else
-        {
-          toast.warn(res.data.resultmessage);
-        }
+        localStorage.setItem('userprofilesn',res.data.result.shortname);
+        localStorage.setItem('userprofilename',  res.data.result.firstname + " " + res.data.result.lastname);
+        res.data.result ? (toast.success('Registation Successfully.'), push("/approval")) : toast.warn(res.data.resultmessage);
       }).catch((err) => {
         toast.error(err.message);
         setLoading(false); 
@@ -184,7 +139,7 @@ export default function RegistationComponent() {
 
 
   return (<>
-    <HeaderFirst />
+    <HeaderBeforeLogin />
     <div className="screenmain">
         <div className="screencontainer">
           <div className="registercontainer">
@@ -246,34 +201,6 @@ export default function RegistationComponent() {
               
 
                 <div className="registerField">
-                  <div className="registertext">Pin Code <small>*</small></div>
-                  <input
-                    className="registerinput"
-                    type="number"
-                    name="pincode"
-                    autoComplete="off"
-                    maxLength={6}
-                    value={pincode}
-                    onInput={onInputmaxLength}
-                    onChange={(e) => { setPincode(e.target.value);  }}
-                  />
-                  {pincodeErrors && <span className="registerError">{pincodeErrors}</span> }
-                </div>
-
-                
-
-                <div className="registerSubmit">
-                  <button className="register_button">CONTINUE</button>
-                </div>
-              </form>) : null }
-              </>
-              
-
-              <>
-              { step === 3 ? (<form onSubmit={handleStep3}>
-                
-
-                <div className="registerField">
                   <div className="registertext">Aadhaar Number <small>*</small></div>
                   <input
                     className="registerinput"
@@ -289,10 +216,43 @@ export default function RegistationComponent() {
                   {aadhaarErrors && <span className="registerError">{aadhaarErrors}</span> }
                 </div>
 
-                <div className="registerTncAccept">
-                  <input id="accepttnc" type="checkbox" value={tnc} onChange={checkboxHandler}  />
-                  <label htmlFor="accepttnc"><span>By signing you agree to our Terms & condition</span></label>
-                  { tncError && <span className='registerError'>{tncError}</span> } 
+                <div className="registerSubmit">
+                  <button className="register_button">CONTINUE</button>
+                </div>
+              </form>) : null }
+              </>
+              
+
+              <>
+              { step === 3 ? (<form onSubmit={handleStep3}>
+                <div className="registerField">
+                  <div className="registertext">Pin Code <small>*</small></div>
+                  <input
+                    className="registerinput"
+                    type="number"
+                    name="pincode"
+                    autoComplete="off"
+                    maxLength={6}
+                    value={pincode}
+                    onInput={onInputmaxLength}
+                    onChange={(e) => { setPincode(e.target.value);  }}
+                  />
+                  {pincodeErrors && <span className="registerError">{pincodeErrors}</span> }
+                </div>
+
+                <div className="registerField">
+                  <div className="registertext">Mobile Number <small>*</small></div>
+                  <input
+                    className="registerinput"
+                    type="number"
+                    name="mobilenumber"
+                    autoComplete="off"
+                    maxLength={10}
+                    value={mobilenumber}
+                    onInput={onInputmaxLength}
+                    onChange={(e) => { setMobilenumber(e.target.value);  }}
+                  />
+                  {mobileErrors && <span className="registerError">{mobileErrors}</span> }
                 </div>
 
                 <div className="registerSubmit"> 
@@ -301,6 +261,11 @@ export default function RegistationComponent() {
               </form>) : null }
               </>
 
+                
+
+                <div className="registerBottomText">
+                  Already have an account?  <Link href='/'>Sign in</Link>
+                </div>
 
           </div>
         </div>

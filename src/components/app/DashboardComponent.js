@@ -28,7 +28,7 @@ const DashboardComponent = () => {
             setLoading(false);
            // console.log(" response - ", res);
            localStorage.setItem("userprofilename",res.data.result.fullname);
-           localStorage.setItem("userprofilepic",res.data.result.profilepictureurl);
+           localStorage.setItem("userprofilesn",res.data.result.shortname);
            localStorage.setItem("verificationstatus",res.data.result.verificationstatus);
            setUserstatus(localStorage.getItem('verificationstatus'));
         }).catch((error) => {

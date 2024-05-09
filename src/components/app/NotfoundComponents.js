@@ -1,15 +1,12 @@
  "use client";
 import Link from "next/link";
 import Image from 'next/image';
+import HeaderFirst from "../shared/HeaderFirst";
 export default function NotFoundComponents() {
 
   return (
     <>
-    <header className='headersection'>
-        <aside className="logo">
-          <Image src="/assets/images/logo.png" width={270} height={50} alt="logo" quality={99} />
-        </aside>
-    </header>
+    <HeaderFirst />
 
     <div className="screenmain"> 
         <div className="screencontainer">
