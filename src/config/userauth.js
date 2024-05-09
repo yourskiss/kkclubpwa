@@ -49,7 +49,7 @@ const isBearerToken = () => {
  
 
 const setLoginNumber = (val) => {
-  return Cookies.set('loginnumber',  val, { expires: new Date(new Date().getTime() + 900000), secure: true });
+  return Cookies.set('loginnumber',  val, { expires: new Date(new Date().getTime() + 1800000), secure: true });
 }
 const isLoginNumber = () => {
   const isToken = !!Cookies.get('loginnumber');

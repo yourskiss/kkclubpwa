@@ -5,7 +5,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useEffect, useState } from "react";
-import HeaderBeforeLogin from "../shared/HeaderBeforelogin";
+import HeaderAfterLogin from "../shared/HeaderAfterlogin";
 
 export default function ApprovalComponent() {
     const[username, setUsername] = useState('');
@@ -29,7 +29,7 @@ export default function ApprovalComponent() {
  
   return (
     <>
-    <HeaderBeforeLogin />
+    <HeaderAfterLogin  backrouter="/dashboard" />
     <div className="screenmain"> 
         <div className="screencontainer">
                 <div className="approvalcontainer">
@@ -44,9 +44,7 @@ export default function ApprovalComponent() {
                                 </p>
                             </dd>
                         </dl>    
-                        <article>
-                            Back to <Link href="/" className="backtobutton">Sign in</Link>
-                        </article>  
+ 
                         
                         <section>
                             <h2>PRODUCT CATEGORIES</h2>

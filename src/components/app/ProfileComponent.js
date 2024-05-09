@@ -40,6 +40,7 @@ export default function ProfileComponent() {
     if(userstatus === "PENDING")
     {
       push("/approval");
+      return 
     }
     if(userstatus === "APPROVE" && rewardspoints <= redeemminimumpoint)
     {

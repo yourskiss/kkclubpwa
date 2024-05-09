@@ -41,6 +41,7 @@ const DashboardComponent = () => {
     if(userstatus === "PENDING")
     {
         push("/approval");
+        return
     }
     if(userstatus === "APPROVE" && rewardspoints <= redeemminimumpoint)
     {
