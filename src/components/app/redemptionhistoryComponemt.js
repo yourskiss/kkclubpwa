@@ -22,14 +22,23 @@ export default function RedemptionhistoryComponemt () {
   const userID = getUserID();
   const { push } = useRouter();
   const redeemedpointTotal = TotalRedeemedPoints();
- 
+  const [isStatus, setIsStatus] = useState(false);
  
 
   useEffect(() => {
-      setLoading(true);
+     setLoading(true);
     _get(`Customer/UserRedeemedPointsHistory?userid=${userID}`)
     .then((res) => {
-       // console.log("Redeemed Points History - ", res);
+        console.log("Redeemed Points History - ", res);
+
+        // res.data.result.some(element => {
+        //   console.count(element.status, element.orderid);
+        //   if (element.status === "Pending") 
+        //   {
+        //     payoutstatus(element.orderid);
+        //   }
+        // });
+
         if(res.data.result.length !== 0)
         {
           setPointhistory(res.data.result)
@@ -47,7 +56,6 @@ export default function RedemptionhistoryComponemt () {
 
 
   const payoutstatus = (od) => {
-    debugger;
     setLoading(true);
     setBtnload(true);
     _get(`/Payment/UserPayoutStatus?userID=${userID}&orderID=${od}`)
@@ -61,7 +69,7 @@ export default function RedemptionhistoryComponemt () {
         setTimeout(function(){
           setLoading(false);
           setBtnload(false);
-          window.location.reload();
+          // window.location.reload();
           // toast.info(res.statusText); 
         }, 10000);
       }
