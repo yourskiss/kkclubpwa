@@ -62,7 +62,7 @@ export default function EarnedComponent() {
         <div className="screenqrbottom">
             <h2>
               <em>CLUB WALLET</em>
-              <CountUp duration={2} start={0}  delay={1}  end={rewardspoints} /> <span>PTS</span>
+              <CountUp duration={2} start={0}  delay={1}  end={rewardspoints} /> <span>Points</span>
             </h2>
             <p><Link href='/rewards'>check your club wallet</Link></p>
         </div>

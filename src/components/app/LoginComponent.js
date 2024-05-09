@@ -146,8 +146,8 @@ export default function LoginComponent() {
  
 
   const verifyotp = () => {
-    // loginnow(); // tesing
-    
+    loginnow(); // tesing
+    /*
       setLoading(true);
       _get("Sms/VerifyOTP?&mobile="+mobileValues+"&otp="+otpValues)
       .then((res) => {
@@ -167,7 +167,7 @@ export default function LoginComponent() {
         toast.error(err.message);
         setLoading(false); 
       });
-    
+    */
   }
 
   
@@ -209,7 +209,7 @@ export default function LoginComponent() {
               </div>
               <div className="registerOtp">
                 <div><aside>
-                  <input type="number" name="otpnumber" autoComplete="off" maxLength={6} minLength={6}  value={otpValues} onChange={otpChange}  onInput={onInputmaxLength} />
+                  <input type="number" name="otp" autoComplete="one-time-code" maxLength={6} minLength={6}  value={otpValues} onChange={otpChange}  onInput={onInputmaxLength} />
                 </aside></div> 
               </div>
               { otpError && <span className='registerError'>{otpError}</span>  }

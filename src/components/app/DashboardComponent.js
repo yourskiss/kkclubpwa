@@ -97,7 +97,7 @@ const DashboardComponent = () => {
               </section>
               <section className='dashboard_redeempointbg' onClick={redeemprompt }>
                     <aside ><Image src="/assets/images/redeempoints.png" width={99} height={115} alt="redeempoints" quality={100} /></aside>
-                    <h5><CountUp duration={2} start={0}  delay={1}  end={rewardspoints} /> <em>pt</em></h5>
+                    <h5><CountUp duration={2} start={0}  delay={1}  end={rewardspoints} /> <em>Points</em></h5>
                     <h2>Redeem Points</h2>
                     <p>IN YOUR CLUB WALLET</p>
               </section>

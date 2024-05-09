@@ -22,7 +22,6 @@ export default function RedemptionhistoryComponemt () {
   const userID = getUserID();
   const { push } = useRouter();
   const redeemedpointTotal = TotalRedeemedPoints();
-  const [isStatus, setIsStatus] = useState(false);
  
 
   useEffect(() => {
@@ -69,7 +68,7 @@ export default function RedemptionhistoryComponemt () {
         setTimeout(function(){
           setLoading(false);
           setBtnload(false);
-          // window.location.reload();
+          window.location.reload();
           // toast.info(res.statusText); 
         }, 10000);
       }
