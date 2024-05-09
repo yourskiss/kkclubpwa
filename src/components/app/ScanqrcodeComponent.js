@@ -99,15 +99,8 @@ export default function ScanqrcodeComponent() {
         <div className="screencontainer">
           { 
             !qrcode ? <div className="scanqrcodecontainer">
-              <h2>Scan Data  <span>({scandata})</span> </h2>
-              <ul>
-                <li>Latitude: {latInfo}</li>
-                <li>Longitude: {lonInfo}</li>
-                <li>IP Address: {ipInfo}</li>
-                <li>OS Details: {osInfo}</li>
-                <li>Browser Details: {browserInfo}</li>
-                <li>Coupone Code: {couponecode}</li>
-              </ul>
+              {/* <h1>Scan Data  <span>({scandata})</span></h1> */}
+              <h2>Coupone Code: <span>{couponecode}</span></h2>
               <form className="scanqrcodeForm" onSubmit={handleSubmitCode} >
                   <button>Validate and Save Coupon</button>
               </form>

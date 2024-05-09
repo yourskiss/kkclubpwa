@@ -368,8 +368,10 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 
 /* ################### qr container ################### */
 .scanqrcodecontainer  { width: 100%; float: left; margin:1rem 0; padding: 0; }
-.scanqrcodecontainer h2 { width: 100%; float: left; margin:0; padding:0; text-align: center;  font-weight: bold; color: #fff; font-size:24px; font-family:var(--font-lneue);   }
-.scanqrcodecontainer h2 span { margin-top: 0.3rem; display: block; font-weight: normal; color: #fff; font-size:18px;    }
+.scanqrcodecontainer h1 { width: 100%; float: left; margin:0; padding:0; text-align: center;  font-weight: bold; color: #fff; font-size:18px; font-family:var(--font-lneue);   }
+.scanqrcodecontainer h1 span { margin-top: 0.5rem; display: block; font-weight: normal; color: #fff; font-size:14px;    }
+.scanqrcodecontainer h2 { width: 100%; float: left; margin:0 0 1.5rem 0; padding:0; text-align: center;  font-weight: bold; color: #fff; font-size:18px; font-family:var(--font-lneue);   }
+.scanqrcodecontainer h2 span {  display: inline-block; font-weight: normal; color: #fff;   }
 .scanqrcodecontainer ul { width: 100%; float: left; margin:1rem 0 2rem 0; padding:0; display: flex; justify-content: center; align-items: stretch; flex-wrap: wrap;  }
 .scanqrcodecontainer ul li { list-style: none; width: 50%; float: left; margin:0; box-sizing: border-box; text-align: center; border: solid 1px #eee; background: #fff;padding: 1rem; font-weight: 500; color: #414141; font-size:18px;  }
 .scanqrcodeForm { display: flex; justify-content: center; align-items: flex-start; flex-direction: column; width: 90%; max-width: 500px; float: none; margin:0 auto; padding:0; box-sizing: border-box; }

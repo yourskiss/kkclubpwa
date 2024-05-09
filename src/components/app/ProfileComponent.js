@@ -39,12 +39,11 @@ export default function ProfileComponent() {
   const redeemprompt = () => {
     if(userstatus === "PENDING")
     {
-      toast.info('Reward points will redeem after profile approval.'); 
-      return
+      push("/approval");
     }
     if(userstatus === "APPROVE" && rewardspoints <= redeemminimumpoint)
     {
-      toast.info(`You can redeem min. ${redeemminimumpoint} reward points.`);
+      toast.info(`You can redeem minimum ${redeemminimumpoint} reward points.`);
       return 
     }
     push("/redeempoints");

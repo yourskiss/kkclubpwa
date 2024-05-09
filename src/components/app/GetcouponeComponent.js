@@ -24,7 +24,7 @@ export default function GetcouponeComponent() {
   const isCC = isCouponeCode();
   const getCC = getCouponeCode();
   useEffect(() => {
-    isCC ? setCouponecode(getCC)  : push("/rewards"); 
+    isCC ? (setCouponecode(getCC), toast.success("QR code added successfully.")) : (toast.error("Invalide QR Code..."), push("/rewards")); 
   }, [couponecode]);
  
  
@@ -60,15 +60,7 @@ export default function GetcouponeComponent() {
         <div className="screencontainer">
 
           <div className="scanqrcodecontainer">
-            <h2>Scan Data </h2>
-            <ul>
-              <li>Latitude: {latInfo}</li>
-              <li>Longitude: {lonInfo}</li>
-              <li>IP Address: {ipInfo}</li>
-              <li>OS Details: {osInfo}</li>
-              <li>Browser Details: {browserInfo}</li>
-              <li>Coupone Code: {couponecode}</li>
-            </ul>
+            <h2>Coupone Code: <span>{couponecode}</span></h2>
             <form className="scanqrcodeForm" onSubmit={handleSubmitCode} >
                 <button>Validate and Save Coupon</button>
             </form>
