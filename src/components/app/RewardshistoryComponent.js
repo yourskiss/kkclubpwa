@@ -47,7 +47,7 @@ export default function RewardshistoryComponent () {
           <div className="rewardscontainer">
             <h2>Reward Points History</h2>
             <h3>
-              <CountUp duration={2} start={0}  delay={1} end={points} /> <b>PTS</b> 
+              <CountUp duration={2} start={0}  delay={1} end={points} /> <b>Points</b> 
               <em>Total Rewards  </em>
             </h3>
           </div>

@@ -94,7 +94,7 @@ export default function RedemptionhistoryComponemt () {
           <div className="rewardscontainer">
             <h2>Redemption History</h2>
             <h3>
-              <CountUp duration={2} start={0}  delay={1} end={redeemedpointTotal} /> <b>PTS</b> 
+              <CountUp duration={2} start={0}  delay={1} end={redeemedpointTotal} /> <b>Points</b> 
               <em>Redeemed Points</em>
             </h3>
           </div>

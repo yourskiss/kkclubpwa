@@ -51,7 +51,7 @@ export default function RedeempointsComponents() {
                     <Image src="/assets/images/redeem.png" width={459} height={448} alt="redeem img" quality={99} />
                 </aside>
                 <h2>Redeem your points</h2>
-                <h3><CountUp duration={2} start={0}  delay={1} end={rewardspoints} /> <b>pts</b> </h3>
+                <h3><CountUp duration={2} start={0}  delay={1} end={rewardspoints} /> <b>Points</b> </h3>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,<br /> sed do eiusmod tempor incididunt</p>
             </div>
             
