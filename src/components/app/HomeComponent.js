@@ -1,9 +1,10 @@
 "use client";
 import Cookies from 'js-cookie';
 import axios from 'axios';
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Pageloading from '../shared/PageloadingComponent'
+import Homevideo from '../core/Homevideo';
+ 
  
 
 const apiURL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -12,10 +13,9 @@ const apiPassword = process.env.NEXT_PUBLIC_API_PASSWORD;
 
 export default function HomeComponent() {
   const { push } = useRouter();
-
+  const isBearerToken = !!Cookies.get('bearertoken');
+  const isUserToken = !!Cookies.get('usertoken');
   useEffect(() => {
-    const isBearerToken = !!Cookies.get('bearertoken');
-    const isUserToken = !!Cookies.get('usertoken');
     if(!isBearerToken)
     {
           axios({
@@ -26,10 +26,10 @@ export default function HomeComponent() {
           }).then((res) => {
             // console.log("Bearer Token - ", res);
             Cookies.set('bearertoken',  res.data.token, { expires: new Date(new Date().getTime() + 3600000), secure: true });
-            setTimeout(function(){  window.location.reload(); }, 1000);
+            setTimeout(function(){  window.location.reload(); }, 2000);
           }).catch((err) => {
             console.log(err.message); 
-            setTimeout(function(){  window.location.reload(); }, 1000);
+            setTimeout(function(){  window.location.reload(); }, 2000);
           });
     }
     else
@@ -38,5 +38,9 @@ export default function HomeComponent() {
     }
   },[]);
 
-  return (<Pageloading />)
+  return (<>
+   <Suspense fallback={<p>...Loading</p>}>
+    <Homevideo />
+  </Suspense>
+  </>)
 }

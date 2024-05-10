@@ -56,7 +56,7 @@ export default function ProfileComponent() {
     localStorage.removeItem('verificationstatus')
     Cookies.remove('couponecodecookies');
     Cookies.remove('usertoken');
-    push("/") ;
+    push("/login") ;
     toast.success('Logout Successfully.'); 
 }
 

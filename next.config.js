@@ -1,3 +1,4 @@
+const { withNextVideo } = require('next-video/process')
 
 const withPWA = require("@ducanh2912/next-pwa").default({
     cacheOnFrontEndNav: false,
@@ -22,5 +23,3 @@ const withPWA = require("@ducanh2912/next-pwa").default({
     reactStrictMode: true,
   };
   module.exports = withPWA(nextConfig);
- 
- 
