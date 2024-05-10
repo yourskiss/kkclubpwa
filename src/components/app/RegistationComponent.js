@@ -252,6 +252,7 @@ export default function RegistationComponent() {
                     type="number"
                     name="pincode"
                     autoComplete="off"
+                    min="0"
                     maxLength={6}
                     value={pincode}
                     onInput={onInputmaxLength}
@@ -280,6 +281,7 @@ export default function RegistationComponent() {
                     type="number"
                     name="aadhaarinfo"
                     autoComplete="off"
+                    min="0"
                     maxLength={12}
                     value={aadhaarinfo}
                     onInput={onInputmaxLength}

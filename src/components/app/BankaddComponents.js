@@ -155,7 +155,7 @@ export default function BankaddComponents() {
                   </div>
                   <div className="bankInfoField">
                       <p>Account Number</p>
-                      <input type='number' name="accountnumber" maxLength={16} autoComplete="off" value={accountnumber} onInput={onInputmaxLength}  onChange={(e)=>setAccountnumber(e.target.value)} />
+                      <input type='number' name="accountnumber" min="0" maxLength={16} autoComplete="off" value={accountnumber} onInput={onInputmaxLength}  onChange={(e)=>setAccountnumber(e.target.value)} />
                   </div>
                   <div className="bankInfoField">
                     <button>CONTINUE</button>
@@ -198,11 +198,11 @@ export default function BankaddComponents() {
                   </div>
                   <div className="bankInfoField">
                       <p>RMN</p>
-                      <input type='number' name="rmn" maxLength={10} autoComplete="off" value={rmn} onInput={onInputmaxLength}  onChange={(e)=>setRmn(e.target.value)} />
+                      <input type='number' name="rmn" min="0" maxLength={10} autoComplete="off" value={rmn} onInput={onInputmaxLength}  onChange={(e)=>setRmn(e.target.value)} />
                   </div>
                   <div className="bankInfoField">
                       <p>Aadhaar Number</p>
-                      <input type='number' name="aadhaar" maxLength={12} autoComplete="off" value={aadhaar} onInput={onInputmaxLength}  onChange={(e)=>setAadhaar(e.target.value)} />
+                      <input type='number' name="aadhaar" min="0" maxLength={12} autoComplete="off" value={aadhaar} onInput={onInputmaxLength}  onChange={(e)=>setAadhaar(e.target.value)} />
                   </div>
                   <div className="bankInfoField">
                       <p>Pan Number</p>

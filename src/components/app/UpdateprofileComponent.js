@@ -188,6 +188,7 @@ export default function UpdateprofileComponent() {
                         className="registerinput"
                         type="number"
                         name="aadhaarinfo"
+                        min="0"
                         maxLength={12}
                         onInput={onInputmaxLength}
                         value={ formValue.aadhaarinfo || '' }
@@ -203,6 +204,7 @@ export default function UpdateprofileComponent() {
                         className="registerinput"
                         type="number"
                         name="postalcode"
+                        min="0"
                         maxLength={6}
                         onInput={onInputmaxLength}
                         value={ formValue.postalcode || '' }
