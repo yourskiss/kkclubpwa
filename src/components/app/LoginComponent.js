@@ -177,23 +177,24 @@ export default function LoginComponent() {
       console.count("OTPCredential");
       window.addEventListener('DOMContentLoaded', e => {
         console.count("DOMContentLoaded");
-        const input = document.querySelector('input[autocomplete="one-time-code"]');
-        if (!input) return;
+      //  const input = document.querySelector('input[autocomplete="one-time-code"]');
+      //  if (!input) return;
         const ac = new AbortController();
-        const form = input.closest('form');
-        if (form) {
-          console.count("form");
-          form.addEventListener('submit', e => {
-            ac.abort();
-          });
-        }
+        // const form = input.closest('form');
+        // if (form) {
+        //   console.count("form");
+        //   form.addEventListener('submit', e => {
+        //     ac.abort();
+        //   });
+        // }
         navigator.credentials.get({
           otp: { transport:['sms'] },
           signal: ac.signal
         }).then(otp => {
-          input.value = otp.code;
-          if (form) form.submit();
-          console.count("then");
+        //  input.value = otp.code;
+          setOtpValues(otp.code);
+        //  if (form) form.submit();
+          console.count(otp.code);
         }).catch(err => {
           console.log(err);
           console.count("catch");
