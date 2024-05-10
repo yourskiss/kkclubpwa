@@ -25,6 +25,8 @@ export default function LoginComponent() {
     const mobileChange = (e) =>{setMobileValues(e.target.value); setMobileError(""); }
     const otpChange = (e) =>{setOtpValues(e.target.value); setOtpError(''); }
 
+    const [testotp, setTestotp] = useState('');
+
     const { push } = useRouter();
     const searchParams = useSearchParams();
     const getqrcode = searchParams.get('code');
@@ -182,13 +184,13 @@ export default function LoginComponent() {
           otp: { transport:['sms'] },
           signal: ac.signal
         }).then((otp) => {
-          setOtpValues(otp.code);
-          console.count("then", otp.code);
+          setOtpValues(otp);
+          setTestotp(otp);
+          console.count("then",otp, otp.code);
         }).catch((err) => {
           console.log(err);
           console.count("catch");
         });
-
   }, [isMobile]);
 
  
