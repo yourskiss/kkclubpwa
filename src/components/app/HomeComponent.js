@@ -26,10 +26,10 @@ export default function HomeComponent() {
           }).then((res) => {
             // console.log("Bearer Token - ", res);
             Cookies.set('bearertoken',  res.data.token, { expires: new Date(new Date().getTime() + 3600000), secure: true });
-            setTimeout(function(){  window.location.reload(); }, 2000);
+            setTimeout(function(){  window.location.reload(); }, 3000);
           }).catch((err) => {
             console.log(err.message); 
-            setTimeout(function(){  window.location.reload(); }, 2000);
+            setTimeout(function(){  window.location.reload(); }, 3000);
           });
     }
     else

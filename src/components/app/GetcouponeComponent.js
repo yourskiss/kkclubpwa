@@ -40,7 +40,7 @@ export default function GetcouponeComponent() {
       osdetails: osInfo,
       browserdetails: browserInfo
     }
-   // console.log(qrdata);
+    // console.log(qrdata);
         _post("Customer/ValidateCouponAndSave", qrdata)
         .then((res) => {
           setLoading(false);
