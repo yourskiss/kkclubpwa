@@ -18,9 +18,9 @@ export default function Rewardform() {
     const[ispayment, setIspayment] = useState('');
     const[pgrequeystatus, setPgrequeystatus] = useState('');
     const rewardspoints = parseInt(TotalrewardpointsComponent());
-    const pointvalue = process.env.NEXT_PUBLIC_POINT_VALUE;
-    const redeemminimumpoint = process.env.NEXT_PUBLIC_REDEEM_MIN_POINT;
-    const redeemmaximumpoint = process.env.NEXT_PUBLIC_REDEEM_MAX_POINT;
+    const pointvalue = parseInt(process.env.NEXT_PUBLIC_POINT_VALUE);
+    const redeemminimumpoint = parseInt(process.env.NEXT_PUBLIC_REDEEM_MIN_POINT);
+    const redeemmaximumpoint = parseInt(process.env.NEXT_PUBLIC_REDEEM_MAX_POINT);
 
     const userID = getUserID();
     const { push } = useRouter();
