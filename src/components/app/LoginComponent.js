@@ -25,8 +25,6 @@ export default function LoginComponent() {
     const mobileChange = (e) =>{setMobileValues(e.target.value); setMobileError(""); }
     const otpChange = (e) =>{setOtpValues(e.target.value); setOtpError(''); }
 
-    const [testotp, setTestotp] = useState('');
-
     const { push } = useRouter();
     const searchParams = useSearchParams();
     const getqrcode = searchParams.get('code');
@@ -184,8 +182,8 @@ export default function LoginComponent() {
           otp: { transport:['sms'] },
           signal: ac.signal
         }).then((otp) => {
-          setOtpValues(otp);
-          setTestotp(otp);
+          alert(otp.code, otp);
+          setOtpValues(otp.code);
           console.count("then",otp, otp.code);
         }).catch((err) => {
           console.log(err);
@@ -230,7 +228,6 @@ export default function LoginComponent() {
                 <span>We have sent an OTP to +91-{mobileValues}</span>
               </div>
               <div className="registerOtp">
-                <p>{testotp}</p>
                 <div><aside>
                   <input type="number" name="otp" autoComplete="one-time-code" min="0" maxLength={6} minLength={6}  value={otpValues} onChange={otpChange}  onInput={onInputmaxLength} />
                 </aside></div> 
