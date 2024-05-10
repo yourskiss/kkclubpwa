@@ -252,7 +252,7 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 .approvalcontainer { width: 100%; float: left; margin-top: 1rem; }
 .approvalcontainer dl { width: 100%; float: left; margin: 0 0 3rem 0;padding: 0; display: flex; justify-content:center; align-items: flex-start; flex-direction: row-reverse;  }
 .approvalcontainer dl dt {  list-style: none; width: 200px; float: left; margin: 0;padding: 0 0 0 2rem; text-align: right; }
-.approvalcontainer dl dt aside { display: inline-block; width:96px; height: 96px; border-radius: 50%; background-color: #afcdaf; margin: 0; padding:5px; border: none; overflow: hidden; box-sizing: border-box; }
+.approvalcontainer dl dt aside { display: inline-block; width:96px; height: 96px; border-radius: 50%; background-color: #b6b5b5; margin: 0; padding:5px; border: none; overflow: hidden; box-sizing: border-box; }
 .approvalcontainer dl dt aside span {  display: flex; justify-content: center; align-items: center; float: left; width: 100%; height:100%; border: solid 3px #fff; border-radius: 50%; margin: 0;padding: 0; box-sizing: border-box; line-height: 1; font-size: 28px; text-transform: uppercase; font-family: var(--font-lneue); color: #fff; letter-spacing: 2px; }
 .approvalcontainer dl dd { list-style: none; width: calc(100% - 200px); float: left; margin: 0;padding: 0; }
 .approvalcontainer dl dd p { padding: 0; width: 100%; float: left; text-align: left; text-transform: none; font-weight: 600;color:#F5F0EB; font-size:36px; font-family: var(--font-lneue);  }
