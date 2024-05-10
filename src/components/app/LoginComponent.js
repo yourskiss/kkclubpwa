@@ -174,12 +174,15 @@ export default function LoginComponent() {
 
   useEffect(() => {
     if ('OTPCredential' in window) {
+      console.count("OTPCredential");
       window.addEventListener('DOMContentLoaded', e => {
+        console.count("DOMContentLoaded");
         const input = document.querySelector('input[autocomplete="one-time-code"]');
         if (!input) return;
         const ac = new AbortController();
         const form = input.closest('form');
         if (form) {
+          console.count("form");
           form.addEventListener('submit', e => {
             ac.abort();
           });
@@ -190,8 +193,10 @@ export default function LoginComponent() {
         }).then(otp => {
           input.value = otp.code;
           if (form) form.submit();
+          console.count("then");
         }).catch(err => {
           console.log(err);
+          console.count("catch");
         });
       });
     }
