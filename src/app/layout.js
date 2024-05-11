@@ -1,6 +1,6 @@
 // import { Inter } from "next/font/google";
 // const inter = Inter({ subsets: ["latin"] });
-
+ 
 import localFont from 'next/font/local';
 const lneue = localFont({ weight: 'normal', variable: '--font-lneue', src: './LarishNeueSemiboldRegular.woff2' });
 const arialmt = localFont({ weight: 'normal', variable: '--font-arialmt', src: './arialmt.woff2' });
@@ -9,7 +9,8 @@ import "./globals.css";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Starfield from 'react-starfield';
-
+import PwaComponent from '@/components/app/PwaComponent';
+ 
 export const metadata = {
   title: "Kerakoll Club",
   description: "Kerakoll is the international leader in sustainable building",
@@ -36,6 +37,7 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+
   return (
     <html lang="en">
       <meta name="background_color" content="#141414"/>
@@ -45,6 +47,8 @@ export default function RootLayout({ children }) {
           <Starfield starCount={1000} starColor={[255, 255, 255]} speedFactor={0.05} />
           <ToastContainer position="top-center" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored"  />
             {children}
+                
+            <PwaComponent />
         </main>
       </body>
     </html>

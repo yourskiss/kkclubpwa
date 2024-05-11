@@ -11,9 +11,11 @@ import { setCouponeCode, isCouponeCode } from "@/config/validecoupone";
 import Otpcountdown from "../core/timer";
 import { _get } from "@/config/apiClient";
 import HeaderFirst from "../shared/HeaderFirst";
-  
+ 
+
  
 export default function LoginComponent() {  
+
     const[loading, setLoading] = useState(false);
     const [isDisabled, setIsDisabled] = useState(false);
     const [mobileValues, setMobileValues] = useState('');
@@ -172,24 +174,23 @@ export default function LoginComponent() {
 
 
 
-  useEffect(() => {
-        console.count("run abort controller");
-        const ac = new AbortController();
-        setTimeout(function(){
-          ac.abort();
-        }, 0.5 * 60 * 1000);
-        navigator.credentials.get({
-          otp: { transport:['sms'] },
-          signal: ac.signal
-        }).then((otp) => {
-          alert(otp.code, otp);
-          setOtpValues(otp.code);
-          console.count("then",otp, otp.code);
-        }).catch((err) => {
-          console.log(err);
-          console.count("catch");
-        });
-  }, [isMobile]);
+  // useEffect(() => {
+  //       console.count("run abort controller");
+  //       const ac = new AbortController();
+  //       setTimeout(function(){
+  //         ac.abort();
+  //       }, 0.5 * 60 * 1000);
+  //       navigator.credentials.get({
+  //         otp: { transport:['sms'] },
+  //         signal: ac.signal
+  //       }).then((otp) => {
+  //         setOtpValues(otp.code);
+  //         alert("then",otp, otp.code);
+  //       }).catch((err) => {
+  //         console.log(err);
+  //         console.count("catch");
+  //       });
+  // }, [isMobile]);
 
  
   return (
@@ -248,6 +249,7 @@ export default function LoginComponent() {
     </div>
 
     { loading ? <Loader message="Request submitting" /> : null }
+
   </>
   )
 }
