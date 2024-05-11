@@ -41,8 +41,9 @@ export default function PwaComponent() {
             {
                 if(choiceResult.outcome==="dismissed")
                 {
-                    
                     toast.info("Installation Cancelled.");
+                    Cookies.set('pwarequest',  true, { expires: new Date(new Date().getTime() + 300000), secure: true });
+                    window.location.reload();
                 }
                 else
                 {
