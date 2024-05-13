@@ -248,9 +248,8 @@ export default function LoginComponent() {
                 <span>We have sent an OTP to +91-{mobileValues}</span>
               </div>
               <div className="registerOtp">
-                <p style={{'color':'#f30'}}>{otpValues}</p>
                 <div><aside>
-                  <input type="number" name="otp" autoComplete="one-time-code" min="0" maxLength={6} minLength={6}  value={111} onChange={otpChange}  onInput={onInputmaxLength} />
+                  <input type="number" name="otp" min="0" maxLength={6} minLength={6}  value={otpValues} onChange={otpChange}  onInput={onInputmaxLength} />
                 </aside></div> 
               </div>
               { otpError && <span className='registerError'>{otpError}</span>  }
