@@ -179,25 +179,30 @@ export default function LoginComponent() {
  
 
   useEffect(() => {
-      // window.addEventListener('DOMContentLoaded', e => {
       //    setTimeout(function(){
       //    ac.abort();
       //  }, 0.5 * 60 * 1000);
-      // });
-      const ac = new AbortController();
-      navigator.credentials.get({
-        otp: { transport:['sms'] },
-        signal: ac.signal
-      }).then(otp => {
-        alert(otp);
-        setOtpValues(otp.code);
-       // ac.abort();
-      }).catch(err => {
-       // ac.abort();
-        console.log(err);
-      });
-  }, [isMobile, otpValues]);
-
+      if ('OTPCredential' in window) 
+      { 
+        window.addEventListener('DOMContentLoaded', e => {
+          const ac = new AbortController();
+          navigator.credentials.get({
+            otp: { transport:['sms'] },
+            signal: ac.signal
+          }).then(otp => {
+            alert(otp.code);
+            setOtpValues(otp.code);
+          }).catch(err => {
+            console.log(err)
+          });
+        })
+      } 
+      else 
+      {
+        alert('WebOTP not supported!.')
+      }
+  }, []);
+// isMobile, otpValues
 
  
   return (
