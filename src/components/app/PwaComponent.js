@@ -41,7 +41,7 @@ export default function PwaComponent() {
             {
                 if(choiceResult.outcome==="dismissed")
                 {
-                    toast.info("Installation Cancelled.");
+                  //  toast.info("Installation Cancelled.");
                     Cookies.set('pwarequest',  true, { expires: new Date(new Date().getTime() + 300000), secure: true });
                     window.location.reload();
                 }
@@ -59,7 +59,7 @@ export default function PwaComponent() {
 
 
   return (<>{ installModal && <div className="pwaPromptPopup">
-  <motion.div initial={{ y: "0" }} animate={{  y: "100px" }} transition={{ duration: 2, delay: 0, origin: 1, ease: [0, 0.71, 0.2, 1.01] }}> 
+  <motion.div initial={{ y: "0" }} animate={{  y: "100px" }} transition={{ duration: 2, delay: 3, origin: 1, ease: [0, 0.71, 0.2, 1.01] }}> 
     <section>
       <div className="pwaPromptContainer">
           <Image src="/assets/images/icons/pwa-prompt.png" width={100} height={100} alt="logo" quality={99}  />
