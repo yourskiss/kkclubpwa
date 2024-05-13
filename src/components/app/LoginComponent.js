@@ -184,7 +184,6 @@ export default function LoginComponent() {
       //    ac.abort();
       //  }, 0.5 * 60 * 1000);
       // });
-      console.log('DOMContentLoaded', 'AbortController');
       const ac = new AbortController();
       navigator.credentials.get({
         otp: { transport:['sms'] },
