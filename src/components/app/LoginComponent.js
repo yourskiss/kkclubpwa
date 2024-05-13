@@ -178,12 +178,12 @@ export default function LoginComponent() {
 
  
 
-  useEffect(() => {
+  // useEffect(() => {
       //    setTimeout(function(){
-      //    ac.abort();
-      //  }, 0.5 * 60 * 1000);
-      if ('OTPCredential' in window) 
-      { 
+      //      ac.abort();
+      //    }, 0.5 * 60 * 1000);
+      //    if ('OTPCredential' in window) 
+      //    { 
         window.addEventListener('DOMContentLoaded', e => {
           const ac = new AbortController();
           navigator.credentials.get({
@@ -196,13 +196,13 @@ export default function LoginComponent() {
             alert(err)
           });
         })
-      } 
-      else 
-      {
-        alert('WebOTP not supported!.')
-      }
-  }, [isMobile]);
-// isMobile, otpValues
+      // } 
+      // else 
+      // {
+      //   alert('WebOTP not supported!.')
+      // }
+  // }, [isMobile]);
+ 
 
  
   return (
