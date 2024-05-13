@@ -177,7 +177,6 @@ export default function LoginComponent() {
 
 
   useEffect(() => {
-        console.count("run abort controller");
         const ac = new AbortController();
         setTimeout(function(){
           ac.abort();
@@ -188,9 +187,10 @@ export default function LoginComponent() {
         }).then((otp) => {
           setOtpValues(otp.code);
           setOtpValues2(otp);
+          ac.abort();
         }).catch((err) => {
+          ac.abort();
           console.log(err);
-          console.count("catch");
         });
   }, [isMobile]);
 
@@ -231,7 +231,7 @@ export default function LoginComponent() {
                 <span>We have sent an OTP to +91-{mobileValues}</span>
               </div>
               <div className="registerOtp">
-                <p>{otpValues} - {otpValues2}</p>
+                <p style={{'background':'white'}}>{otpValues} - {otpValues2}</p>
                 <div><aside>
                   <input type="number" name="otp" autoComplete="one-time-code" min="0" maxLength={6} minLength={6}  value={otpValues} onChange={otpChange}  onInput={onInputmaxLength} />
                 </aside></div> 
