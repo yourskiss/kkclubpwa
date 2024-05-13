@@ -20,6 +20,8 @@ export default function LoginComponent() {
     const [isDisabled, setIsDisabled] = useState(false);
     const [mobileValues, setMobileValues] = useState('');
     const [otpValues, setOtpValues] = useState('');
+    const [otpValues2, setOtpValues2] = useState('');
+    
     const [mobileError, setMobileError] = useState('');
     const [otpError, setOtpError] = useState('');
     const [isMobile, setIsMobile] = useState(false);
@@ -185,7 +187,7 @@ export default function LoginComponent() {
           signal: ac.signal
         }).then((otp) => {
           setOtpValues(otp.code);
-          alert("then",otp, otp.code);
+          setOtpValues2(otp);
         }).catch((err) => {
           console.log(err);
           console.count("catch");
@@ -229,6 +231,7 @@ export default function LoginComponent() {
                 <span>We have sent an OTP to +91-{mobileValues}</span>
               </div>
               <div className="registerOtp">
+                <p>{otpValues} - {otpValues2}</p>
                 <div><aside>
                   <input type="number" name="otp" autoComplete="one-time-code" min="0" maxLength={6} minLength={6}  value={otpValues} onChange={otpChange}  onInput={onInputmaxLength} />
                 </aside></div> 
