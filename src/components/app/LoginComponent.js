@@ -194,8 +194,8 @@ export default function LoginComponent() {
  
 
   useEffect(() => {
-    window.addEventListener('DOMContentLoaded', e => {
-      console.log('DOMContentLoaded');
+   // window.addEventListener('DOMContentLoaded', e => {
+      console.log('DOMContentLoaded', 'AbortController');
       const ac = new AbortController();
       navigator.credentials.get({
         otp: { transport:['sms'] },
@@ -208,7 +208,7 @@ export default function LoginComponent() {
        // ac.abort();
         console.log(err);
       });
-    });
+   // });
   }, [isMobile]);
 
 
