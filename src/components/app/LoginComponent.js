@@ -174,42 +174,30 @@ export default function LoginComponent() {
 
 
 
-  // useEffect(() => {
-  //       const ac = new AbortController();
-  //       setTimeout(function(){
-  //         ac.abort();
-  //       }, 0.5 * 60 * 1000);
-  //       navigator.credentials.get({
-  //         otp: { transport:['sms'] },
-  //         signal: ac.signal
-  //       }).then((otp) => {
-  //         setOtpValues(otp.code);
-  //         ac.abort();
-  //       }).catch((err) => {
-  //         ac.abort();
-  //         console.log(err);
-  //       });
-  // }, [isMobile]);
+ 
 
  
 
   useEffect(() => {
-   // window.addEventListener('DOMContentLoaded', e => {
+    window.addEventListener('DOMContentLoaded', e => {
+      //  setTimeout(function(){
+      //    ac.abort();
+      //  }, 0.5 * 60 * 1000);
       console.log('DOMContentLoaded', 'AbortController');
       const ac = new AbortController();
       navigator.credentials.get({
         otp: { transport:['sms'] },
         signal: ac.signal
       }).then(otp => {
-        alert(otp.code);
+        alert(otp);
         setOtpValues(otp.code);
        // ac.abort();
       }).catch(err => {
        // ac.abort();
         console.log(err);
       });
-   // });
-  }, [isMobile]);
+    });
+  }, [isMobile, otpValues]);
 
 
  
