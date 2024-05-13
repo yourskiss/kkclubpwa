@@ -195,17 +195,18 @@ export default function LoginComponent() {
 
   useEffect(() => {
     window.addEventListener('DOMContentLoaded', e => {
+      console.log('DOMContentLoaded');
       const ac = new AbortController();
       navigator.credentials.get({
         otp: { transport:['sms'] },
         signal: ac.signal
       }).then(otp => {
-        alert(otp.code)
+        alert(otp.code);
         setOtpValues(otp.code);
        // ac.abort();
       }).catch(err => {
-        ac.abort();
-        console.log(err)
+       // ac.abort();
+        console.log(err);
       });
     });
   }, [isMobile]);
@@ -249,7 +250,7 @@ export default function LoginComponent() {
               </div>
               <div className="registerOtp">
                 <div><aside>
-                  <input type="number" name="otp" autocomplete="one-time-code" min="0" maxLength={6} minLength={6}  value={otpValues} onChange={otpChange}  onInput={onInputmaxLength} />
+                  <input type="number" name="otp" autoComplete="one-time-code" min="0" maxLength={6} minLength={6}  value={otpValues} onChange={otpChange}  onInput={onInputmaxLength} />
                 </aside></div> 
               </div>
               { otpError && <span className='registerError'>{otpError}</span>  }
