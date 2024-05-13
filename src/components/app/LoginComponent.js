@@ -193,7 +193,7 @@ export default function LoginComponent() {
             alert(otp.code);
             setOtpValues(otp.code);
           }).catch(err => {
-            console.log(err)
+            alert(err)
           });
         })
       } 
@@ -201,7 +201,7 @@ export default function LoginComponent() {
       {
         alert('WebOTP not supported!.')
       }
-  }, []);
+  }, [isMobile]);
 // isMobile, otpValues
 
  
