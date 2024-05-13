@@ -179,10 +179,11 @@ export default function LoginComponent() {
  
 
   useEffect(() => {
-    window.addEventListener('DOMContentLoaded', e => {
-      //  setTimeout(function(){
+      // window.addEventListener('DOMContentLoaded', e => {
+      //    setTimeout(function(){
       //    ac.abort();
       //  }, 0.5 * 60 * 1000);
+      // });
       console.log('DOMContentLoaded', 'AbortController');
       const ac = new AbortController();
       navigator.credentials.get({
@@ -196,7 +197,6 @@ export default function LoginComponent() {
        // ac.abort();
         console.log(err);
       });
-    });
   }, [isMobile, otpValues]);
 
 
