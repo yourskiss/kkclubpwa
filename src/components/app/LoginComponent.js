@@ -178,31 +178,45 @@ export default function LoginComponent() {
 
  
 
-   useEffect(() => {
       //    setTimeout(function(){
       //      ac.abort();
       //    }, 0.5 * 60 * 1000);
       //    if ('OTPCredential' in window) 
       //    { 
       //  window.addEventListener('DOMContentLoaded', e => {
-          const ac = new AbortController();
-          navigator.credentials.get({
-            otp: { transport:['sms'] },
-            signal: ac.signal
-          }).then(otp => {
-            alert(otp);
-            setOtpValues(otp.code);
-          }).catch(err => {
-            alert(err)
-          });
       //  })
       // } 
       // else 
       // {
       //   alert('WebOTP not supported!.')
       // }
-   }, [isMobile]);
+
  
+   useEffect(() => {
+    if ('OTPCredential' in window) {
+      const ac = new AbortController();
+      navigator.credentials
+        .get({ otp: { transport: ['sms'] }, signal: ac.signal })
+        .then(function(otpCredential) {
+          alert('otpCredential - ', otpCredential);
+          setOtpValues(otpCredential.code);
+          ac.abort();
+        })
+        .catch(function(error) {
+          if (error.name === 'NotAllowedError') {
+            alert('User denied permission to access credentials.');
+          } else if (error.name === 'AbortError') {
+            alert('Operation was aborted.');
+          } else if (error.name === 'NotSupportedError') {
+            alert('API not supported in this environment.');
+          } else {
+            alert('An unexpected error occurred:', error);
+          }
+          ac.abort();
+        });
+    }
+  }, [isMobile]);
+
 
  
   return (
