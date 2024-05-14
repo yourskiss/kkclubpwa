@@ -17,7 +17,6 @@ import OtpInput from 'react-otp-input';
 export default function LoginComponent() {  
   const [pagemsg, setPagemsg] = useState('');
     const[loading, setLoading] = useState(false);
-    const [isDisabled, setIsDisabled] = useState(false);
     const [mobileValues, setMobileValues] = useState('');
     const [otpValues, setOtpValues] = useState('');
     const [mobileError, setMobileError] = useState('');
@@ -59,7 +58,6 @@ export default function LoginComponent() {
     }
     const changeNumber = (e) => {
       e.preventDefault();
-      setIsDisabled(false);
       setIsMobile(false)
     }
     const mobileSubmit =(e) =>{
@@ -71,7 +69,6 @@ export default function LoginComponent() {
       else { 
         setMobileError("");
         setIsMobile(true);   
-        setIsDisabled(true);
         sendotp();
       }
     }
@@ -165,7 +162,6 @@ export default function LoginComponent() {
        // console.log("Verify OTP - ", res);
         if(res.data.isValid)
         {
-         // toast.success("OTP Successfully Verify");
           loginnow();
         }
         else
@@ -193,9 +189,9 @@ export default function LoginComponent() {
    useEffect(() => {
     if ('OTPCredential' in window) {
       const ac = new AbortController();
-      setTimeout(function(){
-        ac.abort();
-      }, 1 * 60 * 1000);
+      // setTimeout(function(){
+      //   ac.abort();
+      // }, 1 * 60 * 1000);
       navigator.credentials
         .get({ otp: { transport: ['sms'] }, signal: ac.signal })
         .then((otpCredential) => {
@@ -216,7 +212,7 @@ export default function LoginComponent() {
           ac.abort();
         });
     }
-  }, [isDisabled]);
+  }, [isMobile]);
 
 
  
@@ -227,15 +223,14 @@ export default function LoginComponent() {
     <div className='screenmain'>
     <section className="screencontainer">
 
-
-          { !isDisabled ? (<form onSubmit={mobileSubmit}>
+          { !isMobile ? (<form onSubmit={mobileSubmit}>
               <div className="registercontainer">
                 <div className="registerHead">Welcome!</div>
                 <div className="registerField">
                   <div className="registertext">Enter mobile number *</div>
                   <div className="registerinputformobile">
                     <span>+91-</span>
-                    <input className="registerinput" type="number" name="mobile" autoComplete="off" min="0" maxLength={10} minLength={10} value={mobileValues} onChange={mobileChange} disabled={isDisabled} onInput={onInputmaxLength} />
+                    <input className="registerinput" type="number" name="mobile" autoComplete="off" min="0" maxLength={10} minLength={10} value={mobileValues} onChange={mobileChange} onInput={onInputmaxLength} />
                   </div>
                   { mobileError && <span className='registerError'>{mobileError}</span> } 
                 </div>
@@ -244,12 +239,7 @@ export default function LoginComponent() {
               <div className="registerSubmit">
                 <button className="register_button">SEND OTP</button>
               </div>
-            </form>) : null }
-          
-              
-
-       { mobileError === '' && isMobile ? ( 
-        <form onSubmit={otpSubmit}>
+            </form>) :  (<form onSubmit={otpSubmit}>
             <div className="registercontainer">
               <div className="registerHead">Verify with OTP</div>
               <div className="registerMsgOtp">
@@ -276,8 +266,7 @@ export default function LoginComponent() {
             <div className="registerSubmit">
                 <button className="register_button">Sign In</button>
             </div>
-        </form>
-         ) : null }
+        </form>) }
 
  
     </section>
