@@ -8,10 +8,10 @@ import { ipaddress, osdetails, browserdetails, geoLatitude, geoLongitude } from 
 import {  toast } from 'react-toastify';
 import { isCouponeCode, getCouponeCode } from "@/config/validecoupone";
 import { _post } from "@/config/apiClient";
-import HeaderAfterLogin from '../shared/HeaderAfterlogin';
+import HeaderDashboard from '../shared/HeaderDashboard';
 
 export default function GetcouponeComponent() {
- 
+  const [pagemsg, setPagemsg] = useState('');
   const [loading, setLoading] = useState(false);
   const [couponecode, setCouponecode] = useState('');
   const { push } = useRouter();
@@ -32,6 +32,8 @@ export default function GetcouponeComponent() {
   {
     e.preventDefault();
     setLoading(true);
+    setPagemsg('Validating Coupon');
+    
     const qrdata = {
       userid: userID,
       couponcode: couponecode,
@@ -55,7 +57,7 @@ export default function GetcouponeComponent() {
 
   return (
     <div className='outsidescreen'>
-      <HeaderAfterLogin backrouter="/dashboard"  />
+      <HeaderDashboard />
       <div className="screenmain screenqrcode" > 
         <div className="screencontainer">
 
@@ -71,7 +73,7 @@ export default function GetcouponeComponent() {
       </div> 
  
 
-      { loading ? <Loader message="Validating Coupon" /> : null }
+     <Loader showStatus={loading}  message={pagemsg} />
     </div>
   )
 }

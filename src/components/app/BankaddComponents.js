@@ -2,15 +2,16 @@
 import Image from 'next/image';
 import { toast } from 'react-toastify';
 import { useRouter, useSearchParams } from 'next/navigation';
-import HeaderAfterLogin from "../shared/HeaderAfterlogin";
 import { useState, useEffect } from 'react';
 import { _get, _post } from "@/config/apiClient";
 import { getUserID } from '@/config/userauth';
 import Loader from '../shared/LoaderComponent';
 import { ipaddress, osdetails, browserdetails  } from "../core/jio";
+import HeaderDashboard from '../shared/HeaderDashboard';
  
 export default function BankaddComponents() {
     const [backroutepath, setbackroutepath] = useState('');
+    const [pagemsg, setPagemsg] = useState('');
     const [loading, setLoading] = useState(false);
     const [step, setStep] = useState(1);
     const [option, setOption] = useState('bank');
@@ -31,7 +32,7 @@ export default function BankaddComponents() {
 
     const getpathfrom = searchParams.get('q') ?? "0";
     useEffect(()=>{
-      getpathfrom === '1' || getpathfrom === 1 ? setbackroutepath('/redeempoints') : setbackroutepath('/profile')
+      getpathfrom === '1' || getpathfrom === 1 ? setbackroutepath('/redeempoints') : setbackroutepath('/dashboard')
     },[backroutepath]);
     
     const onInputmaxLength = (e) => {
@@ -58,7 +59,7 @@ export default function BankaddComponents() {
         else if(accountnumber === '') { toast.error('Account Number is required'); }
         else { 
           setStep(3); 
-         // setUpicode('');
+          setUpicode('');
         }
     }
  
@@ -67,16 +68,18 @@ export default function BankaddComponents() {
       if(upicode === '') { toast.error('UPI ID is required'); }
       else { 
         setStep(3);
-      //  setBankname('');
-      //  setIfsccode('');
-       // setAccountnumber(''); 
+        setBankname('');
+        setIfsccode('');
+        setAccountnumber(''); 
       }
     }
     const handleSubmit= (e) => {
       e.preventDefault();
+        const regexMobile = /^[6789][0-9]{9}$/i;
         if(username === '') { toast.error('Name is required'); }
         else if(rmn === '') { toast.error('RMN is required'); }
         else if(rmn.length !== 10) { toast.error('RMN must have 10 Digit'); }
+        else if(!regexMobile.test(rmn)){toast.error("Invalid mobile number!");}
         else if(aadhaar === '') { toast.error('Aadhaar number is required'); }
         else if(aadhaar.length !== 12) { toast.error('Aadhaar number must have 12 Digit'); }
         else if(pan === '') { toast.error('Pan Number is required'); }
@@ -104,6 +107,7 @@ export default function BankaddComponents() {
       }
       // console.log(" bank details -",bankinfo);
       setLoading(true);
+      setPagemsg('Bank details saving');
       _post("/Payment/SaveUserPayoutInfo", bankinfo)
       .then((res) => {
           setLoading(false);
@@ -126,7 +130,7 @@ export default function BankaddComponents() {
 
  
   return (<>
-    <HeaderAfterLogin backrouter="/profile" />
+    <HeaderDashboard />
 
     <div className="screenmain"> 
         <div className="screencontainer">
@@ -222,6 +226,6 @@ export default function BankaddComponents() {
         </div>
     </div>
     
-    { loading ? <Loader message="Bank infomation saving" /> : null }
+    <Loader showStatus={loading}  message={pagemsg} />
 </>)
 }

@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { toast } from 'react-toastify';
 import { motion } from "framer-motion";
 
-export default function PwaComponent() {
+export default function PwaModal() {
     const[installModal, setInstallModal] = useState(false);
     const[pmtEvt, setPmtEvt] = useState(null);
  

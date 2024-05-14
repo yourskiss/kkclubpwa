@@ -16,6 +16,7 @@ import { setCouponeCode, isCouponeCode } from "@/config/validecoupone";
 
 export default function RegistationComponent() {
   const [step, setStep] = useState(1);
+  const [pagemsg, setPagemsg] = useState('');
   const[loading, setLoading] = useState(false);
   
   const [cityStateName, setCityStateName] = useState('');
@@ -124,6 +125,7 @@ export default function RegistationComponent() {
   const handleRegistration = () => 
   {
     setLoading(true);
+    setPagemsg('Information Savings');
     const datafinal = {
       firstname: firstname,
       lastname: lastname,
@@ -310,6 +312,6 @@ export default function RegistationComponent() {
 
 
 
-    { loading ? <Loader message="Information Savings" /> : null }
+    <Loader showStatus={loading} message={pagemsg} />
 </>)
 }

@@ -4,14 +4,15 @@ import CountUp from 'react-countup';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
-import HeaderAfterLogin from "../shared/HeaderAfterlogin";
 import Rewardform from '../shared/Rewardform';
 import { useEffect, useState } from 'react';
 import { _get } from "@/config/apiClient";
 import { getUserID } from '@/config/userauth';
 import Loader from '../shared/LoaderComponent';
+import HeaderDashboard from '../shared/HeaderDashboard';
 
 export default function RedeempointsComponents() {
+    const [pagemsg, setPagemsg] = useState('');
     const [loading, setLoading] = useState(false);
     const [resultcode, setResultcode] = useState('');
     const rewardspoints = TotalrewardpointsComponent();
@@ -20,6 +21,7 @@ export default function RedeempointsComponents() {
 
     useEffect(() => {
         setLoading(true);
+        setPagemsg('Validating bank information');
         _get("/Payment/GetUserPayoutInfo?userid="+userid)
         .then((res) => {
             setLoading(false);
@@ -37,7 +39,7 @@ export default function RedeempointsComponents() {
      }, [resultcode]);
 
   return (<>
-    <HeaderAfterLogin  backrouter="/dashboard" />
+    <HeaderDashboard />
     <div className="screenmain redeemscreen"> 
         <div className="screencontainer">
 
@@ -67,6 +69,6 @@ export default function RedeempointsComponents() {
 
     </div>
 
-    { loading ? <Loader message="Validating bank information" /> : null }
+   <Loader showStatus={loading} message={pagemsg} />  
 </>)
 }

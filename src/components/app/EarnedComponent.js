@@ -8,9 +8,10 @@ import Image from 'next/image'
 import CountUp from 'react-countup';
 import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
 import { _get } from "@/config/apiClient";
-import HeaderAfterLogin from '../shared/HeaderAfterlogin';
+import HeaderDashboard from '../shared/HeaderDashboard';
 
 export default function EarnedComponent() {
+    const [pagemsg, setPagemsg] = useState('');
     const [loading, setLoading] = useState(false);
     const [pointnumber, setPointnumber] = useState(0);
     const rewardspoints = TotalrewardpointsComponent();
@@ -21,6 +22,7 @@ export default function EarnedComponent() {
    
     useEffect(() => {
         setLoading(true);
+        setPagemsg('Validating Coupon');
         _get("Customer/RewardPointInfo?pointid="+params.pointid)
         .then((res) => {
           //  console.log(" response - ", res);
@@ -33,7 +35,7 @@ export default function EarnedComponent() {
     }, []);
 
   return (<div className='outsidescreen'>
-      <HeaderAfterLogin  backrouter="/profile" />
+      <HeaderDashboard />
       <div className="screenmain screenqrcode" > 
         <div className="screencontainer">
 
@@ -70,7 +72,7 @@ export default function EarnedComponent() {
       </div> 
 
 
-      { loading ? <Loader /> : null }
+      <Loader showStatus={loading}  message={pagemsg} />
       
     </div>)
 }

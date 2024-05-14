@@ -4,29 +4,44 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { isUserToken, isBearerToken } from '@/config/userauth';
+import { getUserMobile } from '@/config/userauth';
+import { _get } from "@/config/apiClient";
+import Loader from './LoaderComponent';
 
 export default  function HeaderDashboard() {
   const[usershort, setUsershort] = useState('');
   const[userstatus, setUserstatus] = useState('');
-
+  const[username, setUsername] = useState('');
   const { push } = useRouter();
   const userToken  =  isUserToken();
   const bearerToken = isBearerToken();
+  const userMobile = getUserMobile();
 
 useEffect(() => {
   if(!userToken) { push("/login"); return  }
   if(!bearerToken) { push("/"); return  }
 }, []);
 
+
 useEffect(() => {
-  if (typeof localStorage !== 'undefined') 
-  {
-      // setUsername(localStorage.getItem('userprofilename'));
-      setUsershort(localStorage.getItem('userprofilesn'));
-      setUserstatus(localStorage.getItem('verificationstatus'));
-  } 
+  _get("Customer/UserInfo?userid=0&phonenumber="+ userMobile)
+  .then((res) => {
+     // console.log(" response - ", res);
+     localStorage.setItem("userprofilename",res.data.result.fullname);
+     localStorage.setItem("userprofilesn",res.data.result.shortname);
+     localStorage.setItem("verificationstatus",res.data.result.verificationstatus);
+
+     setUsershort(res.data.result.shortname);
+     setUserstatus(res.data.result.verificationstatus);
+     setUsername(res.data.result.fullname)
+  }).catch((error) => {
+      toast.info(error); 
+  });
+ 
 }, []);
 
+
+ 
  
 
   return (
@@ -36,7 +51,7 @@ useEffect(() => {
           <Image src="/assets/images/logo.png" width={270} height={50} alt="logo" quality={99} />
         </aside>
         <section>
-            <Link href="/scanqrcode" className='header_scanqrcode'><Image src="/assets/images/QR.png" width={100} height={100} alt="qr" quality={90} /></Link>
+            <Link href="/scanqrcode" className='header_scanqrcode'><Image src="/assets/images/QR.png" width={100} height={100} alt={username} quality={90} /></Link>
             {/*             
             <span className='header_notification'>
               <Image src="/assets/images/notification.png" width={100} height={100} alt="notification" quality={90} />
@@ -48,9 +63,6 @@ useEffect(() => {
             </aside>
         </section>
       </header>
- 
-
     </>
-
   )
 }

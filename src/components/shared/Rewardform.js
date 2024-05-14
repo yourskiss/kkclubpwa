@@ -9,14 +9,13 @@ import { ipaddress, osname  } from "../core/jio";
 import { _get } from "@/config/apiClient";
 
 export default function Rewardform() {
+    const [pagemsg, setPagemsg] = useState('');
     const [loading, setLoading] = useState(false);
     const [pendingorder, setPendingorder] = useState(0);
     const [userOrderID, setUserOrderID] = useState('');
     const[userstatus, setUserstatus] = useState('');
     const[redeempoint, setRedeempoint] = useState(''); 
-    const[isclose, setIsclose] = useState(''); 
-    const[ispayment, setIspayment] = useState('');
-    const[pgrequeystatus, setPgrequeystatus] = useState('');
+ 
     const rewardspoints = parseInt(TotalrewardpointsComponent());
     const pointvalue = parseInt(process.env.NEXT_PUBLIC_POINT_VALUE);
     const redeemminimumpoint = parseInt(process.env.NEXT_PUBLIC_REDEEM_MIN_POINT);
@@ -35,11 +34,15 @@ export default function Rewardform() {
     }, [userstatus]);
 
     useEffect(() => {
+        setLoading(true);
+        setPagemsg('Checking pendding order');
         _get(`/Payment/UserPendingOrder?userID=${userID}`)
         .then((res) => {
-          console.log("Previous order - ", res.data.result[0].pendingorder,  res);
-          setPendingorder(res.data.result[0].pendingorder);
+            setLoading(false);
+            console.log("Previous order - ", res.data.result[0].pendingorder,  res);
+            setPendingorder(res.data.result[0].pendingorder);
         }).catch((error) => {
+            setLoading(false);
             toast.info(error); 
         });
     }, [pendingorder]);
@@ -83,6 +86,7 @@ export default function Rewardform() {
         }
 
         setLoading(true);
+        setPagemsg('Payment Initiation');
         _get(`/Payment/UserPayout?userID=${userID}&points=${redeempoint}&amount=${redeempoint * pointvalue}&ipaddress=${ipInfo}&osdetails=${osn}`)
         .then((res) => {
             setLoading(false);
@@ -109,10 +113,7 @@ export default function Rewardform() {
             {
                 _get(`/Payment/UserPayoutStatus?userID=${userID}&orderID=${val}`)
                 .then((res) => {   
-                console.log("Payout Status - ", res.data.isclose, res.data.ispayment, res.data.pgrequeystatus, res); 
-                setIsclose(res.data.isclose);
-                setIspayment(res.data.ispayment);
-                setPgrequeystatus(res.data.pgrequeystatus);
+                    console.log("Payout Status - ", res.data.isclose, res.data.ispayment, res.data.pgrequeystatus, res); 
                 }).catch((error) => {
                     toast.info(error); 
                 });
@@ -127,6 +128,7 @@ export default function Rewardform() {
         else 
         {
             setLoading(true);
+            setPagemsg('Payment Initiating');
             const interval = setInterval(() => {
                 payoutstatus(userOrderID);
             }, 5000);  
@@ -159,6 +161,6 @@ export default function Rewardform() {
         </div>
 
 
-        { loading ? <Loader message="Payment Initiation" /> : null }
+         <Loader showStatus={loading} message={pagemsg} />  
   </>)
 }

@@ -5,9 +5,10 @@ import Loader from "../shared/LoaderComponent";
 import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
 import CountUp from 'react-countup';
 import { _get } from "@/config/apiClient";
-import HeaderAfterLogin from "../shared/HeaderAfterlogin";
+import HeaderDashboard from "../shared/HeaderDashboard";
 
 export default function RewardshistoryComponent () {
+  const [pagemsg, setPagemsg] = useState('');
   const [loading, setLoading] = useState(false);
   const [pointhistory, setPointhistory] = useState({});
   const [nodata, setNodata] = useState('');
@@ -16,6 +17,7 @@ export default function RewardshistoryComponent () {
   
   useEffect(() => {
     setLoading(true);
+    setPagemsg('Reward history fetching');
     _get("Customer/UserRewardPointsHistory?userid="+ userID)
     .then((res) => {
        // console.log("UserRewardPointsHistory - response - ", res);
@@ -39,7 +41,7 @@ export default function RewardshistoryComponent () {
  const points = TotalrewardpointsComponent();
   return (
   <div className="outsiderewads">
-    <HeaderAfterLogin  backrouter="/profile" />
+    <HeaderDashboard />
     <div className="screenmain screenrewads"> 
       <div className="screencontainer">
  
@@ -76,7 +78,7 @@ export default function RewardshistoryComponent () {
 
 
 
-    { loading ? <Loader message="Getting response" /> : null }
+   <Loader showStatus={loading} message={pagemsg}  />
   </div>
   )
 }

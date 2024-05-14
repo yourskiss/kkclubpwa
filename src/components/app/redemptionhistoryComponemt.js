@@ -6,15 +6,13 @@ import { getUserID } from "@/config/userauth";
 import Loader from "../shared/LoaderComponent";
 import CountUp from 'react-countup';
 import { _get } from "@/config/apiClient";
-import HeaderAfterLogin from "../shared/HeaderAfterlogin";
 import { toast } from 'react-toastify';
 import TotalRedeemedPoints from '../shared/totalredemption';
+import HeaderDashboard from '../shared/HeaderDashboard';
  
 
 export default function RedemptionhistoryComponemt () {
-  const[isclose, setIsclose] = useState(''); 
-  const[ispayment, setIspayment] = useState('');
-  const[pgrequeystatus, setPgrequeystatus] = useState('');
+  const [pagemsg, setPagemsg] = useState('');
   const [btnload, setBtnload] = useState(false);
   const [loading, setLoading] = useState(false);
   const [pointhistory, setPointhistory] = useState({});
@@ -26,6 +24,7 @@ export default function RedemptionhistoryComponemt () {
 
   useEffect(() => {
      setLoading(true);
+     setPagemsg('Redeemed history fetching');
     _get(`Customer/UserRedeemedPointsHistory?userid=${userID}`)
     .then((res) => {
         console.log("Redeemed Points History - ", res);
@@ -57,14 +56,12 @@ export default function RedemptionhistoryComponemt () {
   const payoutstatus = (od) => {
     setLoading(true);
     setBtnload(true);
+    setPagemsg('Checking payment status');
     _get(`/Payment/UserPayoutStatus?userID=${userID}&orderID=${od}`)
     .then((res) => { 
      // console.log("Status inside - ", res.data.isclose, res.data.ispayment, res.data.pgrequeystatus, res); 
       if(res.status === 200)
       {
-        setIsclose(res.data.isclose);
-        setIspayment(res.data.ispayment);
-        setPgrequeystatus(res.data.pgrequeystatus);
         setTimeout(function(){
           setLoading(false);
           setBtnload(false);
@@ -86,7 +83,7 @@ export default function RedemptionhistoryComponemt () {
  
   return (
   <div className="outsiderewads">
-    <HeaderAfterLogin backrouter="/profile" />
+    <HeaderDashboard />
     <div className="screenmain screenrewads"> 
       <div className="screencontainer">
  
@@ -129,7 +126,7 @@ export default function RedemptionhistoryComponemt () {
 
 
 
-    { loading ? <Loader message="Validating information" /> : null }
+    <Loader showStatus={loading} message={pagemsg} /> 
   </div>
   )
 }

@@ -7,9 +7,10 @@ import { _get, _post } from "@/config/apiClient";
 import { getUserID } from '@/config/userauth';
 import Loader from '../shared/LoaderComponent';
 import { ipaddress, osdetails, browserdetails  } from "../core/jio";
-import HeaderAfterLogin from '../shared/HeaderAfterlogin';
+import HeaderDashboard from '../shared/HeaderDashboard';
 
 export default function BankdetailupdateComponents() {
+    const [pagemsg, setPagemsg] = useState('');
     const [loading, setLoading] = useState(false);
     const [step, setStep] = useState(0);
     const [option, setOption] = useState('');
@@ -30,6 +31,7 @@ export default function BankdetailupdateComponents() {
 
     useEffect(() => {
         setLoading(true);
+        setPagemsg('Bank details fetching');
         _get("/Payment/GetUserPayoutInfo?userid="+userid)
         .then((res) => {
             setLoading(false);
@@ -100,9 +102,11 @@ const handleUpiId = (e) => {
 }
 const handleSubmit= (e) => {
   e.preventDefault();
+  const regexMobile = /^[6789][0-9]{9}$/i;
     if(username === '') { toast.error('Name is required'); }
     else if(rmn === '') { toast.error('RMN is required'); }
     else if(rmn.length !== 10) { toast.error('RMN must have 10 Digit'); }
+    else if(!regexMobile.test(rmn)){toast.error("Invalid mobile number!");}
     else if(aadhaar === '') { toast.error('Aadhaar number is required'); }
     else if(aadhaar.length !== 12) { toast.error('Aadhaar number must have 12 Digit'); }
     else if(pan === '') { toast.error('Pan Number is required'); }
@@ -131,6 +135,7 @@ const savebankdetail = () =>
   // console.log(" bank update  -",bankinfo);
 
   setLoading(true);
+  setPagemsg('Bank details updating');
   _post("/Payment/UpdateUserPayoutInfo", bankinfo)
   .then((res) => {
       setLoading(false);
@@ -142,7 +147,7 @@ const savebankdetail = () =>
       else
       {
         toast.success("Bank Details Successfully updated."); 
-        push('/profile');
+        push('/dashboard');
       }
   }).catch((error) => {
       setLoading(false);
@@ -152,7 +157,7 @@ const savebankdetail = () =>
  
 
   return (<>
-    <HeaderAfterLogin backrouter="/profile" />
+    <HeaderDashboard />
     <div className="screenmain"> 
         <div className="screencontainer">
             <div className='bankInfosavecontainer'>
@@ -245,6 +250,6 @@ const savebankdetail = () =>
             </div>
         </div>
     </div>
-  { loading ? <Loader message="Bank infomation updating" /> : null }
+ <Loader showStatus={loading}  message={pagemsg}  /> 
   </>)
 }

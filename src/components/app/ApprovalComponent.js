@@ -1,24 +1,33 @@
  "use client";
 import Link from "next/link";
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useEffect, useState } from "react";
-import HeaderAfterLogin from "../shared/HeaderAfterlogin";
+import HeaderDashboard from "../shared/HeaderDashboard";
 
 export default function ApprovalComponent() {
     const[username, setUsername] = useState('');
     const[usersn, setUsersn] = useState('');
+    const[userstatus, setUserstatus] = useState('PENDING');
+    const { push } = useRouter();
 
     useEffect(() => {
         if (typeof localStorage !== 'undefined') 
         {
             setUsername(localStorage.getItem('userprofilename'));
             setUsersn(localStorage.getItem('userprofilesn'));
+            setUserstatus(localStorage.getItem('verificationstatus'));
         } 
     }, []);
 
+    useEffect(() => {
+        if(userstatus !== 'PENDING') { push('/dashboard'); }
+    }, [userstatus]);
+
+    
     var settingsApproval = {
         dots: true,
         infinite: true,
@@ -26,10 +35,11 @@ export default function ApprovalComponent() {
         slidesToShow: 1,
         slidesToScroll: 1
       };
- 
+
+
   return (
     <>
-    <HeaderAfterLogin  backrouter="/dashboard" />
+    <HeaderDashboard />
     <div className="screenmain"> 
         <div className="screencontainer">
                 <div className="approvalcontainer">

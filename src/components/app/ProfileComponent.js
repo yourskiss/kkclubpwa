@@ -86,8 +86,9 @@ useEffect(() => {
                   </dt>
                   <dd>
                     <h2>{username}</h2>
-                    <p><b>PROFILE PROGRESS</b> - <CountUp duration={2} start={0}  delay={1}  end={profileProgress} />%</p>
-                    <h3><span style={{'width':`${profileProgress}%`}}></span></h3>
+                    <p><b>Status:</b> <span>{userstatus}</span></p>
+                    {/* <p><b>PROFILE PROGRESS</b> - <CountUp duration={2} start={0}  delay={1}  end={profileProgress} />%</p> */}
+                    {/* <h3><span style={{'width':`${profileProgress}%`}}></span></h3> */}
                   </dd>
                 </dl>
                 <aside onClick={()=> push('/update-profile')}>Edit</aside>

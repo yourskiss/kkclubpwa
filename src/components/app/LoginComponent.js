@@ -11,11 +11,11 @@ import { setCouponeCode, isCouponeCode } from "@/config/validecoupone";
 import Otpcountdown from "../core/timer";
 import { _get } from "@/config/apiClient";
 import HeaderFirst from "../shared/HeaderFirst";
- 
+import OtpInput from 'react-otp-input';
 
  
 export default function LoginComponent() {  
-
+  const [pagemsg, setPagemsg] = useState('');
     const[loading, setLoading] = useState(false);
     const [isDisabled, setIsDisabled] = useState(false);
     const [mobileValues, setMobileValues] = useState('');
@@ -25,7 +25,7 @@ export default function LoginComponent() {
     const [isMobile, setIsMobile] = useState(false);
     const [otpsent, setOtpsent] = useState(false);
     const mobileChange = (e) =>{setMobileValues(e.target.value); setMobileError(""); }
-    const otpChange = (e) =>{setOtpValues(e.target.value); setOtpError(''); }
+ 
 
     const { push } = useRouter();
     const searchParams = useSearchParams();
@@ -85,6 +85,7 @@ export default function LoginComponent() {
     function loginnow()
     {
       setLoading(true);
+      setPagemsg('Request submiting');
       _get("Customer/UserInfo?userid=0&phonenumber="+ mobileValues)
       .then(res => {
         //  console.log("login success - ", res);
@@ -103,7 +104,7 @@ export default function LoginComponent() {
             else if(res.data.result && !isCC)  
             {
               push("/dashboard");
-              toast.success('Login Successfully'); 
+              // toast.success('Login Successfully'); 
             }
             else
             {
@@ -133,6 +134,7 @@ export default function LoginComponent() {
 
   const sendotp = () => {
     setLoading(true);
+    setPagemsg('Sending OTP');
       _get("Sms/SendOTP?mobile="+ mobileValues)
       .then((res) => {
         setLoading(false);
@@ -151,13 +153,14 @@ export default function LoginComponent() {
     loginnow(); // tesing
     /*
       setLoading(true);
+      setPagemsg('Verifying OTP');
       _get("Sms/VerifyOTP?&mobile="+mobileValues+"&otp="+otpValues)
       .then((res) => {
         setLoading(false);
        // console.log("Verify OTP - ", res);
         if(res.data.isValid)
         {
-          toast.success("OTP Successfully Verify");
+         // toast.success("OTP Successfully Verify");
           loginnow();
         }
         else
@@ -178,44 +181,37 @@ export default function LoginComponent() {
 
  
 
-      //    setTimeout(function(){
-      //      ac.abort();
-      //    }, 0.5 * 60 * 1000);
-      //    if ('OTPCredential' in window) 
-      //    { 
-      //  window.addEventListener('DOMContentLoaded', e => {
-      //  })
-      // } 
-      // else 
-      // {
-      //   alert('WebOTP not supported!.')
-      // }
+ 
+ 
 
  
    useEffect(() => {
     if ('OTPCredential' in window) {
       const ac = new AbortController();
+      setTimeout(function(){
+        ac.abort();
+      }, 1 * 60 * 1000);
       navigator.credentials
         .get({ otp: { transport: ['sms'] }, signal: ac.signal })
-        .then(function(otpCredential) {
-          alert('otpCredential - ', otpCredential);
+        .then((otpCredential) => {
+          console.log('otpCredential - ', otpCredential);
           setOtpValues(otpCredential.code);
           ac.abort();
         })
-        .catch(function(error) {
+        .catch((error) => {
           if (error.name === 'NotAllowedError') {
-            alert('User denied permission to access credentials.');
+            console.log('User denied permission to access credentials.');
           } else if (error.name === 'AbortError') {
-            alert('Operation was aborted.');
+            console.log('Operation was aborted.');
           } else if (error.name === 'NotSupportedError') {
-            alert('API not supported in this environment.');
+            console.log('API not supported in this environment.');
           } else {
-            alert('An unexpected error occurred:', error);
+            console.log('An unexpected error occurred:', error);
           }
           ac.abort();
         });
     }
-  }, [isMobile]);
+  }, [isDisabled]);
 
 
  
@@ -247,17 +243,24 @@ export default function LoginComponent() {
           
               
 
-        { mobileError === '' && isMobile ? (
+       { mobileError === '' && isMobile ? ( 
         <form onSubmit={otpSubmit}>
             <div className="registercontainer">
               <div className="registerHead">Verify with OTP</div>
               <div className="registerMsgOtp">
                 <span>We have sent an OTP to +91-{mobileValues}</span>
               </div>
-              <div className="registerOtp">
-                <div><aside>
-                  <input type="number" name="otp" autoComplete="one-time-code" min="0" maxLength={6} minLength={6}  value={otpValues} onChange={otpChange}  onInput={onInputmaxLength} />
-                </aside></div> 
+
+              <div className="registerOneTimePassword">
+                <OtpInput
+                  autoComplete="one-time-code"
+                  value={otpValues || ''}
+                  onChange={setOtpValues}
+                  numInputs={6}
+                  inputType="number"
+                  renderSeparator={<span></span>}
+                  renderInput={(props) => <input {...props} />}
+                />
               </div>
               { otpError && <span className='registerError'>{otpError}</span>  }
               {
@@ -268,13 +271,13 @@ export default function LoginComponent() {
                 <button className="register_button">Sign In</button>
             </div>
         </form>
-        ) : null }
+         ) : null }
 
  
     </section>
     </div>
 
-    { loading ? <Loader message="Request submitting" /> : null }
+    <Loader showStatus={loading} message={pagemsg}  />
 
   </>
   )

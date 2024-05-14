@@ -8,9 +8,10 @@ import { ipaddress, osdetails, browserdetails  } from "../core/jio";
 import CitystateUpdateComponent from "../shared/CitystateUpdateComponent";
 import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 import { _get, _post } from "@/config/apiClient";
-import HeaderAfterLogin from "../shared/HeaderAfterlogin";
+import HeaderDashboard from "../shared/HeaderDashboard";
 
 export default function UpdateprofileComponent() {
+    const [pagemsg, setPagemsg] = useState('');
     const[loading, setLoading] = useState(false);
     const { push } = useRouter();
     const userID = getUserID();
@@ -33,6 +34,7 @@ export default function UpdateprofileComponent() {
 
     useEffect(() => {
         setLoading(true);
+        setPagemsg('Profile details fetching');
         _get("Customer/UserInfo?userid=0&phonenumber="+ userMobile)
         .then((res) => {
           //  console.log("get---", res.data.result);
@@ -112,6 +114,7 @@ export default function UpdateprofileComponent() {
           }
          // console.log("datafinal - ",datafinal);
             setLoading(true);
+            setPagemsg('Profile details updating');
             _post("Customer/SaveUser", datafinal)
             .then((res) => {
                // console.log(res);
@@ -135,7 +138,7 @@ export default function UpdateprofileComponent() {
      
   return (
     <>
-    <HeaderAfterLogin  backrouter="/profile" />
+    <HeaderDashboard />
     <div className='screenmain'>
         <section className="screencontainer">
         <form onSubmit={handleSubmit}>
@@ -223,7 +226,7 @@ export default function UpdateprofileComponent() {
  
 
 
-        { loading ? <Loader message="Getting response" /> : null }
+    <Loader showStatus={loading} message={pagemsg} />
     </>
   )
 }
