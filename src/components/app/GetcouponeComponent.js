@@ -47,7 +47,7 @@ export default function GetcouponeComponent() {
         .then((res) => {
           setLoading(false);
           // console.log(res)
-          res.data.result === null ? toast.error(res.data.resultmessage) : (toast.success("Coupon Successfully Validated."), Cookies.remove('couponecodecookies'), push(`/scanqrcode/${res.data.result[0].pointid}`));
+          res.data.result === null ? toast.error(res.data.resultmessage) : (toast.success("Coupon Successfully Validated."), push(`/scanqrcode/${res.data.result[0].pointid}`));
         }).catch((err) => {
           setLoading(false); 
           toast.error(err.message);

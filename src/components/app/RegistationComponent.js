@@ -116,7 +116,6 @@ export default function RegistationComponent() {
     else if(aadhaarinfo.length !== 12) { setAadhaarErrors('Aadhaar must have at least 12 Digits.'); }
     else if(!tnc) { setTncError("Please agree with our Terms & conditions"); }
     else { 
-        // setStep(1);
         handleRegistration();
      }
   } 
@@ -196,8 +195,8 @@ export default function RegistationComponent() {
               <div className="registerSmallHead">SIGN UP</div>
               <div className="registerHead">Setup your profile</div>
 
-              <>
-              { step === 1 ? (<form onSubmit={handleStep1}>
+               
+              { step === 1 && <form onSubmit={handleStep1}>
                 <div className="registerField">
                   <div className="registertext">First Name <small>*</small></div>
                   <input
@@ -230,13 +229,9 @@ export default function RegistationComponent() {
                 <div className="registerSubmit">
                   <button className="register_button">CONTINUE</button>
                 </div>    
-              </form>) : null }
-              </>
-              
-              <>
-              { step === 2 ? (<form onSubmit={handleStep2}>
-                
-                
+              </form> }
+  
+              { step === 2 && <form onSubmit={handleStep2}>
                 <div className="registerField">
                       <div className="registertext">Select City <small>*</small></div>
                       <ErrorBoundary>
@@ -268,14 +263,11 @@ export default function RegistationComponent() {
                 <div className="registerSubmit">
                   <button className="register_button">CONTINUE</button>
                 </div>
-              </form>) : null }
-              </>
+              </form> }
               
 
-              <>
-              { step === 3 ? (<form onSubmit={handleStep3}>
-                
-
+              
+              { step === 3 && <form onSubmit={handleStep3}>
                 <div className="registerField">
                   <div className="registertext">Aadhaar Number <small>*</small></div>
                   <input
@@ -302,8 +294,7 @@ export default function RegistationComponent() {
                 <div className="registerSubmit"> 
                   <button className="register_button">Submit</button>
                 </div>
-              </form>) : null }
-              </>
+              </form>}
 
 
           </div>

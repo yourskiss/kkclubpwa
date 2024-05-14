@@ -12,10 +12,10 @@ export default function CityStateComponent({scChange, nameSC, nameS, nameC}) {
            // console.log("city state - ", res);
             if(mounted)
             {
-              setCitystateList("StateCity add - ", res.data);
+              setCitystateList(res.data);
             } 
         }).catch((err) => {
-            console.log(err.message);
+            console.log("StateCity add - ", err.message);
         });
       return () => { setMounted(false); }
     }, []);

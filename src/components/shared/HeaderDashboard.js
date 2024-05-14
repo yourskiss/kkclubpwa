@@ -8,10 +8,10 @@ import { getUserMobile } from '@/config/userauth';
 import { _get } from "@/config/apiClient";
  
 export default  function HeaderDashboard() {
+  const [mounted, setMounted] = useState(true);
   const[usershort, setUsershort] = useState('');
   const[userstatus, setUserstatus] = useState('');
   const[username, setUsername] = useState('');
-  const [mounted, setMounted] = useState(true);
   const { push } = useRouter();
   const userToken  =  isUserToken();
   const bearerToken = isBearerToken();
