@@ -14,23 +14,24 @@ import HeaderDashboard from '../shared/HeaderDashboard';
 export default function RedeempointsComponents() {
     const [pagemsg, setPagemsg] = useState('');
     const [loading, setLoading] = useState(false);
+    const [mounted, setMounted] = useState(true);
     const [resultcode, setResultcode] = useState('');
     const rewardspoints = TotalrewardpointsComponent();
     const userid = getUserID();
     const { push } = useRouter();
 
     useEffect(() => {
-       // setLoading(true);
-       // setPagemsg('Validating bank information');
         _get("/Payment/GetUserPayoutInfo?userid="+userid)
         .then((res) => {
-          //  setLoading(false);
           //  console.log("User payout info - ", res);
-            setResultcode(res.data.resultcode);
+            if (mounted)
+            {
+                setResultcode(res.data.resultcode);
+            }
         }).catch((error) => {
-         //   setLoading(false);
-            toast.info(error); 
+            toast.info("GetUserPayoutInfo-",error); 
         });
+        return () => { setMounted(false); }
     }, []);
 
  

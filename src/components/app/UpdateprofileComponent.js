@@ -13,6 +13,7 @@ import HeaderDashboard from "../shared/HeaderDashboard";
 export default function UpdateprofileComponent() {
     const [pagemsg, setPagemsg] = useState('');
     const[loading, setLoading] = useState(false);
+    const [mounted, setMounted] = useState(true);
     const { push } = useRouter();
     const userID = getUserID();
     const userMobile = getUserMobile();
@@ -39,15 +40,19 @@ export default function UpdateprofileComponent() {
         .then((res) => {
           //  console.log("get---", res.data.result);
             setLoading(false);
-            setData(true);
-            setUserdata(res.data.result);
-            setCityStateName(`${res.data.result.city} (${res.data.result.state})`)
-            setStateName(res.data.result.state);
-            setCityName(res.data.result.city);
+            if (mounted)
+            {
+                setData(true);
+                setUserdata(res.data.result);
+                setCityStateName(`${res.data.result.city} (${res.data.result.state})`)
+                setStateName(res.data.result.state);
+                setCityName(res.data.result.city);
+            }
         }).catch((err) => {
             toast.warn(err.message);
             setLoading(false); 
         });
+        return () => { setMounted(false); }
     }, []);
  
  
@@ -65,9 +70,9 @@ export default function UpdateprofileComponent() {
         if(val.firstname===''){error.firstname = "First name is required."}
         if(val.lastname===''){error.lastname = "Last name is required."}
         if(val.aadhaarinfo===''){error.aadhaarinfo = "Aadhaar is required."}
-        else if(val.aadhaarinfo.length < 12){error.aadhaarinfo = "Aadhaar must have at least 12 Digit"}
         if(val.postalcode===''){error.postalcode = "Postal code is required"}
         else if(val.postalcode.length !== 6){error.postalcode = "Postal code have at least 6 Digit"}
+        else if(val.aadhaarinfo.length < 12){error.aadhaarinfo = "Aadhaar must have at least 12 Digit"}
         return error;
     }
     const handleSubmit = (e) =>{
@@ -186,6 +191,21 @@ export default function UpdateprofileComponent() {
                 </div>
 
                 <div className="registerField">
+                    <div className="registertext">Postal Code <small>*</small></div>
+                    <input
+                        className="registerinput"
+                        type="number"
+                        name="postalcode"
+                        min="0"
+                        maxLength={6}
+                        onInput={onInputmaxLength}
+                        value={ formValue.postalcode || '' }
+                        onChange={onChangeField}
+                    />
+                    <span className="registerError">{ formError.postalcode  ?  formError.postalcode : '' }</span> 
+                </div>
+
+                <div className="registerField">
                     <div className="registertext">Aadhaar Number <small>*</small></div>
                     <input
                         className="registerinput"
@@ -201,20 +221,7 @@ export default function UpdateprofileComponent() {
                 </div>
 
 
-                <div className="registerField">
-                    <div className="registertext">Postal Code <small>*</small></div>
-                    <input
-                        className="registerinput"
-                        type="number"
-                        name="postalcode"
-                        min="0"
-                        maxLength={6}
-                        onInput={onInputmaxLength}
-                        value={ formValue.postalcode || '' }
-                        onChange={onChangeField}
-                    />
-                    <span className="registerError">{ formError.postalcode  ?  formError.postalcode : '' }</span> 
-                </div>
+
        
                 <div className="registerSubmit">
                   <button className="register_button">Update</button>

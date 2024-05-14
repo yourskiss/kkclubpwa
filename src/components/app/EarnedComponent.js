@@ -13,6 +13,7 @@ import HeaderDashboard from '../shared/HeaderDashboard';
 export default function EarnedComponent() {
     const [pagemsg, setPagemsg] = useState('');
     const [loading, setLoading] = useState(false);
+    const [mounted, setMounted] = useState(true);
     const [pointnumber, setPointnumber] = useState(0);
     const rewardspoints = TotalrewardpointsComponent();
     const { push } = useRouter();
@@ -25,13 +26,17 @@ export default function EarnedComponent() {
         setPagemsg('Validating Coupon');
         _get("Customer/RewardPointInfo?pointid="+params.pointid)
         .then((res) => {
+          setLoading(false);
           //  console.log(" response - ", res);
-            setPointnumber(res.data.result[0].earnedpoints);
-            setLoading(false);
+            if(mounted)
+            {
+              setPointnumber(res.data.result[0].earnedpoints);
+            }
         }).catch((error) => {
             setLoading(false);
-            console.log(" error - ", error);
+            console.log("RewardPointInfo-", error);
         });
+        return () => { setMounted(false); }
     }, []);
 
   return (<div className='outsidescreen'>

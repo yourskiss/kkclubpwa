@@ -5,15 +5,20 @@ import { _get } from "@/config/apiClient";
 
 export default function CityStateComponent({scChange, nameSC, nameS, nameC}) {
     const [citystateList, setCitystateList] = useState([]);
+    const [mounted, setMounted] = useState(true);
     useEffect(() => {
         _get("CommonUtility/StateCity")
         .then((res) => {
            // console.log("city state - ", res);
-            setCitystateList(res.data);
+            if(mounted)
+            {
+              setCitystateList("StateCity add - ", res.data);
+            } 
         }).catch((err) => {
             console.log(err.message);
         });
-      }, []);
+      return () => { setMounted(false); }
+    }, []);
 
       const onchangevalue = (val) => {
         let sc = val.label;

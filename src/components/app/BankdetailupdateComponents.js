@@ -12,6 +12,7 @@ import HeaderDashboard from '../shared/HeaderDashboard';
 export default function BankdetailupdateComponents() {
     const [pagemsg, setPagemsg] = useState('');
     const [loading, setLoading] = useState(false);
+    const [mounted, setMounted] = useState(true);
     const [step, setStep] = useState(1);
     const [infobank , setInfobank] = useState(false);
     const [infoupi , setInfoupi] = useState(false);
@@ -39,19 +40,23 @@ export default function BankdetailupdateComponents() {
         _get("/Payment/GetUserPayoutInfo?userid="+userid)
         .then((res) => {
             setLoading(false);
-          //  console.log("bank update response - ", res);
-            setBankname(res.data.result.bankname);
-            setIfsccode(res.data.result.ifcscode);
-            setAccountnumber(res.data.result.accountnumber);
-            setUpicode(res.data.result.upicode);
-            setAadhaar(res.data.result.aadhaar);
-            setPan(res.data.result.pan);
-            setUsername(res.data.result.username);
-            setRmn(res.data.result.rmn);
+            //  console.log("bank update response - ", res);
+            if(mounted)
+            {
+              setBankname(res.data.result.bankname);
+              setIfsccode(res.data.result.ifcscode);
+              setAccountnumber(res.data.result.accountnumber);
+              setUpicode(res.data.result.upicode);
+              setAadhaar(res.data.result.aadhaar);
+              setPan(res.data.result.pan);
+              setUsername(res.data.result.username);
+              setRmn(res.data.result.rmn);
+            }
         }).catch((error) => {
             setLoading(false);
-            toast.info(error); 
+            toast.info("GetUserPayoutInfo-", error); 
         });
+        return () => { setMounted(false); }
     }, []);
  
  
@@ -78,18 +83,18 @@ const handleBankInfo = (e) => {
     else if(ifsccode.length <= 10) { toast.error('IFSC Code length must be at least 11 characters long'); }
     else if(accountnumber === '') { toast.error('Account Number is required'); }
     else { 
-      setStep(2); 
       setInfobank(true); 
       setOption('upi');
+      setStep(2); 
     }
 }
 const handleUpiId = (e) => {
   e.preventDefault();
   if(upicode === '') { toast.error('UPI ID is required'); }
   else { 
-    setStep(3); 
     setInfoupi(true);
     setOption('personal');
+    setStep(3); 
   }
 }
 const handlePersonal= (e) => {
@@ -104,9 +109,9 @@ const handlePersonal= (e) => {
     else if(pan === '') { toast.error('Pan Number is required'); }
     else if(pan.length !== 10) { toast.error('Pan Number must have 10 Digit'); }
     else { 
-      setStep(4);
-      setInfopersonal(true)
+      setInfopersonal(true);
       setOption('review');
+      setStep(4);
     }
 }
 const reviewHandlar = (e) => {

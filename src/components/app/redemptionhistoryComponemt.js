@@ -15,6 +15,8 @@ export default function RedemptionhistoryComponemt () {
   const [pagemsg, setPagemsg] = useState('');
   const [btnload, setBtnload] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [mounted, setMounted] = useState(true);
+  const [mounted2, setMounted2] = useState(true);
   const [pointhistory, setPointhistory] = useState({});
   const [nodata, setNodata] = useState('');
   const userID = getUserID();
@@ -28,42 +30,50 @@ export default function RedemptionhistoryComponemt () {
     .then((res) => {
         setLoading(false);
         // console.log("Redeemed Points History - ", res);
-        if(res.data.result.length !== 0)
+        if (mounted)
         {
-          setPointhistory(res.data.result)
-        }
-        else
-        {
-          setNodata('Redemption history not available.');
+            if(res.data.result.length !== 0)
+            {
+              setPointhistory(res.data.result)
+            }
+            else
+            {
+              setNodata('Redemption history not available.');
+            }
         }
     }).catch((error) => {
         setLoading(false);
-        toast.error(error); 
+        toast.error("UserRedeemedPointsHistory-",error); 
     });
+    return () => { setMounted(false); }
   }, []);
 
   useEffect(() => {
     _get(`/Payment/UserPendingOrder?userID=${userID}`)
     .then((res) => {
         // console.log("Previous order - ", res.data.result[0].pendingorder,  res.data.result[0].orderid, res);
-        if(res.data.result[0].pendingorder !== '0' && res.data.result[0].orderid !== '')
+        if(mounted2)
         {
-          setLoading(true);
-          setPagemsg('Updating status');
-          _get(`/Payment/UserPayoutStatus?userID=${userID}&orderID=${res.data.result[0].orderid}`)
-          .then((dataa) => { 
-            // console.log("UserPayoutStatus - ",  dataa);
-            setTimeout(function(){
-              setLoading(false);
-            }, 5000);
-          }).catch((error) => {
-              setLoading(false);
-              toast.info(error); 
-          });
+            if(res.data.result[0].pendingorder !== '0' && res.data.result[0].orderid !== '')
+            {
+              setLoading(true);
+              setPagemsg('Updating status');
+              _get(`/Payment/UserPayoutStatus?userID=${userID}&orderID=${res.data.result[0].orderid}`)
+              .then((dataa) => { 
+                // console.log("UserPayoutStatus - ",  dataa);
+                setTimeout(function(){
+                  setLoading(false);
+                }, 5000);
+              }).catch((error) => {
+                  setLoading(false);
+                  toast.info("UserPayoutStatus-",error); 
+              });
+            }
         }
     }).catch((error) => {
-        toast.info(error); 
+        toast.info("UserPendingOrder-",error); 
     });
+    return () => { setMounted2(false); }
   }, []);
 
 

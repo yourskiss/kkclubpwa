@@ -6,7 +6,7 @@ import { _get } from "@/config/apiClient";
 export default function CitystateUpdateComponent({scChange, nameSC, nameS, nameC}) {
     const [citystateList, setCitystateList] = useState([]);
     const [isMounted, setIsMounted] = useState(false);
-    
+    const [mounted, setMounted] = useState(true);
       useEffect(() => {
         setIsMounted(true);
       }, []);
@@ -15,11 +15,17 @@ export default function CitystateUpdateComponent({scChange, nameSC, nameS, nameC
           _get("CommonUtility/StateCity")
           .then((res) => {
              // console.log("city state - ", res);
-              setCitystateList(res.data);
+             if (mounted)
+              {
+                setCitystateList(res.data);
+              } 
           }).catch((err) => {
-              console.log(err.message);
+              console.log("StateCity update - ",err.message);
           });
+        return () => { setMounted(false); }
       }, [isMounted]);
+
+      
 
       const onchangevalue = (val) => {
         scChange(val.label, val.statename, val.cityname);

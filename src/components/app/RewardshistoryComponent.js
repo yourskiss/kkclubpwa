@@ -10,6 +10,7 @@ import HeaderDashboard from "../shared/HeaderDashboard";
 export default function RewardshistoryComponent () {
   const [pagemsg, setPagemsg] = useState('');
   const [loading, setLoading] = useState(false);
+  const [mounted, setMounted] = useState(true);
   const [pointhistory, setPointhistory] = useState({});
   const [nodata, setNodata] = useState('');
   const userID = getUserID();
@@ -22,20 +23,23 @@ export default function RewardshistoryComponent () {
     .then((res) => {
        // console.log("UserRewardPointsHistory - response - ", res);
         setLoading(false);
-        if(res.data.result.length !== 0)
+        if (mounted)
         {
-          setPointhistory(res.data.result)
-        }
-        else
-        {
-          setNodata('Reward history not available.');
+          if(res.data.result.length !== 0)
+          {
+            setPointhistory(res.data.result)
+          }
+          else
+          {
+            setNodata('Reward history not available.');
+          }
         }
     }).catch((error) => {
         setLoading(false);
        // console.log("UserRewardPointsHistory - error - ", error);
         setNodata(error.message);
     });
-
+    return () => { setMounted(false); }
   }, [userID]);
 
  const points = TotalrewardpointsComponent();

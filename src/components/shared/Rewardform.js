@@ -11,6 +11,7 @@ import { _get } from "@/config/apiClient";
 export default function Rewardform() {
     const [pagemsg, setPagemsg] = useState('');
     const [loading, setLoading] = useState(false);
+    const [mounted, setMounted] = useState(true);
     const [pendingorder, setPendingorder] = useState(0);
     const [userOrderID, setUserOrderID] = useState('');
     const[userstatus, setUserstatus] = useState('');
@@ -40,11 +41,15 @@ export default function Rewardform() {
         .then((res) => {
             setLoading(false);
            // console.log("Previous order - ", res.data.result[0].pendingorder,  res);
-            setPendingorder(res.data.result[0].pendingorder);
+            if(mounted)
+            {
+                setPendingorder(res.data.result[0].pendingorder);
+            }
         }).catch((error) => {
             setLoading(false);
             toast.info(error); 
         });
+        return () => { setMounted(false); }
     }, [pendingorder]);
 
 

@@ -28,7 +28,7 @@ export default function HomeComponent() {
             Cookies.set('bearertoken',  res.data.token, { expires: new Date(new Date().getTime() + 3600000), secure: true });
             setTimeout(function(){  window.location.reload(); }, 3000);
           }).catch((err) => {
-            console.log(err.message); 
+            console.log("authtoken-",err.message); 
             setTimeout(function(){  window.location.reload(); }, 3000);
           });
     }

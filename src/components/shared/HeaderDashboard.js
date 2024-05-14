@@ -6,12 +6,12 @@ import Link from 'next/link';
 import { isUserToken, isBearerToken } from '@/config/userauth';
 import { getUserMobile } from '@/config/userauth';
 import { _get } from "@/config/apiClient";
-import Loader from './LoaderComponent';
-
+ 
 export default  function HeaderDashboard() {
   const[usershort, setUsershort] = useState('');
   const[userstatus, setUserstatus] = useState('');
   const[username, setUsername] = useState('');
+  const [mounted, setMounted] = useState(true);
   const { push } = useRouter();
   const userToken  =  isUserToken();
   const bearerToken = isBearerToken();
@@ -24,20 +24,23 @@ useEffect(() => {
 
 
 useEffect(() => {
-  _get("Customer/UserInfo?userid=0&phonenumber="+ userMobile)
-  .then((res) => {
-     // console.log(" response - ", res);
-     localStorage.setItem("userprofilename",res.data.result.fullname);
-     localStorage.setItem("userprofilesn",res.data.result.shortname);
-     localStorage.setItem("verificationstatus",res.data.result.verificationstatus);
-
-     setUsershort(res.data.result.shortname);
-     setUserstatus(res.data.result.verificationstatus);
-     setUsername(res.data.result.fullname)
-  }).catch((error) => {
-      toast.info(error); 
-  });
- 
+    _get("Customer/UserInfo?userid=0&phonenumber="+ userMobile)
+    .then((res) => {
+     // console.log("response - ", res);
+      if (mounted)
+      {
+        localStorage.setItem("userprofilename",res.data.result.fullname);
+        localStorage.setItem("userprofilesn",res.data.result.shortname);
+        localStorage.setItem("verificationstatus",res.data.result.verificationstatus);
+        setUsershort(res.data.result.shortname);
+        setUserstatus(res.data.result.verificationstatus);
+        setUsername(res.data.result.fullname);
+      }
+    }).catch((error) => {
+        toast.info("UserInfo-",error); 
+    });
+   
+  return () => { setMounted(false); }
 }, []);
 
 

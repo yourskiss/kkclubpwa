@@ -61,9 +61,9 @@ export default function BankaddComponents() {
         else if(ifsccode.length <= 10) { toast.error('IFSC Code length must be at least 11 characters long'); }
         else if(accountnumber === '') { toast.error('Account Number is required'); }
         else { 
-          setStep(2); 
           setInfobank(true); 
           setOption('upi');
+          setStep(2); 
         }
     }
  
@@ -71,9 +71,9 @@ export default function BankaddComponents() {
       e.preventDefault();
       if(upicode === '') { toast.error('UPI ID is required'); }
       else { 
-        setStep(3);
         setInfoupi(true);
         setOption('personal');
+        setStep(3);
       }
     }
     const handlePersonal = (e) => {
@@ -88,9 +88,9 @@ export default function BankaddComponents() {
         else if(pan === '') { toast.error('Pan Number is required'); }
         else if(pan.length !== 10) { toast.error('Pan Number must have 10 Digit'); }
         else { 
-          setStep(4);
-          setInfopersonal(true)
+          setInfopersonal(true);
           setOption('review');
+          setStep(4);
         }
     }
 

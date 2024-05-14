@@ -14,6 +14,7 @@ import { _get } from "@/config/apiClient";
 import { motion } from "framer-motion";
 
 export default function ProfileComponent() {
+  const [mounted, setMounted] = useState(true);
   const { push } = useRouter();
   const rewardspoints = parseInt(TotalrewardpointsComponent());
   const[username, setUsername] = useState('');
@@ -66,10 +67,14 @@ useEffect(() => {
   _get("/Payment/GetUserPayoutInfo?userid="+userid)
   .then((res) => {
      // console.log(" response - ", res);
-      setResultcode(res.data.resultcode);
+      if(mounted)
+      {
+        setResultcode(res.data.resultcode);
+      }
   }).catch((error) => {
-      toast.info(error); 
+      toast.info("GetUserPayoutInfo-",error); 
   });
+  return () => { setMounted(false); }
 }, [resultcode]);
 
   return (<>
