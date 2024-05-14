@@ -509,10 +509,11 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 .bankInfosavecontainer h2 { margin:0 0 1rem 0; padding:0; width: 100%; float: left; text-align: left; text-transform: none;  }
 .bankInfosavecontainer h2 em { display: block; font-style: normal; font-family:var(--font-lneue); font-weight: normal;color: #AFCDAF; font-size: 24px;  }
 .bankInfosavecontainer h2 span { display: block; margin-top: 0.5rem; color: #ddd; font-size: 18px; font-weight:normal; }
-.bankInfosavecontainer ul { position: relative; width: 100%; float: left; margin:1.5rem 0 1rem 0; display: flex; justify-content: center; align-items: center; }
-.bankInfosavecontainer ul li { list-style: none; border-top: solid 1px #2f2d2d; border-bottom: solid 1px #2f2d2d; padding: 1rem 0; margin: 0; color: #5d5d5d;  font-family:var(--font-lneue); font-weight: normal;  font-size: 17px;   text-transform: uppercase;  cursor: pointer;  }
-.bankInfosavecontainer ul li:nth-of-type(2) {  cursor: auto;  color: #AFCDAF; padding-right:1rem; padding-left: 1rem;  } 
+.bankInfosavecontainer ul { position: relative; width: 100%; float: left; margin:1.5rem 0 1rem 0; display: flex; justify-content: center; align-items: stretch; }
+.bankInfosavecontainer ul li { display: flex; justify-content: center;align-items: center; list-style: none; border-top: solid 1px #2f2d2d; border-bottom: solid 1px #2f2d2d; padding: 1rem 0; margin: 0; color: #5d5d5d;  font-family:var(--font-lneue); text-align: center; font-weight: normal;  font-size: 16px;   text-transform: uppercase;  cursor: pointer; pointer-events: none; user-select: none;  }
+.bankInfosavecontainer ul li.normal {  cursor: auto;  color: #AFCDAF; padding-right:1rem; padding-left: 1rem; pointer-events:all; user-select:auto; } 
 .bankInfosavecontainer ul li.active { list-style: none; color: #fff ; border-top-color:#ccc; border-bottom-color:#ccc; user-select: none; pointer-events: none; }
+.bankInfosavecontainer ul li.activated { list-style: none; color: #AFCDAF ; user-select: all; pointer-events: auto; }
 
 
 .bankinfo  { position: relative; width: 100%; float: left; text-align: center; margin:2rem 0 1rem 0; padding: 0 3rem 0 0; }
@@ -520,7 +521,8 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 .bankinfo h4 img { max-width:32px; border: 0;  }
 .bankinfo h4 span { margin-left: 0.5rem;}
 .bankinfo h5 { margin: 0.8rem 0 0.5rem 0; position: relative; width: 100%; float: left; text-align: left; font-weight: normal;color: #6d6d6d; font-size: 14px;   text-transform: uppercase; overflow-wrap: break-word;}
-.bankinfo h6 {   position: relative; width: 100%; float: left; text-align: left; font-weight: 500; color: #F5F0EB; font-size:16px; overflow-wrap: break-word; }
+.bankinfo h6 {   position: relative; width: 100%; margin-bottom: 0.3rem; float: left; text-align: left; font-weight: 500; color: #F5F0EB; font-size:16px; overflow-wrap: break-word; }
+.bankinfo h6 b { font-weight: bold; font-size:120%; }
 .bankinfo aside { position: absolute; bottom: 0; right: 0; width: auto; text-align: right; font-weight: 500; color: #AFCDAF; font-size:18px; text-decoration: underline; cursor: pointer; }
 .bankinfo aside:hover {  color: #fff; text-decoration: none; }
 
