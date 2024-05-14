@@ -57,6 +57,11 @@ export default function LoginComponent() {
           e.target.value = e.target.value.slice(0, e.target.maxLength);
         }
     }
+    const changeNumber = (e) => {
+      e.preventDefault();
+      setIsDisabled(false);
+      setIsMobile(false)
+    }
     const mobileSubmit =(e) =>{
       e.preventDefault();
       const regexMobile = /^[6789][0-9]{9}$/i;
@@ -249,6 +254,7 @@ export default function LoginComponent() {
               <div className="registerHead">Verify with OTP</div>
               <div className="registerMsgOtp">
                 <span>We have sent an OTP to +91-{mobileValues}</span>
+                <em className="numberedit" onClick={changeNumber}>Change</em>
               </div>
 
               <div className="registerOneTimePassword">

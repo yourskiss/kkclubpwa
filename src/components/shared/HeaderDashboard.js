@@ -51,7 +51,8 @@ useEffect(() => {
           <Image src="/assets/images/logo.png" width={270} height={50} alt="logo" quality={99} />
         </aside>
         <section>
-            <Link href="/scanqrcode" className='header_scanqrcode'><Image src="/assets/images/QR.png" width={100} height={100} alt={username} quality={90} /></Link>
+            { userstatus === "APPROVE" ? <> <Link href="/scanqrcode" className='header_scanqrcode'><Image src="/assets/images/QR.png" width={100} height={100} alt={username} quality={90} /></Link></> : null }
+           
             {/*             
             <span className='header_notification'>
               <Image src="/assets/images/notification.png" width={100} height={100} alt="notification" quality={90} />

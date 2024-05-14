@@ -20,23 +20,14 @@ export default function RedemptionhistoryComponemt () {
   const userID = getUserID();
   const { push } = useRouter();
   const redeemedpointTotal = TotalRedeemedPoints();
- 
 
   useEffect(() => {
      setLoading(true);
      setPagemsg('Redeemed history fetching');
     _get(`Customer/UserRedeemedPointsHistory?userid=${userID}`)
     .then((res) => {
-        console.log("Redeemed Points History - ", res);
-
-        // res.data.result.some(element => {
-        //   console.count(element.status, element.orderid);
-        //   if (element.status === "Pending") 
-        //   {
-        //     payoutstatus(element.orderid);
-        //   }
-        // });
-
+        setLoading(false);
+        // console.log("Redeemed Points History - ", res);
         if(res.data.result.length !== 0)
         {
           setPointhistory(res.data.result)
@@ -45,12 +36,37 @@ export default function RedemptionhistoryComponemt () {
         {
           setNodata('Redemption history not available.');
         }
-        setLoading(false);
     }).catch((error) => {
         setLoading(false);
         toast.error(error); 
     });
   }, []);
+
+  useEffect(() => {
+    _get(`/Payment/UserPendingOrder?userID=${userID}`)
+    .then((res) => {
+        // console.log("Previous order - ", res.data.result[0].pendingorder,  res.data.result[0].orderid, res);
+        if(res.data.result[0].pendingorder !== '0' && res.data.result[0].orderid !== '')
+        {
+          setLoading(true);
+          setPagemsg('Updating status');
+          _get(`/Payment/UserPayoutStatus?userID=${userID}&orderID=${res.data.result[0].orderid}`)
+          .then((dataa) => { 
+            // console.log("UserPayoutStatus - ",  dataa);
+            setTimeout(function(){
+              setLoading(false);
+            }, 5000);
+          }).catch((error) => {
+              setLoading(false);
+              toast.info(error); 
+          });
+        }
+    }).catch((error) => {
+        toast.info(error); 
+    });
+  }, []);
+
+
 
 
   const payoutstatus = (od) => {
@@ -66,11 +82,12 @@ export default function RedemptionhistoryComponemt () {
           setLoading(false);
           setBtnload(false);
           window.location.reload();
-          // toast.info(res.statusText); 
-        }, 10000);
+        }, 30000);
       }
       else
       {
+        setLoading(false);
+        setBtnload(false);
         toast.info(res.statusText); 
       }
     }).catch((error) => {

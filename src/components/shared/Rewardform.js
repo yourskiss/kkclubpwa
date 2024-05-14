@@ -39,7 +39,7 @@ export default function Rewardform() {
         _get(`/Payment/UserPendingOrder?userID=${userID}`)
         .then((res) => {
             setLoading(false);
-            console.log("Previous order - ", res.data.result[0].pendingorder,  res);
+           // console.log("Previous order - ", res.data.result[0].pendingorder,  res);
             setPendingorder(res.data.result[0].pendingorder);
         }).catch((error) => {
             setLoading(false);
@@ -90,7 +90,7 @@ export default function Rewardform() {
         _get(`/Payment/UserPayout?userID=${userID}&points=${redeempoint}&amount=${redeempoint * pointvalue}&ipaddress=${ipInfo}&osdetails=${osn}`)
         .then((res) => {
             setLoading(false);
-           console.log("Payout request - ", res);
+          // console.log("Payout request - ", res);
            if(res.data.status === 0)
             {
                 toast.info(res.data.data.error); 

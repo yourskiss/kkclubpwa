@@ -44,9 +44,9 @@ export default function ApprovalComponent() {
         <div className="screencontainer">
                 <div className="approvalcontainer">
                         <dl>
-                            <dt>
+                            {/* <dt>
                                 <aside><span>{usersn}</span></aside>
-                            </dt>
+                            </dt> */}
                             <dd>
                                 <p>
                                     <span><b>{username}</b>,</span>

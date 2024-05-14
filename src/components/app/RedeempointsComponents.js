@@ -20,15 +20,15 @@ export default function RedeempointsComponents() {
     const { push } = useRouter();
 
     useEffect(() => {
-        setLoading(true);
-        setPagemsg('Validating bank information');
+       // setLoading(true);
+       // setPagemsg('Validating bank information');
         _get("/Payment/GetUserPayoutInfo?userid="+userid)
         .then((res) => {
-            setLoading(false);
-            console.log("User payout info - ", res);
+          //  setLoading(false);
+          //  console.log("User payout info - ", res);
             setResultcode(res.data.resultcode);
         }).catch((error) => {
-            setLoading(false);
+         //   setLoading(false);
             toast.info(error); 
         });
     }, []);

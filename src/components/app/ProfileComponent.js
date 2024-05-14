@@ -20,7 +20,7 @@ export default function ProfileComponent() {
   const[usershort, setUsershort] = useState('');
   const[userstatus, setUserstatus] = useState('');
   const profileProgress = ProgressComponent();
-  const redeemminimumpoint = process.env.NEXT_PUBLIC_REDEEM_MIN_POINT;
+  const redeemminimumpoint = parseInt(process.env.NEXT_PUBLIC_REDEEM_MIN_POINT);
   const userid = getUserID();
   const [resultcode, setResultcode] = useState('');
  
@@ -42,7 +42,7 @@ export default function ProfileComponent() {
       push("/approval");
       return 
     }
-    if(userstatus === "APPROVE" && rewardspoints <= redeemminimumpoint)
+    if(userstatus === "APPROVE" && rewardspoints < redeemminimumpoint)
     {
       toast.info(`You can redeem minimum ${redeemminimumpoint} reward points.`);
       return 
