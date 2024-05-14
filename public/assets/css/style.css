@@ -522,7 +522,7 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 .bankinfo h4 span { margin-left: 0.5rem;}
 .bankinfo h5 { margin: 0.8rem 0 0.5rem 0; position: relative; width: 100%; float: left; text-align: left; font-weight: normal;color: #6d6d6d; font-size: 14px;   text-transform: uppercase; overflow-wrap: break-word;}
 .bankinfo h6 {   position: relative; width: 100%; margin-bottom: 0.3rem; float: left; text-align: left; font-weight: 500; color: #F5F0EB; font-size:16px; overflow-wrap: break-word; }
-.bankinfo h6 b { font-weight: bold; font-size:120%; }
+.bankinfo h6 b { font-weight: normal; font-size:110%; }
 .bankinfo aside { position: absolute; bottom: 0; right: 0; width: auto; text-align: right; font-weight: 500; color: #AFCDAF; font-size:18px; text-decoration: underline; cursor: pointer; }
 .bankinfo aside:hover {  color: #fff; text-decoration: none; }
 

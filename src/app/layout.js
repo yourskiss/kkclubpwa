@@ -45,7 +45,7 @@ export default function RootLayout({ children }) {
       <body className={`${lneue.variable} ${arialmt.variable}`}>
         <main className="main">
           <Starfield starCount={1000} starColor={[255, 255, 255]} speedFactor={0.05} />
-          <ToastContainer position="top-center" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored"  />
+          <ToastContainer position="top-center" autoClose={2000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored"  />
             {children}
             <PwaModal />
         </main>
