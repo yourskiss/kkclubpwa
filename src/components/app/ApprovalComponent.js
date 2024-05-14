@@ -7,9 +7,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useEffect, useState } from "react";
 import HeaderDashboard from "../shared/HeaderDashboard";
-
 import { getUserMobile } from '@/config/userauth';
 import { _get } from "@/config/apiClient";
+import Loader from "../shared/LoaderComponent";
 
 
 export default function ApprovalComponent() {
