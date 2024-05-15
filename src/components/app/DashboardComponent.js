@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
 import CountUp from 'react-countup';
-import { toast } from 'react-toastify';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
