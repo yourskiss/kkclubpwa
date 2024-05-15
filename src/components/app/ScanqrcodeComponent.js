@@ -15,6 +15,8 @@ import HeaderDashboard from '../shared/HeaderDashboard';
 export default function ScanqrcodeComponent() {
   const [pagemsg, setPagemsg] = useState('');
   const [loading, setLoading] = useState(false);
+  const [mounted, setMounted] = useState(true);
+
   const [qrcode, setQrcode] = useState(true);
   const [scandata, setScandata] = useState('');
   const [couponecode, setCouponecode] = useState('');
@@ -31,13 +33,13 @@ export default function ScanqrcodeComponent() {
 
   useEffect(() => {
       const sdURL = scandata.split("?") || '';
-      if(sdURL[0] === process.env.NEXT_PUBLIC_COUPON_URL || sdURL[0] === process.env.NEXT_PUBLIC_COUPON_URL2 || sdURL[0] === process.env.NEXT_PUBLIC_COUPON_URL3 || sdURL[0] === process.env.NEXT_PUBLIC_COUPON_URL4)
+      if(sdURL[0] === process.env.NEXT_PUBLIC_COUPON_URL1 || sdURL[0] === process.env.NEXT_PUBLIC_COUPON_URL2)
       {
           const couponvalue = sdURL[1].split("=");
           setCouponecode(couponvalue[1]);
-          toast.success("QR code scan successfully.")
+         // toast.success("QR code scan successfully.");
       }
-  }, [scandata]);
+  }, [qrcode]);
 
 
   const handalqrisvailable = (val) => { 
@@ -46,10 +48,19 @@ export default function ScanqrcodeComponent() {
   const getData =(val) =>{
     setScandata(val);
   }
+
+  useEffect(() => {
+    if(couponecode !== '')
+    {
+      handleSubmitCode();
+    }
+}, [couponecode]);
  
-  const handleSubmitCode = (e) => 
+
+
+  const handleSubmitCode = () => 
   {
-    e.preventDefault();
+    debugger;
     setLoading(true);
     setPagemsg('Validating Coupon');
     const qrdata = {
@@ -60,9 +71,7 @@ export default function ScanqrcodeComponent() {
       osdetails: osInfo,
       browserdetails: browserInfo
     }
-   // console.log(qrdata);
-    if(couponecode !== '')
-    {
+ 
         _post("Customer/ValidateCouponAndSave", qrdata)
         .then((res) => {
           setLoading(false);
@@ -71,10 +80,10 @@ export default function ScanqrcodeComponent() {
           {
             toast.error(res.data.resultmessage);
             setQrcode(true);
+           // push('/scanqrcode');
            } 
            else
            {
-            sessionStorage.setItem("pointid", res.data.result[0].pointid);
             toast.success('Coupon Successfully Verify and Added');
             push(`/scanqrcode/${res.data.result[0].pointid}`);
            }
@@ -82,15 +91,8 @@ export default function ScanqrcodeComponent() {
           setLoading(false); 
           toast.error(err.message);
           setQrcode(true);
-          //push("/dashboard");
+        //  push('/scanqrcode');
         });
-    }
-    else
-    {
-      setLoading(false); 
-      toast.error("Invalide QR Code...")
-      setQrcode(true);
-    }
 
   }
 
@@ -99,16 +101,18 @@ export default function ScanqrcodeComponent() {
       <HeaderDashboard />
       <div className="screenmain screenqrcode" > 
         <div className="screencontainer">
-          { 
+          {/* { 
             !qrcode ? <div className="scanqrcodecontainer">
-              {/* <h1>Scan Data  <span>({scandata})</span></h1> */}
+              <h1>Scan Data  <span>({scandata})</span></h1>
               <h2>Coupone Code: <span>{couponecode}</span></h2>
-              <form className="scanqrcodeForm" onSubmit={handleSubmitCode} >
-                  <button>Validate and Save Coupon</button>
+              <form className="scanqrcodeForm" onSubmit={handleSubmitCode}>
+                  <button>Validate Coupon</button>
               </form>
             </div>
             : <div className="scanqrcodesection"><h2>Scan QR code <br /> and win rewards</h2><QrReader onData={handalqrisvailable} onSuccess={getData} /></div>
-          }
+          } */}
+
+          <div className="scanqrcodesection"><h2>Scan QR code <br /> and win rewards</h2><QrReader onData={handalqrisvailable} onSuccess={getData} /></div>
         </div>
 
 

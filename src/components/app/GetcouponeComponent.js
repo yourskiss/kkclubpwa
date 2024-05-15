@@ -64,7 +64,7 @@ export default function GetcouponeComponent() {
           <div className="scanqrcodecontainer">
             <h2>Coupone Code: <span>{couponecode}</span></h2>
             <form className="scanqrcodeForm" onSubmit={handleSubmitCode} >
-                <button>Validate and Save Coupon</button>
+                <button>Validate Coupon</button>
             </form>
           </div>
  
