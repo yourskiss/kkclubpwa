@@ -42,7 +42,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <meta name="background_color" content="#141414"/>
-      <meta name="theme-color" content="#AFCDAF"/>
+      <meta name="theme-color" content="#000000"/>
       <body className={`${lneue.variable} ${arialmt.variable}`}>
         <main className="main">
           <Starfield starCount={1000} starColor={[255, 255, 255]} speedFactor={0.05} />

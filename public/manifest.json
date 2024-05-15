@@ -7,7 +7,7 @@
       "orientation": "portrait",
       "scope": "/",
       "background_color": "#141414",
-      "theme_color": "#AFCDAF",
+      "theme_color": "#000000",
       "screenshots": [
         {
           "src": "/assets/images/screen.jpg",
