@@ -46,9 +46,4 @@ workbox-*.js
 workbox-*.js.map
 sw.js
 sw.js.map
-# next-video
-videos/*
-!videos/*.json
-!videos/*.js
-!videos/*.ts
-public/_next-video
+swe-worker-development.js

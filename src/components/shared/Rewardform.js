@@ -16,6 +16,7 @@ export default function Rewardform() {
     const [userOrderID, setUserOrderID] = useState('');
     const[userstatus, setUserstatus] = useState('');
     const[redeempoint, setRedeempoint] = useState(''); 
+    const[errorMsg, setErrorMsg] = useState(''); 
  
     const rewardspoints = parseInt(TotalrewardpointsComponent());
     const pointvalue = parseInt(process.env.NEXT_PUBLIC_POINT_VALUE);
@@ -55,54 +56,57 @@ export default function Rewardform() {
 
     const pointvalueChange = (e) => {
         setRedeempoint(e.target.value.trim());
+        setErrorMsg('');
     }
     const pointvalueSubmit = (e) => {
         e.preventDefault();
         if(userstatus !== 'APPROVE')
         {
-            toast.info('Reward points will redeem after profile approval.'); 
+            setErrorMsg('Reward points will redeem after profile approval.'); 
             return;
         }
         if(redeempoint === '')
         {
-            toast.info('Please enter your reward points'); 
+            setErrorMsg('Please enter your reward points'); 
             return;
         }
         if(redeempoint > rewardspoints)
         {
-            toast.info('You can redeem maximum to your reward points.'); 
+            setErrorMsg('You can redeem maximum to your reward points.'); 
             return;
         }
         if(redeempoint < redeemminimumpoint)
         {
-            toast.info(`You can redeem minimum ${redeemminimumpoint} reward points.`); 
+            setErrorMsg(`You can redeem minimum ${redeemminimumpoint} reward points.`); 
             return;
         }
         if(redeempoint > redeemmaximumpoint)
         {
-                toast.info(`You can redeem maximum ${redeemmaximumpoint} reward points.`); 
-                return;
+            setErrorMsg(`You can redeem maximum ${redeemmaximumpoint} reward points.`); 
+            return;
         }
         if(pendingorder > 0)
         {
+            setErrorMsg('');
             toast.info('Your Previous order is already in pending.'); 
             push("/redemptionhistory");
             return;
         }
-
+        
         setLoading(true);
         setPagemsg('Payment Initiation');
         _get(`/Payment/UserPayout?userID=${userID}&points=${redeempoint}&amount=${redeempoint * pointvalue}&ipaddress=${ipInfo}&osdetails=${osn}`)
         .then((res) => {
             setLoading(false);
-          // console.log("Payout request - ", res);
+           console.log("Payout request - ", res);
            if(res.data.status === 0)
             {
-                toast.info(res.data.data.error); 
+                setErrorMsg(res.data.data.error); 
             }
             else
             {
-              //  console.log("id- ", res.data.userorderid);
+                setErrorMsg('');
+                console.log("id- ", res.data.userorderid);
                 setUserOrderID(res.data.userorderid);
                 payoutstatus(res.data.userorderid);
             }
@@ -153,12 +157,13 @@ export default function Rewardform() {
     }, [userOrderID]);
 
  
-
+    
   return (<>
         <div className='redeemforms'>
             <form onSubmit={pointvalueSubmit}>
                 <p>1 POINTS = {pointvalue} INR</p>
                 <input type="number" placeholder="ENTER POINTS" min="0" name="redeempoint" value={redeempoint} onChange={pointvalueChange} />
+                { errorMsg && <span>{errorMsg}</span> }
                 <aside>
                     <button type='submit'>Redeem Points</button>
                 </aside>

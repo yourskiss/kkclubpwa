@@ -87,7 +87,7 @@ export default function LoginComponent() {
     function loginnow()
     {
       setLoading(true);
-      setPagemsg('Request submiting');
+      setPagemsg('Verifying OTP');
       _get("Customer/UserInfo?userid=0&phonenumber="+ mobileValues)
       .then(res => {
         //  console.log("login success - ", res);
@@ -152,7 +152,7 @@ export default function LoginComponent() {
  
 
   const verifyotp = () => {
-    loginnow(); // tesing
+     loginnow(); // tesing
     /*
       setLoading(true);
       setPagemsg('Verifying OTP');
@@ -179,21 +179,11 @@ export default function LoginComponent() {
 
 
  
-
- 
-
- 
- 
-
  
    useEffect(() => {
     if ('OTPCredential' in window) {
       const ac = new AbortController();
-      // setTimeout(function(){
-      //   ac.abort();
-      // }, 1 * 60 * 1000);
-      navigator.credentials
-        .get({ otp: { transport: ['sms'] }, signal: ac.signal })
+        navigator.credentials.get({ otp: { transport: ['sms'] }, signal: ac.signal })
         .then((otpCredential) => {
           console.log('otpCredential - ', otpCredential);
           setOtpValues(otpCredential.code);

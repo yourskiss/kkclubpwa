@@ -76,6 +76,7 @@ export default function RegistationComponent() {
  
 
   const handleOptionChange = (sc, st, ct) => {
+    setCitystateErrors(''); 
      setCityStateName(sc);
      setStateName(st);
      setCityName(ct);
@@ -253,7 +254,7 @@ export default function RegistationComponent() {
                     maxLength={6}
                     value={pincode}
                     onInput={onInputmaxLength}
-                    onChange={(e) => { setPincode(e.target.value);  }}
+                    onChange={(e) => { setPincode(e.target.value); setPincodeErrors(''); }}
                   />
                   {pincodeErrors && <span className="registerError">{pincodeErrors}</span> }
                 </div>
@@ -279,7 +280,7 @@ export default function RegistationComponent() {
                     maxLength={12}
                     value={aadhaarinfo}
                     onInput={onInputmaxLength}
-                    onChange={(e) => { setAadhaarinfo(e.target.value); }}
+                    onChange={(e) => { setAadhaarinfo(e.target.value); setAadhaarErrors('');  }}
                   />
                   <div className="registerLineText">Profile details should match with Aadhaar</div>
                   {aadhaarErrors && <span className="registerError">{aadhaarErrors}</span> }

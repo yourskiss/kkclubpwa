@@ -178,7 +178,7 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 .registerMsgOtp { position: relative; width: 100%;float: left;text-align: left;text-transform: none; font-weight: 500; color: rgba(245, 240, 235,0.6); font-size:18px; display:flex; justify-content: flex-start;  align-items:center;   }
 .registerMsgOtp b { font-weight: normal; }
 .registerMsgOtp span { font-weight: normal; }
-.numberedit { margin: 0 0 0 1rem; width:25px; height:25px;   padding:0; font-size: 0; cursor: pointer; text-decoration: none;  background: url('../images/edit_icon.png') no-repeat center center; background-size: 100% 100%; }
+.numberedit { margin:-7px 0 0 0.7rem; width:22px; height:22px;   padding:0; font-size: 0; cursor: pointer; text-decoration: none;  background: url('../images/edit_icon.png') no-repeat center center; background-size: 100% 100%; }
 .numberedit:hover { color:#AFCDAF; text-decoration: underline;  filter: grayscale(100%); }
 
 .registerField { position: relative; width: 100%; float: left;text-align: center; margin-top:1.5rem;}
@@ -501,7 +501,7 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 .redeemforms { width: 100%; float: left; margin:0; padding:0;  }
 .redeemforms p {width: 100%; float: left; margin:0 0 1rem 0; padding:0; text-align: left;  font-weight: normal; color:rgba(245, 240, 235,0.4); font-size:22px;  }
 .redeemforms input {width: 100%; float: left; margin:0 0 0 0; padding:1rem 2rem; border: solid 2px #F5EFEB; border-bottom-width: 4px; background: transparent; outline: none; text-align: left;  font-weight: normal; color:#787674; font-size:22px;  }
-.redeemforms span { width: 100%; float: left; margin:0.7rem 0 0 0; padding:0; text-align: left;  font-weight: normal; color:#AFCDAF; font-size:16px;  }
+.redeemforms span { width: 100%; float: left; margin:1rem 0 0 0; padding:0; text-align: left;  font-weight: normal; color:#f30; font-size:16px;  }
 .redeemforms button { width: 100%; display:block; float: left;  margin:2rem 0 0 0;  padding:1.1rem 2.5rem; box-sizing: border-box; text-align: center;  background:#F5F0EB;  font-weight: 700;  font-size: 22px;  color:#191919;  border: solid 2px #414141; transition: all 0.5s ease-out;  border-radius: 0;  text-decoration: none;   cursor: pointer; outline: none; text-transform: none; }
 .redeemforms button:hover { background: #AFCDAF;  color: #191919;   transition: all 0.5s ease-in; }
 
@@ -530,13 +530,12 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 .bankInfoField p { margin:0; padding:0; width: 100%; float: left; text-align: left; text-transform: none; font-weight: 500;color: rgba(175, 205, 175, 0.6); font-size: 18px;  }
 .bankInfoField input {  float: left;  width: 100%;  padding: 0.5rem 1rem;  border: 0; border-bottom: solid 2px #F5F0EB; outline: none;  background:transparent;  border-radius: 0;  text-align: left; font-weight: 500;  color: rgba(245, 240, 235,0.6);  font-size:18px;  box-shadow:none; box-sizing: border-box; }
 .bankInfoField input:disabled {user-select: none; pointer-events: none;}
-.bankInfoField span { display: block; margin-top:0.5rem; padding: 0; float: left; width: 100%; text-align: left; font-weight: 500; color: #f30; font-size: 14px;}
+.bankInfoField span { display: block; margin-top:0.7rem; padding: 0; float: left; width: 100%; text-align: left; font-weight: 500; color: #f30; font-size: 14px;}
 .bankInfoField aside { display: block; margin:0.2rem 0 1.5rem 0; padding: 0; float: left; width: 100%; text-align: left; font-weight: 500; color: #f30; font-size: 16px;}
 .bankInfoField button { width: 100%; display:block; float: left; margin: 0;  padding:1rem 2rem; box-sizing: border-box; text-align: center;  background:#F5F0EB;  font-weight: 700;  font-size: 18px;  color:#191919;  border: solid 2px #414141; transition: all 0.5s ease-out;  border-radius: 0;  text-decoration: none;   cursor: pointer; outline: none; text-transform: uppercase; }
 .bankInfoField button:hover { background: #AFCDAF;  color: #191919;   transition: all 0.5s ease-in; }
 .bankInfoField button[disabled], .bankInfoField button:disabled { user-select: none;  pointer-events: none;   opacity: 0.6; }
-
-
+ 
 
 
 @media only screen and (max-width:1023px)
