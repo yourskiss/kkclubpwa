@@ -37,7 +37,7 @@ export default function RewardshistoryComponent () {
     }).catch((error) => {
         setLoading(false);
        // console.log("UserRewardPointsHistory - error - ", error);
-        setNodata(error.message);
+       console.log(error.message);
     });
     return () => { setMounted(false); }
   }, [userID]);

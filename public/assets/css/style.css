@@ -276,7 +276,7 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 .pc_slider {width: 100%;float: left;overflow: hidden;margin: 0 !important;padding: 0 0 30px 0 !important;}
 .pc_item { position: relative; width: 100%;float: left;height: auto;margin: 0;padding: 0; }
 .pc_item img { width: 100%; height: auto; float: left;margin: 0;padding: 0;}
-.pc_item p { z-index: 1; position: absolute; bottom:20%; left: 0; width: 100%;float: left;margin: 0;padding: 0; text-align: center; font-weight: bold; color: #F5F0EB; font-size: 42px; font-family: var(--font-lneue);  }
+.pc_item p { z-index: 1; position: absolute; bottom:0; left: 0; width: 100%;float: left;margin: 0;padding: 1rem 0.5rem; background: rgba(0, 0, 0, 0.6); word-break: break-word; text-align: center; font-weight: bold; color: #F5F0EB; font-size: 42px; font-family: var(--font-lneue);  }
 .pc_slider .slick-list {z-index: 2;margin: 0;padding: 0;overflow: hidden;}
 .pc_slider .slick-track {display: flex;justify-content: space-between;align-items: stretch;height: inherit;margin: 0;padding: 0;}
 .pc_slider .slick-slide {margin: 0;padding: 0; }
@@ -369,7 +369,7 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 /* ################### qr code reader ################### */
 .scanqrcodesection  { width: 100%; float: left; margin:0; padding:1rem 0 0 0; text-align: center; }
 .scanqrcodesection h2 {  width: 100%; float: left; margin:0 0 3rem 0; padding: 0; text-align: center;  text-transform: none; font-weight: normal;color: #fff; font-size: 26px; font-family:var(--font-lneue);  }
-.qr-reader { display: inline-block; float:none; margin: 0 auto; width: 95%; max-width: 400px; height:400px; padding: 54px; background:url('../images/qr-frame-bg.png') no-repeat center center; background-size:100% 100%;  z-index: 2; position: relative; left:0;  top:0; border:none;  }
+.qr-reader { display: inline-block; float:none; margin: 0 auto; width: 95%; max-width: 400px; height:400px; padding: 52px 50px; background:url('../images/qr-frame-bg.png') no-repeat center center; background-size:100% 100%;  z-index: 2; position: relative; left:0;  top:0; border:none;  }
 .qr-reader video { width: 100%;  height: 100%;  object-fit: cover;}
 .qr-reader section {  width: 100% !important; height: 100% !important;  left: 0 !important; top: 0 !important; float: left; }
 .qr-reader .close-qr-reader { z-index:4; position: absolute; right: 1rem; top: 1rem; height: 40px; width: 40px; border-radius: 50%; overflow: hidden; display: flex; justify-content: center; align-items: center; background-color: #414141; font-size:22px; cursor: pointer; color:#fff; text-decoration: none; }
@@ -591,7 +591,7 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 .approvalcontainer dl dd p span { margin:0 0 0.5rem 0;  font-size:20px; }
 .approvalcontainer section h2 { font-size: 20px; }
 .approvalcontainer section h3 { margin:1rem 0 2rem 0;  font-size: 24px;  }
-.pc_item p {  bottom:12%; font-size:30px; }
+.pc_item p {  font-size:30px; }
 
 
 

@@ -41,7 +41,7 @@ export default function ScanqrcodeComponent() {
       }
       else
       {
-          console.count("Invalide QR code.");
+          console.count("Wrong QR code.");
       }
   }, [qrcode]);
 
@@ -81,20 +81,20 @@ export default function ScanqrcodeComponent() {
           console.log(res)
           if(res.data.result === null)
           {
-            toast.error(res.data.resultmessage);
+            toast.error("Invalide QR Code, Try another code");
             setQrcode(true);
-           // push('/scanqrcode');
+            window.location.reload();
            } 
            else
            {
-            toast.success('Coupon Successfully Verify and Added');
+            toast.success('Coupon Successfully Added');
             push(`/scanqrcode/${res.data.result[0].pointid}`);
            }
         }).catch((err) => {
           setLoading(false); 
           toast.error(err.message);
           setQrcode(true);
-        //  push('/scanqrcode');
+          window.location.reload();
         });
 
   }

@@ -16,6 +16,9 @@ export default function ApprovalComponent() {
     const [pagemsg, setPagemsg] = useState('');
     const [loading, setLoading] = useState(false);
     const [mounted, setMounted] = useState(true);
+    const [mounted2, setMounted2] = useState(true);
+
+    const[productimg, setProductimg] = useState({});
     
     const[usershort, setUsershort] = useState('');
     const[userstatus, setUserstatus] = useState('PENDING');
@@ -24,6 +27,8 @@ export default function ApprovalComponent() {
     const { push } = useRouter();
     const userMobile = getUserMobile();
  
+    const imageUrl = process.env.NEXT_PUBLIC_IMAGE_URL;
+console.log(imageUrl);
 
     useEffect(() => {
         setLoading(true);
@@ -43,24 +48,47 @@ export default function ApprovalComponent() {
           }
         }).catch((error) => {
             setLoading(false);
-            toast.info("UserInfo-",error); 
+            console.log("UserInfo-",error); 
         });
        
       return () => { setMounted(false); }
     }, []);
 
     useEffect(() => {
-        if(userstatus !== 'PENDING') { push('/dashboard'); }
+      //  if(userstatus !== 'PENDING') { push('/dashboard'); }
     }, [userstatus]);
 
+
+ 
+
+    useEffect(() => {
+        setLoading(true);
+        setPagemsg('Fatching products images');
+        _get("/Cms/ProductBannerImage?section=approval")
+        .then((res) => {
+            setLoading(false);
+            console.log("ProductBannerImage - ", res);
+            if (mounted2)
+            {
+                setProductimg(res.data.result);
+            }
+        }).catch((error) => {
+            setLoading(false);
+           console.log("ProductBannerImage-",error); 
+        });
+      return () => { setMounted2(false); }
+    }, []);
     
     var settingsApproval = {
         dots: true,
         infinite: true,
         speed: 500,
+        adaptiveHeight:false,
         slidesToShow: 1,
         slidesToScroll: 1
       };
+
+
 
 
   return (
@@ -86,22 +114,14 @@ export default function ApprovalComponent() {
                             <h2>PRODUCT CATEGORIES</h2>
                             <h3>We have the right solution for every building-related problem</h3>
                             <Slider className="pc_slider" {...settingsApproval}>
-                                <div className="pc_item">
-                                    <Image src="/assets/images/product-categories/pc1.jpg" width={100} height={100} alt="product" quality={99} />
-                                    <p>Waterproofing</p>
-                                </div>
-                                <div className="pc_item">
-                                    <Image src="/assets/images/product-categories/pc2.png" width={100} height={100} alt="product" quality={99} />
-                                    <p>Waterproofing</p>
-                                </div>
-                                <div className="pc_item">
-                                    <Image src="/assets/images/product-categories/pc3.png" width={100} height={100} alt="product" quality={99} />
-                                    <p>Waterproofing</p>
-                                </div>
-                                <div className="pc_item">
-                                    <Image src="/assets/images/product-categories/pc4.jpg" width={100} height={100} alt="product" quality={99} />
-                                    <p>Waterproofing</p>
-                                </div>
+                            {  
+                               productimg && productimg.map && productimg.map((val) => <div className="pc_item" key={val.bannerid}>
+                                    <img src={imageUrl+val.imagepath}   alt={val.alternativetext} />
+                                    <p>{val.alternativetext}</p>
+                                </div>) 
+                            }
+                             
+
                             </Slider>
                         </section>
                 </div>
