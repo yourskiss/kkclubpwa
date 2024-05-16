@@ -64,8 +64,21 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 
 
 /* ################### msg-popup ################### */
+.pwaIsoPrompt { display: block; z-index:8; position: fixed; left: 50%; top: 0; transform: translateX(-50%); height: 100%; width: 100%; max-width: 1024px; float: left;  background-color: #000; background: rgba(0,0,0,0.4); }
+.pwaIsoPrompt section { display: block; z-index:9;  position:absolute; left:50%; bottom:1rem; transform: translateX(-50%); width:94%; height: auto; float: left; background-color: #fff; overflow:visible; border-radius:10px; margin:0 auto; padding:1.5rem 0 1rem 0; box-sizing: border-box; }
+.pwaIsoPrompt h2 {  width: 100%; float: left; margin:0; padding: 0 1rem 1rem 1rem; border-bottom: solid 1px #DEDEDE; display: flex; justify-content: space-between; align-items: flex-start;  } 
+.pwaIsoPrompt h2 span {  color:#383C3D; font-size: 18px; font-weight: 500;line-height: 1; }
+.pwaIsoPrompt h2 button {  margin: 0 0 0 1rem; padding:0; background:none;  font-weight: normal; line-height: 1; font-size: 16px;  color:#42b0fa;  border:none; transition: all 0.5s ease-out;  border-radius:0;  cursor: pointer;  text-transform: none; }
+.pwaIsoPrompt h2 button:hover {  color:#383C3D; transition: all 0.5s ease-in;  }
+.pwaIsoPrompt p {  width:84%; float: left; margin:0 8%; padding: 1.5rem 0 1rem 0; border-bottom: solid 1px #DEDEDE; color:#9d9d9d; font-size: 14px; font-weight: 500;line-height: 1.4;  } 
+.pwaIsoPrompt ul {  width:84%; float: left; margin:0 8%; padding:1rem 0 0 0; color:#383C3D; font-size: 14px; font-weight: 500;line-height: 1;  } 
+.pwaIsoPrompt ul li { list-style: none; margin:0; padding:0.6rem 0; display: flex; justify-content:flex-start; align-items:center; }
+.pwaIsoPrompt ul li img { width: 24px; height: auto; margin: 0 0.7rem 0 0; padding: 0; border: 0; }
+.pwaIsoPrompt ul li span {  color:#383C3D; font-size: 14px; font-weight: 500; line-height: 1; }
+
+/* ################### msg-popup ################### */
 .pwaPromptPopup { display: block; z-index:8; position: fixed; left: 50%; top: 0; transform: translateX(-50%); height: 100%; width: 100%; max-width: 1024px; float: left;  background-color: #000; background: rgba(0,0,0,0.4); }
-.pwaPromptPopup section { display: block; z-index:9;  position:absolute; left:50%; top:10%; transform: translateX(-50%); width: 95%; max-width:350px; height: auto;  float: left; background-color: #AFCDAF; overflow:visible; border-radius:10px; margin:0 auto; padding:1.5rem; box-sizing: border-box; }
+.pwaPromptPopup section { display: block; z-index:9;  position:absolute; left:50%;  transform: translateX(-50%); width: 95%; max-width:350px; height: auto;  float: left; background-color: #AFCDAF; overflow:visible; border-radius:10px; margin:0 auto; padding:1.5rem; box-sizing: border-box; }
 .pwaPromptContainer { width: 100%; float: left; margin:0; padding: 0; display: flex; justify-content:flex-start; align-items: center; }
 .pwaPromptContainer img { background: #fff;  border-radius: 50%; width: 70px; height: auto; margin: 0 20px 0 0; }
 .pwaPromptContainer h2 {  width:calc(100% - 90px); float: left; margin:0; padding: 0; text-align: left; color:#000; line-height: 1.2; font-size:18px;  text-transform: none; } 
@@ -180,15 +193,11 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 .registerMsgOtp span { font-weight: normal; }
 .numberedit { margin:-7px 0 0 0.7rem; width:22px; height:22px;   padding:0; font-size: 0; cursor: pointer; text-decoration: none;  background: url('../images/edit_icon.png') no-repeat center center; background-size: 100% 100%; }
 .numberedit:hover { color:#AFCDAF; text-decoration: underline;  filter: grayscale(100%); }
-
 .registerField { position: relative; width: 100%; float: left;text-align: center; margin-top:1.5rem;}
 .registertext { margin:0; padding:0.5rem 0 0 0; width: 100%; float: left; text-align: left; text-transform: none; font-weight: 500;color: rgba(175, 205, 175, 0.6); font-size: 18px;  }
 .registertext.registertextcenter { margin: 1rem 0 0 0; text-align: center; }
-
   input::-webkit-outer-spin-button { appearance: none;margin: 0;}
   input::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;}
- 
-
 .registerField .registerinput {  float: left;  width: 100%;  padding: 0.5rem 1rem;  border: 0; border-bottom: solid 2px #F5F0EB; outline: none;  background:transparent;  border-radius: 0;  text-align: left; font-weight: 500;  color: rgba(245, 240, 235,0.6);  font-size: 24px;  box-shadow:none; box-sizing: border-box; }
 .registerField .registerinput:disabled {user-select: none; pointer-events: none;}
 .registerField .registerSelect  {  float: left;  width: 100%;  padding:0.5rem 1rem;  border: 0; border-bottom: solid 2px #F5F0EB; outline: none;  background:transparent;  border-radius: 0;  text-align: left; font-weight: 500;  color: rgba(245, 240, 235,0.6); font-size: 24px;  box-shadow:none;  text-indent: 0; text-overflow: "";-webkit-appearance: none; appearance: none; box-sizing: border-box; background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGBAMAAAAI3hL1AAAAAXNSR0IB2cksfwAAAAlwSFlzAAAAnQAAAJ0Bj3LnbgAAACRQTFRF////////////AAAA////////////////////////////////OT+Z1gAAAAx0Uk5TCIcKAAGRwgy8mZO95nqVkAAAAC1JREFUeJxjZFQS+H+P0VXpzNccRhMlGfFdjMbihS/7GY0ZVV99YDRmEHzPAADT/wuH1cAZOAAAAABJRU5ErkJggg=='); background-repeat: no-repeat;  background-position: right 1rem center; }

@@ -1,5 +1,5 @@
 "use client";
-import Cookies from 'js-cookie';
+import React from 'react';
 import { useState, useEffect } from 'react';
 import { motion } from "framer-motion";
 import { ErrorBoundary } from "next/dist/client/components/error-boundary";
@@ -8,27 +8,31 @@ export default function PwaIOS () {
   const [shouldShowPrompt, setShouldShowPrompt] = useState(false);
 
   useEffect(() => {
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
     const notInstalled = !window.navigator.standalone;
-    const lastPrompt = !!Cookies.get('pwaIos');
-    const isIOS = (/iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.userAgent === 'MacIntel' && navigator.maxTouchPoints > 1)) && !window.MSStream;
-    console.log("isIOS-",isIOS," /// notInstalled-",notInstalled," /// lastPrompt-",lastPrompt);
-    if (isIOS && notInstalled && !lastPrompt) 
-    {
+    const lastPrompt = localStorage.getItem('lastPrompt');
+    const daysSinceLastPrompt = lastPrompt ? (new Date() - new Date(lastPrompt)) / (1000 * 60 * 60 * 24) : null;
+
+    console.log("isIOS-",isIOS," /// notInstalled-",notInstalled," /// lastPrompt-",lastPrompt," /// daysSinceLastPrompt-",daysSinceLastPrompt);
+
+    if (isIOS && notInstalled && (daysSinceLastPrompt === null || daysSinceLastPrompt > 1)) {
       setShouldShowPrompt(true);
     }
+
+    
   }, []);
 
   const promptInstall = () => {
-    Cookies.set('pwaIos',  true, { expires: new Date(new Date().getTime() + 300000), secure: true });
+    // Custom logic to show your install prompt
+ 
+    localStorage.setItem('lastPrompt', new Date().toISOString());
     setShouldShowPrompt(false);
-    window.location.reload();
   };
 
  
   return (<ErrorBoundary>
     { shouldShowPrompt && <div className='pwaIsoPrompt'>
-    <motion.div initial={{ opacity: 0 }}  whileInView={{ opacity: 1 }} transition={{ duration: 1, delay: 0, origin: 1, ease: [0, 0.71, 0.2, 1.01] }}>
-      {/* <motion.div initial={{ opacity: '0' }} animate={{  opacity: '1' }} transition={{ duration: 3, delay: 0, origin: 1, ease:'easeIn' }}>  */}
+      <motion.div initial={{ opacity: '0' }} animate={{  opacity: '1' }} transition={{ duration: 3, delay: 0, origin: 1, ease:'easeIn' }}> 
         <section>
           <h2>
             <span>Add to Home Screen</span>
