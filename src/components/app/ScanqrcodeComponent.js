@@ -15,8 +15,7 @@ import HeaderDashboard from '../shared/HeaderDashboard';
 export default function ScanqrcodeComponent() {
   const [pagemsg, setPagemsg] = useState('');
   const [loading, setLoading] = useState(false);
-  const [mounted, setMounted] = useState(true);
-
+ 
   const [qrcode, setQrcode] = useState(true);
   const [scandata, setScandata] = useState('');
   const [couponecode, setCouponecode] = useState('');
@@ -29,29 +28,22 @@ export default function ScanqrcodeComponent() {
   const browserInfo = browserdetails();
   const rewardspoints = TotalrewardpointsComponent();
  
- 
-
-  useEffect(() => {
-      const sdURL = scandata.split("?") || '';
-      if(sdURL[0] === process.env.NEXT_PUBLIC_COUPON_URL)
-      {
-          const couponvalue = sdURL[1].split("=");
-          setCouponecode(couponvalue[1]);
-         // toast.success("QR code scan successfully.");
-      }
-      else
-      {
-          console.count("Wrong QR code.");
-      }
-  }, [qrcode]);
-
-
   const handalqrisvailable = (val) => { 
     setQrcode(val);
   }
   const getData =(val) =>{
     setScandata(val);
   }
+
+  useEffect(() => {
+      const sdURL = scandata.split("?") || '';
+      if(sdURL[0] === process.env.NEXT_PUBLIC_COUPON_URL || sdURL[0] === process.env.NEXT_PUBLIC_COUPON_URL2)
+      {
+        const couponvalue = sdURL[1].split("=");
+        setCouponecode(couponvalue[1]);
+        // toast.success("QR code scan successfully.");
+      }
+  }, [qrcode]);
 
   useEffect(() => {
     if(couponecode !== '')
@@ -83,7 +75,7 @@ export default function ScanqrcodeComponent() {
           {
             toast.error("Invalide QR Code, Try another code");
            // setQrcode(true);
-            setTimeout(function(){window.location.reload(); },3000);
+            setTimeout(function(){window.location.reload(); },2000);
            } 
            else
            {
@@ -105,7 +97,7 @@ export default function ScanqrcodeComponent() {
       <div className="screenmain screenqrcode" > 
         <div className="screencontainer">
            { 
-            !qrcode ? <div className="scanqrcodecontainer">
+            couponecode !== '' ? <div className="scanqrcodecontainer">
               <h1>Scan Data  <span>({scandata})</span></h1>
               <h2>Coupone Code: <span>{couponecode}</span></h2>
               <form className="scanqrcodeForm" onSubmit={handleSubmitCode} style={{'display':'none'}}>

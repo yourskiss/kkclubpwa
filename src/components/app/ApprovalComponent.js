@@ -27,7 +27,7 @@ export default function ApprovalComponent() {
     const { push } = useRouter();
     const userMobile = getUserMobile();
     const imageUrl = process.env.NEXT_PUBLIC_IMAGE_URL;
- 
+    const imageSection = process.env.NEXT_PUBLIC_SECTION_APPROVAL;
 
     useEffect(() => {
         setLoading(true);
@@ -63,7 +63,7 @@ export default function ApprovalComponent() {
     useEffect(() => {
         setLoading(true);
         setPagemsg('Fatching products');
-        _get("/Cms/ProductBannerImage?section=approval")
+        _get(`/Cms/ProductBannerImage?section=${imageSection}`)
         .then((res) => {
             setLoading(false);
            // console.log("ProductBannerImage - ", res);

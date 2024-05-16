@@ -140,7 +140,7 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 .headersection.headerAfterlogin { justify-content: flex-start; background-color:transparent;   }
 .headersection.headerDashboard {  justify-content: space-between; background-color:transparent;  }
 .headersection.headerDashboard .logo { display: inline-block; float:none;width: 100%; max-width: 260px;  margin: 0; padding:0;}
-.headersection.headerDashboard .logo img { width: 100%; height: auto; }
+.headersection.headerDashboard .logo img { cursor: pointer; width: 100%; height: auto; }
 .headersection.headerDashboard section { position: relative; display: flex; justify-content:flex-end; align-items: center;  }
 .header_userdp { cursor: pointer; position: relative; display: inline-block; width:75px; height: 75px; border-radius: 50%;  margin: 0; padding:0.4rem; border: none;  }
 .header_userdp span {  display: flex; justify-content: center; align-items: center; float: left; width: 100%; height:100%; border: solid 3px #191919; border-radius: 50%; margin: 0;padding: 0; box-sizing: border-box; line-height: 1; font-size: 24px; font-weight: bold; text-transform: uppercase; font-family: var(--font-lneue); color: #191919; letter-spacing:1px; }

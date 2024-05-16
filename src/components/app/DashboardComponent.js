@@ -30,7 +30,7 @@ const DashboardComponent = () => {
     const rewardspoints = parseInt(TotalrewardpointsComponent());
     const redeemminimumpoint = parseInt(process.env.NEXT_PUBLIC_REDEEM_MIN_POINT);
     const imageUrl = process.env.NEXT_PUBLIC_IMAGE_URL;
-
+    const imageSection = process.env.NEXT_PUBLIC_SECTION_DASHBOARD;
  
     useEffect(() => {
         if (typeof localStorage !== 'undefined') 
@@ -57,7 +57,7 @@ const DashboardComponent = () => {
   useEffect(() => {
     setLoading(true);
     setPagemsg('Fatching products');
-    _get("/Cms/ProductBannerImage?section=dashboard")
+    _get(`/Cms/ProductBannerImage?section=${imageSection}`)
     .then((res) => {
         setLoading(false);
        // console.log("ProductBannerImage - ", res);
