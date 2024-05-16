@@ -82,8 +82,8 @@ export default function ScanqrcodeComponent() {
           if(res.data.result === null)
           {
             toast.error("Invalide QR Code, Try another code");
-            setQrcode(true);
-            window.location.reload();
+           // setQrcode(true);
+            setTimeout(function(){window.location.reload(); },3000);
            } 
            else
            {
@@ -93,7 +93,7 @@ export default function ScanqrcodeComponent() {
         }).catch((err) => {
           setLoading(false); 
           toast.error(err.message);
-          setQrcode(true);
+         // setQrcode(true);
           window.location.reload();
         });
 
@@ -104,18 +104,17 @@ export default function ScanqrcodeComponent() {
       <HeaderDashboard />
       <div className="screenmain screenqrcode" > 
         <div className="screencontainer">
-          {/* { 
+           { 
             !qrcode ? <div className="scanqrcodecontainer">
               <h1>Scan Data  <span>({scandata})</span></h1>
               <h2>Coupone Code: <span>{couponecode}</span></h2>
-              <form className="scanqrcodeForm" onSubmit={handleSubmitCode}>
+              <form className="scanqrcodeForm" onSubmit={handleSubmitCode} style={{'display':'none'}}>
                   <button>Validate Coupon</button>
               </form>
             </div>
             : <div className="scanqrcodesection"><h2>Scan QR code <br /> and win rewards</h2><QrReader onData={handalqrisvailable} onSuccess={getData} /></div>
-          } */}
+          } 
 
-          <div className="scanqrcodesection"><h2>Scan QR code <br /> and win rewards</h2><QrReader onData={handalqrisvailable} onSuccess={getData} /></div>
         </div>
 
 

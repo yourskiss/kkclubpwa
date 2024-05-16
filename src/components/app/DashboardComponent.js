@@ -60,7 +60,7 @@ const DashboardComponent = () => {
     _get("/Cms/ProductBannerImage?section=dashboard")
     .then((res) => {
         setLoading(false);
-        console.log("ProductBannerImage - ", res);
+       // console.log("ProductBannerImage - ", res);
         if (mounted2)
         {
             setProductimg(res.data.result);
