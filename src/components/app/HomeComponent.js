@@ -1,7 +1,7 @@
 "use client";
 import Cookies from 'js-cookie';
 import axios from 'axios';
-import { Suspense, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Homevideo from '../shared/Homevideo';
 import { setCouponeCode, isCouponeCode } from "@/config/validecoupone";
@@ -54,8 +54,6 @@ export default function HomeComponent() {
   },[]);
 
   return (<>
-   <Suspense fallback={<p>...Loading</p>}>
     <Homevideo />
-  </Suspense>
   </>)
 }
