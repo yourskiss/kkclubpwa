@@ -8,14 +8,29 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import HeaderDashboard from '../shared/HeaderDashboard';
+import Loader from '../shared/LoaderComponent';
+import { _get } from "@/config/apiClient";
+
 import PwaModal from "../shared/PwaModal";
 import PwaIOS from "../shared/PwaIOS";
+import Link from 'next/link';
+
  
 const DashboardComponent = () => {
+    const [pagemsg, setPagemsg] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    const [mounted2, setMounted2] = useState(true);
+
+    const[productimg, setProductimg] = useState({});
+
     const[userstatus, setUserstatus] = useState('');
+
     const { push } = useRouter();
     const rewardspoints = parseInt(TotalrewardpointsComponent());
-    const redeemminimumpoint = process.env.NEXT_PUBLIC_REDEEM_MIN_POINT;
+    const redeemminimumpoint = parseInt(process.env.NEXT_PUBLIC_REDEEM_MIN_POINT);
+    const imageUrl = process.env.NEXT_PUBLIC_IMAGE_URL;
+
  
     useEffect(() => {
         if (typeof localStorage !== 'undefined') 
@@ -37,6 +52,25 @@ const DashboardComponent = () => {
     }
     push("/redeempoints");
   }
+
+
+  useEffect(() => {
+    setLoading(true);
+    setPagemsg('Fatching products');
+    _get("/Cms/ProductBannerImage?section=dashboard")
+    .then((res) => {
+        setLoading(false);
+        console.log("ProductBannerImage - ", res);
+        if (mounted2)
+        {
+            setProductimg(res.data.result);
+        }
+    }).catch((error) => {
+        setLoading(false);
+       console.log("ProductBannerImage-",error); 
+    });
+  return () => { setMounted2(false); }
+}, []);
  
   var settingsDashboard = {
     dots: true,
@@ -97,34 +131,15 @@ const DashboardComponent = () => {
             <div className="dashboard_products">
                 <h2>Earn rewards on every purchase</h2>
                 <Slider className="dashboard_slider" {...settingsDashboard}>
-                    <div className="db_item">
-                        <aside><Image src="/assets/images/products/img.png" width={500} height={500} alt="product" quality={99} /></aside>
-                        <p>
-                            <span>Learn more</span>
-                            <Image src="/assets/images/arrows.png" width={45} height={14} alt="product" quality={99} />
-                        </p>
-                    </div>
-                    <div className="db_item">
-                        <aside><Image src="/assets/images/products/img.png" width={500} height={500} alt="product" quality={99} /></aside>
-                        <p>
-                            <span>Learn more</span>
-                            <Image src="/assets/images/arrows.png" width={45} height={14} alt="product" quality={99} />
-                        </p>
-                    </div>
-                    <div className="db_item">
-                        <aside><Image src="/assets/images/products/img.png" width={500} height={500} alt="product" quality={99} /></aside>
-                        <p>
-                            <span>Learn more</span>
-                            <Image src="/assets/images/arrows.png" width={45} height={14} alt="product" quality={99} />
-                        </p>
-                    </div>
-                    <div className="db_item">
-                        <aside><Image src="/assets/images/products/img.png" width={500} height={500} alt="product" quality={99} /></aside>
-                        <p>
-                            <span>Learn more</span>
-                            <Image src="/assets/images/arrows.png" width={45} height={14} alt="product" quality={99} />
-                        </p>
-                    </div>                
+                {  
+                               productimg && productimg.map && productimg.map((val) => <div className="db_item" key={val.bannerid}>
+                                    <aside><img src={`${imageUrl}${val.imagepath}`}   alt={val.alternativetext} /></aside>
+                                    <Link href={val.hyperlink} target='_blank'>
+                                        <span>Learn more</span>
+                                        <Image src="/assets/images/arrows.png" width={45} height={14} alt="product" quality={99} />
+                                    </Link>
+                                </div>) 
+                }
                 </Slider>
             </div>
 
@@ -132,6 +147,7 @@ const DashboardComponent = () => {
       </div>
     </div> 
 
+    <Loader showStatus={loading}  message={pagemsg} />                       
     <PwaModal />
     <PwaIOS />
   </>)

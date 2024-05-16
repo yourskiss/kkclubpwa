@@ -26,9 +26,8 @@ export default function ApprovalComponent() {
 
     const { push } = useRouter();
     const userMobile = getUserMobile();
- 
     const imageUrl = process.env.NEXT_PUBLIC_IMAGE_URL;
-console.log(imageUrl);
+ 
 
     useEffect(() => {
         setLoading(true);
@@ -55,7 +54,7 @@ console.log(imageUrl);
     }, []);
 
     useEffect(() => {
-      //  if(userstatus !== 'PENDING') { push('/dashboard'); }
+        if(userstatus !== 'PENDING') { push('/dashboard'); }
     }, [userstatus]);
 
 
@@ -63,11 +62,11 @@ console.log(imageUrl);
 
     useEffect(() => {
         setLoading(true);
-        setPagemsg('Fatching products images');
+        setPagemsg('Fatching products');
         _get("/Cms/ProductBannerImage?section=approval")
         .then((res) => {
             setLoading(false);
-            console.log("ProductBannerImage - ", res);
+           // console.log("ProductBannerImage - ", res);
             if (mounted2)
             {
                 setProductimg(res.data.result);
@@ -78,6 +77,8 @@ console.log(imageUrl);
         });
       return () => { setMounted2(false); }
     }, []);
+
+
     
     var settingsApproval = {
         dots: true,
@@ -116,7 +117,7 @@ console.log(imageUrl);
                             <Slider className="pc_slider" {...settingsApproval}>
                             {  
                                productimg && productimg.map && productimg.map((val) => <div className="pc_item" key={val.bannerid}>
-                                    <img src={imageUrl+val.imagepath}   alt={val.alternativetext} />
+                                    <img src={`${imageUrl}${val.imagepath}`} alt={val.alternativetext} />
                                     <p>{val.alternativetext}</p>
                                 </div>) 
                             }
