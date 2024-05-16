@@ -9,8 +9,7 @@ import "./globals.css";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Starfield from 'react-starfield';
-import PwaModal from '@/components/shared/PwaModal';
-import PwaIOS from '@/components/shared/PwaIOS';
+
  
 export const metadata = {
   title: "Kerakoll Club",
@@ -48,8 +47,7 @@ export default function RootLayout({ children }) {
           <Starfield starCount={1000} starColor={[255, 255, 255]} speedFactor={0.05} />
           <ToastContainer position="top-center" autoClose={2000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored"  />
             {children}
-            <PwaModal />
-            <PwaIOS />
+            
         </main>
       </body>
     </html>

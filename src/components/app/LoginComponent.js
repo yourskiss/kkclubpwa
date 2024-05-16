@@ -2,17 +2,18 @@
 import Link from "next/link";
 import Image from 'next/image';
 import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Loader from "../shared/LoaderComponent";
 import { toast } from 'react-toastify';
 import {isBearerToken, setUserCookies, isUserToken, setLoginNumber } from "@/config/userauth";
 import { encryptText } from "@/config/crypto";
-import { setCouponeCode, isCouponeCode } from "@/config/validecoupone";
 import Otpcountdown from "../core/timer";
 import { _get } from "@/config/apiClient";
 import HeaderFirst from "../shared/HeaderFirst";
 import OtpInput from 'react-otp-input';
-
+import PwaModal from "../shared/PwaModal";
+import PwaIOS from "../shared/PwaIOS";
+import { isCouponeCode } from "@/config/validecoupone";
  
 export default function LoginComponent() {  
   const [pagemsg, setPagemsg] = useState('');
@@ -27,21 +28,15 @@ export default function LoginComponent() {
  
 
     const { push } = useRouter();
-    const searchParams = useSearchParams();
-    const getqrcode = searchParams.get('code');
-    const isCC = isCouponeCode();
     const userToken   =  isUserToken();
     const bearerToken = isBearerToken();
-
+    const isCC = isCouponeCode();
 
     const otpcountertime = new Date();
     otpcountertime.setSeconds(otpcountertime.getSeconds() + 60);  
     const getOtpTimer =(val) =>{ setOtpsent(val); }
   
-     useEffect(() => {
-       if(getqrcode !== null) { setCouponeCode(getqrcode); }
-     }, [getqrcode]);
-    
+
   
     useEffect(() => {
       if(!bearerToken) { push("/"); return  }
@@ -98,15 +93,19 @@ export default function LoginComponent() {
           localStorage.setItem("verificationstatus",res.data.result.verificationstatus);
             const userinfo = res.data.result.userid + "|" + res.data.result.phonenumber
             setUserCookies(encryptText(userinfo));       
-            if(res.data.result && isCC)
-            { 
-              push('/getcoupone');
-              toast.success('Coupon Added Successfully'); 
-            }
-            else if(res.data.result && !isCC)  
+            if(res.data.result)  
             {
-              push("/dashboard");
-              // toast.success('Login Successfully'); 
+                if(isCC)
+                { 
+                  toast.success('Coupon Added Successfully'); 
+                  push('/getcoupone');
+                  
+                }
+                else 
+                {
+                 // toast.success('Login Successfully.'); 
+                  push("/dashboard");
+                }
             }
             else
             {
@@ -263,6 +262,10 @@ export default function LoginComponent() {
     </div>
 
     <Loader showStatus={loading} message={pagemsg}  />
+
+    <PwaModal />
+    <PwaIOS />
+
 
   </>
   )

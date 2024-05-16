@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Cookies from 'js-cookie';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Loader from '../shared/LoaderComponent';
 import { toast } from 'react-toastify';
 import { ipaddress, osdetails, browserdetails  } from "../core/jio";
@@ -12,7 +12,7 @@ import { _post } from "@/config/apiClient";
 import { isBearerToken, isUserToken, getLoginNumber,  isLoginNumber, setUserCookies } from "@/config/userauth";
 import HeaderFirst from "../shared/HeaderFirst";
 import { encryptText } from "@/config/crypto";
-import { setCouponeCode, isCouponeCode } from "@/config/validecoupone";
+import { isCouponeCode } from "@/config/validecoupone";
 
 export default function RegistationComponent() {
   const [step, setStep] = useState(1);
@@ -51,19 +51,15 @@ export default function RegistationComponent() {
   const userToken =  isUserToken();
   const bearerToken = isBearerToken();
   const { push } = useRouter();
-  const searchParams = useSearchParams();
-  const getqrcode = searchParams.get('code');
   const isCC = isCouponeCode();
  
-
-  useEffect(() => {
-    if(getqrcode !== null) { setCouponeCode(getqrcode); }
-  }, [getqrcode]);
+ 
  
 
  useEffect(() => {
-   if(!bearerToken) { push("/"); return  }
-   if(userToken) { push("/dashboard"); return }
+  if(!bearerToken) { push("/"); return  }
+  if(userToken && !isCC) { push("/dashboard"); return }
+  if(userToken && isCC) { push("/getcoupone"); return }
    if(isLoginID) { setMobilenumber(getLoginID) } else { push('/login');}
  }, []);
 
@@ -162,7 +158,7 @@ export default function RegistationComponent() {
           const userinfo = res.data.result.userid + "|" + res.data.result.phonenumber
           setUserCookies(encryptText(userinfo));
           Cookies.remove('loginnumber');
-            if(isCC)
+              if(isCC)
               { 
                 toast.success('Coupon Added Successfully'); 
                 push('/getcoupone');

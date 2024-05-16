@@ -8,6 +8,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import HeaderDashboard from '../shared/HeaderDashboard';
+import PwaModal from "../shared/PwaModal";
+import PwaIOS from "../shared/PwaIOS";
  
 const DashboardComponent = () => {
     const[userstatus, setUserstatus] = useState('');
@@ -130,7 +132,8 @@ const DashboardComponent = () => {
       </div>
     </div> 
 
- 
+    <PwaModal />
+    <PwaIOS />
   </>)
 }
 export default DashboardComponent;  

@@ -33,11 +33,15 @@ export default function ScanqrcodeComponent() {
 
   useEffect(() => {
       const sdURL = scandata.split("?") || '';
-      if(sdURL[0] === process.env.NEXT_PUBLIC_COUPON_URL1 || sdURL[0] === process.env.NEXT_PUBLIC_COUPON_URL2)
+      if(sdURL[0] === process.env.NEXT_PUBLIC_COUPON_URL)
       {
           const couponvalue = sdURL[1].split("=");
           setCouponecode(couponvalue[1]);
          // toast.success("QR code scan successfully.");
+      }
+      else
+      {
+          console.count("Invalide QR code.");
       }
   }, [qrcode]);
 
@@ -60,7 +64,6 @@ export default function ScanqrcodeComponent() {
 
   const handleSubmitCode = () => 
   {
-    debugger;
     setLoading(true);
     setPagemsg('Validating Coupon');
     const qrdata = {

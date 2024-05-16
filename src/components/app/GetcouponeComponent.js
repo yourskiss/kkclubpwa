@@ -1,4 +1,5 @@
 "use client";
+import Link from 'next/link';
 import Cookies from 'js-cookie';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -9,11 +10,14 @@ import {  toast } from 'react-toastify';
 import { isCouponeCode, getCouponeCode } from "@/config/validecoupone";
 import { _post } from "@/config/apiClient";
 import HeaderDashboard from '../shared/HeaderDashboard';
+import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
+import CountUp from 'react-countup';
 
 export default function GetcouponeComponent() {
   const [pagemsg, setPagemsg] = useState('');
   const [loading, setLoading] = useState(false);
   const [couponecode, setCouponecode] = useState('');
+  const rewardspoints = TotalrewardpointsComponent();
   const { push } = useRouter();
   const userID = getUserID();
   const latInfo = geoLatitude();
@@ -23,8 +27,19 @@ export default function GetcouponeComponent() {
   const browserInfo = browserdetails();
   const isCC = isCouponeCode();
   const getCC = getCouponeCode();
+  
   useEffect(() => {
-    isCC ? (setCouponecode(getCC), toast.success("QR code added successfully.")) : (toast.error("Invalide QR Code..."), push("/rewards")); 
+      if(isCC)
+      {
+        setCouponecode(getCC);
+       // toast.success("QR code scan successfully.")
+       }
+       else
+       {
+        toast.error("Invalide QR Code...");
+        push("/rewards");
+        Cookies.remove('couponecodecookies');
+       }
   }, [couponecode]);
  
  
@@ -47,11 +62,21 @@ export default function GetcouponeComponent() {
         .then((res) => {
           setLoading(false);
           // console.log(res)
-          res.data.result === null ? toast.error(res.data.resultmessage) : (toast.success("Coupon Successfully Validated."), push(`/scanqrcode/${res.data.result[0].pointid}`));
+            if(res.data.result === null)
+            {
+              toast.error(res.data.resultmessage);
+              Cookies.remove('couponecodecookies');
+              push('/scanqrcode');
+             }
+             else
+             {
+              toast.success("Coupon Successfully Validated.");
+              Cookies.remove('couponecodecookies');
+              push(`/scanqrcode/${res.data.result[0].pointid}`);
+             }
         }).catch((err) => {
           setLoading(false); 
           toast.error(err.message);
-          //push("/dashboard");
         });
   }
 
@@ -68,6 +93,14 @@ export default function GetcouponeComponent() {
             </form>
           </div>
  
+
+          <div className="screenqrbottom">
+            <h2>
+              <em>CLUB WALLET</em>
+              <CountUp duration={2} start={0}  delay={1}  end={rewardspoints} /> <span>Points</span>
+            </h2>
+            <p><Link href='/rewards'>view points</Link></p>
+          </div>
           
         </div>
       </div> 

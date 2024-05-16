@@ -5,7 +5,7 @@ export default function Homevideo() {
     <>
       <div className="videoloader">
           <section>
-            <video autoPlay muted loop playsInline style={{ width: '308px', height: '58px' }} poster="/assets/images/logo.png">
+            <video autoPlay muted playsInline style={{ width: '308px', height: '58px' }} poster="/assets/images/logo.png">
               <source src="/assets/videos/homevideo-unit.mp4"  />
             </video>
           </section>
