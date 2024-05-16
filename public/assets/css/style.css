@@ -522,7 +522,7 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 .bankInfosavecontainer ul li { display: flex; justify-content: center;align-items: center; list-style: none; border-top: solid 1px #2f2d2d; border-bottom: solid 1px #2f2d2d; padding: 1rem 0; margin: 0; color: #5d5d5d;  font-family:var(--font-lneue); text-align: center; font-weight: normal;  font-size: 16px;   text-transform: uppercase;  cursor: pointer; pointer-events: none; user-select: none;  }
 .bankInfosavecontainer ul li.normal {  cursor: auto;  color: #AFCDAF; padding-right:1rem; padding-left: 1rem; pointer-events:all; user-select:auto; } 
 .bankInfosavecontainer ul li.active { list-style: none; color: #fff ; border-top-color:#ccc; border-bottom-color:#ccc; user-select: none; pointer-events: none; }
-.bankInfosavecontainer ul li.activated { list-style: none; color: #AFCDAF ; user-select: all; pointer-events: auto; }
+.bankInfosavecontainer ul li.activated { list-style: none; color: #AFCDAF ; user-select: none; pointer-events: none; }
 
 
 .bankinfo  { position: relative; width: 100%; float: left; text-align: center; margin:2rem 0 1rem 0; padding: 0 3rem 0 0; }
