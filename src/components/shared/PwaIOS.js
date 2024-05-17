@@ -3,9 +3,13 @@ import Cookies from 'js-cookie';
 import { useState, useEffect } from 'react';
 import { motion } from "framer-motion";
 import { ErrorBoundary } from "next/dist/client/components/error-boundary";
+ 
+ 
 
 export default function PwaIOS () {
   const [shouldShowPrompt, setShouldShowPrompt] = useState(false);
+
+ 
 
   useEffect(() => {
    // const userAgent = window.navigator.userAgent.toLowerCase();
@@ -33,7 +37,6 @@ export default function PwaIOS () {
   return (<ErrorBoundary>
     { shouldShowPrompt && <div className='pwaIsoPrompt'>
     <motion.div initial={{ opacity: 0 }}  whileInView={{ opacity: 1 }} transition={{ duration: 1, delay: 0, origin: 1, ease: [0, 0.71, 0.2, 1.01] }}>
-      {/* <motion.div initial={{ opacity: '0' }} animate={{  opacity: '1' }} transition={{ duration: 3, delay: 0, origin: 1, ease:'easeIn' }}>  */}
         <section>
           <h2>
             <span>Add to Home Screen</span>

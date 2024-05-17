@@ -51,24 +51,32 @@ export default function RedemptionhistoryComponemt () {
   useEffect(() => {
     _get(`/Payment/UserPendingOrder?userID=${userID}`)
     .then((res) => {
-        // console.log("Previous order - ", res.data.result[0].pendingorder,  res.data.result[0].orderid, res);
-        if(mounted2)
-        {
+            // console.log("Previous order - ", res.data.result[0].pendingorder,  res.data.result[0].orderid, res);
             if(res.data.result[0].pendingorder !== '0' && res.data.result[0].orderid !== '')
             {
               setLoading(true);
-              setPagemsg('Updating status');
-              _get(`/Payment/UserPayoutStatus?userID=${userID}&orderID=${res.data.result[0].orderid}`)
-              .then((dataa) => { 
-                // console.log("UserPayoutStatus - ",  dataa);
-                setTimeout(function(){
-                  setLoading(false);
-                }, 5000);
-              }).catch((error) => {
-                  setLoading(false);
-                  toast.info("UserPayoutStatus-",error); 
-              });
-            }
+              setPagemsg('Updating payment status');
+              if(mounted2)
+              {
+                _get(`/Payment/UserPayoutStatus?userID=${userID}&orderID=${res.data.result[0].orderid}`)
+                .then((dataa) => { 
+                   console.log("UserPayoutStatus - ",  dataa);
+                   if(res.status === 200)
+                    {
+                      setTimeout(function(){
+                        setLoading(false);
+                      }, 3000);
+                    }
+                    else
+                    {
+                      setLoading(false);
+                      console.log(res.statusText); 
+                    }
+                }).catch((error) => {
+                    setLoading(false);
+                    toast.info("UserPayoutStatus-",error); 
+                });
+              }
         }
     }).catch((error) => {
         toast.info("UserPendingOrder-",error); 
@@ -80,6 +88,11 @@ export default function RedemptionhistoryComponemt () {
 
 
   const payoutstatus = (od) => {
+   // debugger;
+   if(od === null || od === undefined || od === '')
+    {
+      return 
+    }
     setLoading(true);
     setBtnload(true);
     setPagemsg('Checking payment status');
@@ -92,7 +105,7 @@ export default function RedemptionhistoryComponemt () {
           setLoading(false);
           setBtnload(false);
           window.location.reload();
-        }, 30000);
+        }, 10000);
       }
       else
       {

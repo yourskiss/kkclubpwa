@@ -97,8 +97,8 @@ const handleBankInfo = (e) => {
       setErrorIfsc('');
       setErrorAc('');
       setInfobank(true); 
-      setOption('upi');
-      setStep(2); 
+      setOption('review');
+      setStep(4);
     }
 }
 const handleUpiId = (e) => {
@@ -107,8 +107,8 @@ const handleUpiId = (e) => {
   else { 
     setErrorUpi('');
     setInfoupi(true);
-    setOption('personal');
-    setStep(3); 
+    setOption('review');
+    setStep(4);
   }
 }
 const handlePersonal= (e) => {
@@ -222,7 +222,7 @@ const savebankdetail = () =>
                       {errorAc && <span>{errorAc}</span> }
                   </div>
                   <div className="bankInfoField">
-                    <button>CONTINUE</button>
+                    <button>CONTINUE & REVIEW</button>
                   </div>
                 </form> }
 
@@ -234,7 +234,7 @@ const savebankdetail = () =>
                       {errorUpi && <span>{errorUpi}</span>}
                   </div>
                   <div className="bankInfoField">
-                    <button>CONTINUE</button>
+                    <button>CONTINUE & REVIEW</button>
                   </div>
                 </form> }
  
@@ -290,7 +290,7 @@ const savebankdetail = () =>
                     <aside  onClick={(e)=>stepHandler('personal')} title="Edit">Edit</aside>
                   </div>
                   <div className="bankInfoField">
-                    <button onClick={reviewHandlar}>UPDATE</button>
+                    <button onClick={reviewHandlar}>SAVE CHANGES</button>
                   </div>
                   </> }
 

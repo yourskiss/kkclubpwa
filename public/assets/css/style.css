@@ -65,7 +65,8 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 
 /* ################### msg-popup ################### */
 .pwaIsoPrompt { display: block; z-index:8; position: fixed; left: 50%; top: 0; transform: translateX(-50%); height: 100%; width: 100%; max-width: 1024px; float: left;  background-color: #000; background: rgba(0,0,0,0.4); }
-.pwaIsoPrompt section { display: block; z-index:9;  position:absolute; left:50%; bottom:1rem; transform: translateX(-50%); width:94%; height: auto; float: left; background-color: #fff; overflow:visible; border-radius:10px; margin:0 auto; padding:1.5rem 0 1rem 0; box-sizing: border-box; }
+.pwaIsoPrompt section { display: block; z-index:9;  position:absolute; left:50%; bottom:2rem; transform: translateX(-50%); width:94%; height: auto; float: left; background-color: #fff; overflow:visible; border-radius:10px; margin:0 auto; padding:1.5rem 0 1rem 0; box-sizing: border-box; }
+.pwaIsoPrompt section:after { content: ''; position: absolute; left: 50%; bottom: -10px; transform: translateX(-50%); background: transparent; width: 0; height: 0;  border-top:12px solid #fff;border-left:10px solid transparent; border-right:10px solid transparent; }
 .pwaIsoPrompt h2 {  width: 100%; float: left; margin:0; padding: 0 1rem 1rem 1rem; border-bottom: solid 1px #DEDEDE; display: flex; justify-content: space-between; align-items: flex-start;  } 
 .pwaIsoPrompt h2 span {  color:#383C3D; font-size: 18px; font-weight: 500;line-height: 1; }
 .pwaIsoPrompt h2 button {  margin: 0 0 0 1rem; padding:0; background:none;  font-weight: normal; line-height: 1; font-size: 16px;  color:#42b0fa;  border:none; transition: all 0.5s ease-out;  border-radius:0;  cursor: pointer;  text-transform: none; }
@@ -523,7 +524,6 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 .bankInfosavecontainer ul li.normal {  cursor: auto;  color: #AFCDAF; padding-right:1rem; padding-left: 1rem; pointer-events:all; user-select:auto; } 
 .bankInfosavecontainer ul li.active { list-style: none; color: #fff ; border-top-color:#ccc; border-bottom-color:#ccc; user-select: none; pointer-events: none; }
 .bankInfosavecontainer ul li.activated { list-style: none; color: #AFCDAF ; user-select: none; pointer-events: none; }
-
 
 .bankinfo  { position: relative; width: 100%; float: left; text-align: center; margin:2rem 0 1rem 0; padding: 0 3rem 0 0; }
 .bankinfo h4 { position: relative; width: 100%; float: left; text-align: left; display: flex; justify-content: flex-start; align-items: center; font-family:var(--font-lneue); font-weight: normal;color: #AFCDAF; font-size: 24px;   text-transform: uppercase; overflow-wrap: break-word; overflow: hidden; }
