@@ -25,7 +25,7 @@ export default function LoginComponent() {
     const [isMobile, setIsMobile] = useState(false);
     const [otpsent, setOtpsent] = useState(false);
     const mobileChange = (e) =>{setMobileValues(e.target.value); setMobileError(""); }
- 
+
 
     const { push } = useRouter();
     const userToken   =  isUserToken();

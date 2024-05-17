@@ -3,7 +3,6 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import Homevideo from '../shared/Homevideo';
 import { setCouponeCode, isCouponeCode } from "@/config/validecoupone";
 
 const apiURL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -49,11 +48,19 @@ export default function HomeComponent() {
     }
     else
     {
-      isUserToken && !isCC ? push("/dashboard") : isUserToken && isCC ? push("/getcoupone") : push("/login");
+     isUserToken && !isCC ? push("/dashboard") : isUserToken && isCC ? push("/getcoupone") : push("/login");
     }
   },[]);
 
   return (<>
-    <Homevideo />
+    <div className="videoloader">
+      <div className='videoconainer'>
+        <video autoPlay muted playsInline style={{ width: '308px', height: '58px' }} poster="/assets/images/logo.png">
+          <source src="/assets/videos/homevideo-unit.mp4" type="video/mp4" />
+        </video>
+
+        {/* <img src="/assets/images/logo.png" alt="Logo"  /> */}
+      </div>
+    </div>
   </>)
 }

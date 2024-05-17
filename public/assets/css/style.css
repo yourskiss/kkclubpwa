@@ -37,9 +37,10 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 
 /* ################### videoloader ################### */
 .videoloader { display: block; z-index: 9; position: fixed;left: 50%;top: 50%; margin:0; transform: translate(-50%, -50%); border:0; border-radius: 0; margin: 0;padding: 0; width:100%; max-width: 1024px; height:100%;  background-color:#171717; overflow: hidden; }
-.videoloader section { z-index: 2; position: absolute;left:0;top:0; margin:0; width:100%; height:100%; display: flex; justify-content: center; align-items: center;  background-image: url('../images/design_full_black.png'); background-repeat:  no-repeat; background-position:  center center; background-size: cover; }
-.videoloader section video { border: 0; margin: 0; padding:0; width: 300px; height: 58px; }
-
+.videoconainer { z-index: 2; position: absolute;left:0;top:0; margin:0; width:100%; height:100%; display: flex; justify-content: center; align-items: center; flex-direction: column; background-image: url('../images/design_full_black.png'); background-repeat:  no-repeat; background-position:  center center; background-size: cover; }
+.videoloader video { border: 0; margin: 0; padding:0; outline: 0; width: 300px; height: 58px; }
+.videoloader img {border: 0; margin: 0; padding:0; outline: 0; width: 290px; height: auto; }
+ 
 
 /* ################### walkthrough ################### */
 .walkthrough { display: block;  z-index: 9; position: fixed;left: 50%;top: 50%; margin:0; transform: translate(-50%, -50%); border:0; border-radius: 0; margin: 0;padding: 0; width:100%; max-width: 1024px; height:100%;   overflow: hidden;  background-color:#afcdaf; background-image: url('/images/pageloader.png'); background-repeat:  no-repeat; background-position:  center center; background-size: cover; }

@@ -5,22 +5,16 @@ import { motion } from "framer-motion";
 import { ErrorBoundary } from "next/dist/client/components/error-boundary";
  
  
-
 export default function PwaIOS () {
   const [shouldShowPrompt, setShouldShowPrompt] = useState(false);
 
- 
-
   useEffect(() => {
-   // const userAgent = window.navigator.userAgent.toLowerCase();
-   // const isIOS =  /iphone|ipad|ipod/.test(userAgent);
-
+    const getAgent = window.navigator.userAgent.toLowerCase();
+    const isIOS =  /iphone|ipad|ipod/.test(getAgent);
     const notInstalled = !window.navigator.standalone;
     const lastPrompt = !!Cookies.get('pwaIos');
-    const isIOS = (/iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.userAgent === 'MacIntel' && navigator.maxTouchPoints > 1)) && !window.MSStream;
-    console.log("isIOS-",isIOS," /// notInstalled-",notInstalled," /// lastPrompt-",lastPrompt);
-
-
+    // const isIOS = (/iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.userAgent === 'MacIntel' && navigator.maxTouchPoints > 1)) && !window.MSStream;
+   
     if (isIOS && notInstalled && !lastPrompt) 
     {
       setShouldShowPrompt(true);
