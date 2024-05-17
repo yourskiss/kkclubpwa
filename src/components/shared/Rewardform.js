@@ -101,7 +101,14 @@ export default function Rewardform() {
            console.log("Payout request - ", res);
            if(res.data.status === 0)
             {
-                setErrorMsg(res.data.data.error); 
+                if(res.data.data === null)
+                {
+                    setErrorMsg(res.data.message); 
+                }
+                else
+                {
+                    setErrorMsg(res.data.data.error);
+                }
             }
             else
             {
