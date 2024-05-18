@@ -30,7 +30,7 @@ export default function PwaModal() {
       e.preventDefault();
       setInstallModal(false);
       Cookies.set('pwarequest',  true, { expires: new Date(new Date().getTime() + 300000), secure: true });
-      window.location.reload();
+     // window.location.reload();
     }
     const handalInstall = (e) => {
       e.preventDefault();
@@ -43,7 +43,7 @@ export default function PwaModal() {
                 {
                   //  toast.info("Installation Cancelled.");
                     Cookies.set('pwarequest',  true, { expires: new Date(new Date().getTime() + 300000), secure: true });
-                    window.location.reload();
+                   // window.location.reload();
                 }
                 else
                 {

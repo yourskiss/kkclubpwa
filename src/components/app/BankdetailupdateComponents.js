@@ -14,9 +14,9 @@ export default function BankdetailupdateComponents() {
     const [loading, setLoading] = useState(false);
     const [mounted, setMounted] = useState(true);
     
-    const [infobank , setInfobank] = useState(false);
-    const [infoupi , setInfoupi] = useState(false);
-    const [infopersonal , setInfopersonal] = useState(false);
+    const [infobank , setInfobank] = useState(true);
+    const [infoupi , setInfoupi] = useState(true);
+    const [infopersonal , setInfopersonal] = useState(true);
  
     const [errorBank, setErrorBank] = useState('');
     const [errorIfsc, setErrorIfsc] = useState('');
