@@ -15,7 +15,7 @@ export default function PwaIOS () {
     const lastPrompt = !!Cookies.get('pwaIos');
     // const isIOS = (/iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.userAgent === 'MacIntel' && navigator.maxTouchPoints > 1)) && !window.MSStream;
    
-    if (!isIOS && notInstalled && !lastPrompt) 
+    if (isIOS && notInstalled && !lastPrompt) 
     {
       setShouldShowPrompt(true);
     }
