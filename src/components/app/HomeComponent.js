@@ -1,15 +1,10 @@
 "use client";
 import Cookies from 'js-cookie';
-import axios from 'axios';
 import { useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { setCouponeCode, isCouponeCode } from "@/config/validecoupone";
 
-const apiURL = process.env.NEXT_PUBLIC_BASE_URL;
-const apiUsername = process.env.NEXT_PUBLIC_API_USERNAME;
-const apiPassword = process.env.NEXT_PUBLIC_API_PASSWORD;
-
-export default function HomeComponent() {
+export default function HomeComponent({datatoken}) {
   const { push } = useRouter();
   const searchParams = useSearchParams();
   const getqrcode = searchParams.get('code');
@@ -26,25 +21,13 @@ export default function HomeComponent() {
   }, []);
 
 
-
   useEffect(() => {
     if(!isBearerToken)
     {
-          axios({
-            url: apiURL +"ApiAuth/authtoken",
-            method: "POST",
-            headers: {  "Content-Type": "application/json" },
-            data: JSON.stringify({ "userid": apiUsername, "password": apiPassword }),
-          }).then((res) => {
-            // console.log("Bearer Token - ", res);
-            Cookies.set('bearertoken',  res.data.token, { expires: new Date(new Date().getTime() + 3600000), secure: true });
-            setTimeout(function(){  
-              window.location.reload();
-            }, 4000);
-          }).catch((err) => {
-            console.log("authtoken-",err.message); 
-            setTimeout(function(){  window.location.reload(); }, 2000);
-          });
+      Cookies.set('bearertoken',  datatoken, { expires: new Date(new Date().getTime() + 3600000), secure: true });
+      setTimeout(function(){  
+        window.location.reload();
+      }, 4000);
     }
     else
     {
