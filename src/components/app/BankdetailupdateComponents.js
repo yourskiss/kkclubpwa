@@ -14,8 +14,8 @@ export default function BankdetailupdateComponents() {
     const [loading, setLoading] = useState(false);
     const [mounted, setMounted] = useState(true);
     
-    const [infobank , setInfobank] = useState(true);
-    const [infoupi , setInfoupi] = useState(true);
+    const [infobank , setInfobank] = useState(false);
+    const [infoupi , setInfoupi] = useState(false);
     const [infopersonal , setInfopersonal] = useState(true);
  
     const [errorBank, setErrorBank] = useState('');
@@ -44,6 +44,8 @@ export default function BankdetailupdateComponents() {
     const osInfo = osdetails();
     const browserInfo = browserdetails();
 
+ 
+
     useEffect(() => {
         setLoading(true);
         setPagemsg('Bank details fetching');
@@ -53,14 +55,26 @@ export default function BankdetailupdateComponents() {
             //  console.log("bank update response - ", res);
             if(mounted)
             {
-              setBankname(res.data.result.bankname);
-              setIfsccode(res.data.result.ifcscode);
-              setAccountnumber(res.data.result.accountnumber);
-              setUpicode(res.data.result.upicode);
+              res.data.result.bankname !== null ? setBankname(res.data.result.bankname) : setBankname('');
+              res.data.result.ifcscode !== null ? setIfsccode(res.data.result.ifcscode) : setIfsccode('');
+              res.data.result.accountnumber !== null ? setAccountnumber(res.data.result.accountnumber) : setAccountnumber('');
+              res.data.result.upicode!== null ? setUpicode(res.data.result.upicode) : setUpicode('');
               setAadhaar(res.data.result.aadhaar);
               setPan(res.data.result.pan);
               setUsername(res.data.result.username);
               setRmn(res.data.result.rmn);
+
+              if(res.data.result.bankname  !== null && res.data.result.ifcscode !== null && res.data.result.accountnumber  !== null)
+              {
+                setInfobank(true);
+              }
+
+              if(res.data.result.upicode !== null)
+              {
+                setInfoupi(true); 
+              }
+
+
             }
         }).catch((error) => {
             setLoading(false);
@@ -87,41 +101,41 @@ const stepHandler = (val) => {
 
 const handleBankInfo = (e) => {
   e.preventDefault();
-  if(bankname === '') { setErrorBank('Bank Name is required'); }
-  else if(bankname.length <= 4) { setErrorBank('Bank Name length must be at least 5 characters long'); }
-  else if(ifsccode === '') { setErrorIfsc('IFSC Code is required'); }
-  else if(ifsccode.length <= 10) { setErrorIfsc('IFSC Code length must be at least 11 characters long'); }
-  else if(accountnumber === '') { setErrorAc('Account Number is required'); }
+  if(bankname === '') { setErrorBank('Bank Name is required');  return }
+  else if(bankname?.length < 5) { setErrorBank('Bank Name length must be at least 5 characters long');  return }
+  else if(ifsccode === '') { setErrorIfsc('IFSC Code is required');  return }
+  else if(ifsccode?.length < 11) { setErrorIfsc('IFSC Code length must be at least 11 characters long');  return }
+  else if(accountnumber === '') { setErrorAc('Account Number is required');  return }
   else { 
       setErrorBank('');
       setErrorIfsc('');
       setErrorAc('');
       setInfobank(true); 
-      setOption('review');
-      setStep(4);
+      setOption('upi');
+      setStep(2);
     }
 }
 const handleUpiId = (e) => {
   e.preventDefault();
-  if(upicode === '') { setErrorUpi('UPI ID is required'); }
+  if(upicode === '') { setErrorUpi('UPI ID is required');  return }
   else { 
     setErrorUpi('');
     setInfoupi(true);
-    setOption('review');
-    setStep(4);
+    setOption('personal');
+    setStep(3);
   }
 }
 const handlePersonal= (e) => {
   e.preventDefault();
   const regexMobile = /^[6789][0-9]{9}$/i;
-  if(username === '') { setErrorName('Name is required'); }
-  else if(rmn === '') { setErrorRmn('RMN is required'); }
-  else if(rmn.length !== 10) { setErrorRmn('RMN must have 10 Digit'); }
-  else if(!regexMobile.test(rmn)){ setErrorRmn("Invalid mobile number!");}
-  else if(aadhaar === '') { setErrorAadhaar('Aadhaar number is required'); }
-  else if(aadhaar.length !== 12) { setErrorAadhaar('Aadhaar number must have 12 Digit'); }
-  else if(pan === '') { setErrorPan('Pan Number is required'); }
-  else if(pan.length !== 10) { setErrorPan('Pan Number must have 10 Digit'); }
+  if(username === '') { setErrorName('Name is required');  return }
+  else if(rmn === '') { setErrorRmn('RMN is required');  return }
+  else if(rmn?.length !== 10) { setErrorRmn('RMN must have 10 Digit');  return }
+  else if(!regexMobile.test(rmn)){ setErrorRmn("Invalid mobile number!");  return }
+  else if(aadhaar === '') { setErrorAadhaar('Aadhaar number is required');  return }
+  else if(aadhaar?.length !== 12) { setErrorAadhaar('Aadhaar number must have 12 Digit');  return }
+  else if(pan === '') { setErrorPan('Pan Number is required');  return }
+  else if(pan?.length !== 10) { setErrorPan('Pan Number must have 10 Digit');  return }
   else { 
       setErrorName('');
       setErrorRmn('');
@@ -132,11 +146,33 @@ const handlePersonal= (e) => {
       setStep(4);
     }
 }
+
+const bankSkipHandal = (e) => {
+  e.preventDefault();
+  setErrorBank('');
+  setErrorIfsc('');
+  setErrorAc('');
+  setInfobank(false); 
+  setBankname('');
+  setIfsccode('');
+  setAccountnumber('');
+  setOption('upi');
+  setStep(2);
+} 
+
+const upiSkipHandal = (e) => {
+  e.preventDefault();
+  setErrorUpi('');
+  setInfoupi(false);
+  setUpicode('');
+  setOption('personal');
+  setStep(3);
+} 
+
 const reviewHandlar = (e) => {
   e.preventDefault();
-  if(!infobank) { toast.error('Bank details is required'); stepHandler('bank') }
-  else if(!infoupi) { toast.error('UPI ID is required'); stepHandler('upi') }
-  else if(!infopersonal) { toast.error('Personal infomation is required'); stepHandler('personal') }
+  if(!infobank && !infoupi) { toast.error('Bank/upi details is required'); return }
+  else if(!infopersonal) { toast.error('Personal infomation is required'); stepHandler('personal');  return }
   else
   {
     savebankdetail();
@@ -222,7 +258,8 @@ const savebankdetail = () =>
                       {errorAc && <span>{errorAc}</span> }
                   </div>
                   <div className="bankInfoField">
-                    <button>CONTINUE & REVIEW</button>
+                    <button>Next</button>
+                    <aside onClick={bankSkipHandal}>Skip</aside>
                   </div>
                 </form> }
 
@@ -234,7 +271,8 @@ const savebankdetail = () =>
                       {errorUpi && <span>{errorUpi}</span>}
                   </div>
                   <div className="bankInfoField">
-                    <button>CONTINUE & REVIEW</button>
+                    <button>Next</button>
+                    {infobank ? <aside onClick={upiSkipHandal}>Skip</aside> : <aside onClick={()=>stepHandler('bank')}>Back</aside>}
                   </div>
                 </form> }
  
@@ -260,12 +298,14 @@ const savebankdetail = () =>
                       {errorPan && <span>{errorPan}</span>}
                   </div>
                   <div className="bankInfoField">
-                      <button>CONTINUE & REVIEW</button>
+                  <button>NEXT & REVIEW</button>
+                    <aside onClick={()=>stepHandler('upi')}>Back</aside>
                   </div>
                 </form> }
 
                 
                 { step === 4 && <>
+                  { infobank  && <>
                   <div className='bankinfo'>
                       <h4>
                           <Image src="/assets/images/icon_bank.png" width={25} height={25} quality={99} alt={bankname} />
@@ -275,6 +315,10 @@ const savebankdetail = () =>
                         <h6>A/c: {accountnumber}</h6> 
                         <aside onClick={(e)=>stepHandler('bank')} title="Edit">Edit</aside>
                   </div>
+                  </>}
+
+
+                  { infoupi && <>
                   <div className='bankinfo'>
                      <h4>
                           <Image src="/assets/images/icon_upi.png" width={25} height={25} quality={99} alt={upicode} />
@@ -282,6 +326,10 @@ const savebankdetail = () =>
                       </h4>
                     <aside  onClick={(e)=>stepHandler('upi')} title="Edit">Edit</aside>
                   </div>
+                  </>}
+
+
+                  { infopersonal && <>
                   <div className='bankinfo'>
                     <h6>Name: <b>{username}</b></h6>
                     <h6>RMN: <b>{rmn}</b></h6> 
@@ -289,9 +337,14 @@ const savebankdetail = () =>
                     <h6>Pan: <b>{pan}</b></h6> 
                     <aside  onClick={(e)=>stepHandler('personal')} title="Edit">Edit</aside>
                   </div>
+                  </>}
+
+
                   <div className="bankInfoField">
-                    <button onClick={reviewHandlar}>SAVE CHANGES</button>
+                    <button className='bankinfobtn' onClick={reviewHandlar}>SAVE CHANGES</button>
                   </div>
+                  
+
                   </> }
 
             </div>

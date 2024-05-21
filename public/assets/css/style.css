@@ -541,13 +541,13 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 .bankInfoField input {  float: left;  width: 100%;  padding: 0.5rem 1rem;  border: 0; border-bottom: solid 2px #F5F0EB; outline: none;  background:transparent;  border-radius: 0;  text-align: left; font-weight: 500;  color: rgba(245, 240, 235,0.6);  font-size:18px;  box-shadow:none; box-sizing: border-box; }
 .bankInfoField input:disabled {user-select: none; pointer-events: none;}
 .bankInfoField span { display: block; margin-top:0.7rem; padding: 0; float: left; width: 100%; text-align: left; font-weight: 500; color: #f30; font-size: 14px;}
-.bankInfoField aside { display: block; margin:0.2rem 0 1.5rem 0; padding: 0; float: left; width: 100%; text-align: left; font-weight: 500; color: #f30; font-size: 16px;}
-.bankInfoField button { width: 100%; display:block; float: left; margin: 0;  padding:1rem 2rem; box-sizing: border-box; text-align: center;  background:#F5F0EB;  font-weight: 700;  font-size: 18px;  color:#191919;  border: solid 2px #414141; transition: all 0.5s ease-out;  border-radius: 0;  text-decoration: none;   cursor: pointer; outline: none; text-transform: uppercase; }
+.bankInfoField aside { display: block; margin:0; padding:1rem 2rem; float: right; width:auto; border: solid 2px transparent; text-decoration: underline; text-align: left; font-weight: 500; color: #fff; font-size: 18px;}
+.bankInfoField aside:hover{ color: #AFCDAF;   transition: all 0.5s ease-in; }
+.bankInfoField button { width:auto; display:block; float: right; margin: 0;  padding:1rem 2rem; box-sizing: border-box; text-align: center;  background:#F5F0EB;  font-weight: 700;  font-size: 18px;  color:#191919;  border: solid 2px #414141; transition: all 0.5s ease-out;  border-radius: 0;  text-decoration: none;   cursor: pointer; outline: none; text-transform: uppercase; }
 .bankInfoField button:hover { background: #AFCDAF;  color: #191919;   transition: all 0.5s ease-in; }
 .bankInfoField button[disabled], .bankInfoField button:disabled { user-select: none;  pointer-events: none;   opacity: 0.6; }
+.bankInfoField button.bankinfobtn { width:100%;   }
  
-
-
 @media only screen and (max-width:1023px)
 {
  /* ################### walkthrough ################### */
