@@ -27,7 +27,7 @@ export default function HomeComponent({datatoken}) {
       Cookies.set('bearertoken',  datatoken, { expires: new Date(new Date().getTime() + 3600000), secure: true });
       setTimeout(function(){  
         window.location.reload();
-      }, 4000);
+      }, 3000);
     }
     else
     {
@@ -36,14 +36,8 @@ export default function HomeComponent({datatoken}) {
   },[]);
 
   return (<>
-    <div className="videoloader">
-      <div className='videoconainer'>
         <video autoPlay muted playsInline style={{ width: '308px', height: '58px' }} poster="/assets/images/logo.png">
           <source src="/assets/videos/homevideo-unit.mp4" type="video/mp4" />
         </video>
-
-        {/* <img src="/assets/images/logo.png" alt="Logo"  /> */}
-      </div>
-    </div>
   </>)
 }

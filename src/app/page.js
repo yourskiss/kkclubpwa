@@ -6,7 +6,7 @@ const apiURL = process.env.NEXT_PUBLIC_BASE_URL;
 const apiUsername = process.env.NEXT_PUBLIC_API_USERNAME;
 const apiPassword = process.env.NEXT_PUBLIC_API_PASSWORD;
 
-async function postData() {
+async function setMainToken() {
     const response = await fetch(`${apiURL}ApiAuth/authtoken`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -19,12 +19,13 @@ async function postData() {
 
 export default async function Home() {
   return (
-    <>
-    test
     <Suspense fallback={<p>...Loading</p>}>
-      <HomeComponent datatoken={await postData()} />
-    </Suspense> 
-    </>
+      <div className="videoloader">
+        <div className='videoconainer'>
+          <HomeComponent datatoken={await setMainToken()} />
+      </div>
+    </div>
+  </Suspense> 
   );
 }
  
