@@ -180,28 +180,33 @@ export default function LoginComponent() {
  
  
    useEffect(() => {
+    const input = document.querySelector('input[autocomplete="one-time-code"]');
     if ('OTPCredential' in window) {
       const ac = new AbortController();
+      alert('AbortController - ', ac);
+      alert('navigator.credentials - ', navigator.credentials.get());
         navigator.credentials.get({ otp: { transport: ['sms'] }, signal: ac.signal })
         .then((otpCredential) => {
-          console.log('otpCredential - ', otpCredential);
+          alert('otpCredential - ', otpCredential);
+          input.value = otp.code;
           setOtpValues(otpCredential.code);
           ac.abort();
         })
         .catch((error) => {
-          if (error.name === 'NotAllowedError') {
-            console.log('User denied permission to access credentials.');
-          } else if (error.name === 'AbortError') {
-            console.log('Operation was aborted.');
-          } else if (error.name === 'NotSupportedError') {
-            console.log('API not supported in this environment.');
-          } else {
-            console.log('An unexpected error occurred:', error);
-          }
+          // if (error.name === 'NotAllowedError') {
+          //   console.log('User denied permission to access credentials.');
+          // } else if (error.name === 'AbortError') {
+          //   console.log('Operation was aborted.');
+          // } else if (error.name === 'NotSupportedError') {
+          //   console.log('API not supported in this environment.');
+          // } else {
+          //   console.log('An unexpected error occurred:', error);
+          // }
+          console.log(error);
           ac.abort();
         });
     }
-  }, [isMobile]);
+  }, [otpValues]);
 
 
  
@@ -236,7 +241,12 @@ export default function LoginComponent() {
                 <em className="numberedit" onClick={changeNumber}>Change</em>
               </div>
 
+              <div className="registerinputformobile">
+              <input id="single-factor-code-text-field" autocomplete="one-time-code"/>
+              </div>
+
               <div className="registerOneTimePassword">
+                
                 <OtpInput
                   autoComplete="one-time-code"
                   value={otpValues || ''}
