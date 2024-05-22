@@ -180,14 +180,11 @@ export default function LoginComponent() {
  
  
    useEffect(() => {
-    const input = document.querySelector('input[autocomplete="one-time-code"]');
     if ('OTPCredential' in window) {
       const ac = new AbortController();
-      alert('navigator.credentials - ', navigator.credentials.get({ otp: { transport: ['sms'] }, signal: ac.signal }));
         navigator.credentials.get({ otp: { transport: ['sms'] }, signal: ac.signal })
         .then((otpCredential) => {
-          alert('otpCredential - ', otpCredential);
-          input.value = otp.code;
+          console.log('otpCredential - ', otpCredential);
           setOtpValues(otpCredential.code);
           ac.abort();
         })
@@ -205,7 +202,7 @@ export default function LoginComponent() {
           ac.abort();
         });
     }
-  }, [otpValues]);
+  }, [isMobile]);
 
 
  
@@ -240,12 +237,9 @@ export default function LoginComponent() {
                 <em className="numberedit" onClick={changeNumber}>Change</em>
               </div>
 
-              <div className="registerinputformobile">
-                <input id="single-factor-code-text-field" autocomplete="one-time-code" value={otpValues} />
-              </div>
+ 
 
               <div className="registerOneTimePassword">
-                
                 <OtpInput
                   autoComplete="one-time-code"
                   value={otpValues || ''}
