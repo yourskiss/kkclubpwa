@@ -183,8 +183,7 @@ export default function LoginComponent() {
     const input = document.querySelector('input[autocomplete="one-time-code"]');
     if ('OTPCredential' in window) {
       const ac = new AbortController();
-      alert('AbortController - ', ac);
-      alert('navigator.credentials - ', navigator.credentials.get());
+      alert('navigator.credentials - ', navigator.credentials.get({ otp: { transport: ['sms'] }, signal: ac.signal }));
         navigator.credentials.get({ otp: { transport: ['sms'] }, signal: ac.signal })
         .then((otpCredential) => {
           alert('otpCredential - ', otpCredential);
@@ -242,7 +241,7 @@ export default function LoginComponent() {
               </div>
 
               <div className="registerinputformobile">
-              <input id="single-factor-code-text-field" autocomplete="one-time-code"/>
+                <input id="single-factor-code-text-field" autocomplete="one-time-code" value={otpValues} />
               </div>
 
               <div className="registerOneTimePassword">
