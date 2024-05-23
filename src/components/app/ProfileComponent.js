@@ -8,7 +8,7 @@ import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 import HeaderProfile from "../shared/HeaderProfile";
 import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
-import ProgressComponent from "../shared/ProgressComponent";
+// import ProgressComponent from "../shared/ProgressComponent";
 import { getUserID } from '@/config/userauth';
 import { _get } from "@/config/apiClient";
 import { motion } from "framer-motion";
@@ -20,7 +20,7 @@ export default function ProfileComponent() {
   const[username, setUsername] = useState('');
   const[usershort, setUsershort] = useState('');
   const[userstatus, setUserstatus] = useState('');
-  const profileProgress = ProgressComponent();
+  // const profileProgress = ProgressComponent();
   const redeemminimumpoint = parseInt(process.env.NEXT_PUBLIC_REDEEM_MIN_POINT);
   const userid = getUserID();
   const [resultcode, setResultcode] = useState('');
@@ -72,13 +72,13 @@ useEffect(() => {
         setResultcode(res.data.resultcode);
       }
   }).catch((error) => {
-      toast.info("GetUserPayoutInfo-",error); 
+      console.log("GetUserPayoutInfo-",error); 
   });
   return () => { setMounted(false); }
 }, [resultcode]);
 
   return (<>
-  <motion.div initial={{ x: "100vw" }} animate={{  x: 0 }} exit={{ x: "100vw" }} transition={{ duration: 0.8, delay: 0.1, origin: 1, ease: [0, 0.71, 0.2, 1.01] }}>
+  <motion.div initial={{ x: "100vw" }} animate={{ x:0 }} exit={{ x: "100vw" }} transition={{ duration: 0.8, delay: 0.1, origin: 1, ease: [0, 0.71, 0.2, 1.01] }}>
     <HeaderProfile />
     <div className="screenmain screenprofile"> 
         <div className="screencontainer">

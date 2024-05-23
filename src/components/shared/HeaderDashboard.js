@@ -4,18 +4,21 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { isUserToken, isBearerToken } from '@/config/userauth';
-import { getUserMobile } from '@/config/userauth';
+import { getUserMobile, getUserID } from '@/config/userauth';
 import { _get } from "@/config/apiClient";
  
 export default  function HeaderDashboard() {
   const [mounted, setMounted] = useState(true);
+  const [mounted2, setMounted2] = useState(true);
   const[usershort, setUsershort] = useState('');
   const[userstatus, setUserstatus] = useState('');
   const[username, setUsername] = useState('');
+  const[notificationCount, setNotificationCount] = useState(0);
   const { push } = useRouter();
   const userToken  =  isUserToken();
   const bearerToken = isBearerToken();
   const userMobile = getUserMobile();
+  const userID = getUserID();
 
 useEffect(() => {
   if(!userToken) { push("/login"); return  }
@@ -26,7 +29,7 @@ useEffect(() => {
 useEffect(() => {
     _get("Customer/UserInfo?userid=0&phonenumber="+ userMobile)
     .then((res) => {
-     // console.log("response - ", res);
+     // console.log("UserInfo response - ", res);
       if (mounted)
       {
         localStorage.setItem("userprofilename",res.data.result.fullname);
@@ -37,14 +40,30 @@ useEffect(() => {
         setUsername(res.data.result.fullname);
       }
     }).catch((error) => {
-        toast.info("UserInfo-",error); 
+        console.log("UserInfo-",error); 
     });
    
   return () => { setMounted(false); }
 }, []);
 
 
+
+useEffect(() => {
+  _get("Customer/GetTotalOfUserNotification?userid="+ userID)
+  .then((res) => {
+   // console.log("GetTotalOfUserNotification  response - ", res);
+    if (mounted2)
+    {
+      setNotificationCount(res.data.result[0].totalnotification);
+    }
+  }).catch((error) => {
+      console.log("GetTotalOfUserNotification-",error); 
+  });
  
+return () => { setMounted2(false); }
+}, [notificationCount]);
+
+
  
 
   return (
@@ -56,12 +75,13 @@ useEffect(() => {
         <section>
             <Link href="/scanqrcode" className='header_scanqrcode'><Image src="/assets/images/QR.png" width={100} height={100} alt={username} quality={90} /></Link>
            
-            {/*             
-            <span className='header_notification'>
+        
+            <span className='header_notification' onClick={()=> push('/notifications') }>
               <Image src="/assets/images/notification.png" width={100} height={100} alt="notification" quality={90} />
-              <span></span>
+              { parseInt(notificationCount) > 0 ? <span>{notificationCount}</span> : null} 
             </span> 
-            */}
+          
+            
             <aside className={ userstatus === "APPROVE" ? "header_userdp status_approve" : "header_userdp status_pending" } >
               <span onClick={() => push("/profile") }>{usershort}</span>
             </aside>

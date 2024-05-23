@@ -144,12 +144,14 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 .headersection {  width: 100%; max-width: 1024px; height: 120px; float: left; padding:0 3rem; display: flex; justify-content:center; align-items: center; box-sizing: border-box; background-color:#191919;  }
 .headersection .logo { display: inline-block; float:none;width: 100%; max-width: 270px;  margin: 0; padding:0;}
 .headersection .logo img { width: 100%; height: auto; }
-.headersection .backarrow { display: inline-block; float:none; width: 55px; margin: 0; padding:0; }
-.headersection .backarrow img { width:100%; height: auto;  cursor: pointer;  transition: all 0.5s ease-in; filter:none; }
+.headersection .backarrow { display: inline-block; float:none; width:auto; margin: 0; padding:0; }
+.headersection .backarrow img { width:55px; height: auto;  cursor: pointer;  transition: all 0.5s ease-in; filter:none; }
 .headersection .backarrow img:hover { filter: sepia() saturate(500%) hue-rotate(50deg); transition: all 0.5s ease-in;}
+.headersection .backarrow span { margin: 0 0 0 1rem; text-align: left; text-transform: none; font-weight: 500; color:#fff; font-size: 24px; }
 .headersection .scanqrnow { display: inline-block; float:none; width: 55px; margin: 0; padding:0; }
 .headersection .scanqrnow img { width:100%; height: auto;  cursor: pointer;  transition: all 0.5s ease-in; transform: scale(1); }
 .headersection .scanqrnow img:hover { transform: scale(1.05); transition: all 0.5s ease-in;}
+
 
 .headersection.headerProfiles { justify-content: space-between; background-color:transparent;   }
 .headersection.headerAfterlogin { justify-content: flex-start; background-color:transparent;   }
@@ -172,7 +174,7 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 }
 .header_notification img { float: left; width: 100%; height:auto; border: 0; border-radius: 0; margin: 0;padding: 0;  transition: all 0.5s ease-out; }
 .header_notification img:hover {  transition: all 0.5s ease-in; }
-.header_notification span { z-index: 1; position: absolute; top:-4px; right:-4px;width: 14px; height: 14px;border-radius: 50%; background:transparent;text-align: center;line-height: 20px;font-size: 10px; background: #AFCDAF; }
+.header_notification span { z-index: 1; position: absolute; top:-4px; right:-4px;width: 16px; height: 16px;border-radius: 50%; text-align: center;line-height: 1; font-size: 10px; background: #AFCDAF; display: flex; justify-content: center; align-items: center; }
 .header_menu  { display: block; z-index: 5; position: absolute; top: 110%; right: 0; background: #afcdaf; padding:0; width:220px; box-shadow: 0px 3px 12px rgb(0 0 0 / 8%); box-sizing:border-box; transition: all 0.5s ease-in-out; }
 .header_menu:after { z-index:2; position:absolute; right: 20%; top:-13px; content: "\f0d8"; font-family:'FontAwesome'; color: #afcdaf; line-height:1; font-weight:400; font-size:20px; }
 .header_menu li { list-style: none; width: 100%; float: left; padding:10px; margin: 0;  border: none;   border-top: solid 1px #fff; background:transparent;text-decoration: none; border-radius: 0; box-sizing: border-box;   text-align: center; font-size: 16px; color: #414141; }
@@ -547,7 +549,21 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 .bankInfoField button:hover { background: #AFCDAF;  color: #191919;   transition: all 0.5s ease-in; }
 .bankInfoField button[disabled], .bankInfoField button:disabled { user-select: none;  pointer-events: none;   opacity: 0.6; }
 .bankInfoField button.bankinfobtn { width:100%;   }
- 
+
+
+
+/* ################### screennotification ################### */
+.screenmain.screennotification {  align-items: flex-start; padding: 0 0 100px 0; }
+.notificationList  { width: 100%; float: left; margin:0; padding:1rem 3rem 0 3rem;  background: url('../images/rewadsbg.png') no-repeat center top; background-size:100% 100%; }
+.notificationList li { list-style: none; width: 100%; float: left; margin:0;  border-top: solid 1px #515050; padding:1.3rem 0;  }
+.notificationList li:first-child { border-top: none;}
+.notificationList li h6 { width: 100%; float: left; margin:0;  padding:1rem 0;  text-align: center; font-weight: 500; color:#fff; font-size:20px; word-break: break-all; }
+.notificationList li h3 { width: 100%; float: left; margin:0;  padding:0;  text-align: left; font-weight: 500; color:#fff; font-size:18px; word-break: break-all; }
+.notificationList li h4 { width: 100%; float: left; margin:0; padding:0.5rem 0 0 0;  text-align: left; font-weight: 500; color:#a5a5a5; font-size:14px; word-break: break-all; }
+
+
+
+
 @media only screen and (max-width:1023px)
 {
  /* ################### walkthrough ################### */
@@ -584,7 +600,8 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 /* ################### headersection ################### */
 .headersection { padding:0 2rem; height: 100px; }
 .headersection .logo { max-width:200px; }
-.headersection .backarrow { width:45px; }
+.headersection .backarrow img { width:40px; }
+.headersection .backarrow span {  font-size: 20px; }
 .headersection .scanqrnow { width:40px; }
 .headersection.headerDashboard .logo { margin-top: 8px; max-width:170px; }
 .header_userdp { width: 50px; height: 50px; padding:0.2rem; }
@@ -720,6 +737,11 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 .redeemforms span {  font-size:14px;  }
 .redeemforms button { margin:1.5rem 0 0 0;  padding:1.1rem 2.5rem; font-size: 18px;   }
 
+
+
+
+/* ################### screennotification ################### */
+.notificationList { padding: 1rem 1rem 0 1rem;
 
 }
 
