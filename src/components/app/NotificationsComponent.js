@@ -7,6 +7,7 @@ import { _get, _post } from "@/config/apiClient";
 import { getUserID } from '@/config/userauth';
 import { ipaddress, osdetails, browserdetails  } from "../core/jio";
 import Loader from '../shared/LoaderComponent';
+import { isUserToken, isBearerToken } from '@/config/userauth';
 
 export default function NotificationsComponent() {
   const [pagemsg, setPagemsg] = useState('');
@@ -20,7 +21,13 @@ export default function NotificationsComponent() {
   const ipInfo = ipaddress();
   const osInfo = osdetails();
   const browserInfo = browserdetails();
+  const userToken  =  isUserToken();
+  const bearerToken = isBearerToken();
 
+  useEffect(() => {
+    if(!userToken) { push("/login"); return  }
+    if(!bearerToken) { push("/"); return  }
+  }, []);
 
   useEffect(() => {
     _get("Customer/GetTotalOfUserNotification?userid="+ userID)
