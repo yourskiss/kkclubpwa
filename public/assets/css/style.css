@@ -193,7 +193,7 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 .registercontainer { width: 100%; float: left;   }
 .registerMsg { width: 100%;float: left;text-align: center;text-transform: none; font-weight: 500; color: #f30;font-size: 18px;  margin-top:1.5rem; }
 .registerMsgOtp { position: relative; width: 100%;float: left;text-align: left;text-transform: none; font-weight: 500; color: rgba(245, 240, 235,0.6); font-size:18px; display:flex; justify-content: flex-start;  align-items:center;   }
-.registerMsgOtp b { font-weight: normal; }
+.registerMsgOtp b { display: inline-block; font-weight: normal; }
 .registerMsgOtp span { font-weight: normal; }
 .numberedit { margin:-7px 0 0 0.7rem; width:22px; height:22px;   padding:0; font-size: 0; cursor: pointer; text-decoration: none;  background: url('../images/edit_icon.png') no-repeat center center; background-size: 100% 100%; }
 .numberedit:hover { color:#AFCDAF; text-decoration: underline;  filter: grayscale(100%); }

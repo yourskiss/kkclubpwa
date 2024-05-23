@@ -151,8 +151,8 @@ export default function LoginComponent() {
  
 
   const verifyotp = () => {
-    // loginnow(); // tesing
-    
+     loginnow(); // tesing
+    /*
       setLoading(true);
       setPagemsg('Verifying OTP');
       _get("Sms/VerifyOTP?&mobile="+mobileValues+"&otp="+otpValues)
@@ -172,7 +172,7 @@ export default function LoginComponent() {
         toast.error(err.message);
         setLoading(false); 
       });
-    
+    */
   }
 
 
@@ -233,7 +233,7 @@ export default function LoginComponent() {
             <div className="registercontainer">
               <div className="registerHead">Verify with OTP</div>
               <div className="registerMsgOtp">
-                <span>We have sent an OTP to +91-{mobileValues}</span>
+                <span>We have sent an OTP to <b>+91- {mobileValues}</b></span>
                 <em className="numberedit" onClick={changeNumber}>Change</em>
               </div>
 

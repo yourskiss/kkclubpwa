@@ -76,7 +76,7 @@ export default function Rewardform() {
             return;
         }
         if(redeempoint < redeemminimumpoint)
-        {
+        {  
             setErrorMsg(`You can redeem minimum ${redeemminimumpoint} reward points.`); 
             return;
         }

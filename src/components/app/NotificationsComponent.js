@@ -29,6 +29,8 @@ export default function NotificationsComponent() {
     if(!bearerToken) { push("/"); return  }
   }, []);
 
+
+
   useEffect(() => {
     _get("Customer/GetTotalOfUserNotification?userid="+ userID)
     .then((res) => {
@@ -43,6 +45,8 @@ export default function NotificationsComponent() {
    
   return () => { setMounted2(false); }
   }, [notificationCount]);
+
+
 
 useEffect(() => {
   _get("Customer/GetUserNotifications?userid="+ userID)
@@ -83,7 +87,7 @@ const readNotification = (e) => {
         console.log(err.message);
         setLoading(false); 
       });
- 
+
   } 
 
   return (<>

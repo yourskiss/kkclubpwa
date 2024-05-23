@@ -153,7 +153,7 @@ export default function RedemptionhistoryComponemt () {
                   <p>{ val.transactionamount } <span>{val.transactionid}</span></p>
                   <p>{val.status} <span>{val.orderid}</span></p>
                   {
-                    val.status === 'Pending' ? <><p><Image className={ btnload ? "rotedrefreshimg" : null } src="/assets/images/refresh_icon.png" onClick={()=> payoutstatus(val.orderid)}  width={20} height={20} alt="Pending" quality={99}  /></p></> :  val.status === 'Success' ? <p><Image src="/assets/images/success_icon.png"  width={20} height={20} alt="Success" quality={99} className='transition_success'  /></p> : <p><Image src="/assets/images/failed_icon.png"  width={20} height={20} alt="Failed" quality={99}  className='transition_failed' /></p>
+                    val.status === 'Pending' ? <><p><Image className={ btnload ? "rotedrefreshimg" : null } src="/assets/images/refresh_icon.png" onClick={()=> payoutstatus(val.orderid)}  width={20} height={20} alt="Pending" quality={99} title='Click to refresh' /></p></> :  val.status === 'Success' ? <p><Image src="/assets/images/success_icon.png"  width={20} height={20} alt="Success" quality={99} className='transition_success'  /></p> : <p><Image src="/assets/images/failed_icon.png"  width={20} height={20} alt="Failed" quality={99}  className='transition_failed'  title='Transition Failed' /></p>
                   }
                 </li>) }
               </ol>

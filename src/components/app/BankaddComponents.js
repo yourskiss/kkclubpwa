@@ -97,8 +97,8 @@ export default function BankaddComponents() {
       e.preventDefault();
         const regexMobile = /^[6789][0-9]{9}$/i;
         if(username === '') { setErrorName('Name is required');  return }
-        else if(rmn === '') { setErrorRmn('RMN is required');  return }
-        else if(rmn?.length !== 10) { setErrorRmn('RMN must have 10 Digit');  return }
+        else if(rmn === '') { setErrorRmn('Mobile number is required');  return }
+        else if(rmn?.length !== 10) { setErrorRmn('Mobile number must have 10 Digit');  return }
         else if(!regexMobile.test(rmn)){ setErrorRmn("Invalid mobile number!");  return }
         else if(aadhaar === '') { setErrorAadhaar('Aadhaar number is required');  return }
         else if(aadhaar?.length !== 12) { setErrorAadhaar('Aadhaar number must have 12 Digit');  return }
@@ -255,7 +255,7 @@ export default function BankaddComponents() {
                       {errorName && <span>{errorName}</span>}
                   </div>
                   <div className="bankInfoField">
-                      <p>RMN</p>
+                      <p>Mobile Number</p>
                       <input type='number' name="rmn" min="0" maxLength={10} autoComplete="off" value={rmn} onInput={onInputmaxLength}  onChange={(e)=>{setRmn(e.target.value); setErrorRmn(''); }} />
                       {errorRmn && <span>{errorRmn}</span>}
                   </div>
@@ -304,9 +304,9 @@ export default function BankaddComponents() {
                   { infopersonal && <>
                   <div className='bankinfo'>
                     <h6>Name: <b>{username}</b></h6>
-                    <h6>RMN: <b>{rmn}</b></h6> 
-                    <h6>Aadhaar: <b>{aadhaar}</b></h6> 
-                    <h6>Pan: <b>{pan}</b></h6> 
+                    <h6>Mobile Number: <b>{rmn}</b></h6> 
+                    <h6>Aadhaar Number: <b>{aadhaar}</b></h6> 
+                    <h6>Pan Number: <b>{pan}</b></h6> 
                     <aside  onClick={()=>stepHandler('personal')} title="Edit">Edit</aside>
                   </div>
                   </>}
