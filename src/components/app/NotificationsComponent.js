@@ -113,7 +113,7 @@ const readNotification = (e) => {
             <ul className='notificationList'>
  
                 {  
-                  notifyList.map &&  notifyList.map((val, index) => <li key={val.notificationid} data-deliverystatus={val.deliverystatus} data-notificationtype={val.notificationtype} data-isread={val.isread} className={val.isread === 0 ? "notify_list" : "notified_list" }>
+                  notifyList.map &&  notifyList.slice(0, 10).map((val, index) => <li key={val.notificationid} data-deliverystatus={val.deliverystatus} data-notificationtype={val.notificationtype} data-isread={val.isread} className={val.isread === 0 ? "notify_list" : "notified_list" }>
                     <h3>{val.notificationmessage}</h3>
                   </li>)
                 }
