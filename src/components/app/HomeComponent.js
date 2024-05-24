@@ -24,7 +24,7 @@ export default function HomeComponent({datatoken}) {
   useEffect(() => {
     if(!isBearerToken)
     {
-      Cookies.set('bearertoken',  datatoken, { expires: new Date(new Date().getTime() + 3600000), secure: true });
+      Cookies.set('bearertoken',  datatoken, { expires: new Date(new Date().getTime() + 3000000), secure: true }); // 3600000
       setTimeout(function(){  
         window.location.reload();
       }, 3000);

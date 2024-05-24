@@ -49,18 +49,21 @@ export default function NotificationsComponent() {
 
 
 useEffect(() => {
+  setLoading(true);
+  setPagemsg('Fetching Notification');
   _get("Customer/GetUserNotifications?userid="+ userID)
   .then((res) => {
-    // console.log("GetUserNotifications  response - ", res);
+   // console.log("GetUserNotifications  response - ", res);
+    setLoading(false);
     if (mounted)
     {
       setNotifyList(res.data.result);
     }
   }).catch((error) => {
-      console.log("GetUserNotifications-",error); 
+    setLoading(false);
+    console.log("GetUserNotifications-",error); 
   });
- 
-return () => { setMounted(false); }
+  return () => { setMounted(false); }
 }, [notifyList]);
 
 
@@ -75,41 +78,43 @@ const readNotification = (e) => {
         osdetails: osInfo,
         browserdetails: browserInfo
     }
-    setLoading(true);
-    setPagemsg('Updating');
-
+    // console.log(datafinal);
+    if(parseInt(notificationCount) !== 0)
+    {
+      setLoading(true);
+      setPagemsg('Updating');
       _post("Customer/MarkReadUserNotification", datafinal)
       .then((res) => {
-      //  console.log("MarkReadUserNotification", res);
+       // console.log("MarkReadUserNotification", res);
         setLoading(false);
         Router.back();
       }).catch((err) => {
         console.log(err.message);
         setLoading(false); 
       });
-
+    }
+    else
+    {
+      Router.back();
+    }
   } 
 
   return (<>
-    <motion.div initial={{ y: "-100vw" }} animate={{ y:0 }} transition={{ duration: 0.8, delay: 0.1, origin: 1, ease: [0, 0.71, 0.2, 1.01] }}>
-    <header className='headersection headerProfiles'>
+    <motion.div initial={{ y: "-250px" }} animate={{ y:0 }} transition={{ duration:2, delay: 0, origin: 1, ease: [0, 0.71, 0.2, 1.01] }}>
+    <header className='headersection headerNotification'>
         <aside className="backarrow">
           <Image src="/assets/images/back-arrow.png" width={65} height={24} alt="back" quality={99} onClick={readNotification} title='Back' />
-          <span>Notifications</span>
         </aside>
+        <div className='head_notification'>Notifications</div>
       </header>
     <div className="screenmain screennotification"> 
         <div className="screencontainer">
 
             <ul className='notificationList'>
-              {
-                parseInt(notificationCount) === 0 ? <li><h6>Notifications not available</h6></li> : null
-              }
-
+ 
                 {  
-                  notifyList.map &&  notifyList.map((val, index) => <li key={val.notificationid} data-deliverystatus={val.deliverystatus} data-notificationtype={val.notificationtype}>
-                    <h3>{val.notificationtitle}</h3>
-                    <h4>{val.notificationmessage}</h4>
+                  notifyList.map &&  notifyList.map((val, index) => <li key={val.notificationid} data-deliverystatus={val.deliverystatus} data-notificationtype={val.notificationtype} data-isread={val.isread} className={val.isread === 0 ? "notify_list" : "notified_list" }>
+                    <h3>{val.notificationmessage}</h3>
                   </li>)
                 }
             </ul>

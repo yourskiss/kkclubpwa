@@ -144,16 +144,16 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 .headersection {  width: 100%; max-width: 1024px; height: 120px; float: left; padding:0 3rem; display: flex; justify-content:center; align-items: center; box-sizing: border-box; background-color:#191919;  }
 .headersection .logo { display: inline-block; float:none;width: 100%; max-width: 270px;  margin: 0; padding:0;}
 .headersection .logo img { width: 100%; height: auto; }
-.headersection .backarrow { display: inline-block; float:none; width:auto; margin: 0; padding:0; }
-.headersection .backarrow img { width:55px; height: auto;  cursor: pointer;  transition: all 0.5s ease-in; filter:none; }
-.headersection .backarrow img:hover { filter: sepia() saturate(500%) hue-rotate(50deg); transition: all 0.5s ease-in;}
-.headersection .backarrow span { margin: 0 0 0 1rem; text-align: left; text-transform: none; font-weight: 500; color:#fff; font-size: 24px; }
-.headersection .scanqrnow { display: inline-block; float:none; width: 55px; margin: 0; padding:0; }
-.headersection .scanqrnow img { width:100%; height: auto;  cursor: pointer;  transition: all 0.5s ease-in; transform: scale(1); }
-.headersection .scanqrnow img:hover { transform: scale(1.05); transition: all 0.5s ease-in;}
+.backarrow { display: inline-block; float:none; width:auto; margin: 0; padding:0; }
+.backarrow img { width:55px; height: auto;  cursor: pointer;  transition: all 0.5s ease-in; filter:none; }
+.backarrow img:hover { filter: sepia() saturate(500%) hue-rotate(50deg); transition: all 0.5s ease-in;}
+.scanqrnow { display: inline-block; float:none; width: 55px; margin: 0; padding:0; }
+.scanqrnow img { width:100%; height: auto;  cursor: pointer;  transition: all 0.5s ease-in; transform: scale(1); }
+.scanqrnow img:hover { transform: scale(1.05); transition: all 0.5s ease-in;}
 
 
 .headersection.headerProfiles { justify-content: space-between; background-color:transparent;   }
+.headersection.headerNotification { justify-content:flex-start; background-color:transparent;  }
 .headersection.headerAfterlogin { justify-content: flex-start; background-color:transparent;   }
 .headersection.headerDashboard {  justify-content: space-between; background-color:transparent;  }
 .headersection.headerDashboard .logo { display: inline-block; float:none;width: 100%; max-width: 260px;  margin: 0; padding:0;}
@@ -175,6 +175,10 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 .header_notification img { float: left; width: 100%; height:auto; border: 0; border-radius: 0; margin: 0;padding: 0;  transition: all 0.5s ease-out; }
 .header_notification img:hover {  transition: all 0.5s ease-in; }
 .header_notification span { z-index: 1; position: absolute; top:-4px; right:-4px;width: 16px; height: 16px;border-radius: 50%; text-align: center;line-height: 1; font-size: 10px; background: #AFCDAF; display: flex; justify-content: center; align-items: center; }
+
+.head_notification { width: auto; float: left; margin: 0 0 0 1rem; text-align: left; text-transform: none; font-weight: 500; color:#fff; font-size: 24px; }
+
+
 .header_menu  { display: block; z-index: 5; position: absolute; top: 110%; right: 0; background: #afcdaf; padding:0; width:220px; box-shadow: 0px 3px 12px rgb(0 0 0 / 8%); box-sizing:border-box; transition: all 0.5s ease-in-out; }
 .header_menu:after { z-index:2; position:absolute; right: 20%; top:-13px; content: "\f0d8"; font-family:'FontAwesome'; color: #afcdaf; line-height:1; font-weight:400; font-size:20px; }
 .header_menu li { list-style: none; width: 100%; float: left; padding:10px; margin: 0;  border: none;   border-top: solid 1px #fff; background:transparent;text-decoration: none; border-radius: 0; box-sizing: border-box;   text-align: center; font-size: 16px; color: #414141; }
@@ -182,7 +186,8 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 .header_menu li b { display: block; white-space: nowrap;  overflow: hidden; text-overflow: ellipsis; }
 .header_menu li span, .header_menu li a { cursor:pointer; text-decoration: none; color: #414141; transition:all 0.5s ease-out; }
 .header_menu li span:hover, .header_menu li a:hover { transition:all 0.5s ease-in; color: #fff;  }
- 
+ .notificationText { width: auto; float: left; margin: 0 0 0 1rem; text-align: left; text-transform: none; font-weight: 500; color:#fff; font-size: 24px; }
+
  
 /* ################### register ################### */
 .registerHead { width: 100%; float: left; margin: 0 0 1.5rem 0; text-align: left; text-transform: none;  font-weight: bold; color:#F5F0EB; font-size:30px; font-family: var(--font-lneue);   }
@@ -481,7 +486,7 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 .profile_status dl dt.status_approve { background-color:#afcdaf; }
 .profile_status dl dt.status_pending { background: #b6b5b5; }
 .profile_status dl dd { width: 300px; }
-.profile_status dl dd h2 { display: block; width: 100%; float: left; margin:0; padding:0; text-align: left;  font-weight: bold; color: #AFCDAF; font-size:36px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.profile_status dl dd h2 { display: block; width: 100%; float: left; margin:0; padding:0; text-align: left;  font-weight: bold; color: #AFCDAF; font-size:36px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-transform: uppercase; }
 .profile_status dl dd p { display: block; width: 100%; float: left; margin:0; padding:1rem 0 1.2rem 0; text-align: left;  font-weight: 600; color:#AFCDAF; font-size:18px; }
 .profile_status dl dd p b { font-weight: 400; color:#fff;  }
 .profile_status dl dd h3 { position: relative;  display: block; width: 100%; height: 12px; float: left; margin:0; padding:0; background-color:#F5F0EB66; border: solid 2px #191919; line-height: 0; font-size: 0; border-radius: 10px; overflow: hidden; }
@@ -554,12 +559,14 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 
 /* ################### screennotification ################### */
 .screenmain.screennotification {  align-items: flex-start; padding: 0 0 100px 0; }
-.notificationList  { width: 100%; float: left; margin:0; padding:1rem 3rem 0 3rem;  background: url('../images/rewadsbg.png') no-repeat center top; background-size:100% 100%; }
-.notificationList li { list-style: none; width: 100%; float: left; margin:0;  border-top: solid 1px #515050; padding:1.3rem 0;  }
+.notificationList  { width: 100%; float: left; margin:0; padding:0;  background: url('../images/rewadsbg.png') no-repeat center top; background-size:100% 100%; }
+.notificationList li { list-style: none; width: 100%; float: left; margin:0;  border-top: solid 1px #515050; padding:1.3rem 3rem;  }
 .notificationList li:first-child { border-top: none;}
+.notificationList li.notify_list { background: #000; }
+.notificationList li.notified_list { background:none; }
 .notificationList li h6 { width: 100%; float: left; margin:0;  padding:1rem 0;  text-align: center; font-weight: 500; color:#fff; font-size:20px; word-break: break-all; }
-.notificationList li h3 { width: 100%; float: left; margin:0;  padding:0;  text-align: left; font-weight: 500; color:#fff; font-size:18px; word-break: break-all; }
-.notificationList li h4 { width: 100%; float: left; margin:0; padding:0.5rem 0 0 0;  text-align: left; font-weight: 500; color:#a5a5a5; font-size:14px; word-break: break-all; }
+.notificationList li h3 { width: 100%; float: left; margin:0;  padding:0;  text-align: left; font-weight: 500; color:#fff; font-size:16px; word-break: break-all; }
+.notificationList li.notified_list h3 {  color:#a5a5a5; font-size:14px;  }
 
 
 
@@ -600,8 +607,8 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 /* ################### headersection ################### */
 .headersection { padding:0 2rem; height: 100px; }
 .headersection .logo { max-width:200px; }
-.headersection .backarrow img { width:40px; }
-.headersection .backarrow span {  font-size: 20px; }
+.backarrow img { width:40px; }
+.head_notification {  font-size: 20px; }
 .headersection .scanqrnow { width:40px; }
 .headersection.headerDashboard .logo { margin-top: 8px; max-width:170px; }
 .header_userdp { width: 50px; height: 50px; padding:0.2rem; }
@@ -741,7 +748,7 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 
 
 /* ################### screennotification ################### */
-.notificationList { padding: 1rem 1rem 0 1rem;
+.notificationList li {  padding: 1rem; }
 
 }
 
