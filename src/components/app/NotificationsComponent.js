@@ -8,10 +8,12 @@ import { getUserID } from '@/config/userauth';
 import { ipaddress, osdetails, browserdetails  } from "../core/jio";
 import Loader from '../shared/LoaderComponent';
 import { isUserToken, isBearerToken } from '@/config/userauth';
+import Sectionloader from '../shared/SectionLoad';
 
 export default function NotificationsComponent() {
   const [pagemsg, setPagemsg] = useState('');
   const[loading, setLoading] = useState(false);
+  const[loadNoti, setLoadNoti] = useState(false);
   const [mounted, setMounted] = useState(true);
   const [mounted2, setMounted2] = useState(true);
   const[notificationCount, setNotificationCount] = useState(0);
@@ -25,8 +27,8 @@ export default function NotificationsComponent() {
   const bearerToken = isBearerToken();
 
   useEffect(() => {
-    if(!userToken) { push("/login"); return  }
-    if(!bearerToken) { push("/"); return  }
+    if(!userToken) { Router.push("/login"); return  }
+    if(!bearerToken) { Router.push("/"); return  }
   }, []);
 
 
@@ -49,18 +51,17 @@ export default function NotificationsComponent() {
 
 
 useEffect(() => {
-  setLoading(true);
-  setPagemsg('Fetching Notification');
+  setLoadNoti(true);
   _get("Customer/GetUserNotifications?userid="+ userID)
   .then((res) => {
    // console.log("GetUserNotifications  response - ", res);
-    setTimeout(function(){setLoading(false);}, 1000);
+    setTimeout(function(){setLoadNoti(false);}, 500);
     if (mounted)
     {
       setNotifyList(res.data.result);
     }
   }).catch((error) => {
-    setLoading(false);
+    setLoadNoti(false);
     console.log("GetUserNotifications-",error); 
   });
   return () => { setMounted(false); }
@@ -109,15 +110,16 @@ const readNotification = (e) => {
       </header>
     <div className="screenmain screennotification"> 
         <div className="screencontainer">
-
-            <ul className='notificationList'>
- 
-                {  
-                  notifyList.map &&  notifyList.slice(0, 10).map((val, index) => <li key={val.notificationid} data-deliverystatus={val.deliverystatus} data-notificationtype={val.notificationtype} data-isread={val.isread} className={val.isread === 0 ? "notify_list" : "notified_list" }>
-                    <h3>{val.notificationmessage}</h3>
-                  </li>)
-                }
+            { loadNoti ? <Sectionloader /> : <>
+             <ul className='notificationList'>
+             {  
+               notifyList.map &&  notifyList.slice(0, 10).map((val, index) => <li key={val.notificationid} data-deliverystatus={val.deliverystatus} data-notificationtype={val.notificationtype} data-isread={val.isread} className={val.isread === 0 ? "notify_list" : "notified_list" }>
+                 <h3>{val.notificationmessage}</h3>
+               </li>)
+             }
             </ul>
+            </> }
+            
 
         </div>
     </div>
