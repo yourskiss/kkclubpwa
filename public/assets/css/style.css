@@ -560,13 +560,13 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 /* ################### screennotification ################### */
 .screenmain.screennotification {  align-items: flex-start; padding: 0 0 100px 0; }
 .notificationList  { width: 100%; float: left; margin:0; padding:0;  background: url('../images/rewadsbg.png') no-repeat center top; background-size:100% 100%; }
-.notificationList li { list-style: none; width: 100%; float: left; margin:0;  border-top: solid 1px #515050; padding:1.3rem 3rem;  }
+.notificationList li { list-style: none; width: 100%; float: left; margin:0;  border-top: solid 1px #515050; padding:1.6rem 3rem;  }
 .notificationList li:first-child { border-top: none;}
 .notificationList li.notify_list { background: #000; }
 .notificationList li.notified_list { background:none; }
 .notificationList li h6 { width: 100%; float: left; margin:0;  padding:1rem 0;  text-align: center; font-weight: 500; color:#fff; font-size:20px; word-break: break-all; }
 .notificationList li h3 { width: 100%; float: left; margin:0;  padding:0;  text-align: left; font-weight: 500; color:#fff; font-size:16px; word-break: break-all; }
-.notificationList li.notified_list h3 {  color:#a5a5a5; font-size:14px;  }
+.notificationList li.notified_list h3 {  color:#a5a5a5;   }
 
 
 
@@ -748,7 +748,7 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 
 
 /* ################### screennotification ################### */
-.notificationList li {  padding: 1rem; }
+.notificationList li {  padding:1.3rem 1rem; }
 
 }
 

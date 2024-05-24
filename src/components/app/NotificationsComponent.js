@@ -54,7 +54,7 @@ useEffect(() => {
   _get("Customer/GetUserNotifications?userid="+ userID)
   .then((res) => {
    // console.log("GetUserNotifications  response - ", res);
-    setLoading(false);
+    setTimeout(function(){setLoading(false);}, 1000);
     if (mounted)
     {
       setNotifyList(res.data.result);
