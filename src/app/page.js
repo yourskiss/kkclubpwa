@@ -13,7 +13,7 @@ async function setMainToken() {
       body: JSON.stringify({ "userid": apiUsername, "password": apiPassword }), 
     });
     const result = await response.json(); 
-    console.log('Success:', result);
+   // console.log('Success:', result);
     return result.token;
 }
 

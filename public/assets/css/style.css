@@ -4,7 +4,7 @@
  @font-face { font-family: 'ln'; src: url('../fonts/lneue.woff2') format('woff2'); font-weight: normal; font-style: normal;  }  
 */
 html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,footer,header,nav,section{display:block}h1{font-size:2em;margin:.67em 0}figcaption,figure,main{display:block}figure{margin:1em 40px}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:rgba(0,0,0,0);-webkit-text-decoration-skip:objects}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:inherit}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}dfn{font-style:italic}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-0.25em}sup{top:-0.5em}audio,video{display:inline-block}audio:not([controls]){display:none;height:0}img{border-style:none}svg:not(:root){overflow:hidden}button,input,optgroup,select,textarea{font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}button::-moz-focus-inner,[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner{border-style:none;padding:0}button:-moz-focusring,[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{display:inline-block;vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{ outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details,menu{display:block}summary{display:list-item}canvas{display:inline-block}template{display:none}[hidden]{display:none}
-body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-height:1; font-family: var(--font-arialmt); }
+body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-height:1; font-family: var(--font-arialmt); }
 
 /* ################### pageloading ################### */
 .pageloading { display: block; z-index: 9; position: fixed;left: 50%;top: 50%; margin:0; transform: translate(-50%, -50%); border:0; border-radius: 0; margin: 0;padding: 0; width:100%; max-width: 1024px; height:100%;  background-color:#191919; overflow: hidden; }
@@ -487,8 +487,8 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 .profile_status dl dt span {  display: flex; justify-content: center; align-items: center; float: left; width: 100%; height:100%; border: solid 3px #191919; border-radius: 50%; margin: 0;padding: 0; box-sizing: border-box; line-height: 1; font-size: 36px; text-transform: uppercase; font-family: var(--font-lneue); color: #191919; letter-spacing: 2px; }
 .profile_status dl dt.status_approve { background-color:#afcdaf; }
 .profile_status dl dt.status_pending { background: #b6b5b5; }
-.profile_status dl dd { width: 300px; }
-.profile_status dl dd h2 { display: block; width: 100%; float: left; margin:0; padding:0; text-align: left;  font-weight: bold; color: #AFCDAF; font-size:36px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-transform: uppercase; }
+.profile_status dl dd { width: 400px; }
+.profile_status dl dd h2 { display: block; width: 100%; float: left; margin:0; padding:0; text-align: left;  font-weight: bold; color: #AFCDAF; font-size:32px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-transform: uppercase; }
 .profile_status dl dd p { display: block; width: 100%; float: left; margin:0; padding:1rem 0 1.2rem 0; text-align: left;  font-weight: 600; color:#AFCDAF; font-size:18px; }
 .profile_status dl dd p b { font-weight: 400; color:#fff;  }
 .profile_status dl dd h3 { position: relative;  display: block; width: 100%; height: 12px; float: left; margin:0; padding:0; background-color:#F5F0EB66; border: solid 2px #191919; line-height: 0; font-size: 0; border-radius: 10px; overflow: hidden; }
@@ -719,7 +719,7 @@ body { background-color: #f5f0eb; margin:0;padding:0;box-sizing:border-box;line-
 .profile_status dl dt { width:70px; height: 70px; margin: 0 0.8rem 0 0; padding:0.3rem;   }
 .profile_status dl dt span { border-width:2px; font-size: 20px;  }
 .profile_status dl dd { width: 200px; }
-.profile_status dl dd h2 { font-size:20px;  }
+.profile_status dl dd h2 { font-size:18px;  }
 .profile_status dl dd p { padding:0.5rem 0 0.7rem 0;font-size:14px; }
 .profile_status dl dd h3 {  height:9px; border-width:1px; }
 .profile_status aside { font-size:18px; }

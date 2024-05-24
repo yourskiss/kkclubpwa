@@ -1,4 +1,5 @@
 "use client";
+// import Image from 'next/image';
 import Cookies from 'js-cookie';
 import { useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -24,8 +25,8 @@ export default function HomeComponent({datatoken}) {
   useEffect(() => {
     if(!isBearerToken)
     {
-      Cookies.set('bearertoken',  datatoken, { expires: new Date(new Date().getTime() + 3000000), secure: true }); // 3600000
-      setTimeout(function(){  
+      Cookies.set('bearertoken',  datatoken, { expires: new Date(new Date().getTime() + 2700000), secure: true }); // 3600000
+      setTimeout(function() {  
         window.location.reload();
       }, 3000);
     }
@@ -35,9 +36,14 @@ export default function HomeComponent({datatoken}) {
     }
   },[]);
 
+  // if (isBearerToken) {
+  //   return(<Image src="/assets/images/logo.png" width={270} height={50} alt="logo" quality={99} />);
+  // }
   return (<>
-        <video autoPlay muted playsInline style={{ width: '308px', height: '58px' }} poster="/assets/images/logo.png">
-          <source src="/assets/videos/homevideo-unit.mp4" type="video/mp4" />
-        </video>
-  </>)
+    <video autoPlay muted playsInline style={{ width: '308px', height: '58px' }} poster="/assets/images/logo.png">
+      <source src="/assets/videos/homevideo-unit.mp4" type="video/mp4" />
+    </video>
+  </>);
+
+ 
 }
