@@ -1,7 +1,7 @@
 "use server";
  import { Suspense } from 'react';
  import HomeComponent from '@/components/app/HomeComponent';
-
+ 
 const apiURL = process.env.NEXT_PUBLIC_BASE_URL;
 const apiUsername = process.env.NEXT_PUBLIC_API_USERNAME;
 const apiPassword = process.env.NEXT_PUBLIC_API_PASSWORD;
@@ -16,6 +16,8 @@ async function setMainToken() {
    // console.log('Success:', result);
     return result.token;
 }
+
+ 
 
 export default async function Home() {
   return (

@@ -18,11 +18,12 @@ export default function HomeComponent({datatoken}) {
   }, [getqrcode]);
 
   useEffect(() => {
-    if(isBearerToken && isUserToken && isCC) { push("/getcoupone"); return }
+    if(isBearerToken && !!Cookies.get('usertoken') && isCC) { push("/getcoupone"); return }
   }, []);
 
 
   useEffect(() => {
+    // console.log(isBearerToken, !!Cookies.get('bearertoken'), Cookies.get('bearertoken'));
     if(!isBearerToken)
     {
       Cookies.set('bearertoken',  datatoken, { expires: new Date(new Date().getTime() + 2700000), secure: true }); // 3600000
@@ -32,7 +33,7 @@ export default function HomeComponent({datatoken}) {
     }
     else
     {
-     isUserToken && !isCC ? push("/dashboard") : isUserToken && isCC ? push("/getcoupone") : push("/login");
+      isUserToken && !isCC ? push("/dashboard") : isUserToken && isCC ? push("/getcoupone") : push("/login");
     }
   },[]);
 
