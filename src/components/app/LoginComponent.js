@@ -152,27 +152,27 @@ export default function LoginComponent() {
 
   const verifyotp = () => {
      loginnow(); // tesing
-    
-      // setLoading(true);
-      // setPagemsg('Verifying OTP');
-      // _get("Sms/VerifyOTP?&mobile="+mobileValues+"&otp="+otpValues)
-      // .then((res) => {
-      //   setLoading(false);
-      //  // console.log("Verify OTP - ", res);
-      //   if(res.data.isValid)
-      //   {
-      //     loginnow();
-      //   }
-      //   else
-      //   {
-      //     toast.error("Invalid OTP");
-      //     setOtpValues('');
-      //   }
-      // }).catch((err) => {
-      //   toast.error(err.message);
-      //   setLoading(false); 
-      // });
-    
+    /*
+      setLoading(true);
+      setPagemsg('Verifying OTP');
+      _get("Sms/VerifyOTP?&mobile="+mobileValues+"&otp="+otpValues)
+      .then((res) => {
+        setLoading(false);
+       // console.log("Verify OTP - ", res);
+        if(res.data.isValid)
+        {
+          loginnow();
+        }
+        else
+        {
+          toast.error("Invalid OTP");
+          setOtpValues('');
+        }
+      }).catch((err) => {
+        toast.error(err.message);
+        setLoading(false); 
+      });
+    */
   }
 
 
