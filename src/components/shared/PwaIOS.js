@@ -7,6 +7,7 @@ import { ErrorBoundary } from "next/dist/client/components/error-boundary";
  
 export default function PwaIOS () {
   const [shouldShowPrompt, setShouldShowPrompt] = useState(false);
+  const promptTime = parseInt(process.env.NEXT_PUBLIC_PWA_PROMPT_TIME);
 
   useEffect(() => {
     const getAgent = window.navigator.userAgent.toLowerCase();
@@ -22,7 +23,7 @@ export default function PwaIOS () {
   }, []);
 
   const promptInstall = () => {
-    Cookies.set('pwaIos',  true, { expires: new Date(new Date().getTime() + 300000), secure: true });
+    Cookies.set('pwaIos',  true, { expires: new Date(new Date().getTime() + promptTime), secure: true });
     setShouldShowPrompt(false);
    // window.location.reload();
   };

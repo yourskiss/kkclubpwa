@@ -1,7 +1,8 @@
 "use client";
 import Cookies from 'js-cookie';
 const setCouponeCode = (val) => {
-    return Cookies.set('couponecodecookies', val, { expires: new Date(new Date().getTime() + 900000), secure: true }); // 3600000
+  const scanqrTime = parseInt(process.env.NEXT_PUBLIC_QR_SCAN_TIME);
+    return Cookies.set('couponecodecookies', val, { expires: new Date(new Date().getTime() + scanqrTime), secure: true });
  }
  const isCouponeCode = () => {
    const isToken = !!Cookies.get('couponecodecookies');

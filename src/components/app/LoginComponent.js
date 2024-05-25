@@ -152,27 +152,27 @@ export default function LoginComponent() {
 
   const verifyotp = () => {
      loginnow(); // tesing
-    /*
-      setLoading(true);
-      setPagemsg('Verifying OTP');
-      _get("Sms/VerifyOTP?&mobile="+mobileValues+"&otp="+otpValues)
-      .then((res) => {
-        setLoading(false);
-       // console.log("Verify OTP - ", res);
-        if(res.data.isValid)
-        {
-          loginnow();
-        }
-        else
-        {
-          toast.error("Invalid OTP");
-          setOtpValues('');
-        }
-      }).catch((err) => {
-        toast.error(err.message);
-        setLoading(false); 
-      });
-    */
+    
+      // setLoading(true);
+      // setPagemsg('Verifying OTP');
+      // _get("Sms/VerifyOTP?&mobile="+mobileValues+"&otp="+otpValues)
+      // .then((res) => {
+      //   setLoading(false);
+      //  // console.log("Verify OTP - ", res);
+      //   if(res.data.isValid)
+      //   {
+      //     loginnow();
+      //   }
+      //   else
+      //   {
+      //     toast.error("Invalid OTP");
+      //     setOtpValues('');
+      //   }
+      // }).catch((err) => {
+      //   toast.error(err.message);
+      //   setLoading(false); 
+      // });
+    
   }
 
 
@@ -184,7 +184,6 @@ export default function LoginComponent() {
       const ac = new AbortController();
         navigator.credentials.get({ otp: { transport: ['sms'] }, signal: ac.signal })
         .then((otpCredential) => {
-          console.log('otpCredential - ', otpCredential);
           setOtpValues(otpCredential.code);
           ac.abort();
         })
@@ -247,7 +246,7 @@ export default function LoginComponent() {
                   numInputs={6}
                   inputType="number"
                   renderSeparator={<span></span>}
-                  renderInput={(props) => <input {...props} />}
+                  renderInput={(props) => <input autocomplete="on" {...props} />}
                 />
               </div>
               { otpError && <span className='registerError'>{otpError}</span>  }

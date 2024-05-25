@@ -26,7 +26,8 @@ const getUserMobile = () => {
 
 
 const setUserCookies = (val) => {
-   return Cookies.set('usertoken', val, { expires: 365, secure: true });
+  const utTime = parseInt(process.env.NEXT_PUBLIC_USER_TOKEN_TIME);
+   return Cookies.set('usertoken', val, { expires: utTime, secure: true });
 }
 
 
@@ -49,7 +50,8 @@ const isBearerToken = () => {
  
 
 const setLoginNumber = (val) => {
-  return Cookies.set('loginnumber',  val, { expires: new Date(new Date().getTime() + 1800000), secure: true });
+  const registerMobileTime = parseInt(process.env.NEXT_PUBLIC_REGISTATION_MOBILE_TIME);
+  return Cookies.set('loginnumber',  val, { expires: new Date(new Date().getTime() + registerMobileTime), secure: true });
 }
 const isLoginNumber = () => {
   const isToken = !!Cookies.get('loginnumber');

@@ -69,8 +69,8 @@ export default function ScanqrcodeComponent() {
  
         _post("Customer/ValidateCouponAndSave", qrdata)
         .then((res) => {
-          setLoading(false);
-          console.log(res)
+          setTimeout(function(){setLoading(false);},2000); 
+          // console.log(res)
           if(res.data.result === null)
           {
             toast.error("Invalide QR Code, Try another code");
@@ -79,7 +79,7 @@ export default function ScanqrcodeComponent() {
            } 
            else
            {
-            toast.success('Coupon Successfully Added');
+            toast.success('Coupon Successfully Validated');
             push(`/scanqrcode/${res.data.result[0].pointid}`);
            }
         }).catch((err) => {

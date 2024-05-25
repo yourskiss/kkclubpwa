@@ -12,6 +12,7 @@ export default function HomeComponent({datatoken}) {
   const isCC = isCouponeCode();
   const isBearerToken = !!Cookies.get('bearertoken');
   const isUserToken = !!Cookies.get('usertoken');
+  const btTime = parseInt(process.env.NEXT_PUBLIC_BEARER_TOKEN_TIME);
 
   useEffect(() => {
     if(getqrcode !== null) { setCouponeCode(getqrcode); }
@@ -26,7 +27,7 @@ export default function HomeComponent({datatoken}) {
     // console.log(isBearerToken, !!Cookies.get('bearertoken'), Cookies.get('bearertoken'));
     if(!isBearerToken)
     {
-      Cookies.set('bearertoken',  datatoken, { expires: new Date(new Date().getTime() + 2700000), secure: true }); // 3600000
+      Cookies.set('bearertoken',  datatoken, { expires: new Date(new Date().getTime() + btTime), secure: true });
       setTimeout(function() {  
         window.location.reload();
       }, 3000);

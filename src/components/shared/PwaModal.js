@@ -5,9 +5,11 @@ import { useState, useEffect } from "react";
 import { toast } from 'react-toastify';
 import { motion } from "framer-motion";
 
+
 export default function PwaModal() {
     const[installModal, setInstallModal] = useState(false);
     const[pmtEvt, setPmtEvt] = useState(null);
+    const promptTime = parseInt(process.env.NEXT_PUBLIC_PWA_PROMPT_TIME);
  
     useEffect(()=> {
         const handalbeforeinstallprompt = (evt) => {
@@ -29,7 +31,7 @@ export default function PwaModal() {
     const handalCancel = (e) => {
       e.preventDefault();
       setInstallModal(false);
-      Cookies.set('pwarequest',  true, { expires: new Date(new Date().getTime() + 300000), secure: true });
+      Cookies.set('pwarequest',  true, { expires: new Date(new Date().getTime() + promptTime), secure: true });
      // window.location.reload();
     }
     const handalInstall = (e) => {
@@ -42,7 +44,7 @@ export default function PwaModal() {
                 if(choiceResult.outcome==="dismissed")
                 {
                   //  toast.info("Installation Cancelled.");
-                    Cookies.set('pwarequest',  true, { expires: new Date(new Date().getTime() + 300000), secure: true });
+                    Cookies.set('pwarequest',  true, { expires: new Date(new Date().getTime() + promptTime), secure: true });
                    // window.location.reload();
                 }
                 else
