@@ -1,6 +1,5 @@
 "use client";
 import Link from 'next/link';
-import Cookies from 'js-cookie';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getUserID } from "@/config/userauth";
@@ -12,6 +11,8 @@ import { _post } from "@/config/apiClient";
 import HeaderDashboard from '../shared/HeaderDashboard';
 import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
 import CountUp from 'react-countup';
+import { removeCouponeCode } from "@/config/validecoupone";
+ 
 
 export default function GetcouponeComponent() {
   const [pagemsg, setPagemsg] = useState('');
@@ -38,7 +39,7 @@ export default function GetcouponeComponent() {
        {
         toast.error("Invalide QR Code...");
         push("/rewards");
-        Cookies.remove('couponecodecookies');
+        removeCouponeCode();
        }
   }, [couponecode]);
  
@@ -65,13 +66,13 @@ export default function GetcouponeComponent() {
             if(res.data.result === null)
             {
               toast.error(res.data.resultmessage);
-              Cookies.remove('couponecodecookies');
+              removeCouponeCode();
               push('/scanqrcode');
              }
              else
              {
               toast.success("Coupon Successfully Validated.");
-              Cookies.remove('couponecodecookies');
+              removeCouponeCode();
               push(`/scanqrcode/${res.data.result[0].pointid}`);
              }
         }).catch((err) => {

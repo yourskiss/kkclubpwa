@@ -11,10 +11,11 @@ const setCouponeCode = (val) => {
    return isToken;
  }
  const getCouponeCode = () => {
-   const isValue = Cookies.get('couponecodecookies', { domain:domainname  });
-   return isValue;
+   return Cookies.get('couponecodecookies', { domain:domainname  });
  }
-
+ const removeCouponeCode = () => {
+  return Cookies.remove('couponecodecookies', { domain:domainname  });
+}
 
  
-export {  setCouponeCode, isCouponeCode, getCouponeCode };
+export {  setCouponeCode, isCouponeCode, getCouponeCode, removeCouponeCode };

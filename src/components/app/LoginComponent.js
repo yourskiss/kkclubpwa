@@ -5,7 +5,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import Loader from "../shared/LoaderComponent";
 import { toast } from 'react-toastify';
-import {isBearerToken, setUserCookies, isUserToken, setLoginNumber } from "@/config/userauth";
+import {setUserCookies, isUserToken } from "@/config/userauth";
+import { isBearerToken } from '@/config/bearerauth';
 import { encryptText } from "@/config/crypto";
 import Otpcountdown from "../core/timer";
 import { _get } from "@/config/apiClient";
@@ -14,7 +15,7 @@ import OtpInput from 'react-otp-input';
 import PwaModal from "../shared/PwaModal";
 import PwaIOS from "../shared/PwaIOS";
 import { isCouponeCode } from "@/config/validecoupone";
- 
+import { setLoginNumber } from "@/config/registertoken";
  
 export default function LoginComponent() {  
   const [pagemsg, setPagemsg] = useState('');

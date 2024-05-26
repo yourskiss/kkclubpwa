@@ -2,7 +2,8 @@
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import {  isUserToken, isBearerToken } from "@/config/userauth";
+import {  isUserToken } from "@/config/userauth";
+import { isBearerToken } from '@/config/bearerauth';
 
 export default  function HeaderProfile() {
 const { push } = useRouter();

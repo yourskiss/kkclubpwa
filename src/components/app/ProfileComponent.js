@@ -4,15 +4,14 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import CountUp from 'react-countup';
 import { toast } from 'react-toastify';
-import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 import HeaderProfile from "../shared/HeaderProfile";
 import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
 // import ProgressComponent from "../shared/ProgressComponent";
-import { getUserID } from '@/config/userauth';
+import { getUserID, removeUserToken } from '@/config/userauth';
 import { _get } from "@/config/apiClient";
 import { motion } from "framer-motion";
-const domainname = process.env.NEXT_PUBLIC_DOMAIN_COOKIES;
+
 
 export default function ProfileComponent() {
   const [mounted, setMounted] = useState(true);
@@ -53,12 +52,10 @@ export default function ProfileComponent() {
   }
 
   const logoutnow = () => {
-
     localStorage.removeItem("userprofilesn");
     localStorage.removeItem("userprofilename");
     localStorage.removeItem('verificationstatus')
-    Cookies.remove('couponecodecookies', { domain:domainname  });
-    Cookies.remove('usertoken', { domain:domainname  });
+    removeUserToken();
     push("/login") ;
     toast.success('Logout Successfully.'); 
 }

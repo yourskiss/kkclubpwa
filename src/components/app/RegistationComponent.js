@@ -8,10 +8,12 @@ import { ipaddress, osdetails, browserdetails  } from "../core/jio";
 import CityStateComponent from "../shared/CitystateComponent";
 import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 import { _post } from "@/config/apiClient";
-import { isBearerToken, isUserToken, getLoginNumber,  isLoginNumber, setUserCookies } from "@/config/userauth";
+import { isUserToken, setUserCookies } from "@/config/userauth";
+import { isBearerToken } from '@/config/bearerauth';
 import HeaderFirst from "../shared/HeaderFirst";
 import { encryptText } from "@/config/crypto";
 import { isCouponeCode } from "@/config/validecoupone";
+import { getLoginNumber,  isLoginNumber, removeLoginNumber } from "@/config/registertoken";
 
 export default function RegistationComponent() {
   const [step, setStep] = useState(1);
@@ -156,6 +158,7 @@ export default function RegistationComponent() {
           localStorage.setItem("verificationstatus",res.data.result.verificationstatus);
           const userinfo = res.data.result.userid + "|" + res.data.result.phonenumber
           setUserCookies(encryptText(userinfo));
+          removeLoginNumber();
               if(isCC)
               { 
                 toast.success('Coupon Added Successfully'); 

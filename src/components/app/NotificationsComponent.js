@@ -7,7 +7,8 @@ import { _get, _post } from "@/config/apiClient";
 import { getUserID } from '@/config/userauth';
 import { ipaddress, osdetails, browserdetails  } from "../core/jio";
 import Loader from '../shared/LoaderComponent';
-import { isUserToken, isBearerToken } from '@/config/userauth';
+import { isUserToken } from '@/config/userauth';
+import { isBearerToken } from '@/config/bearerauth';
 import Sectionloader from '../shared/SectionLoad';
 
 export default function NotificationsComponent() {

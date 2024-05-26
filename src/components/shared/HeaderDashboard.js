@@ -3,8 +3,8 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { isUserToken, isBearerToken } from '@/config/userauth';
-import { getUserMobile, getUserID } from '@/config/userauth';
+import {isUserToken, getUserMobile, getUserID } from '@/config/userauth';
+import { isBearerToken } from '@/config/bearerauth';
 import { _get } from "@/config/apiClient";
  
 export default  function HeaderDashboard() {
