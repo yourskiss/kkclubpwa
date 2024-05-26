@@ -14,5 +14,8 @@ const isBearerToken = () => {
 const getBearerToken = () => {
   return Cookies.get('bearertoken', { domain:domainname  });
 }
+const removeBearerToken = () => {
+  return Cookies.remove('bearertoken', { domain:domainname  });
+}
 
-export {  setBearerToken, isBearerToken, getBearerToken };
+export {  setBearerToken, isBearerToken, getBearerToken, removeBearerToken };

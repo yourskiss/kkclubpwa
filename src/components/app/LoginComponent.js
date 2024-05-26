@@ -16,6 +16,8 @@ import PwaModal from "../shared/PwaModal";
 import PwaIOS from "../shared/PwaIOS";
 import { isCouponeCode } from "@/config/validecoupone";
 import { setLoginNumber } from "@/config/registertoken";
+
+ 
  
 export default function LoginComponent() {  
   const [pagemsg, setPagemsg] = useState('');
@@ -27,6 +29,7 @@ export default function LoginComponent() {
     const [isMobile, setIsMobile] = useState(false);
     const [otpsent, setOtpsent] = useState(false);
     const mobileChange = (e) =>{setMobileValues(e.target.value); setMobileError(""); }
+
 
 
     const { push } = useRouter();

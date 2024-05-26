@@ -7,14 +7,16 @@ const apiUsername = process.env.NEXT_PUBLIC_API_USERNAME;
 const apiPassword = process.env.NEXT_PUBLIC_API_PASSWORD;
 
 async function setMainToken() {
-    const response = await fetch(`${apiURL}ApiAuth/authtoken`, {
+    const response = await fetch(apiURL+"ApiAuth/authtoken", {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ "userid": apiUsername, "password": apiPassword }), 
     });
-    const result = await response.json(); 
-   // console.log('Success:', result);
-    return result.token;
+    const data = await response.json(); 
+   // console.log('data-', data.token);
+    return data.token;
+
+   
 }
 
  

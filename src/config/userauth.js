@@ -42,12 +42,7 @@ const removeUserToken = () => {
 
 
 
-const isBearerToken = () => {
-  const isBT = !!Cookies.get('bearertoken', { domain:domainname  });
-  return isBT;
-}
+ 
  
 
- 
-
-export {  getUserID, getUserMobile, setUserCookies, getUserToken, isUserToken, removeUserToken, isBearerToken };
+export {  getUserID, getUserMobile, setUserCookies, getUserToken, isUserToken, removeUserToken };
