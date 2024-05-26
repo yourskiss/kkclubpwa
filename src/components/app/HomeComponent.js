@@ -4,22 +4,24 @@ import Cookies from 'js-cookie';
 import { useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { setCouponeCode, isCouponeCode } from "@/config/validecoupone";
+const btTime = parseInt(process.env.NEXT_PUBLIC_BEARER_TOKEN_TIME);
+const domainname = process.env.NEXT_PUBLIC_DOMAIN_COOKIES;
 
 export default function HomeComponent({datatoken}) {
   const { push } = useRouter();
   const searchParams = useSearchParams();
   const getqrcode = searchParams.get('code');
   const isCC = isCouponeCode();
-  const isBearerToken = !!Cookies.get('bearertoken');
-  const isUserToken = !!Cookies.get('usertoken');
-  const btTime = parseInt(process.env.NEXT_PUBLIC_BEARER_TOKEN_TIME);
+  const isBearerToken = !!Cookies.get('bearertoken', { domain:domainname  });
+  const isUserToken = !!Cookies.get('usertoken', { domain:domainname  });
 
+  
   useEffect(() => {
     if(getqrcode !== null) { setCouponeCode(getqrcode); }
   }, [getqrcode]);
 
   useEffect(() => {
-    if(isBearerToken && !!Cookies.get('usertoken') && isCC) { push("/getcoupone"); return }
+    if(isBearerToken && isUserToken && isCC) { push("/getcoupone"); return }
   }, []);
 
 
@@ -27,7 +29,7 @@ export default function HomeComponent({datatoken}) {
     // console.log(isBearerToken, !!Cookies.get('bearertoken'), Cookies.get('bearertoken'));
     if(!isBearerToken)
     {
-      Cookies.set('bearertoken',  datatoken, { expires: new Date(new Date().getTime() + btTime), secure: true });
+      Cookies.set('bearertoken',  datatoken, { expires: new Date(new Date().getTime() + btTime), secure: true, sameSite: 'Strict', path: '/', domain:domainname });
       setTimeout(function() {  
         window.location.reload();
       }, 3000);

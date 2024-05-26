@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import Loader from '../shared/LoaderComponent';
 import { toast } from 'react-toastify';
@@ -60,7 +59,7 @@ export default function RegistationComponent() {
   if(!bearerToken) { push("/"); return  }
   if(userToken && !isCC) { push("/dashboard"); return }
   if(userToken && isCC) { push("/getcoupone"); return }
-   if(isLoginID) { setMobilenumber(getLoginID) } else { push('/login');}
+  if(isLoginID) { setMobilenumber(getLoginID) } else { push('/login');}
  }, []);
 
   const checkboxHandler = () => {
@@ -157,7 +156,6 @@ export default function RegistationComponent() {
           localStorage.setItem("verificationstatus",res.data.result.verificationstatus);
           const userinfo = res.data.result.userid + "|" + res.data.result.phonenumber
           setUserCookies(encryptText(userinfo));
-          Cookies.remove('loginnumber');
               if(isCC)
               { 
                 toast.success('Coupon Added Successfully'); 

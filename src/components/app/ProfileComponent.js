@@ -12,6 +12,7 @@ import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
 import { getUserID } from '@/config/userauth';
 import { _get } from "@/config/apiClient";
 import { motion } from "framer-motion";
+const domainname = process.env.NEXT_PUBLIC_DOMAIN_COOKIES;
 
 export default function ProfileComponent() {
   const [mounted, setMounted] = useState(true);
@@ -52,11 +53,12 @@ export default function ProfileComponent() {
   }
 
   const logoutnow = () => {
+
     localStorage.removeItem("userprofilesn");
     localStorage.removeItem("userprofilename");
     localStorage.removeItem('verificationstatus')
-    Cookies.remove('couponecodecookies');
-    Cookies.remove('usertoken');
+    Cookies.remove('couponecodecookies', { domain:domainname  });
+    Cookies.remove('usertoken', { domain:domainname  });
     push("/login") ;
     toast.success('Logout Successfully.'); 
 }

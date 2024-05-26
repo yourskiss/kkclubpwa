@@ -15,6 +15,7 @@ import PwaModal from "../shared/PwaModal";
 import PwaIOS from "../shared/PwaIOS";
 import { isCouponeCode } from "@/config/validecoupone";
  
+ 
 export default function LoginComponent() {  
   const [pagemsg, setPagemsg] = useState('');
     const[loading, setLoading] = useState(false);
@@ -188,15 +189,6 @@ export default function LoginComponent() {
           ac.abort();
         })
         .catch((error) => {
-          // if (error.name === 'NotAllowedError') {
-          //   console.log('User denied permission to access credentials.');
-          // } else if (error.name === 'AbortError') {
-          //   console.log('Operation was aborted.');
-          // } else if (error.name === 'NotSupportedError') {
-          //   console.log('API not supported in this environment.');
-          // } else {
-          //   console.log('An unexpected error occurred:', error);
-          // }
           console.log(error);
           ac.abort();
         });
@@ -211,6 +203,8 @@ export default function LoginComponent() {
 
     <div className='screenmain'>
     <section className="screencontainer">
+ 
+ 
 
           { !isMobile ? (<form onSubmit={mobileSubmit}>
               <div className="registercontainer">

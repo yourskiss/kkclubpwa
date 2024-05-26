@@ -1,29 +1,26 @@
 "use client";
-import Cookies from 'js-cookie';
 import { useState, useEffect } from 'react';
 import { motion } from "framer-motion";
 import { ErrorBoundary } from "next/dist/client/components/error-boundary";
- 
+import { setPwaIos, isPwaIos } from '@/config/pwa';
  
 export default function PwaIOS () {
   const [shouldShowPrompt, setShouldShowPrompt] = useState(false);
-  const promptTime = parseInt(process.env.NEXT_PUBLIC_PWA_PROMPT_TIME);
+
 
   useEffect(() => {
     const getAgent = window.navigator.userAgent.toLowerCase();
     const isIOS =  /iphone|ipad|ipod/.test(getAgent);
     const notInstalled = !window.navigator.standalone;
-    const lastPrompt = !!Cookies.get('pwaIos');
-    // const isIOS = (/iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.userAgent === 'MacIntel' && navigator.maxTouchPoints > 1)) && !window.MSStream;
-   
-    if (isIOS && notInstalled && !lastPrompt) 
+    const lastPrompt = isPwaIos();  
+    if(isIOS && notInstalled && !lastPrompt) 
     {
       setShouldShowPrompt(true);
     }
   }, []);
 
   const promptInstall = () => {
-    Cookies.set('pwaIos',  true, { expires: new Date(new Date().getTime() + promptTime), secure: true });
+    setPwaIos(true);
     setShouldShowPrompt(false);
    // window.location.reload();
   };
