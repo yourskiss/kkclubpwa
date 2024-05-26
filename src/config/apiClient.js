@@ -1,9 +1,9 @@
 "use client";
 import axios from 'axios';
-import Cookies from 'js-cookie';
+import { getBearerToken } from './bearerauth';
 const apiURL = process.env.NEXT_PUBLIC_BASE_URL;
-const domainname = process.env.NEXT_PUBLIC_DOMAIN_COOKIES;
-const bt = Cookies.get('bearertoken', { domain:domainname  });
+const bt = getBearerToken();
+
 
 
 
