@@ -246,7 +246,7 @@ export default function LoginComponent() {
                   numInputs={6}
                   inputType="number"
                   renderSeparator={<span></span>}
-                  renderInput={(props) => <input autocomplete="on" {...props} />}
+                  renderInput={(props) => <input autoComplete="on" {...props} />}
                 />
               </div>
               { otpError && <span className='registerError'>{otpError}</span>  }

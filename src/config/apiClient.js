@@ -2,8 +2,10 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 const apiURL = process.env.NEXT_PUBLIC_BASE_URL;
+// const isBearerToken = !!Cookies.get('bearertoken');
 const bt = Cookies.get('bearertoken');
- 
+
+
 
 const apiClient = axios.create({
     baseURL: apiURL,
