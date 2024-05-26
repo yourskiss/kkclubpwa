@@ -48,7 +48,7 @@ export default function Rewardform() {
             }
         }).catch((error) => {
             setLoading(false);
-            toast.info(error); 
+            console.log(error); 
         });
         return () => { setMounted(false); }
     }, [pendingorder]);
@@ -98,7 +98,7 @@ export default function Rewardform() {
         _get(`/Payment/UserPayout?userID=${userID}&points=${redeempoint}&amount=${redeempoint * pointvalue}&ipaddress=${ipInfo}&osdetails=${osn}`)
         .then((res) => {
             setLoading(false);
-           console.log("Payout request - ", res);
+          // console.log("Payout request - ", res);
            if(res.data.status === 0)
             {
                 if(res.data.data === null)
@@ -113,13 +113,12 @@ export default function Rewardform() {
             else
             {
                 setErrorMsg('');
-                console.log("id- ", res.data.userorderid);
                 setUserOrderID(res.data.userorderid);
                 payoutstatus(res.data.userorderid);
             }
         }).catch((error) => {
             setLoading(false);
-            toast.info(error); 
+            console.log(error); 
         });
         
     }
@@ -129,9 +128,9 @@ export default function Rewardform() {
             {
                 _get(`/Payment/UserPayoutStatus?userID=${userID}&orderID=${val}`)
                 .then((res) => {   
-                    console.log("Payout Status - ", res.data.isclose, res.data.ispayment, res.data.pgrequeystatus, res); 
+                   // console.log("Payout Status - ", res.data.isclose, res.data.ispayment, res.data.pgrequeystatus, res); 
                 }).catch((error) => {
-                    toast.info(error); 
+                    console.log(error); 
                 });
             }
     }

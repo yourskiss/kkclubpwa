@@ -29,7 +29,7 @@ export default function RedeempointsComponents() {
                 setResultcode(res.data.resultcode);
             }
         }).catch((error) => {
-            toast.info("GetUserPayoutInfo-",error); 
+            console.log("GetUserPayoutInfo-",error); 
         });
         return () => { setMounted(false); }
     }, []);

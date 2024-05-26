@@ -43,7 +43,7 @@ export default function RedemptionhistoryComponemt () {
         }
     }).catch((error) => {
         setLoading(false);
-        toast.error("UserRedeemedPointsHistory-",error); 
+        console.log("UserRedeemedPointsHistory-",error); 
     });
     return () => { setMounted(false); }
   }, []);
@@ -60,7 +60,7 @@ export default function RedemptionhistoryComponemt () {
               {
                 _get(`/Payment/UserPayoutStatus?userID=${userID}&orderID=${res.data.result[0].orderid}`)
                 .then((dataa) => { 
-                   console.log("UserPayoutStatus - ",  dataa);
+                  // console.log("UserPayoutStatus - ",  dataa);
                    if(res.status === 200)
                     {
                       setTimeout(function(){
@@ -74,12 +74,12 @@ export default function RedemptionhistoryComponemt () {
                     }
                 }).catch((error) => {
                     setLoading(false);
-                    toast.info("UserPayoutStatus-",error); 
+                    console.log("UserPayoutStatus-",error); 
                 });
               }
         }
     }).catch((error) => {
-        toast.info("UserPendingOrder-",error); 
+      console.log("UserPendingOrder-",error); 
     });
     return () => { setMounted2(false); }
   }, []);
