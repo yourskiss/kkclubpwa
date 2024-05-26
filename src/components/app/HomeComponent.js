@@ -1,13 +1,18 @@
 "use client";
 // import Image from 'next/image';
+import axios from 'axios';
 import { useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { setCouponeCode, isCouponeCode } from "@/config/validecoupone";
 import { setBearerToken, isBearerToken, getBearerToken, removeBearerToken } from '@/config/bearerauth';
 import { isUserToken } from '@/config/userauth';
-import { toast } from 'react-toastify';
 
-export default function HomeComponent({datatoken}) {
+  const apiURL = process.env.NEXT_PUBLIC_BASE_URL;
+  const apiUsername = process.env.NEXT_PUBLIC_API_USERNAME;
+  const apiPassword = process.env.NEXT_PUBLIC_API_PASSWORD;
+ 
+
+export default function HomeComponent() {
   const { push } = useRouter();
   const searchParams = useSearchParams();
   const getqrcode = searchParams.get('code');
@@ -15,6 +20,8 @@ export default function HomeComponent({datatoken}) {
   const isBT = isBearerToken();
   const isUT = isUserToken();
   const getBT = getBearerToken();
+
+
  
   useEffect(() => {
     if(getqrcode !== null) { setCouponeCode(getqrcode); }
@@ -28,18 +35,19 @@ export default function HomeComponent({datatoken}) {
   useEffect(() => {
     if(!isBT)
     {
-      setBearerToken(datatoken);
-      setTimeout(function() {  
-        window.location.reload();
-      }, 3000);
-    }
-    else if(getBT === undefined || getBT === 'undefined')
-    {
-      toast.error("Bearer Token Issue.")
-      removeBearerToken();
-      setTimeout(function() {  
-        window.location.reload();
-      }, 4000);
+      axios({
+        method: 'post',
+        url: `${apiURL}ApiAuth/authtoken`,
+        data: JSON.stringify({ "userid": apiUsername, "password": apiPassword }), 
+        headers: {'Content-Type': 'application/json'},
+      })
+      .then(function (response) {
+          setBearerToken(response.data.token);
+          setTimeout(function() {  window.location.reload(); }, 3000);
+      })
+      .catch(function(error){
+          console.log(error);
+      })
     }
     else
     {
