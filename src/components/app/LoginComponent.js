@@ -153,8 +153,8 @@ export default function LoginComponent() {
  
 
   const verifyotp = () => {
-     loginnow(); // tesing
-    /*
+    // loginnow(); // tesing
+    
       setLoading(true);
       setPagemsg('Verifying OTP');
       _get("Sms/VerifyOTP?&mobile="+mobileValues+"&otp="+otpValues)
@@ -174,7 +174,7 @@ export default function LoginComponent() {
         toast.error(err.message);
         setLoading(false); 
       });
-    */
+    
   }
 
 
