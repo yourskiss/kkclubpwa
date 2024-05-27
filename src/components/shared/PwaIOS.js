@@ -11,9 +11,11 @@ export default function PwaIOS () {
   useEffect(() => {
     const getAgent = window.navigator.userAgent.toLowerCase();
     const isIOS =  /iphone|ipad|ipod/.test(getAgent);
-    const notInstalled = !window.navigator.standalone;
+    const notInstalled = window.navigator.standalone === true;
+    const isPwa = window.matchMedia('(display-mode: standalone)').matches;
     const lastPrompt = isPwaIos();  
-    if(isIOS && notInstalled && !lastPrompt) 
+   // console.log(isIOS , isPwa , notInstalled , lastPrompt)
+    if(isIOS && !isPwa && notInstalled && !lastPrompt) 
     {
       setShouldShowPrompt(true);
     }
