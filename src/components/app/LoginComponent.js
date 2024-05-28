@@ -181,22 +181,27 @@ export default function LoginComponent() {
   }
 
 
-
+  const fillAutoOTP = async () => {
+    if ('OTPCredential' in window) {
+      try 
+      {
+        const otp = await navigator.credentials.get({
+          otp: { transport: ['sms'] },
+          signal: new AbortController().signal
+        });
+        if (otp) {
+          document.getElementById('otpinputs').value = otp.code;
+          document.getElementById('otpinputs').focus();
+        }
+      } catch (err) {
+        console.error('Error in OTP autofill:', err);
+      }
+    }
+  };
  
  
    useEffect(() => {
-    if ('OTPCredential' in window) {
-      const ac = new AbortController();
-        navigator.credentials.get({ otp: { transport: ['sms'] }, signal: ac.signal })
-        .then((otpCredential) => {
-          setOtpValues(otpCredential.code);
-          ac.abort();
-        })
-        .catch((error) => {
-          console.log(error);
-          ac.abort();
-        });
-    }
+    fillAutoOTP();
   }, [isMobile]);
 
 
@@ -234,12 +239,15 @@ export default function LoginComponent() {
                 <em className="numberedit" onClick={changeNumber}>Change</em>
               </div>
 
- 
+              <div className="registerinputformobile">
+                <h2 style={{'color':'#fff'}}>test - {otpValues}</h2>
+                <input className="registerinput" id="otpinputs" type="number" autoComplete="one-time-code" min="0" maxLength={6} value={otpValues} onInput={onInputmaxLength} onChange={(e)=>setOtpValues(e.target.value)} onFocus={(e)=>setOtpValues(e.target.value)} />
+              </div>
 
               <div className="registerOneTimePassword">
                 <OtpInput
                   autoComplete="one-time-code"
-                  value={otpValues || ''}
+                  value={otpValues}
                   onChange={setOtpValues}
                   numInputs={6}
                   inputType="number"
