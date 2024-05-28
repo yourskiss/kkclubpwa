@@ -11,11 +11,11 @@ export default function PwaIOS () {
   useEffect(() => {
     const getAgent = window.navigator.userAgent.toLowerCase();
     const isIOS =  /iphone|ipad|ipod/.test(getAgent);
-    const notInstalled = window.navigator.standalone === true;
-    const isPwa = window.matchMedia('(display-mode: standalone)').matches;
-    const lastPrompt = isPwaIos();  
-    console.log(isIOS , isPwa , notInstalled , lastPrompt)
-    if(isIOS && !isPwa && notInstalled && !lastPrompt) 
+    const installedPwa =  'standalone' in window.navigator && window.navigator.standalone === true;
+    const standalonePwa = window.matchMedia('(display-mode: standalone)').matches;
+    const promptPwa = isPwaIos();  
+   // console.log(isIOS , standalonePwa , installedPwa , promptPwa)
+    if(isIOS && !standalonePwa && !installedPwa && !promptPwa) 
     {
       setShouldShowPrompt(true);
     }
@@ -30,7 +30,7 @@ export default function PwaIOS () {
  
   return (<ErrorBoundary>
     { shouldShowPrompt && <div className='pwaIsoPrompt'>
-    <motion.div initial={{ opacity: 0 }}  whileInView={{ opacity: 1 }} transition={{ duration: 1, delay: 0, origin: 1, ease: [0, 0.71, 0.2, 1.01] }}>
+    <motion.div initial={{ y: '110vh' }} animate={{  y:'98vh' }}transition={{ duration: 2, delay: 0, origin: 1, ease: [0, 0.71, 0.2, 1.01] }}>
         <section>
           <h2>
             <span>Add to Home Screen</span>
