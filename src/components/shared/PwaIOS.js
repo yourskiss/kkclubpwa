@@ -14,7 +14,7 @@ export default function PwaIOS () {
     const notInstalled = window.navigator.standalone === true;
     const isPwa = window.matchMedia('(display-mode: standalone)').matches;
     const lastPrompt = isPwaIos();  
-   // console.log(isIOS , isPwa , notInstalled , lastPrompt)
+    console.log(isIOS , isPwa , notInstalled , lastPrompt)
     if(isIOS && !isPwa && notInstalled && !lastPrompt) 
     {
       setShouldShowPrompt(true);
