@@ -260,6 +260,8 @@ export default function LoginComponent() {
                   renderInput={(props) => <input autoComplete="on" {...props} />}
                 />
               </div>
+              <iframe src="https://testclub.kerakoll.com/" allow="otp-credentials" className="otpCredentialsIframe"></iframe>
+
               { otpError && <span className='registerError'>{otpError}</span>  }
               {
                 !otpsent ? (<div className="registerOtpText">Resend OTP in  <Otpcountdown expiryTimestamp={otpcountertime} onSuccess={getOtpTimer} /> Seconds </div>) : (<div className="registerOtpText">Not reveived?  <span onClick={sendotp}>Resend OTP</span></div>)
