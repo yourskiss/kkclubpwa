@@ -9,6 +9,7 @@ import CountUp from 'react-countup';
 import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
 import { _get } from "@/config/apiClient";
 import HeaderDashboard from '../shared/HeaderDashboard';
+import FooterComponent from '../shared/FooterComponent';
 
 export default function EarnedComponent() {
     const [pagemsg, setPagemsg] = useState('');
@@ -76,7 +77,10 @@ export default function EarnedComponent() {
         
       </div> 
 
+      <FooterComponent />
 
+
+      
       <Loader showStatus={loading}  message={pagemsg} />
       
     </div>)

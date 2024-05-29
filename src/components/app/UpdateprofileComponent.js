@@ -9,6 +9,7 @@ import CitystateUpdateComponent from "../shared/CitystateUpdateComponent";
 import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 import { _get, _post } from "@/config/apiClient";
 import HeaderDashboard from "../shared/HeaderDashboard";
+import FooterComponent from "../shared/FooterComponent";
 
 export default function UpdateprofileComponent() {
     const [pagemsg, setPagemsg] = useState('');
@@ -231,7 +232,7 @@ export default function UpdateprofileComponent() {
     </section>
     </div>
  
-
+    <FooterComponent />
 
     <Loader showStatus={loading} message={pagemsg} />
     </>

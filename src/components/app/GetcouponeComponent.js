@@ -12,6 +12,7 @@ import HeaderDashboard from '../shared/HeaderDashboard';
 import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
 import CountUp from 'react-countup';
 import { removeCouponeCode } from "@/config/validecoupone";
+import FooterComponent from '../shared/FooterComponent';
  
 
 export default function GetcouponeComponent() {
@@ -106,6 +107,7 @@ export default function GetcouponeComponent() {
         </div>
       </div> 
  
+      <FooterComponent />
 
      <Loader showStatus={loading}  message={pagemsg} />
     </div>

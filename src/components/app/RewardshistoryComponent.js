@@ -6,6 +6,7 @@ import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
 import CountUp from 'react-countup';
 import { _get } from "@/config/apiClient";
 import HeaderDashboard from "../shared/HeaderDashboard";
+import FooterComponent from "../shared/FooterComponent";
 
 export default function RewardshistoryComponent () {
   const [pagemsg, setPagemsg] = useState('');
@@ -79,7 +80,9 @@ export default function RewardshistoryComponent () {
  
       </div>
     </div> 
+    
 
+    <FooterComponent />
 
 
    <Loader showStatus={loading} message={pagemsg}  />

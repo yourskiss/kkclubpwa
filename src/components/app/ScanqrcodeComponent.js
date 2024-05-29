@@ -11,6 +11,7 @@ import CountUp from 'react-countup';
 import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
 import { _post } from "@/config/apiClient";
 import HeaderDashboard from '../shared/HeaderDashboard';
+import FooterComponent from '../shared/FooterComponent';
 
 export default function ScanqrcodeComponent() {
   const [pagemsg, setPagemsg] = useState('');
@@ -122,6 +123,7 @@ export default function ScanqrcodeComponent() {
       </div> 
  
 
+      <FooterComponent />
       
        <Loader showStatus={loading} message={pagemsg} /> 
     </div>

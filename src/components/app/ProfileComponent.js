@@ -11,6 +11,7 @@ import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
 import { getUserID, removeUserToken } from '@/config/userauth';
 import { _get } from "@/config/apiClient";
 import { motion } from "framer-motion";
+import FooterComponent from "../shared/FooterComponent";
 
 
 export default function ProfileComponent() {
@@ -121,6 +122,9 @@ useEffect(() => {
         </div>
 
     </div>
+
+
+    <FooterComponent />
 
   </motion.div>
 </>)

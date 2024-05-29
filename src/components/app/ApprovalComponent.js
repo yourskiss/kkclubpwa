@@ -10,6 +10,7 @@ import HeaderDashboard from "../shared/HeaderDashboard";
 import { getUserMobile } from '@/config/userauth';
 import { _get } from "@/config/apiClient";
 import Loader from "../shared/LoaderComponent";
+import FooterComponent from "../shared/FooterComponent";
 
 
 export default function ApprovalComponent() {
@@ -129,7 +130,7 @@ export default function ApprovalComponent() {
             </div>
       </div>
 
-
+      <FooterComponent />
       <Loader showStatus={loading}  message={pagemsg} />
     </>
   )

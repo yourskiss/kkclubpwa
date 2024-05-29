@@ -8,6 +8,7 @@ import { getUserID } from '@/config/userauth';
 import Loader from '../shared/LoaderComponent';
 import { ipaddress, osdetails, browserdetails  } from "../core/jio";
 import HeaderDashboard from '../shared/HeaderDashboard';
+import FooterComponent from '../shared/FooterComponent';
  
 export default function BankaddComponents() {
     const [backroutepath, setbackroutepath] = useState('');
@@ -321,6 +322,8 @@ export default function BankaddComponents() {
         
         </div>
     </div>
+
+    <FooterComponent />
     
     <Loader showStatus={loading}  message={pagemsg} />
 </>)

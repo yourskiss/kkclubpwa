@@ -11,7 +11,6 @@ import { encryptText } from "@/config/crypto";
 import Otpcountdown from "../core/timer";
 import { _get } from "@/config/apiClient";
 import HeaderFirst from "../shared/HeaderFirst";
-import OtpInput from 'react-otp-input';
 import PwaModal from "../shared/PwaModal";
 import PwaIOS from "../shared/PwaIOS";
 import { isCouponeCode } from "@/config/validecoupone";
@@ -20,7 +19,7 @@ import FooterComponent from "../shared/FooterComponent";
 
  
  
-export default function LoginComponent() {  
+export default function LoginComponent2() {  
   const [pagemsg, setPagemsg] = useState('');
     const[loading, setLoading] = useState(false);
     const [mobileValues, setMobileValues] = useState('');
@@ -157,8 +156,8 @@ export default function LoginComponent() {
  
 
   const verifyotp = () => {
-    // loginnow(); // tesing
-    
+    loginnow(); // tesing
+    /*
       setLoading(true);
       setPagemsg('Verifying OTP');
       _get("Sms/VerifyOTP?&mobile="+mobileValues+"&otp="+otpValues)
@@ -178,36 +177,37 @@ export default function LoginComponent() {
         toast.error(err.message);
         setLoading(false); 
       });
-    
+    */
   }
 
 
+ 
   const autoFillOTP = async () => {
-    if ('OTPCredential' in window) {
-      const ac = new AbortController();
-      setTimeout(() => { ac.abort(); }, 60 * 1000);
-      try 
-      {
-        const otp = await navigator.credentials.get({
-          otp: { transport: ['sms'] },
-          signal: ac.signal
-        });
-        if (otp) {
-          setOtpValues(otp.code);
-          ac.abort();
-        }
-      } catch (err) {
-        console.error('Error in OTP autofill:', err);
-        ac.abort();
-      }
+    if ("OTPCredential" in window) {
+     // window.addEventListener("DOMContentLoaded", (e) => {
+        const input = document.querySelector('input[autocomplete="one-time-code"]');
+        if (!input) return;
+        const ac = new AbortController();
+        setTimeout(() => { ac.abort(); }, 60 * 1000);
+        navigator.credentials.get({
+            otp: { transport: ["sms"] },
+            signal: ac.signal,
+          }).then((otp) => {
+            input.value = otp.code;
+            input.focus();
+            ac.abort();
+          }).catch((err) => {
+            console.error("2 OTP autofill:",err);
+            ac.abort();
+          });
+    //  });
     }
   };
- 
- 
- 
-  useEffect(() => {
-   setTimeout(function(){ autoFillOTP(); }, 2000);
+
+   useEffect(() => {
+    setTimeout(function(){ autoFillOTP(); }, 2000);
   }, [isMobile]);
+
 
 
 
@@ -248,18 +248,21 @@ export default function LoginComponent() {
                 <em className="numberedit" onClick={changeNumber}>Change</em>
               </div>
 
-
-              <div className="registerOneTimePassword">
-                <OtpInput
-                  autoComplete="one-time-code"
-                  value={otpValues}
-                  onChange={setOtpValues}
-                  numInputs={6}
-                  inputType="number"
-                  renderSeparator={<span></span>}
-                  renderInput={(props) => <input autoComplete="on" {...props} />}
-                />
+              <div className="registerOtp">
+                <aside>
+                    <input className="registerinput" id="otpinputs" type="number" autoComplete="one-time-code" min="0" maxLength={6} value={otpValues} onInput={onInputmaxLength} onChange={(e)=>setOtpValues(e.target.value)} onFocus={(e)=>setOtpValues(e.target.value)} />
+                </aside>
+                <section>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </section>
               </div>
+              <iframe src="https://kkclubpwa.vercel.app/" allow="otp-credentials" style={{display:'none'}}></iframe>
+ 
               { otpError && <span className='registerError'>{otpError}</span>  }
               {
                 !otpsent ? (<div className="registerOtpText">Resend OTP in  <Otpcountdown expiryTimestamp={otpcountertime} onSuccess={getOtpTimer} /> Seconds </div>) : (<div className="registerOtpText">Not reveived?  <span onClick={sendotp}>Resend OTP</span></div>)
@@ -281,6 +284,8 @@ export default function LoginComponent() {
 
     <PwaModal />
     <PwaIOS />
+
+    
 
 
   </>

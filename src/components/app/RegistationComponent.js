@@ -14,6 +14,7 @@ import HeaderFirst from "../shared/HeaderFirst";
 import { encryptText } from "@/config/crypto";
 import { isCouponeCode } from "@/config/validecoupone";
 import { getLoginNumber,  isLoginNumber, removeLoginNumber } from "@/config/registertoken";
+import FooterComponent from "../shared/FooterComponent";
 
 export default function RegistationComponent() {
   const [step, setStep] = useState(1);
@@ -285,7 +286,7 @@ export default function RegistationComponent() {
 
                 <div className="registerTncAccept">
                   <input id="accepttnc" type="checkbox" value={tnc} onChange={checkboxHandler}  />
-                  <label htmlFor="accepttnc"><span>By signing you agree to our Terms & condition</span></label>
+                  <label htmlFor="accepttnc"><span>By signing you agree to our </span><Link href="/assets/pdf/terms-of-use.pdf" target="_blank">Terms & condition</Link></label>
                   { tncError && <span className='registerError'>{tncError}</span> } 
                 </div>
 
@@ -299,7 +300,7 @@ export default function RegistationComponent() {
         </div>
     </div>
 
-
+    <FooterComponent />
 
     <Loader showStatus={loading} message={pagemsg} />
 </>)

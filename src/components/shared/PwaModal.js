@@ -4,19 +4,21 @@ import { useState, useEffect } from "react";
 import { toast } from 'react-toastify';
 import { motion } from "framer-motion";
 import { setPwaPropt, isPwaPropt } from '@/config/pwa';
- 
+import { isMobile } from 'react-device-detect';
+
  
 
 export default function PwaModal() {
     const[installModal, setInstallModal] = useState(false);
     const[pmtEvt, setPmtEvt] = useState(null);
     const lastPrompt = isPwaPropt();
-    
+ 
     useEffect(()=> {
+     // console.log(isMobile, !window.matchMedia('(display-mode:standalone)').matches)
         const handalbeforeinstallprompt = (evt) => {
           evt.preventDefault();
           setPmtEvt(evt);
-          if(!window.matchMedia('(display-mode:standalone)').matches)
+          if(isMobile && !window.matchMedia('(display-mode:standalone)').matches)
           {
             setInstallModal(true);
           }

@@ -2,6 +2,7 @@
 import Link from "next/link";
 import Image from 'next/image';
 import HeaderFirst from "../shared/HeaderFirst";
+import FooterComponent from "../shared/FooterComponent";
 export default function NotFoundComponents() {
 
   return (
@@ -18,6 +19,8 @@ export default function NotFoundComponents() {
 
         </div>
       </div>
+
+    <FooterComponent />
     </>
   )
 }

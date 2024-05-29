@@ -9,6 +9,7 @@ import { _get } from "@/config/apiClient";
 import { toast } from 'react-toastify';
 import TotalRedeemedPoints from '../shared/totalredemption';
 import HeaderDashboard from '../shared/HeaderDashboard';
+import FooterComponent from '../shared/FooterComponent';
  
 
 export default function RedemptionhistoryComponemt () {
@@ -164,6 +165,8 @@ export default function RedemptionhistoryComponemt () {
       </div>
     </div> 
 
+
+    <FooterComponent />
 
 
     <Loader showStatus={loading} message={pagemsg} /> 

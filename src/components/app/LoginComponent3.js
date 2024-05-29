@@ -11,7 +11,6 @@ import { encryptText } from "@/config/crypto";
 import Otpcountdown from "../core/timer";
 import { _get } from "@/config/apiClient";
 import HeaderFirst from "../shared/HeaderFirst";
-import OtpInput from 'react-otp-input';
 import PwaModal from "../shared/PwaModal";
 import PwaIOS from "../shared/PwaIOS";
 import { isCouponeCode } from "@/config/validecoupone";
@@ -20,7 +19,7 @@ import FooterComponent from "../shared/FooterComponent";
 
  
  
-export default function LoginComponent() {  
+export default function LoginComponent3() {  
   const [pagemsg, setPagemsg] = useState('');
     const[loading, setLoading] = useState(false);
     const [mobileValues, setMobileValues] = useState('');
@@ -157,8 +156,8 @@ export default function LoginComponent() {
  
 
   const verifyotp = () => {
-    // loginnow(); // tesing
-    
+     loginnow(); // tesing
+      /*
       setLoading(true);
       setPagemsg('Verifying OTP');
       _get("Sms/VerifyOTP?&mobile="+mobileValues+"&otp="+otpValues)
@@ -178,9 +177,8 @@ export default function LoginComponent() {
         toast.error(err.message);
         setLoading(false); 
       });
-    
+      */
   }
-
 
   const autoFillOTP = async () => {
     if ('OTPCredential' in window) {
@@ -193,21 +191,21 @@ export default function LoginComponent() {
           signal: ac.signal
         });
         if (otp) {
-          setOtpValues(otp.code);
-          ac.abort();
+            document.getElementById("otpinputs").value = otp.code;
+            document.getElementById("otpinputs").focus();
+            ac.abort();
         }
       } catch (err) {
-        console.error('Error in OTP autofill:', err);
+        console.error('3 OTP autofill:', err);
         ac.abort();
       }
     }
   };
  
- 
- 
   useEffect(() => {
    setTimeout(function(){ autoFillOTP(); }, 2000);
   }, [isMobile]);
+
 
 
 
@@ -248,18 +246,20 @@ export default function LoginComponent() {
                 <em className="numberedit" onClick={changeNumber}>Change</em>
               </div>
 
-
-              <div className="registerOneTimePassword">
-                <OtpInput
-                  autoComplete="one-time-code"
-                  value={otpValues}
-                  onChange={setOtpValues}
-                  numInputs={6}
-                  inputType="number"
-                  renderSeparator={<span></span>}
-                  renderInput={(props) => <input autoComplete="on" {...props} />}
-                />
+              <div className="registerOtp">
+                <aside>
+                    <input className="registerinput" id="otpinputs" type="number" autoComplete="one-time-code" min="0" maxLength={6} value={otpValues} onInput={onInputmaxLength} onChange={(e)=>setOtpValues(e.target.value)} onFocus={(e)=>setOtpValues(e.target.value)} />
+                </aside>
+                <section>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </section>
               </div>
+
               { otpError && <span className='registerError'>{otpError}</span>  }
               {
                 !otpsent ? (<div className="registerOtpText">Resend OTP in  <Otpcountdown expiryTimestamp={otpcountertime} onSuccess={getOtpTimer} /> Seconds </div>) : (<div className="registerOtpText">Not reveived?  <span onClick={sendotp}>Resend OTP</span></div>)

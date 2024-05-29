@@ -14,6 +14,7 @@ import { _get } from "@/config/apiClient";
 import PwaModal from "../shared/PwaModal";
 import PwaIOS from "../shared/PwaIOS";
 import Link from 'next/link';
+import FooterComponent from '../shared/FooterComponent';
 
  
 const DashboardComponent = () => {
@@ -146,6 +147,8 @@ const DashboardComponent = () => {
 
       </div>
     </div> 
+
+    <FooterComponent />
 
     <Loader showStatus={loading}  message={pagemsg} />                       
     <PwaModal />

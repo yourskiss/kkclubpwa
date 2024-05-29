@@ -141,7 +141,7 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 .outsiderewads { width: 100%; min-height:100vh; float: left; padding:0;   background-image: url('../images/design_bott_part.png'); background-repeat: no-repeat; background-position: center top -70px; background-size: 100% auto;  }
 
 
-.screenmain { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; width: 100%; min-height:calc(100vh - 120px); float: left; background-color: #191919; padding:2rem 3rem 5rem 3rem; box-sizing: border-box; }
+.screenmain { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; width: 100%; min-height:calc(100vh - 160px); float: left; background-color: #191919; padding:2rem 3rem 5rem 3rem; box-sizing: border-box; }
 .screenmain.screendashboard { min-height: auto; background-color:transparent;  background: url('../images/dashboard_bg.png') no-repeat center top; background-size:100% 70%;  }
 .screenmain.screendashboardbottom { padding-top: 0 !important; min-height: auto; }
 .screenmain.screenqrcode { position: relative; padding-top: 0 !important; padding-bottom: 150px !important; background-color:transparent; background-image:url('../images/scanbg.png'); background-repeat:no-repeat; background-position:center bottom; background-size:100% auto;  }
@@ -193,6 +193,15 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
  .notificationText { width: auto; float: left; margin: 0 0 0 1rem; text-align: left; text-transform: none; font-weight: 500; color:#fff; font-size: 24px; }
 
  
+
+/* ################### footersection ################### */
+.footersection {  width: 100%; max-width: 1024px; height: 40px; float: left; padding:0 3rem; background-color:#191919; display: flex; justify-content: center; align-items: center;  }
+.footersection p { width: 100%; float: left; margin:0; padding:0; text-align: center;  padding: 0; font-weight: 500; color: #a5a5a5; font-size:12px; }
+.footersection p a { text-decoration: none;  color: #a5a5a5; transition: all 0.5s ease-out;  }
+.footersection p a:hover { color: #fff; text-decoration:underline; transition: all 0.5s ease-in; }
+
+
+
 /* ################### register ################### */
 .registerHead { width: 100%; float: left; margin: 0 0 1.5rem 0; text-align: left; text-transform: none;  font-weight: bold; color:#F5F0EB; font-size:30px; font-family: var(--font-lneue);   }
 .registerSmallHead { margin:0 0 1rem 0; padding: 0; width: 100%; float: left; text-align: left; text-transform: none; font-weight: 500; color: rgba(245, 240, 235,0.6); font-size: 18px;   }
@@ -230,10 +239,10 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
  .registerTncAccept label:before { content: ""; padding: 0; margin: 0;  background:none; border-radius:0; height: 16px; width: 16px;  border:solid 2px rgba(245, 240, 235, 0.8); }
  .registerTncAccept label:after { opacity:0.1; content: ""; z-index: 2; position:absolute; left: 4px; top:2px; transform: rotate(-45deg); padding: 0; margin: 0;  background:none; border-radius:0; height:6px; width: 16px;  border-left:solid 3px #AFCDAF; border-bottom: solid 3px #AFCDAF; }
  .registerTncAccept label span { margin-left: 0.5rem; }
- .registerTncAccept input[type="checkbox"]:checked + label { color:#AFCDAF; }
 .registerTncAccept input[type="checkbox"]:checked + label:before{ border-color:#AFCDAF; }
 .registerTncAccept input[type="checkbox"]:checked + label:after{  opacity:1; }
-
+.registerTncAccept label a { margin-left: 0.5rem; text-decoration: none; color:rgba(245, 240, 235, 0.8); }
+.registerTncAccept label a:hover{ text-decoration: underline; color:#AFCDAF;  }
 
 .registerSubmit { margin-top:2rem;  float: left;  width: 100%;  text-align: center;}
 .register_button { width: 100%; display: inline-block;  margin: 0 auto;  padding:1.1rem 2.5rem; box-sizing: border-box; text-align: center;  background:#F5F0EB;  font-weight: 700;  font-size: 18px;  color:#191919;  border: solid 2px #414141; transition: all 0.5s ease-out;  border-radius: 0;  text-decoration: none;   cursor: pointer; outline: none; text-transform: uppercase; }
@@ -249,9 +258,29 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 .registerLineText { margin:1rem 0 0.5rem 0; width: 100%; float: left; text-align: left; text-transform: none;  font-weight: 500; color: rgba(245, 240, 235,0.6);  font-size:16px;  }
 
 .registerOtp {float: left; width: 100%; margin:3rem 0 0 0; padding: 0; text-align: left; }
-.registerOtp div { width: 270px; height: 45px; margin: 0; float: left; padding: 0; display:block; overflow: hidden; }
+/* .registerOtp div { width: 270px; height: 45px; margin: 0; float: left; padding: 0; display:block; overflow: hidden; }
 .registerOtp aside { left: 0; position: sticky; }
-.registerOtp aside input { margin: 0; padding:0; text-indent: 15px; letter-spacing:33px; border: 0; outline: none; width: 320px; min-width: 320px;  background: none; background-image: linear-gradient(to left, #F5F0EB 80%, rgba(222, 222, 222, 0) 0%);background-position: bottom; background-size:45px 3px;background-repeat: repeat-x;background-position-x:40px; text-align: left; font-size:24px; line-height: 36px; font-weight: bold;  color: #F5F0EB; box-sizing: border-box; }
+.registerOtp aside input { margin: 0; padding:0; text-indent: 15px; letter-spacing:33px; border: 0; outline: none; width: 320px; min-width: 320px;  background: none; background-image: linear-gradient(to left, #F5F0EB 80%, rgba(222, 222, 222, 0) 0%);background-position: bottom; background-size:45px 3px;background-repeat: repeat-x;background-position-x:40px; text-align: left; font-size:24px; line-height: 36px; font-weight: bold;  color: #F5F0EB; box-sizing: border-box; } */
+
+.registerOtp aside {
+  border: none;
+  font-size: 20px;
+  font-weight: 500;
+  margin: 0;
+  padding: 0;
+  width: 270px;
+  background-color: transparent;
+}
+
+.registerOtp aside input { padding: 0; width: 115%;  height: 35px; border: none; outline: none !important;  letter-spacing: 35px; text-decoration: solid; background-color: transparent; caret-color: transparent; text-align: left; text-indent: 10px; font-size: 24px; line-height: 1; font-weight: bold; color: #fff; }
+.registerOtp aside input:focus { outline: none !important; color:#a8c4a8;}
+.registerOtp aside input:selection { color: #a8c4a8;}
+
+.registerOtp section { float: left; margin: 0; padding: 0; width: 270px; height: 2px; display: flex; align-items: center; justify-content: space-between;}
+.registerOtp section span { float: left; margin: 0; padding: 0; width: 30px; height: 2px;  background-color: #F5F0EB; }
+.registerOtp section span.active { background-color: #a8c4a8; }
+
+
 
 .registerOneTimePassword {float: left; width: 100%; margin:3rem 0 0 0; padding: 0; text-align: left; }
 .registerOneTimePassword div {float: left; width: 100%; display: flex; justify-content: flex-start; align-items: flex-start; }
@@ -482,7 +511,7 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 .earnepoints_scan p { display: block; width: 100%; float: left; margin:0; padding:1rem 0 0 0; text-align: center;  font-weight: 600; color: #fff; font-size:20px;  font-family: var(--font-lneue);  }
 
 /* ################### profilecontainer ################### */
-.screenmain.screenprofile { position: relative; background-color:transparent;  background-image:url('../images/design_top.png'); background-repeat:no-repeat; background-position:center bottom -450px;  background-size:100% auto; align-items: flex-start; padding:0 0 150px 0;  }
+.screenmain.screenprofile { position: relative; background-color:transparent;  background-image:url('../images/design_top.png'); background-repeat:no-repeat; background-position:center bottom -450px;  background-size:100% auto; align-items: flex-start; padding:0 0 150px 0;    }
 .profile_status { width: 100%; float: left; margin:0; padding:3rem; display: flex; justify-content:space-between; align-items: center; background-image:url('../images/dashboard_bg.png'); background-repeat:no-repeat; background-position: center bottom;  background-size:100% 100%; }
 .profile_status dl {  width: 100%; float: left; margin:0; padding: 0; display: flex; justify-content:flex-start; align-items:center; }
 .profile_status dl dt { display: inline-block; width:120px; height: 120px; border-radius: 50%;  margin: 0 1.5rem 0 0; padding:0.5rem; border: none;   }
@@ -603,7 +632,7 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 
 
 /* ################### screen ################### */
-.screenmain { min-height:calc(100vh - 100px); padding:2px 2em 4rem 2rem;  }
+.screenmain { min-height:calc(100vh - 140px); padding:2px 2em 4rem 2rem;  }
 .screenmain.screendashboardbottom { padding-top: 0 !important; }
 
 
@@ -619,6 +648,10 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 .header_scanqrcode { width: 25px;  margin: 0 1rem 0 0;  }
 .header_notification { width: 20px; margin: 0 1rem 0 0;   }
  
+
+/* ################### footersection ################### */
+.footersection { padding:0 2rem;   }
+
 
 /* ################### approvalcontainer ################### */
 .approvalcontainer dl dt { width: 80px; padding: 0; }
@@ -770,13 +803,17 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 {
  
 /* ################### screen ################### */
-.screenmain { min-height:calc(100vh - 90px); padding:1px 1rem 2rem 1rem;  }
+.screenmain { min-height:calc(100vh - 130px); padding:1px 1rem 2rem 1rem;  }
 .screenmain.screendashboardbottom { padding-top: 0 !important; }
 
 
 /* ################### headersection ################### */
 .headersection { padding:0 1rem; height: 90px; }
 .header_menu:after { right: 15%; }
+
+ 
+/* ################### footersection ################### */
+.footersection { padding:0 1rem;  }
 
 
 /* ################### dashboard ################### */

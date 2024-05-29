@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react';
 import { motion } from "framer-motion";
 import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 import { setPwaIos, isPwaIos } from '@/config/pwa';
- 
+import { isMobile } from 'react-device-detect';
+
 export default function PwaIOS () {
   const [shouldShowPrompt, setShouldShowPrompt] = useState(false);
 
@@ -11,11 +12,11 @@ export default function PwaIOS () {
   useEffect(() => {
     const getAgent = window.navigator.userAgent.toLowerCase();
     const isIOS =  /iphone|ipad|ipod/.test(getAgent);
-    const installedPwa =  'standalone' in window.navigator && window.navigator.standalone === true;
+    const installedPwa = 'standalone' in window.navigator && window.navigator.standalone === true;
     const standalonePwa = window.matchMedia('(display-mode: standalone)').matches;
     const promptPwa = isPwaIos();  
-   // console.log(isIOS , standalonePwa , installedPwa , promptPwa)
-    if(isIOS && !standalonePwa && !installedPwa && !promptPwa) 
+   // console.log(isIOS , isMobile, standalonePwa , installedPwa , promptPwa)
+    if(isIOS && isMobile && !standalonePwa && !installedPwa && !promptPwa) 
     {
       setShouldShowPrompt(true);
     }
