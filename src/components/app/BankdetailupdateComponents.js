@@ -306,7 +306,7 @@ const savebankdetail = () =>
 
                 
                 { step === 4 && <>
-                  { infobank  && <>
+                  { infobank  ? <>
                   <div className='bankinfo'>
                       <h4>
                           <Image src="/assets/images/icon_bank.png" width={25} height={25} quality={99} alt={bankname} />
@@ -314,18 +314,34 @@ const savebankdetail = () =>
                         </h4>
                         <h5>IFSC: {ifsccode}</h5>
                         <h6>A/c: {accountnumber}</h6> 
-                        <aside onClick={(e)=>stepHandler('bank')} title="Edit">Edit</aside>
+                        <aside onClick={()=>stepHandler('bank')} title="Edit">Edit</aside>
+                  </div>
+                  </>: <>
+                  <div className='bankinfo'>
+                    <h4>
+                        <Image src="/assets/images/icon_bank.png" width={25} height={25} quality={99} alt={bankname} />
+                        <small>Bank Details Not Added</small>
+                    </h4>
+                    <aside  onClick={()=>stepHandler('bank')} title="Edit">Add Bank Info</aside>
                   </div>
                   </>}
 
 
-                  { infoupi && <>
+                  { infoupi ? <>
                   <div className='bankinfo'>
                      <h4>
                           <Image src="/assets/images/icon_upi.png" width={25} height={25} quality={99} alt={upicode} />
                           <span>{upicode}</span>
                       </h4>
-                    <aside  onClick={(e)=>stepHandler('upi')} title="Edit">Edit</aside>
+                    <aside  onClick={()=>stepHandler('upi')} title="Edit">Edit</aside>
+                  </div>
+                  </> : <>
+                  <div className='bankinfo'>
+                    <h4>
+                        <Image src="/assets/images/icon_upi.png" width={25} height={25} quality={99} alt={upicode} />
+                        <small>UPI ID Not Added</small>
+                    </h4>
+                    <aside  onClick={()=>stepHandler('upi')} title="Edit">Add UPI ID</aside>
                   </div>
                   </>}
 
