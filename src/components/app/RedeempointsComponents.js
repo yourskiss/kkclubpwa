@@ -10,6 +10,7 @@ import { _get } from "@/config/apiClient";
 import { getUserID } from '@/config/userauth';
 import Loader from '../shared/LoaderComponent';
 import HeaderDashboard from '../shared/HeaderDashboard';
+import FooterComponent from '../shared/FooterComponent';
 
 export default function RedeempointsComponents() {
     const [pagemsg, setPagemsg] = useState('');
@@ -69,6 +70,9 @@ export default function RedeempointsComponents() {
         </div>
 
     </div>
+
+
+    <FooterComponent />
 
    <Loader showStatus={loading} message={pagemsg} />  
 </>)
