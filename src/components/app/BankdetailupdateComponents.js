@@ -112,8 +112,8 @@ const handleBankInfo = (e) => {
       setErrorIfsc('');
       setErrorAc('');
       setInfobank(true); 
-      setOption('upi');
-      setStep(2);
+      setOption('review');
+      setStep(4);
     }
 }
 const handleUpiId = (e) => {
@@ -122,8 +122,8 @@ const handleUpiId = (e) => {
   else { 
     setErrorUpi('');
     setInfoupi(true);
-    setOption('personal');
-    setStep(3);
+    setOption('review');
+    setStep(4);
   }
 }
 const handlePersonal= (e) => {
