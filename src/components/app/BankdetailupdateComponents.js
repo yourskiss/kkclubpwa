@@ -259,8 +259,8 @@ const savebankdetail = () =>
                       {errorAc && <span>{errorAc}</span> }
                   </div>
                   <div className="bankInfoField">
-                    <button>Next</button>
-                    <aside onClick={bankSkipHandal}>Skip</aside>
+                    <button className='bankinfobtn'>Next</button>
+                    {/* <aside onClick={bankSkipHandal}>Skip</aside> */}
                   </div>
                 </form> }
 
@@ -272,8 +272,8 @@ const savebankdetail = () =>
                       {errorUpi && <span>{errorUpi}</span>}
                   </div>
                   <div className="bankInfoField">
-                    <button>Next</button>
-                    {infobank ? <aside onClick={upiSkipHandal}>Skip</aside> : <aside onClick={()=>stepHandler('bank')}>Back</aside>}
+                    <button className='bankinfobtn'>Next</button>
+                    {/* {infobank ? <aside onClick={upiSkipHandal}>Skip</aside> : <aside onClick={()=>stepHandler('bank')}>Back</aside>} */}
                   </div>
                 </form> }
  
@@ -299,8 +299,8 @@ const savebankdetail = () =>
                       {errorPan && <span>{errorPan}</span>}
                   </div>
                   <div className="bankInfoField">
-                  <button>NEXT & REVIEW</button>
-                    <aside onClick={()=>stepHandler('upi')}>Back</aside>
+                  <button className='bankinfobtn'>NEXT</button>
+                    {/* <aside onClick={()=>stepHandler('upi')}>Back</aside> */}
                   </div>
                 </form> }
 
