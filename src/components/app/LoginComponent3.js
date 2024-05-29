@@ -47,7 +47,7 @@ export default function LoginComponent2() {
 
     <div className='screenmain'>
       <section className="screencontainer">
-        { !isMobile ? <LoginPart3 isMobStatus={isMobStatus} getMobNumber={getMobNumber} /> :  <OtpPart3 isMobStatus={isMobStatus} getMobNumber={getMobNumber} phonenumber={phonenumber} /> }
+        { !isMobile ? <LoginPart3 isMobStatus={isMobStatus} getMobNumber={getMobNumber} phonenumber={phonenumber} /> :  <OtpPart3 isMobStatus={isMobStatus} getMobNumber={getMobNumber} phonenumber={phonenumber} /> }
       </section>
     </div>
 

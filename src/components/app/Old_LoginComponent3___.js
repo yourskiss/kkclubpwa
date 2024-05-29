@@ -19,7 +19,7 @@ import FooterComponent from "../shared/FooterComponent";
 
  
  
-export default function LoginComponent3() {  
+export default function LoginComponent_____XXXXX33333() {  
   const [pagemsg, setPagemsg] = useState('');
     const[loading, setLoading] = useState(false);
     const [mobileValues, setMobileValues] = useState('');

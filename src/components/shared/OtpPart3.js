@@ -47,6 +47,7 @@ export default function OtpPart3({isMobStatus, getMobNumber, phonenumber}) {
   const changeNumber = (e) => {
     e.preventDefault();
     isMobStatus(false);
+    getMobNumber(phonenumber);
   }
 
 
@@ -133,10 +134,10 @@ export default function OtpPart3({isMobStatus, getMobNumber, phonenumber}) {
       }
       else
       {
-        setLoginNumber(mobileValues);
+        setLoginNumber(phonenumber);
         push('/register');
       }
-      setLoading(false);
+      setTimeout(function(){ setLoading(false); },2000);
     })
     .catch(error => {
       console.log("catch loginnow");

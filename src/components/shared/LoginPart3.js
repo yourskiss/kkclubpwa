@@ -4,10 +4,10 @@ import { _get } from "@/config/apiClient";
 import { toast } from 'react-toastify';
 import Loader from "../shared/LoaderComponent";
 
-export default function LoginPart3({isMobStatus, getMobNumber}) {
+export default function LoginPart3({isMobStatus, getMobNumber, phonenumber}) {
   const [pagemsg, setPagemsg] = useState('');
   const[loading, setLoading] = useState(false);
-  const [mobileValues, setMobileValues] = useState('');
+  const [mobileValues, setMobileValues] = useState(phonenumber || '');
   const [mobileError, setMobileError] = useState('');
 
   const mobileChange = (e) =>{setMobileValues(e.target.value); setMobileError(""); }

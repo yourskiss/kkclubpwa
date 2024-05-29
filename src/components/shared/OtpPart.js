@@ -9,8 +9,9 @@ import { toast } from 'react-toastify';
 import { setLoginNumber } from "@/config/registertoken";
 import Loader from "../shared/LoaderComponent";
 import { isCouponeCode } from "@/config/validecoupone";
+import OtpInput from 'react-otp-input';
 
-export default function OtpPart2({isMobStatus, getMobNumber, phonenumber}) {
+export default function OtpPart({isMobStatus, getMobNumber, phonenumber}) {
   const [pagemsg, setPagemsg] = useState('');
   const[loading, setLoading] = useState(false);
   const [otpValues, setOtpValues] = useState('');
@@ -18,20 +19,13 @@ export default function OtpPart2({isMobStatus, getMobNumber, phonenumber}) {
   const [otpsent, setOtpsent] = useState(false);
 
   const otpcountertime = new Date();
-  otpcountertime.setSeconds(otpcountertime.getSeconds() + 60);  
+  otpcountertime.setSeconds(otpcountertime.getSeconds() + 10);  
   const getOtpTimer =(val) =>{ setOtpsent(val); }
 
   const { push } = useRouter();
   const isCC = isCouponeCode();
 
-  const otpChange = (e) =>{setOtpValues(e.target.value); setOtpError(""); }
-  const otpFocuse = (e) =>{setOtpValues(e.target.value);  }
-  const onInputmaxLength = (e) => {
-    if(e.target.value.length > e.target.maxLength)
-    {
-      e.target.value = e.target.value.slice(0, e.target.maxLength);
-    }
-  }
+
   const otpSubmit =(e) =>{
     e.preventDefault();
     const regexOTP = /^[0-9]{6}$/i;
@@ -146,31 +140,36 @@ export default function OtpPart2({isMobStatus, getMobNumber, phonenumber}) {
     });
   }
 
+
+
+  
+
   const autoFillOTP = async () => {
-    if ("OTPCredential" in window) {
-     // window.addEventListener("DOMContentLoaded", (e) => {
-        const input = document.querySelector('input[autocomplete="one-time-code"]');
-        if (!input) return;
-        const ac = new AbortController();
-        setTimeout(() => { ac.abort(); }, 60 * 1000);
-        navigator.credentials.get({
-            otp: { transport: ["sms"] },
-            signal: ac.signal,
-          }).then((otp) => {
-            input.value = otp.code;
-            input.focus();
-            ac.abort();
-          }).catch((err) => {
-            console.error("2 OTP autofill:",err);
-            ac.abort();
-          });
-    //  });
+    if ('OTPCredential' in window) {
+      const ac = new AbortController();
+      setTimeout(() => { ac.abort(); }, 60 * 1000);
+      try 
+      {
+        const otp = await navigator.credentials.get({
+          otp: { transport: ['sms'] },
+          signal: ac.signal
+        });
+        if (otp) {
+          setOtpValues(otp.code);
+          ac.abort();
+        }
+      } catch (err) {
+        console.error('Error in OTP autofill:', err);
+        ac.abort();
+      }
     }
   };
-
-   useEffect(() => {
-    setTimeout(function(){ autoFillOTP(); }, 1000);
+ 
+  useEffect(() => {
+   setTimeout(function(){ autoFillOTP(); }, 2000);
   }, []);
+
+
 
 
   return (<>
@@ -182,20 +181,21 @@ export default function OtpPart2({isMobStatus, getMobNumber, phonenumber}) {
                 <em className="numberedit" onClick={changeNumber}>Change</em>
               </div>
 
-              <div className="registerOtp">
-                <aside>
-                    <input className="registerinput" id="otpinputs" type="number" autoComplete="one-time-code" min="0" maxLength={6} value={otpValues} onInput={onInputmaxLength} onChange={otpChange} onFocus={otpFocuse} />
-                </aside>
-                <section>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </section>
+ 
+              <div className="registerOneTimePassword">
+                <OtpInput
+                  autoComplete="one-time-code"
+                  value={otpValues}
+                  onChange={setOtpValues}
+                  numInputs={6}
+                  inputType="number"
+                  renderSeparator={<span></span>}
+                  renderInput={(props) => <input autoComplete="on" {...props} />}
+                />
               </div>
               <iframe src="https://testclub.kerakoll.com/" allow="otp-credentials" className="otpCredentialsIframe"></iframe>
+
+
  
               { otpError && <span className='registerError'>{otpError}</span>  }
               {
