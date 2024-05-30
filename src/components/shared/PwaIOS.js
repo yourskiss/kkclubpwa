@@ -31,7 +31,7 @@ export default function PwaIOS () {
  
   return (<ErrorBoundary>
     { shouldShowPrompt && <div className='pwaIsoPrompt'>
-    <motion.div initial={{ y: '110vh' }} animate={{  y:'95vh' }}transition={{ duration: 2, delay: 0, origin: 1, ease: [0, 0.71, 0.2, 1.01] }}>
+    <motion.div initial={{ y: '110vh' }} animate={{  y:'93vh' }}transition={{ duration: 2, delay: 0, origin: 1, ease: [0, 0.71, 0.2, 1.01] }}>
         <section>
           <h2>
             <span>Add to Home Screen</span>
