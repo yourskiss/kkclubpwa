@@ -19,7 +19,7 @@ export default function OtpPart({isMobStatus, getMobNumber, phonenumber}) {
   const [otpsent, setOtpsent] = useState(false);
 
   const otpcountertime = new Date();
-  otpcountertime.setSeconds(otpcountertime.getSeconds() + 10);  
+  otpcountertime.setSeconds(otpcountertime.getSeconds() + 60);  
   const getOtpTimer =(val) =>{ setOtpsent(val); }
 
   const { push } = useRouter();
