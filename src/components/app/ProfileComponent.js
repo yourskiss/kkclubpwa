@@ -5,7 +5,6 @@ import CountUp from 'react-countup';
 import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
 import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
-// import ProgressComponent from "../shared/ProgressComponent";
 import { getUserID, removeUserToken } from '@/config/userauth';
 import { _get } from "@/config/apiClient";
 import { motion } from "framer-motion";
@@ -16,19 +15,25 @@ import {  isUserToken } from "@/config/userauth";
 
 export default function ProfileComponent() {
   const [mounted, setMounted] = useState(true);
+  const [userstatus, setUserstatus] = useState('');
+  const [usershort, setUsershort] = useState('');
+  const [username, setUsername] = useState('');
+
   const rewardspoints = parseInt(TotalrewardpointsComponent());
-  // const profileProgress = ProgressComponent();
   const redeemminimumpoint = parseInt(process.env.NEXT_PUBLIC_REDEEM_MIN_POINT);
   const userid = getUserID();
   const [resultcode, setResultcode] = useState('');
-  const userstatus = getUserStatus();
-  const usershort = getUserShort();
-  const username = getUserName();
   const Router = useRouter();
   const userToken   =  isUserToken();
+  const gtUST = getUserStatus();
+  const gtUNM = getUserName();
+  const gtUSN = getUserShort();
  
   useEffect(() => {
     if(!userToken) { Router.push("/login"); return  }
+    setUserstatus(gtUST);
+    setUsershort(gtUSN);
+    setUsername(gtUNM);
   }, []);
 
 
@@ -101,8 +106,6 @@ const backbuttonHandal = () => {
                   <dd>
                     <h2>{username}</h2>
                     <p><b>Status:</b> <span>{userstatus}</span></p>
-                    {/* <p><b>PROFILE PROGRESS</b> - <CountUp duration={2} start={0}  delay={1}  end={profileProgress} />%</p> */}
-                    {/* <h3><span style={{'width':`${profileProgress}%`}}></span></h3> */}
                   </dd>
                 </dl>
                 <aside onClick={()=> Router.push('/update-profile')}>Edit</aside>

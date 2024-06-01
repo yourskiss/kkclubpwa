@@ -13,19 +13,19 @@ const removeUserInfo = () => {
 const getUserStatus = () => {
     if (typeof localStorage !== 'undefined') 
     {
-      return localStorage.getItem('verificationstatus')
+      return localStorage.getItem('verificationstatus');
     } 
 }
 const getUserName = () => {
     if (typeof localStorage !== 'undefined') 
     {
-      return localStorage.getItem('userprofilename')
+      return localStorage.getItem('userprofilename');
     } 
 }
 const getUserShort = () => {
     if (typeof localStorage !== 'undefined') 
     {
-      return localStorage.getItem('userprofilesn')
+      return localStorage.getItem('userprofilesn');
     } 
 }
  

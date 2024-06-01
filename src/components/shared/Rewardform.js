@@ -17,7 +17,8 @@ export default function Rewardform() {
     const [userOrderID, setUserOrderID] = useState('');
     const[redeempoint, setRedeempoint] = useState(''); 
     const[errorMsg, setErrorMsg] = useState(''); 
-    const userstatus = getUserStatus();
+    const[userstatus, setUserstatus] = useState('');
+    const gtUST = getUserStatus();
  
     const rewardspoints = parseInt(TotalrewardpointsComponent());
     const pointvalue = parseInt(process.env.NEXT_PUBLIC_POINT_VALUE);
@@ -28,7 +29,12 @@ export default function Rewardform() {
     const { push } = useRouter();
     const ipInfo = ipaddress();
     const osn = osname();
- 
+
+    
+    useEffect(() => {
+        setUserstatus(gtUST);
+    }, []);
+
     useEffect(() => {
         setLoading(true);
         setPagemsg('Checking pendding order');

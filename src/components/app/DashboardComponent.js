@@ -21,7 +21,8 @@ const DashboardComponent = () => {
     const [loading, setLoading] = useState(false);
     const [mounted2, setMounted2] = useState(true);
     const[productimg, setProductimg] = useState({});
-    const userstatus = getUserStatus();
+    const[userstatus, setUserstatus] = useState('');
+    const gtUST = getUserStatus();
  
     const { push } = useRouter();
     const rewardspoints = parseInt(TotalrewardpointsComponent());
@@ -31,20 +32,9 @@ const DashboardComponent = () => {
  
  
 
-  const redeemprompt = () => {
-    if(userstatus === "PENDING")
-    {
-        push("/approval");
-        return
-    }
-    if(userstatus === "APPROVE" && rewardspoints <= redeemminimumpoint)
-    {
-        toast.info(`You can redeem minimum ${redeemminimumpoint} reward points.`); 
-        return
-    }
-    push("/redeempoints");
-  }
-
+    useEffect(() => {
+      setUserstatus(gtUST);
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -63,6 +53,9 @@ const DashboardComponent = () => {
     });
   return () => { setMounted2(false); }
 }, []);
+
+
+
  
   var settingsDashboard = {
     dots: true,
@@ -81,6 +74,21 @@ const DashboardComponent = () => {
       }
     ]
   };
+
+
+  const redeemprompt = () => {
+    if(userstatus === "PENDING")
+    {
+        push("/approval");
+        return
+    }
+    if(userstatus === "APPROVE" && rewardspoints <= redeemminimumpoint)
+    {
+        toast.info(`You can redeem minimum ${redeemminimumpoint} reward points.`); 
+        return
+    }
+    push("/redeempoints");
+  }
 
  
   return (<>
