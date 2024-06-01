@@ -1,12 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
-
-
 import {isUserToken } from "@/config/userauth";
-import { isBearerToken, setBearerToken } from '@/config/bearerauth';
 import { isCouponeCode } from "@/config/validecoupone";
-
 import HeaderFirst from "../shared/HeaderFirst";
 import PwaModal from "../shared/PwaModal";
 import PwaIOS from "../shared/PwaIOS";
@@ -14,18 +10,18 @@ import FooterComponent from "../shared/FooterComponent";
 import LoginPart from "../shared/LoginPart";
 import OtpPart from "../shared/OtpPart";
 
- 
+
 
 export default function LoginComponent() {  
     const [isMobile, setIsMobile] = useState(false);
     const [phonenumber, setPhonenumber] = useState('');
     const userToken   =  isUserToken();
-    const bearerToken = isBearerToken();
     const isCC = isCouponeCode();
     const { push } = useRouter();
+
+
     
     useEffect(() => {
-      if(!bearerToken) { setBearerToken('in'); return  }
       if(userToken && !isCC) { push("/dashboard"); return }
       if(userToken && isCC) { push("/getcoupone"); return }
     }, []);

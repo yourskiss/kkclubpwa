@@ -1,11 +1,9 @@
 "use client";
-import Link from "next/link";
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import CountUp from 'react-countup';
 import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
-import HeaderProfile from "../shared/HeaderProfile";
 import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
 // import ProgressComponent from "../shared/ProgressComponent";
 import { getUserID, removeUserToken } from '@/config/userauth';
@@ -13,13 +11,12 @@ import { _get } from "@/config/apiClient";
 import { motion } from "framer-motion";
 import FooterComponent from "../shared/FooterComponent";
 import { getUserStatus, getUserName, getUserShort, removeUserInfo } from "@/config/userinfo";
-
+import {  isUserToken } from "@/config/userauth";
+ 
 
 export default function ProfileComponent() {
   const [mounted, setMounted] = useState(true);
-  const { push } = useRouter();
   const rewardspoints = parseInt(TotalrewardpointsComponent());
-
   // const profileProgress = ProgressComponent();
   const redeemminimumpoint = parseInt(process.env.NEXT_PUBLIC_REDEEM_MIN_POINT);
   const userid = getUserID();
@@ -27,12 +24,18 @@ export default function ProfileComponent() {
   const userstatus = getUserStatus();
   const usershort = getUserShort();
   const username = getUserName();
+  const Router = useRouter();
+  const userToken   =  isUserToken();
+ 
+  useEffect(() => {
+    if(!userToken) { Router.push("/login"); return  }
+  }, []);
 
 
   const redeemprompt = () => {
     if(userstatus === "PENDING")
     {
-      push("/approval");
+      Router.push("/approval");
       return 
     }
     if(userstatus === "APPROVE" && rewardspoints < redeemminimumpoint)
@@ -40,13 +43,13 @@ export default function ProfileComponent() {
       toast.info(`You can redeem minimum ${redeemminimumpoint} reward points.`);
       return 
     }
-    push("/redeempoints");
+    Router.push("/redeempoints");
   }
 
   const logoutnow = () => {
     removeUserInfo();
     removeUserToken();
-    push("/login") ;
+    Router.push("/login") ;
     toast.success('Logout Successfully.'); 
 }
 
@@ -66,9 +69,24 @@ useEffect(() => {
   return () => { setMounted(false); }
 }, [resultcode]);
 
+
+const backbuttonHandal = () => {
+  Router.back();
+}
+
+
   return (<>
-  <motion.div initial={{ x: "100vw" }} animate={{ x:0 }} exit={{ x: "100vw" }} transition={{ duration: 1, delay: 0, origin: 1, ease: [0, 0.71, 0.2, 1.01] }}>
-    <HeaderProfile />
+  <motion.div initial={{ x: "100vw" }} animate={{ x:0 }}  transition={{ duration: 1, delay: 0, origin: 1, ease: [0, 0.71, 0.2, 1.01] }}>
+ 
+
+      <header className='headersection headerProfiles'>
+        <aside className="backarrow">
+          <Image src="/assets/images/back-arrow.png" width={65} height={24} alt="back" quality={99} onClick={backbuttonHandal} title='Back' />
+        </aside>
+        <aside className='scanqrnow'>
+            <Image src="/assets/images/QR.png" width={42} height={42} alt="scanqrcode" quality={99} onClick={() => Router.push('/scanqrcode')} title='Scan QR Code' />
+        </aside>
+      </header>
 
     
     <div className="screenmain screenprofile"> 
@@ -87,19 +105,19 @@ useEffect(() => {
                     {/* <h3><span style={{'width':`${profileProgress}%`}}></span></h3> */}
                   </dd>
                 </dl>
-                <aside onClick={()=> push('/update-profile')}>Edit</aside>
+                <aside onClick={()=> Router.push('/update-profile')}>Edit</aside>
             </div>
 
             <div className="profile_menu">
                 <ul>
                   {
-                     resultcode === 0 ? <li onClick={()=> push('/bankdetailupdate')}>UPDATE BANK DETAILS</li> : <li onClick={()=> push('/bankdetailsadd?q=0')}>ADD BANK DETAILS</li>
+                     resultcode === 0 ? <li onClick={()=> Router.push('/bankdetailupdate')}>UPDATE BANK DETAILS</li> : <li onClick={()=> Router.push('/bankdetailsadd?q=0')}>ADD BANK DETAILS</li>
                   }
                   <li onClick={redeemprompt}>
                     REWARD POINTS <em><CountUp duration={2} start={0}  delay={1}  end={rewardspoints} /> Points</em>
                   </li>
-                  <li onClick={()=> push('/rewards')}>REWARD HISTORY</li>
-                  <li onClick={()=> push('/redemptionhistory')}>REDEMPTION HISTORY</li>
+                  <li onClick={()=> Router.push('/rewards')}>REWARD HISTORY</li>
+                  <li onClick={()=> Router.push('/redemptionhistory')}>REDEMPTION HISTORY</li>
                   <li onClick={logoutnow}>SIGN OUT</li>
                 </ul>
             </div>

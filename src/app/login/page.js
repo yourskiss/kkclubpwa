@@ -5,6 +5,5 @@ export default function login() {
     <Suspense fallback={<p>...Loading</p>}>
       <LoginComponent />
     </Suspense>
-  
 )
 }

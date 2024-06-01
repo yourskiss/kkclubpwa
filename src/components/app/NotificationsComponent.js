@@ -102,12 +102,14 @@ const readNotification = (e) => {
 
   return (<>
     <motion.div initial={{ y: "-250px" }} animate={{ y:0 }} transition={{ duration:2, delay: 0, origin: 1, ease: [0, 0.71, 0.2, 1.01] }}>
+      
     <header className='headersection headerNotification'>
         <aside className="backarrow">
           <Image src="/assets/images/back-arrow.png" width={65} height={24} alt="back" quality={99} onClick={readNotification} title='Back' />
         </aside>
         <div className='head_notification'>Notifications</div>
       </header>
+
     <div className="screenmain screennotification"> 
         <div className="screencontainer">
             { loadNoti ? <Sectionloader /> : <>

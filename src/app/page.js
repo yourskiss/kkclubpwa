@@ -21,11 +21,7 @@ export default async function Home() {
 
   return (
     <Suspense fallback={<p>.</p>}>
-      <div className="videoloader">
-        <div className='videoconainer'>
-          <HomeComponent />
-      </div>
-    </div>
+      <HomeComponent />
   </Suspense> 
   );
 }

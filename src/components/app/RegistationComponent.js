@@ -9,7 +9,6 @@ import CityStateComponent from "../shared/CitystateComponent";
 import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 import { _post } from "@/config/apiClient";
 import { isUserToken, setUserCookies } from "@/config/userauth";
-import { isBearerToken, setBearerToken } from '@/config/bearerauth';
 import HeaderFirst from "../shared/HeaderFirst";
 import { encryptText } from "@/config/crypto";
 import { isCouponeCode } from "@/config/validecoupone";
@@ -52,7 +51,6 @@ export default function RegistationComponent() {
   const getLoginID = getLoginNumber();
   const isLoginID = isLoginNumber();
   const userToken =  isUserToken();
-  const bearerToken = isBearerToken();
   const { push } = useRouter();
   const isCC = isCouponeCode();
  
@@ -60,7 +58,6 @@ export default function RegistationComponent() {
  
 
  useEffect(() => {
-  if(!bearerToken) { setBearerToken('in'); return  }
   if(userToken && !isCC) { push("/dashboard"); return }
   if(userToken && isCC) { push("/getcoupone"); return }
   if(isLoginID) { setMobilenumber(getLoginID) } else { push('/login');}

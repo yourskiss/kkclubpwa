@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import {isUserToken, getUserMobile, getUserID } from '@/config/userauth';
-import { isBearerToken, setBearerToken } from '@/config/bearerauth';
 import { _get } from "@/config/apiClient";
 import { setUserInfo } from '@/config/userinfo';
  
@@ -17,14 +16,11 @@ export default  function HeaderDashboard() {
   const[notificationCount, setNotificationCount] = useState(0);
   const { push } = useRouter();
   const userToken  =  isUserToken();
-  const bearerToken = isBearerToken();
   const userMobile = getUserMobile();
   const userID = getUserID();
 
 useEffect(() => {
   if(!userToken) { push("/login"); return  }
-  if(!bearerToken) { setBearerToken('in'); return  }
-
 }, []);
 
 
