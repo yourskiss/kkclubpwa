@@ -4,12 +4,9 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { setCouponeCode, isCouponeCode } from "@/config/validecoupone";
-import { setBearerToken, isBearerToken, getBearerToken, removeBearerToken } from '@/config/bearerauth';
+import {   isBearerToken, setBearerToken  } from '@/config/bearerauth';
 import { isUserToken } from '@/config/userauth';
 
-  const apiURL = process.env.NEXT_PUBLIC_BASE_URL;
-  const apiUsername = process.env.NEXT_PUBLIC_API_USERNAME;
-  const apiPassword = process.env.NEXT_PUBLIC_API_PASSWORD;
  
 
 export default function HomeComponent() {
@@ -19,7 +16,7 @@ export default function HomeComponent() {
   const isCC = isCouponeCode();
   const isBT = isBearerToken();
   const isUT = isUserToken();
-  const getBT = getBearerToken();
+ 
 
 
  
@@ -35,19 +32,7 @@ export default function HomeComponent() {
   useEffect(() => {
     if(!isBT)
     {
-      axios({
-        method: 'post',
-        url: `${apiURL}ApiAuth/authtoken`,
-        data: JSON.stringify({ "userid": apiUsername, "password": apiPassword }), 
-        headers: {'Content-Type': 'application/json'},
-      })
-      .then(function (response) {
-          setBearerToken(response.data.token);
-          setTimeout(function() {  window.location.reload(); }, 3000);
-      })
-      .catch(function(error){
-          console.log(error);
-      })
+      setBearerToken('home');
     }
     else
     {

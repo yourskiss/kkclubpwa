@@ -9,7 +9,7 @@ import CityStateComponent from "../shared/CitystateComponent";
 import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 import { _post } from "@/config/apiClient";
 import { isUserToken, setUserCookies } from "@/config/userauth";
-import { isBearerToken } from '@/config/bearerauth';
+import { isBearerToken, setBearerToken } from '@/config/bearerauth';
 import HeaderFirst from "../shared/HeaderFirst";
 import { encryptText } from "@/config/crypto";
 import { isCouponeCode } from "@/config/validecoupone";
@@ -59,7 +59,7 @@ export default function RegistationComponent() {
  
 
  useEffect(() => {
-  if(!bearerToken) { push("/"); return  }
+  if(!bearerToken) { setBearerToken('in'); return  }
   if(userToken && !isCC) { push("/dashboard"); return }
   if(userToken && isCC) { push("/getcoupone"); return }
   if(isLoginID) { setMobilenumber(getLoginID) } else { push('/login');}

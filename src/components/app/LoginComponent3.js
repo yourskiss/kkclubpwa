@@ -1,12 +1,10 @@
 "use client";
-import Link from "next/link";
-import Image from 'next/image';
 import { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 
 
 import {isUserToken } from "@/config/userauth";
-import { isBearerToken } from '@/config/bearerauth';
+import { isBearerToken, setBearerToken } from '@/config/bearerauth';
 import { isCouponeCode } from "@/config/validecoupone";
 
 import HeaderFirst from "../shared/HeaderFirst";
@@ -27,7 +25,7 @@ export default function LoginComponent2() {
     const { push } = useRouter();
     
     useEffect(() => {
-      if(!bearerToken) { push("/"); return  }
+      if(!bearerToken) { setBearerToken('in'); return  }
       if(userToken && !isCC) { push("/dashboard"); return }
       if(userToken && isCC) { push("/getcoupone"); return }
     }, []);

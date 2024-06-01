@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import {  isUserToken } from "@/config/userauth";
-import { isBearerToken } from '@/config/bearerauth';
+import { isBearerToken, setBearerToken } from '@/config/bearerauth';
 
 export default  function HeaderProfile() {
 const { push } = useRouter();
@@ -11,7 +11,7 @@ const userToken   =  isUserToken();
 const bearerToken = isBearerToken();
 useEffect(() => {
   if(!userToken) { push("/login"); return  }
-  if(!bearerToken) { push("/"); return  }
+  if(!bearerToken) { setBearerToken('in'); return  }
 }, []);
 
   return (
