@@ -7,6 +7,7 @@ import { getUserID } from '@/config/userauth';
 import Loader from '../shared/LoaderComponent';
 import { ipaddress, osname  } from "../core/jio";
 import { _get } from "@/config/apiClient";
+import { getUserStatus } from "@/config/userinfo";
 
 export default function Rewardform() {
     const [pagemsg, setPagemsg] = useState('');
@@ -14,9 +15,9 @@ export default function Rewardform() {
     const [mounted, setMounted] = useState(true);
     const [pendingorder, setPendingorder] = useState(0);
     const [userOrderID, setUserOrderID] = useState('');
-    const[userstatus, setUserstatus] = useState('');
     const[redeempoint, setRedeempoint] = useState(''); 
     const[errorMsg, setErrorMsg] = useState(''); 
+    const userstatus = getUserStatus();
  
     const rewardspoints = parseInt(TotalrewardpointsComponent());
     const pointvalue = parseInt(process.env.NEXT_PUBLIC_POINT_VALUE);
@@ -27,14 +28,7 @@ export default function Rewardform() {
     const { push } = useRouter();
     const ipInfo = ipaddress();
     const osn = osname();
-    
-    useEffect(() => {
-        if (typeof localStorage !== 'undefined') 
-        {
-            setUserstatus(localStorage.getItem('verificationstatus'));
-        } 
-    }, [userstatus]);
-
+ 
     useEffect(() => {
         setLoading(true);
         setPagemsg('Checking pendding order');

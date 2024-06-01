@@ -10,35 +10,26 @@ import "slick-carousel/slick/slick-theme.css";
 import HeaderDashboard from '../shared/HeaderDashboard';
 import Loader from '../shared/LoaderComponent';
 import { _get } from "@/config/apiClient";
-
 import PwaModal from "../shared/PwaModal";
 import PwaIOS from "../shared/PwaIOS";
 import Link from 'next/link';
 import FooterComponent from '../shared/FooterComponent';
-
+import { getUserStatus } from "@/config/userinfo";
  
 const DashboardComponent = () => {
     const [pagemsg, setPagemsg] = useState('');
     const [loading, setLoading] = useState(false);
-
     const [mounted2, setMounted2] = useState(true);
-
     const[productimg, setProductimg] = useState({});
-
-    const[userstatus, setUserstatus] = useState('');
-
+    const userstatus = getUserStatus();
+ 
     const { push } = useRouter();
     const rewardspoints = parseInt(TotalrewardpointsComponent());
     const redeemminimumpoint = parseInt(process.env.NEXT_PUBLIC_REDEEM_MIN_POINT);
     const imageUrl = process.env.NEXT_PUBLIC_IMAGE_URL;
     const imageSection = process.env.NEXT_PUBLIC_SECTION_DASHBOARD;
  
-    useEffect(() => {
-        if (typeof localStorage !== 'undefined') 
-        {
-            setUserstatus(localStorage.getItem('verificationstatus'));
-        } 
-      }, []);
+ 
 
   const redeemprompt = () => {
     if(userstatus === "PENDING")

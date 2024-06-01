@@ -10,6 +10,7 @@ import { setLoginNumber } from "@/config/registertoken";
 import Loader from "../shared/LoaderComponent";
 import { isCouponeCode } from "@/config/validecoupone";
 import OtpInput from 'react-otp-input';
+import { setUserInfo } from "@/config/userinfo";
 
 export default function OtpPart({isMobStatus, getMobNumber, phonenumber}) {
   const [pagemsg, setPagemsg] = useState('');
@@ -98,9 +99,7 @@ export default function OtpPart({isMobStatus, getMobNumber, phonenumber}) {
       //  console.log("login success - ", res);
       if(res.data.result.verificationstatus === "APPROVE" || res.data.result.verificationstatus === "PENDING")
       {
-        localStorage.setItem("userprofilename",res.data.result.fullname);
-        localStorage.setItem("userprofilesn",res.data.result.shortname);
-        localStorage.setItem("verificationstatus",res.data.result.verificationstatus);
+          setUserInfo(res.data.result.fullname, res.data.result.shortname, res.data.result.verificationstatus);
           const userinfo = res.data.result.userid + "|" + res.data.result.phonenumber
           setUserCookies(encryptText(userinfo));       
           if(res.data.result)  

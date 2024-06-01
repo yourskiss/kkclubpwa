@@ -15,6 +15,7 @@ import { encryptText } from "@/config/crypto";
 import { isCouponeCode } from "@/config/validecoupone";
 import { getLoginNumber,  isLoginNumber, removeLoginNumber } from "@/config/registertoken";
 import FooterComponent from "../shared/FooterComponent";
+import { setUserInfo } from "@/config/userinfo";
 
 export default function RegistationComponent() {
   const [step, setStep] = useState(1);
@@ -154,9 +155,7 @@ export default function RegistationComponent() {
         setLoading(false);
         if(res.data.result)
         {
-          localStorage.setItem("userprofilename",res.data.result.fullname);
-          localStorage.setItem("userprofilesn",res.data.result.shortname);
-          localStorage.setItem("verificationstatus",res.data.result.verificationstatus);
+          setUserInfo(res.data.result.fullname, res.data.result.shortname, res.data.result.verificationstatus);
           const userinfo = res.data.result.userid + "|" + res.data.result.phonenumber
           setUserCookies(encryptText(userinfo));
           removeLoginNumber();

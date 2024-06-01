@@ -6,6 +6,7 @@ import Link from 'next/link';
 import {isUserToken, getUserMobile, getUserID } from '@/config/userauth';
 import { isBearerToken, setBearerToken } from '@/config/bearerauth';
 import { _get } from "@/config/apiClient";
+import { setUserInfo } from '@/config/userinfo';
  
 export default  function HeaderDashboard() {
   const [mounted, setMounted] = useState(true);
@@ -33,9 +34,7 @@ useEffect(() => {
      // console.log("UserInfo response - ", res);
       if (mounted)
       {
-        localStorage.setItem("userprofilename",res.data.result.fullname);
-        localStorage.setItem("userprofilesn",res.data.result.shortname);
-        localStorage.setItem("verificationstatus",res.data.result.verificationstatus);
+        setUserInfo(res.data.result.fullname, res.data.result.shortname, res.data.result.verificationstatus);
         setUsershort(res.data.result.shortname);
         setUserstatus(res.data.result.verificationstatus);
         setUsername(res.data.result.fullname);

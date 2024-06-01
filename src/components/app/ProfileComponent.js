@@ -12,31 +12,22 @@ import { getUserID, removeUserToken } from '@/config/userauth';
 import { _get } from "@/config/apiClient";
 import { motion } from "framer-motion";
 import FooterComponent from "../shared/FooterComponent";
+import { getUserStatus, getUserName, getUserShort, removeUserInfo } from "@/config/userinfo";
 
 
 export default function ProfileComponent() {
   const [mounted, setMounted] = useState(true);
   const { push } = useRouter();
   const rewardspoints = parseInt(TotalrewardpointsComponent());
-  const[username, setUsername] = useState('');
-  const[usershort, setUsershort] = useState('');
-  const[userstatus, setUserstatus] = useState('');
+
   // const profileProgress = ProgressComponent();
   const redeemminimumpoint = parseInt(process.env.NEXT_PUBLIC_REDEEM_MIN_POINT);
   const userid = getUserID();
   const [resultcode, setResultcode] = useState('');
- 
-  useEffect(() => {
-    if (typeof localStorage !== 'undefined') 
-    {
-        setUsername(localStorage.getItem('userprofilename'));
-        setUsershort(localStorage.getItem('userprofilesn'));
-        setUserstatus(localStorage.getItem('verificationstatus'));
-    } 
+  const userstatus = getUserStatus();
+  const usershort = getUserShort();
+  const username = getUserName();
 
-  }, []);
-
-  
 
   const redeemprompt = () => {
     if(userstatus === "PENDING")
@@ -53,9 +44,7 @@ export default function ProfileComponent() {
   }
 
   const logoutnow = () => {
-    localStorage.removeItem("userprofilesn");
-    localStorage.removeItem("userprofilename");
-    localStorage.removeItem('verificationstatus')
+    removeUserInfo();
     removeUserToken();
     push("/login") ;
     toast.success('Logout Successfully.'); 
@@ -80,6 +69,8 @@ useEffect(() => {
   return (<>
   <motion.div initial={{ x: "100vw" }} animate={{ x:0 }} exit={{ x: "100vw" }} transition={{ duration: 1, delay: 0, origin: 1, ease: [0, 0.71, 0.2, 1.01] }}>
     <HeaderProfile />
+
+    
     <div className="screenmain screenprofile"> 
         <div className="screencontainer">
            

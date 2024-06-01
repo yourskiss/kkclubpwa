@@ -1,6 +1,4 @@
  "use client";
-import Link from "next/link";
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -11,6 +9,7 @@ import { getUserMobile } from '@/config/userauth';
 import { _get } from "@/config/apiClient";
 import Loader from "../shared/LoaderComponent";
 import FooterComponent from "../shared/FooterComponent";
+import { setUserInfo } from "@/config/userinfo";
 
 
 export default function ApprovalComponent() {
@@ -39,9 +38,7 @@ export default function ApprovalComponent() {
          // console.log("response - ", res);
           if (mounted)
           {
-            localStorage.setItem("userprofilename",res.data.result.fullname);
-            localStorage.setItem("userprofilesn",res.data.result.shortname);
-            localStorage.setItem("verificationstatus",res.data.result.verificationstatus);
+            setUserInfo(res.data.result.fullname, res.data.result.shortname, res.data.result.verificationstatus);
             setUsershort(res.data.result.shortname);
             setUserstatus(res.data.result.verificationstatus);
             setUsername(res.data.result.fullname);
