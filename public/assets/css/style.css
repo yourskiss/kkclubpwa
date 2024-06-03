@@ -579,6 +579,7 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 
 .bankInfoField { position: relative; width: 100%; float: left; text-align: center; margin-top:1.5rem;}
 .bankInfoField p { margin:0; padding:0; width: 100%; float: left; text-align: left; text-transform: none; font-weight: 500;color: rgba(175, 205, 175, 0.6); font-size: 18px;  }
+.textUppercase { text-transform: uppercase; }
 .bankInfoField input {  float: left;  width: 100%;  padding: 0.5rem 1rem;  border: 0; border-bottom: solid 2px #F5F0EB; outline: none;  background:transparent;  border-radius: 0;  text-align: left; font-weight: 500;  color: rgba(245, 240, 235,0.6);  font-size:18px;  box-shadow:none; box-sizing: border-box; }
 .bankInfoField input:disabled {user-select: none; pointer-events: none;}
 .bankInfoField span { display: block; margin-top:0.7rem; padding: 0; float: left; width: 100%; text-align: left; font-weight: 500; color: #f30; font-size: 14px;}

@@ -267,7 +267,7 @@ export default function BankaddComponents() {
                   </div>
                   <div className="bankInfoField">
                       <p>Pan Number</p>
-                      <input type='text' name="pan" maxLength={10} autoComplete="off" value={pan} onInput={onInputmaxLength}  onChange={(e)=>{setPan(e.target.value); setErrorPan(''); }} />
+                      <input  className='textUppercase' type='text' name="pan" maxLength={10} autoComplete="off" value={pan} onInput={onInputmaxLength}  onChange={(e)=>{setPan(e.target.value); setErrorPan(''); }} />
                       {errorPan && <span>{errorPan}</span>}
                   </div>
                   <div className="bankInfoField">
@@ -307,7 +307,7 @@ export default function BankaddComponents() {
                     <h6>Name: <b>{username}</b></h6>
                     <h6>Mobile Number: <b>{rmn}</b></h6> 
                     <h6>Aadhaar Number: <b>{aadhaar}</b></h6> 
-                    <h6>Pan Number: <b>{pan}</b></h6> 
+                    <h6>Pan Number: <b className='textUppercase'>{pan}</b></h6> 
                     <aside  onClick={()=>stepHandler('personal')} title="Edit">Edit</aside>
                   </div>
                   </>}
