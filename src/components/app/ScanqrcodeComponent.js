@@ -72,21 +72,38 @@ export default function ScanqrcodeComponent() {
         .then((res) => {
           setTimeout(function(){setLoading(false);},2000); 
           // console.log(res)
-          if(res.data.result === null)
+          if(res.data.resultcode === 0)
           {
-            toast.error("This code has already been scanned. Try again.");
-           // setQrcode(true);
-            setTimeout(function(){window.location.reload(); },2000);
-           } 
-           else
-           {
-            toast.success('Your code has been successfully scanned.');
-            push(`/scanqrcode/${res.data.result[0].pointid}`);
-           }
+              toast.success("Your code has been successfully scanned ");
+              push(`/scanqrcode/${res.data.result[0].pointid}`);
+          } 
+          else if(res.data.resultcode === -101)
+          {
+              toast.error("This code has already been scanned. Try again.");
+              setTimeout(function(){window.location.reload(); },2000);
+          } 
+          else if(res.data.resultcode === -102)
+          {
+              toast.error("This coupon code is invalid. Please enter a valid coupon code.");
+              setTimeout(function(){window.location.reload(); },2000);
+          } 
+          else if(res.data.resultcode === -103)
+            {
+              toast.error("This coupon code is inactive. Please enter a valid coupon code. ");
+              setTimeout(function(){window.location.reload(); },2000);
+          } 
+          else if(res.data.resultcode === -100)
+          {
+              toast.error("There is an issue while availing the coupon. kindly contact to the support team.");
+              setTimeout(function(){window.location.reload(); },2000);
+          }
+          else
+          {
+            window.location.reload();
+          }
         }).catch((err) => {
           setLoading(false); 
-          toast.error(err);
-         // setQrcode(true);
+          console.log(err);
           window.location.reload();
         });
 

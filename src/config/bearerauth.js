@@ -14,7 +14,7 @@ const setBearerCookies = (val) => {
   return Cookies.set('bearertoken',  val, { expires: new Date(new Date().getTime() + btTime), secure: true, sameSite: 'Strict', path: '/', domain:domainname });
 }
 const setBearerToken = (pagevalue) => {
-  console.log(pagevalue);
+  // console.log(pagevalue);
   axios({
     method: 'post',
     url: `${apiURL}ApiAuth/authtoken`,
