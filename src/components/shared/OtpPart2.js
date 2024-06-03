@@ -175,7 +175,7 @@ export default function OtpPart2({isMobStatus, getMobNumber, phonenumber}) {
   return (<>
     <form onSubmit={otpSubmit}>
             <div className="registercontainer">
-              <div className="registerHead">Verify with OTP</div>
+              <div className="registerHead">Enter OTP</div>
               <div className="registerMsgOtp">
                 <span>We have sent an OTP to <b>+91- {phonenumber}</b></span>
                 <em className="numberedit" onClick={changeNumber}>Change</em>
@@ -198,7 +198,7 @@ export default function OtpPart2({isMobStatus, getMobNumber, phonenumber}) {
  
               { otpError && <span className='registerError'>{otpError}</span>  }
               {
-                !otpsent ? (<div className="registerOtpText">Resend OTP in  <Otpcountdown expiryTimestamp={otpcountertime} onSuccess={getOtpTimer} /> Seconds </div>) : (<div className="registerOtpText">Not reveived?  <span onClick={resendotp}>Resend OTP</span></div>)
+                !otpsent ? (<div className="registerOtpText">Resend OTP in  <Otpcountdown expiryTimestamp={otpcountertime} onSuccess={getOtpTimer} /> Seconds </div>) : (<div className="registerOtpText">Not received? <span onClick={resendotp}>Resend OTP</span></div>)
               }
             </div>
             <div className="registerSubmit">

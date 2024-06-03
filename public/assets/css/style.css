@@ -216,7 +216,7 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 .numberedit { margin:-7px 0 0 0.7rem; width:22px; height:22px;   padding:0; font-size: 0; cursor: pointer; text-decoration: none;  background: url('../images/edit_icon.png') no-repeat center center; background-size: 100% 100%; }
 .numberedit:hover { color:#AFCDAF; text-decoration: underline;  filter: grayscale(100%); }
 .registerField { position: relative; width: 100%; float: left;text-align: center; margin-top:1.5rem;}
-.registertext { margin:0; padding:0.5rem 0 0 0; width: 100%; float: left; text-align: left; text-transform: none; font-weight: 500;color: rgba(175, 205, 175, 0.6); font-size: 18px;  }
+.registertext { margin:0; padding:0.5rem 0 0 0; width: 100%; float: left; text-align: left; text-transform: none; font-weight: 500;color: rgba(175, 205, 175, 0.6); font-size: 18px; line-height: 1.2;  }
 .registertext.registertextcenter { margin: 1rem 0 0 0; text-align: center; }
   input::-webkit-outer-spin-button { appearance: none;margin: 0;}
   input::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;}
@@ -322,8 +322,8 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 .approvalcontainer article a:hover { text-decoration: none;  color: #F5F0EB;  transition: all 0.5s ease-in;  }
 
 .approvalcontainer section { width: 100%; float: left; margin:3rem 0 0 0;padding: 0; }
-.approvalcontainer section h2 { margin:0; padding: 0; width: 100%; float: left; text-align: left; text-transform: none; font-weight: 500; color:rgba(245, 240, 235, 0.6); font-size: 24px;  }
-.approvalcontainer section h3 { margin:2rem 0 3rem 0; padding: 0; width: 100%; float: left; text-align: left; text-transform: none; font-weight: 500;color:#F5F0EB; font-size: 36px;  }
+.approvalcontainer section h2 { margin:0 0 2rem 0; padding: 0; width: 100%; float: left; text-align: left; text-transform: none; font-weight: 500; color:rgba(245, 240, 235, 0.6); font-size: 24px;  }
+.approvalcontainer section h3 { margin:0 0 3rem 0; padding: 0; width: 100%; float: left; text-align: left; text-transform: none; font-weight: 500;color:#F5F0EB; font-size: 36px;  }
 .pc_slider {width: 100%;float: left;overflow: hidden;margin: 0 !important;padding: 0 0 30px 0 !important;}
 .pc_item { position: relative; width: 100%;float: left;height: auto;margin: 0;padding: 0; }
 .pc_item img { display: block; width: 100%; height: auto; float: left;margin: 0;padding: 0;border: 0;}
@@ -660,8 +660,8 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 .approvalcontainer dl dt aside span { border-width: 2px; font-size:18px;  }
 .approvalcontainer dl dd p {  font-size: 18px;  }
 .approvalcontainer dl dd p span { margin:0 0 0.5rem 0;  font-size:20px; }
-.approvalcontainer section h2 { font-size: 20px; }
-.approvalcontainer section h3 { margin:1rem 0 2rem 0;  font-size: 24px;  }
+.approvalcontainer section h2 {   margin:0 0 1rem 0;  font-size: 20px; }
+.approvalcontainer section h3 { margin:0 0 2rem 0;  font-size: 24px;  }
 .pc_item p {  font-size:30px; }
 
 

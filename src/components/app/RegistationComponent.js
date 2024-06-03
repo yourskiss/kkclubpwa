@@ -189,11 +189,10 @@ export default function RegistationComponent() {
               }
               <div className="registerSmallHead">SIGN UP</div>
               <div className="registerHead">Setup your profile</div>
-
-               
+ 
               { step === 1 && <form onSubmit={handleStep1}>
                 <div className="registerField">
-                  <div className="registertext">First Name <small>*</small></div>
+                  <div className="registertext">First Name - As per Adhaar Card<small>*</small></div>
                   <input
                     className="registerinput"
                     type="text"
@@ -207,7 +206,7 @@ export default function RegistationComponent() {
                   {fnErrors && <span className="registerError">{fnErrors}</span> }
                 </div>
                 <div className="registerField">
-                  <div className="registertext">Last Name <small>*</small></div>
+                  <div className="registertext">Last Name - As per Adhaar Card<small>*</small></div>
                   <input
                     className="registerinput"
                     type="text"
@@ -225,20 +224,20 @@ export default function RegistationComponent() {
                   <button className="register_button">CONTINUE</button>
                 </div>    
               </form> }
-  
+ 
               { step === 2 && <form onSubmit={handleStep2}>
                 <div className="registerField">
-                      <div className="registertext">Select City <small>*</small></div>
+                      <div className="registertext">Subscript - City of work area<small>*</small></div>
                       <ErrorBoundary>
                           <CityStateComponent scChange={handleOptionChange} nameSC={cityStateName} nameS={stateName} nameC={cityName} />
                       </ErrorBoundary>
                       { citystateErrors && <span className="registerError"> {citystateErrors}</span> } 
-                      <div className="registerLineText">Enter State name to pick nearby City</div>
+                      {/* <div className="registerLineText">Enter State name to pick nearby City</div> */}
                 </div>
               
 
                 <div className="registerField">
-                  <div className="registertext">Pin Code <small>*</small></div>
+                  <div className="registertext">Pincode of work area<small>*</small></div>
                   <input
                     className="registerinput"
                     type="number"
@@ -264,7 +263,7 @@ export default function RegistationComponent() {
               
               { step === 3 && <form onSubmit={handleStep3}>
                 <div className="registerField">
-                  <div className="registertext">Aadhaar Number <small>*</small></div>
+                  <div className="registertext">Aadhaar Number<small>*</small></div>
                   <input
                     className="registerinput"
                     type="number"

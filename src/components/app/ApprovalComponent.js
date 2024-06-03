@@ -103,14 +103,13 @@ export default function ApprovalComponent() {
                             <dd>
                                 <p>
                                     <span><b>{username}</b>,</span>
-                                    <span>your request has gone for further approval.</span>
+                                    <span>Registration request Submitted and pending for approval. Your branch manager will contact you for further details.</span>
                                 </p>
                             </dd>
                         </dl>    
  
                         
                         <section>
-                            <h2>PRODUCT CATEGORIES</h2>
                             <h3>We have the right solution for every building-related problem</h3>
                             <Slider className="pc_slider" {...settingsApproval}>
                             {  

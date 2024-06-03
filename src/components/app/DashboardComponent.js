@@ -10,8 +10,6 @@ import "slick-carousel/slick/slick-theme.css";
 import HeaderDashboard from '../shared/HeaderDashboard';
 import Loader from '../shared/LoaderComponent';
 import { _get } from "@/config/apiClient";
-import PwaModal from "../shared/PwaModal";
-import PwaIOS from "../shared/PwaIOS";
 import Link from 'next/link';
 import FooterComponent from '../shared/FooterComponent';
 import { getUserStatus } from "@/config/userinfo";
@@ -150,8 +148,7 @@ const DashboardComponent = () => {
     <FooterComponent />
 
     <Loader showStatus={loading}  message={pagemsg} />                       
-    <PwaModal />
-    <PwaIOS />
+
   </>)
 }
 export default DashboardComponent;  

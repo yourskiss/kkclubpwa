@@ -42,7 +42,7 @@ export default function ScanqrcodeComponent() {
       {
         const couponvalue = sdURL[1].split("=");
         setCouponecode(couponvalue[1]);
-        // toast.success("QR code scan successfully.");
+       // toast.success("Your code has been successfully scanned.");
       }
   }, [qrcode]);
 
@@ -74,18 +74,18 @@ export default function ScanqrcodeComponent() {
           // console.log(res)
           if(res.data.result === null)
           {
-            toast.error("Invalide QR Code, Try another code");
+            toast.error("This code has already been scanned. Try again.");
            // setQrcode(true);
             setTimeout(function(){window.location.reload(); },2000);
            } 
            else
            {
-            toast.success('Coupon Successfully Validated');
+            toast.success('Your code has been successfully scanned.');
             push(`/scanqrcode/${res.data.result[0].pointid}`);
            }
         }).catch((err) => {
           setLoading(false); 
-          toast.error(err.message);
+          toast.error(err);
          // setQrcode(true);
           window.location.reload();
         });

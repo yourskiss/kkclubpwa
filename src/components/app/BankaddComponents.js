@@ -141,7 +141,7 @@ export default function BankaddComponents() {
 
     const reviewHandlar = (e) => {
       e.preventDefault();
-      if(!infobank && !infoupi) { toast.error('Bank/upi details is required');  return }
+      if(!infobank && !infoupi) { toast.error('Enter bank details/UPI ID');  return }
       else if(!infopersonal) { toast.error('Personal infomation is required'); stepHandler('personal');  return }
       else
       {
@@ -185,7 +185,7 @@ export default function BankaddComponents() {
           }
       }).catch((error) => {
           setLoading(false);
-          toast.info(error); 
+          console.log(error); 
       });
     }
   
@@ -201,7 +201,7 @@ export default function BankaddComponents() {
             <div className='bankInfosavecontainer'>
               <h2>
                 <em>Add Bank / UPI ID</em>
-                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</span>
+                <span>Please share Bank account or UPI details linked to your adhaar and PAN card. </span>
               </h2> 
               {
                 step !== 4 && <ul>

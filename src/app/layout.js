@@ -10,6 +10,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Starfield from 'react-starfield';
 import { GoogleAnalytics } from '@next/third-parties/google';
+import PwaModal from '@/components/shared/PwaModal';
+import PwaIOS from '@/components/shared/PwaIOS';
  
 export const metadata = {
   title: "Kerakoll Club",
@@ -55,6 +57,9 @@ export default function RootLayout({ children }) {
           <ToastContainer position="top-center" autoClose={2000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored"  />
             {children}
             
+
+            <PwaModal />
+            <PwaIOS />
         </main>
       </body>
     </html>

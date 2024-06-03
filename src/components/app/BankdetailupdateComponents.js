@@ -79,7 +79,7 @@ export default function BankdetailupdateComponents() {
             }
         }).catch((error) => {
             setLoading(false);
-            toast.info("GetUserPayoutInfo-", error); 
+            console.log("GetUserPayoutInfo-", error); 
         });
         return () => { setMounted(false); }
     }, []);
@@ -172,7 +172,7 @@ const upiSkipHandal = (e) => {
 
 const reviewHandlar = (e) => {
   e.preventDefault();
-  if(!infobank && !infoupi) { toast.error('Bank/upi details is required'); return }
+  if(!infobank && !infoupi) { toast.error('Enter bank details/UPI ID'); return }
   else if(!infopersonal) { toast.error('Personal infomation is required'); stepHandler('personal');  return }
   else
   {
@@ -216,7 +216,7 @@ const savebankdetail = () =>
       }
   }).catch((error) => {
       setLoading(false);
-      toast.info(error); 
+      console.log(error); 
   });
 }
  
@@ -228,7 +228,7 @@ const savebankdetail = () =>
             <div className='bankInfosavecontainer'>
               <h2>
                 <em>Update Bank / UPI ID </em>
-                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</span>
+                <span>Please share Bank account or UPI details linked to your adhaar and PAN card. </span>
               </h2>  
                         
                  

@@ -47,9 +47,9 @@ export default function LoginPart({isMobStatus, getMobNumber, phonenumber}) {
   return (<>
     <form onSubmit={mobileSubmit}>
               <div className="registercontainer">
-                <div className="registerHead">Welcome!</div>
+                <div className="registerHead">Welcome to Kerakoll!</div>
                 <div className="registerField">
-                  <div className="registertext">Enter mobile number *</div>
+                  <div className="registertext">To proceed further please enter your mobile number.</div>
                   <div className="registerinputformobile">
                     <span>+91-</span>
                     <input className="registerinput" type="number" name="mobile" autoComplete="off" min="0" maxLength={10} minLength={10} value={mobileValues} onChange={mobileChange} onInput={onInputmaxLength} />

@@ -153,7 +153,7 @@ export default function UpdateprofileComponent() {
                  
                 
                 <div className="registerField">
-                    <div className="registertext">First name <small>*</small></div>
+                    <div className="registertext">First Name - As per Adhaar Card<small>*</small></div>
                     <input
                         className="registerinput"
                         type="text"
@@ -167,7 +167,7 @@ export default function UpdateprofileComponent() {
                 </div>
 
                 <div className="registerField">
-                    <div className="registertext">Last name <small>*</small></div>
+                    <div className="registertext">Last Name - As per Adhaar Card<small>*</small></div>
                     <input
                         className="registerinput"
                         type="text"
@@ -182,17 +182,17 @@ export default function UpdateprofileComponent() {
  
  
                 <div className="registerField">
-                      <div className="registertext">Select City <small>*</small></div>
+                      <div className="registertext">Subscript - City of work area<small>*</small></div>
                       { data ? (
                       <ErrorBoundary>
                           <CitystateUpdateComponent scChange={handleOptionChange} nameSC={cityStateName} nameS={stateName} nameC={cityName} />
                       </ErrorBoundary>
                       ) : null }
-                      <div className="registerLineText">Enter State name to pick nearby City</div>
+                      {/* <div className="registerLineText">Enter State name to pick nearby City</div> */}
                 </div>
 
                 <div className="registerField">
-                    <div className="registertext">Postal Code <small>*</small></div>
+                    <div className="registertext">Pincode of work area<small>*</small></div>
                     <input
                         className="registerinput"
                         type="number"
@@ -207,7 +207,7 @@ export default function UpdateprofileComponent() {
                 </div>
 
                 <div className="registerField">
-                    <div className="registertext">Aadhaar Number <small>*</small></div>
+                    <div className="registertext">Aadhaar Number<small>*</small></div>
                     <input
                         className="registerinput"
                         type="number"

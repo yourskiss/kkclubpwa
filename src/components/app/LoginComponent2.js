@@ -4,8 +4,6 @@ import { useRouter } from 'next/navigation';
 import {isUserToken } from "@/config/userauth";
 import { isCouponeCode } from "@/config/validecoupone";
 import HeaderFirst from "../shared/HeaderFirst";
-import PwaModal from "../shared/PwaModal";
-import PwaIOS from "../shared/PwaIOS";
 import FooterComponent from "../shared/FooterComponent";
 import LoginPart2 from "../shared/LoginPart2";
 import OtpPart2 from "../shared/OtpPart2";
@@ -44,13 +42,7 @@ export default function LoginComponent2() {
 
 
     <FooterComponent />
-
-    
-
-    <PwaModal />
-    <PwaIOS />
-
-    
+ 
 
 
   </>
