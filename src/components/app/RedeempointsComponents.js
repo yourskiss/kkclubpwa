@@ -1,7 +1,6 @@
 "use client";
 import Image from 'next/image';
 import CountUp from 'react-countup';
-import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
 import Rewardform from '../shared/Rewardform';

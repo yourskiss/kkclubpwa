@@ -117,7 +117,7 @@ export default function RedemptionhistoryComponemt () {
     }).catch((error) => {
         setLoading(false);
         setBtnload(false);
-        toast.info(error); 
+        console.log(error); 
     });
   }
  

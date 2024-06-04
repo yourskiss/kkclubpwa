@@ -173,7 +173,7 @@ export default function RegistationComponent() {
           toast.warn(res.data.resultmessage);
         }
       }).catch((err) => {
-        toast.error(err.message);
+        console.log(err.message);
         setLoading(false); 
       });
   }
