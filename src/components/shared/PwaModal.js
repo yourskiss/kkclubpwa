@@ -52,7 +52,7 @@ export default function PwaModal() {
                 }
                 else
                 {
-                    toast.success("Installation Successfully.");
+                    toast.success("Installation Start.");
                 }     
             });
             setPmtEvt(null);

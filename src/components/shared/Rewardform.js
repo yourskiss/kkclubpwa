@@ -20,7 +20,7 @@ export default function Rewardform() {
     const[userstatus, setUserstatus] = useState('');
     const gtUST = getUserStatus();
  
-    const rewardspoints = parseInt(TotalrewardpointsComponent());
+    const rewardspoints = 5; // parseInt(TotalrewardpointsComponent());
     const pointvalue = parseInt(process.env.NEXT_PUBLIC_POINT_VALUE);
     const redeemminimumpoint = parseInt(process.env.NEXT_PUBLIC_REDEEM_MIN_POINT);
     const redeemmaximumpoint = parseInt(process.env.NEXT_PUBLIC_REDEEM_MAX_POINT);
@@ -72,7 +72,7 @@ export default function Rewardform() {
         }
         if(redeempoint > rewardspoints)
         {
-            setErrorMsg('You can redeem maximum to your reward points.'); 
+            setErrorMsg(`You can redeem maximum ${rewardspoints} reward points.`); 
             return;
         }
         if(redeempoint < redeemminimumpoint)

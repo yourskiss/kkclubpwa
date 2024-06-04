@@ -81,7 +81,7 @@ const DashboardComponent = () => {
         push("/approval");
         return
     }
-    if(userstatus === "APPROVE" && rewardspoints <= redeemminimumpoint)
+    if(userstatus === "APPROVE" && rewardspoints < redeemminimumpoint)
     {
         toast.info(`You can redeem minimum ${redeemminimumpoint} reward points.`); 
         return

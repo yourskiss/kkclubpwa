@@ -47,7 +47,7 @@ export default function ScanqrcodeComponent() {
             }
             else
             {
-                toast.error("Please scan qr code with kerakoll app.");
+                toast.error("Please scan qr code with kerakoll app.");
                 setTimeout(function(){window.location.reload();},2000);
             }
       }
