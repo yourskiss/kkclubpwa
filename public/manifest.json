@@ -1,7 +1,7 @@
 {
       "id":"1",
-      "name": "Club",
-      "short_name": "Club",
+      "name": "Kerakoll Club",
+      "short_name": "Kerakoll Club",
       "start_url": "/",
       "display": "standalone",
       "orientation": "portrait",

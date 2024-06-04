@@ -227,7 +227,7 @@ export default function RegistationComponent() {
  
               { step === 2 && <form onSubmit={handleStep2}>
                 <div className="registerField">
-                      <div className="registertext">Subscript - City of work area<small>*</small></div>
+                      <div className="registertext">City of work area<small>*</small></div>
                       <ErrorBoundary>
                           <CityStateComponent scChange={handleOptionChange} nameSC={cityStateName} nameS={stateName} nameC={cityName} />
                       </ErrorBoundary>

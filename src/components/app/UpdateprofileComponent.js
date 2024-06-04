@@ -182,7 +182,7 @@ export default function UpdateprofileComponent() {
  
  
                 <div className="registerField">
-                      <div className="registertext">Subscript - City of work area<small>*</small></div>
+                      <div className="registertext">City of work area<small>*</small></div>
                       { data ? (
                       <ErrorBoundary>
                           <CitystateUpdateComponent scChange={handleOptionChange} nameSC={cityStateName} nameS={stateName} nameC={cityName} />

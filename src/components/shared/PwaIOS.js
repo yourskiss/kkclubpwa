@@ -7,8 +7,7 @@ import { isMobile } from 'react-device-detect';
 
 export default function PwaIOS () {
   const [shouldShowPrompt, setShouldShowPrompt] = useState(false);
-
-
+  
   useEffect(() => {
     const getAgent = window.navigator.userAgent.toLowerCase();
     const isIOS =  /iphone|ipad|ipod/.test(getAgent);

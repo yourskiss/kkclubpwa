@@ -103,7 +103,7 @@ export default function ApprovalComponent() {
                             <dd>
                                 <p>
                                     <span><b>{username}</b>,</span>
-                                    <span>Registration request Submitted and pending for approval. Your branch manager will contact you for further details.</span>
+                                    <span>Registration request submitted and pending for approval. Your branch manager will contact you for further details.</span>
                                 </p>
                             </dd>
                         </dl>    
