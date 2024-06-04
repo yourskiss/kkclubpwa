@@ -38,11 +38,18 @@ export default function ScanqrcodeComponent() {
 
   useEffect(() => {
       const sdURL = scandata.split("?") || '';
-      if(sdURL[0] === process.env.NEXT_PUBLIC_COUPON_URL || sdURL[0] === process.env.NEXT_PUBLIC_COUPON_URL2)
+      if(!qrcode)
       {
-        const couponvalue = sdURL[1].split("=");
-        setCouponecode(couponvalue[1]);
-       // toast.success("Your code has been successfully scanned.");
+          if(sdURL[0] === process.env.NEXT_PUBLIC_COUPON_URL || sdURL[0] === process.env.NEXT_PUBLIC_COUPON_URL2)
+            {
+                const couponvalue = sdURL[1].split("=");
+                setCouponecode(couponvalue[1]);
+            }
+            else
+            {
+                toast.error("Please scan qr code with kerakoll app.");
+                setTimeout(function(){window.location.reload();},2000);
+            }
       }
   }, [qrcode]);
 
