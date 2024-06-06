@@ -10,28 +10,38 @@ import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 import { _get, _post } from "@/config/apiClient";
 import HeaderDashboard from "../shared/HeaderDashboard";
 import FooterComponent from "../shared/FooterComponent";
+import { setUserInfo } from "@/config/userinfo";
 
 export default function UpdateprofileComponent() {
     const [pagemsg, setPagemsg] = useState('');
     const[loading, setLoading] = useState(false);
     const [mounted, setMounted] = useState(true);
+    const [mounted2, setMounted2] = useState(true);
+
+    const [data, setData] = useState(false);
+    const [formValue, setFormValue] = useState({});
+    const [formError, setFormError] = useState({});
+    const [isSubmit, setIsSubmit] = useState(false);
+
+    const [cityStateName, setCityStateName] = useState('');
+    const [stateName, setStateName] = useState('');
+    const [cityName, setCityName] = useState('');
+
+    const[bankname,setBankname] = useState('');
+    const[ifsccode,setIfsccode] = useState('');
+    const[accountnumber,setAccountnumber] = useState('');
+    const[upicode,setUpicode] = useState('');
+    const[pan,setPan] = useState('');
+
+    const [userdata, setUserdata] = useState({});
+    
     const { push } = useRouter();
     const userID = getUserID();
     const userMobile = getUserMobile();
     const ipInfo = ipaddress();
     const osInfo = osdetails();
     const browserInfo = browserdetails();
-    const [userdata, setUserdata] = useState({});
-  
-    const [data, setData] = useState(false);
-    const [formValue, setFormValue] = useState({});
-    const [formError, setFormError] = useState({});
-    const [isSubmit, setIsSubmit] = useState(false);
-
-
-    const [cityStateName, setCityStateName] = useState('');
-    const [stateName, setStateName] = useState('');
-    const [cityName, setCityName] = useState('');
+    
 
 
     useEffect(() => {
@@ -50,7 +60,7 @@ export default function UpdateprofileComponent() {
                 setCityName(res.data.result.city);
             }
         }).catch((err) => {
-            toast.warn(err.message);
+            console.log(err.message);
             setLoading(false); 
         });
         return () => { setMounted(false); }
@@ -61,7 +71,6 @@ export default function UpdateprofileComponent() {
         setFormValue({
             'firstname':  userdata.firstname,
             'lastname':  userdata.lastname,
-            'aadhaarinfo': userdata.aadhaarinfo,
             'postalcode':userdata.postalcode
         });
     }, [data]);
@@ -70,10 +79,8 @@ export default function UpdateprofileComponent() {
         const error = {};
         if(val.firstname===''){error.firstname = "First name is required."}
         if(val.lastname===''){error.lastname = "Last name is required."}
-        if(val.aadhaarinfo===''){error.aadhaarinfo = "Aadhaar is required."}
         if(val.postalcode===''){error.postalcode = "Postal code is required"}
         else if(val.postalcode.length !== 6){error.postalcode = "Postal code have at least 6 Digit"}
-        else if(val.aadhaarinfo.length < 12){error.aadhaarinfo = "Aadhaar must have at least 12 Digit"}
         return error;
     }
     const handleSubmit = (e) =>{
@@ -104,7 +111,7 @@ export default function UpdateprofileComponent() {
             gender: "",
             phonenumber: userMobile,
             emailaddress: "",
-            aadhaarinfo: formValue.aadhaarinfo,
+            aadhaarinfo: userdata.aadhaarinfo,
             addressline1: "",
             city: cityName,
             state: stateName,
@@ -125,8 +132,8 @@ export default function UpdateprofileComponent() {
             .then((res) => {
                // console.log(res);
                 setLoading(false);
-                localStorage.setItem('userprofilesn', res.data.result.shortname);
-                localStorage.setItem('userprofilename',  res.data.result.firstname + " " + res.data.result.lastname);
+                savebankdetail();
+                setUserInfo(res.data.result.fullname, res.data.result.shortname, res.data.result.verificationstatus);
                 res.data.result ? (toast.success("Profile Updated Successfully."),push("/profile")) : toast.warn(res.data.resultmessage);
             }).catch((err) => {
                 setLoading(false); 
@@ -141,6 +148,50 @@ export default function UpdateprofileComponent() {
           e.target.value = e.target.value.slice(0, e.target.maxLength);
         }
     }
+
+    useEffect(() => {
+        _get("/Payment/GetUserPayoutInfo?userid="+userID)
+        .then((res) => {
+            // console.log("bank update response - ", res);
+            if(mounted2)
+            {
+              res.data.result.bankname !== null ? setBankname(res.data.result.bankname) : setBankname('');
+              res.data.result.ifcscode !== null ? setIfsccode(res.data.result.ifcscode) : setIfsccode('');
+              res.data.result.accountnumber !== null ? setAccountnumber(res.data.result.accountnumber) : setAccountnumber('');
+              res.data.result.upicode!== null ? setUpicode(res.data.result.upicode) : setUpicode('');
+              setPan(res.data.result.pan);
+            }
+        }).catch((error) => {
+            console.log("GetUserPayoutInfo-", error); 
+        });
+        return () => { setMounted2(false); }
+    }, []);
+
+        const savebankdetail = () => 
+        {
+          const bankinfo = {
+            userid: userID,
+            bankname: bankname,
+            ifcscode: ifsccode,
+            accountnumber: accountnumber,
+            upicode: upicode,
+            aadhaar: userdata.aadhaarinfo,
+            pan:pan,
+            username: formValue.firstname + " " + formValue.lastname,
+            rmn: userMobile,
+            locationpage: "/bankdetailsupdate",
+            ipaddress: ipInfo,
+            osdetails: osInfo,
+            browserdetails: browserInfo
+          }
+          // console.log(" bank update  -",bankinfo);
+          _post("/Payment/UpdateUserPayoutInfo", bankinfo)
+          .then((res) => {
+             //  console.log("update bank details - ", res);
+          }).catch((error) => {
+              console.log(error); 
+          });
+        }
      
   return (
     <>
@@ -205,23 +256,6 @@ export default function UpdateprofileComponent() {
                     />
                     <span className="registerError">{ formError.postalcode  ?  formError.postalcode : '' }</span> 
                 </div>
-
-                <div className="registerField">
-                    <div className="registertext">Aadhaar Number<small>*</small></div>
-                    <input
-                        className="registerinput"
-                        type="number"
-                        name="aadhaarinfo"
-                        min="0"
-                        maxLength={12}
-                        onInput={onInputmaxLength}
-                        value={ formValue.aadhaarinfo || '' }
-                        onChange={onChangeField}
-                    />
-                    <span className="registerError">{ formError.aadhaarinfo  ?  formError.aadhaarinfo : '' }</span> 
-                </div>
-
-
 
        
                 <div className="registerSubmit">

@@ -4,16 +4,18 @@ import { toast } from 'react-toastify';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { _get, _post } from "@/config/apiClient";
-import { getUserID } from '@/config/userauth';
+import { getUserID, getUserMobile } from '@/config/userauth';
 import Loader from '../shared/LoaderComponent';
 import { ipaddress, osdetails, browserdetails  } from "../core/jio";
 import HeaderDashboard from '../shared/HeaderDashboard';
 import FooterComponent from '../shared/FooterComponent';
  
 export default function BankaddComponents() {
-    const [backroutepath, setbackroutepath] = useState('');
     const [pagemsg, setPagemsg] = useState('');
-    const [loading, setLoading] = useState(false);
+    const[loading, setLoading] = useState(false);
+    const [mounted, setMounted] = useState(true);
+    const [backroutepath, setbackroutepath] = useState('');
+ 
     const [infobank, setInfobank] = useState(false);
     const [infoupi, setInfoupi] = useState(false);
     const [infopersonal, setInfopersonal] = useState(false); 
@@ -22,9 +24,6 @@ export default function BankaddComponents() {
     const [errorIfsc, setErrorIfsc] = useState('');
     const [errorAc, setErrorAc] = useState('');
     const [errorUpi, setErrorUpi] = useState('');
-    const [errorName, setErrorName] = useState('');
-    const [errorRmn, setErrorRmn] = useState('');
-    const [errorAadhaar, setErrorAadhaar] = useState('');
     const [errorPan, setErrorPan] = useState('');
 
     const [step, setStep] = useState(1);
@@ -33,14 +32,12 @@ export default function BankaddComponents() {
     const[ifsccode,setIfsccode] = useState('');
     const[accountnumber,setAccountnumber] = useState('');
     const[upicode,setUpicode] = useState('');
-    const[aadhaar,setAadhaar] = useState('');
     const[pan,setPan] = useState('');
+    const[aadhaar,setAadhaar] = useState('');
     const[username,setUsername] = useState('');
-    const[rmn,setRmn] = useState('');
-
-     
-
+ 
     const userid = getUserID();
+    const usermobile = getUserMobile();
     const { push } = useRouter();
     const searchParams = useSearchParams()
     const ipInfo = ipaddress();
@@ -51,6 +48,28 @@ export default function BankaddComponents() {
     useEffect(()=>{
       getpathfrom === '1' || getpathfrom === 1 ? setbackroutepath('/redeempoints') : setbackroutepath('/dashboard')
     },[backroutepath]);
+
+
+
+    useEffect(() => {
+      setLoading(true);
+      setPagemsg('Details fetching');
+      _get("Customer/UserInfo?userid=0&phonenumber="+ usermobile)
+      .then((res) => {
+         // console.log("get---", res.data.result);
+          setLoading(false);
+          if (mounted)
+          {
+              setUsername(`${res.data.result.firstname} ${res.data.result.lastname}`)
+              setAadhaar(res.data.result.aadhaarinfo);
+          }
+      }).catch((err) => {
+          setLoading(false);
+          console.log(err.message);
+      });
+      return () => { setMounted(false); }
+  }, []);
+
     
     const onInputmaxLength = (e) => {
       if(e.target.value.length > e.target.maxLength)
@@ -58,7 +77,6 @@ export default function BankaddComponents() {
         e.target.value = e.target.value.slice(0, e.target.maxLength);
       }
     }
- 
     const stepHandler = (val) => {
       if(val ===  'bank') { setStep(1); setInfobank(false); }
       if(val ===  'upi') { setStep(2); setInfoupi(false); }
@@ -82,7 +100,6 @@ export default function BankaddComponents() {
           setStep(2); 
         }
     }
-  
 
     const handleUpiId = (e) => {
       e.preventDefault();
@@ -96,27 +113,15 @@ export default function BankaddComponents() {
     }
     const handlePersonal = (e) => {
       e.preventDefault();
-        const regexMobile = /^[6789][0-9]{9}$/i;
-        if(username === '') { setErrorName('Name is required');  return }
-        else if(rmn === '') { setErrorRmn('Mobile number is required');  return }
-        else if(rmn?.length !== 10) { setErrorRmn('Mobile number must have 10 Digit');  return }
-        else if(!regexMobile.test(rmn)){ setErrorRmn("Invalid mobile number!");  return }
-        else if(aadhaar === '') { setErrorAadhaar('Aadhaar number is required');  return }
-        else if(aadhaar?.length !== 12) { setErrorAadhaar('Aadhaar number must have 12 Digit');  return }
-        else if(pan === '') { setErrorPan('Pan Number is required');  return }
+        if(pan === '') { setErrorPan('Pan Number is required');  return }
         else if(pan?.length !== 10) { setErrorPan('Pan Number must have 10 Digit'); return }
         else { 
-          setErrorName('');
-          setErrorRmn('');
-          setErrorAadhaar('');
           setErrorPan('');
           setInfopersonal(true);
           setOption('review');
           setStep(4);
         }
     }
-
-
 
     const bankSkipHandal = (e) => {
       e.preventDefault();
@@ -149,7 +154,6 @@ export default function BankaddComponents() {
       }
     } 
 
-
     const savebankdetail = () => 
     {
       const bankinfo = {
@@ -158,16 +162,17 @@ export default function BankaddComponents() {
         ifcscode: ifsccode.trim(),
         accountnumber: accountnumber.trim(),
         upicode: upicode.trim(),
-        aadhaar: aadhaar.trim(),
+        aadhaar: aadhaar,
         pan:pan.trim(),
-        username: username.trim(),
-        rmn: rmn.trim(),
+        username:username,
+        rmn: usermobile,
         locationpage: "/bankdetailsadd",
         ipaddress: ipInfo,
         osdetails: osInfo,
         browserdetails: browserInfo
       }
       // console.log(" bank details -",bankinfo);
+       
       setLoading(true);
       setPagemsg('Bank details saving');
       _post("/Payment/SaveUserPayoutInfo", bankinfo)
@@ -251,21 +256,6 @@ export default function BankaddComponents() {
 
                 { step === 3 && <form onSubmit={handlePersonal}>
                   <div className="bankInfoField">
-                      <p>Full Name</p>
-                      <input type='text' name="username" maxLength={50} autoComplete="off" value={username} onInput={onInputmaxLength}  onChange={(e)=>{setUsername(e.target.value); setErrorName('');}} />
-                      {errorName && <span>{errorName}</span>}
-                  </div>
-                  <div className="bankInfoField">
-                      <p>Mobile Number</p>
-                      <input type='number' name="rmn" min="0" maxLength={10} autoComplete="off" value={rmn} onInput={onInputmaxLength}  onChange={(e)=>{setRmn(e.target.value); setErrorRmn(''); }} />
-                      {errorRmn && <span>{errorRmn}</span>}
-                  </div>
-                  <div className="bankInfoField">
-                      <p>Aadhaar Number</p>
-                      <input type='number' name="aadhaar" min="0" maxLength={12} autoComplete="off" value={aadhaar} onInput={onInputmaxLength}  onChange={(e)=>{setAadhaar(e.target.value); setErrorAadhaar(''); }} />
-                      {errorAadhaar && <span>{errorAadhaar}</span>}
-                  </div>
-                  <div className="bankInfoField">
                       <p>Pan Number</p>
                       <input  className='textUppercase' type='text' name="pan" maxLength={10} autoComplete="off" value={pan} onInput={onInputmaxLength}  onChange={(e)=>{setPan(e.target.value); setErrorPan(''); }} />
                       {errorPan && <span>{errorPan}</span>}
@@ -304,9 +294,9 @@ export default function BankaddComponents() {
 
                   { infopersonal && <>
                   <div className='bankinfo'>
-                    <h6>Name: <b>{username}</b></h6>
-                    <h6>Mobile Number: <b>{rmn}</b></h6> 
-                    <h6>Aadhaar Number: <b>{aadhaar}</b></h6> 
+                     {/* <h6>Full Name: <b className='textUppercase'>{username}</b></h6>   
+                    <h6>Aadhaar Number: <b className='textUppercase'>{aadhaar}</b></h6> 
+                    <h6>Mobile Number: <b className='textUppercase'>{usermobile}</b></h6>   */}
                     <h6>Pan Number: <b className='textUppercase'>{pan}</b></h6> 
                     <aside  onClick={()=>stepHandler('personal')} title="Edit">Edit</aside>
                   </div>

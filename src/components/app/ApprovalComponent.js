@@ -64,10 +64,11 @@ export default function ApprovalComponent() {
         _get(`/Cms/ProductBannerImage?section=${imageSection}`)
         .then((res) => {
             setLoading(false);
-           // console.log("ProductBannerImage - ", res);
+           // console.log("ProductBannerImage approval - ", res);
             if (mounted2)
             {
-                setProductimg(res.data.result);
+                const strAscending = [...res.data.result].sort((a, b) => a.alternativetext > b.alternativetext ? 1 : -1);
+                setProductimg(strAscending);
             }
         }).catch((error) => {
             setLoading(false);
@@ -84,7 +85,8 @@ export default function ApprovalComponent() {
         speed: 500,
         adaptiveHeight:false,
         slidesToShow: 1,
-        slidesToScroll: 1
+        slidesToScroll: 1,
+        focusOnSelect: true
       };
 
 
@@ -113,7 +115,7 @@ export default function ApprovalComponent() {
                             <h3>We have the right solution for every building-related problem</h3>
                             <Slider className="pc_slider" {...settingsApproval}>
                             {  
-                               productimg && productimg.map && productimg.map((val) => <div className="pc_item" key={val.bannerid}>
+                               productimg && productimg.map && productimg.map((val, index) => <div className="pc_item" key={index} data-bannerid={val.bannerid} data-bannerimageid={val.bannerimageid}>
                                     <img src={`${imageUrl}${val.imagepath}`} alt={val.alternativetext} />
                                     <p>{val.alternativetext}</p>
                                 </div>) 

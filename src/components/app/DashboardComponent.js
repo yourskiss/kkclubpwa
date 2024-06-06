@@ -41,10 +41,11 @@ const DashboardComponent = () => {
     _get(`/Cms/ProductBannerImage?section=${imageSection}`)
     .then((res) => {
         setLoading(false);
-       // console.log("ProductBannerImage - ", res);
+        // console.log("ProductBannerImage dash - ", res);
         if (mounted2)
         {
-            setProductimg(res.data.result);
+            const numAscending = [...res.data.result].sort((a, b) => a.bannerimageid - b.bannerimageid);
+            setProductimg(numAscending);
         }
     }).catch((error) => {
         setLoading(false);
@@ -66,6 +67,7 @@ const DashboardComponent = () => {
     initialSlide: 0,
     centerMode: false,
     centerPadding: '5px',
+    focusOnSelect: true,
     responsive: [
       {
         breakpoint: 599,
@@ -131,12 +133,12 @@ const DashboardComponent = () => {
                 <h2>Earn rewards on every purchase</h2>
                 <Slider className="dashboard_slider" {...settingsDashboard}>
                 {  
-                               productimg && productimg.map && productimg.map((val) => <div className="db_item" key={val.bannerid}>
+                               productimg && productimg.map && productimg.map((val, index) => <div className="db_item" key={index} data-bannerid={val.bannerid} data-bannerimageid={val.bannerimageid}>
                                     <aside><img src={`${imageUrl}${val.imagepath}`}   alt={val.alternativetext} /></aside>
-                                    <Link href={val.hyperlink} target='_blank'>
+                                    {/* <Link href={val.hyperlink} target='_blank'>
                                         <span>Learn more</span>
                                         <Image src="/assets/images/arrows.png" width={45} height={14} alt="product" quality={99} />
-                                    </Link>
+                                    </Link> */}
                                 </div>) 
                 }
                 </Slider>

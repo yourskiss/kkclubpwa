@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { _get, _post } from "@/config/apiClient";
-import { getUserID } from '@/config/userauth';
+import { getUserID, getUserMobile } from '@/config/userauth';
 import Loader from '../shared/LoaderComponent';
 import { ipaddress, osdetails, browserdetails  } from "../core/jio";
 import HeaderDashboard from '../shared/HeaderDashboard';
@@ -14,18 +14,17 @@ export default function BankdetailupdateComponents() {
     const [pagemsg, setPagemsg] = useState('');
     const [loading, setLoading] = useState(false);
     const [mounted, setMounted] = useState(true);
+    const [mounted2, setMounted2] = useState(true);
+ 
     
     const [infobank , setInfobank] = useState(false);
     const [infoupi , setInfoupi] = useState(false);
-    const [infopersonal , setInfopersonal] = useState(true);
+    const [infopersonal , setInfopersonal] = useState(false);
  
     const [errorBank, setErrorBank] = useState('');
     const [errorIfsc, setErrorIfsc] = useState('');
     const [errorAc, setErrorAc] = useState('');
     const [errorUpi, setErrorUpi] = useState('');
-    const [errorName, setErrorName] = useState('');
-    const [errorRmn, setErrorRmn] = useState('');
-    const [errorAadhaar, setErrorAadhaar] = useState('');
     const [errorPan, setErrorPan] = useState('');
     
     const [step, setStep] = useState(4);
@@ -34,18 +33,34 @@ export default function BankdetailupdateComponents() {
     const[ifsccode,setIfsccode] = useState('');
     const[accountnumber,setAccountnumber] = useState('');
     const[upicode,setUpicode] = useState('');
-    const[aadhaar,setAadhaar] = useState('');
     const[pan,setPan] = useState('');
     const[username,setUsername] = useState('');
-    const[rmn,setRmn] = useState('');
+    const[aadhaar,setAadhaar] = useState('');
+
+ 
 
     const userid = getUserID();
+    const usermobile = getUserMobile();
     const { push } = useRouter();
     const ipInfo = ipaddress();
     const osInfo = osdetails();
     const browserInfo = browserdetails();
 
- 
+
+  useEffect(() => {
+      _get("Customer/UserInfo?userid=0&phonenumber="+ usermobile)
+      .then((res) => {
+          // console.log("get---", res.data.result);
+          if (mounted)
+          {
+            setUsername(`${res.data.result.firstname} ${res.data.result.lastname}`)
+            setAadhaar(res.data.result.aadhaarinfo);
+          }
+      }).catch((err) => {
+          console.log(err.message);
+      });
+      return () => { setMounted(false); }
+  }, []);
 
     useEffect(() => {
         setLoading(true);
@@ -53,35 +68,23 @@ export default function BankdetailupdateComponents() {
         _get("/Payment/GetUserPayoutInfo?userid="+userid)
         .then((res) => {
             setLoading(false);
-            //  console.log("bank update response - ", res);
-            if(mounted)
+            // console.log("bank update response - ", res);
+            if(mounted2)
             {
               res.data.result.bankname !== null ? setBankname(res.data.result.bankname) : setBankname('');
               res.data.result.ifcscode !== null ? setIfsccode(res.data.result.ifcscode) : setIfsccode('');
               res.data.result.accountnumber !== null ? setAccountnumber(res.data.result.accountnumber) : setAccountnumber('');
               res.data.result.upicode!== null ? setUpicode(res.data.result.upicode) : setUpicode('');
-              setAadhaar(res.data.result.aadhaar);
               setPan(res.data.result.pan);
-              setUsername(res.data.result.username);
-              setRmn(res.data.result.rmn);
-
-              if(res.data.result.bankname  !== null && res.data.result.ifcscode !== null && res.data.result.accountnumber  !== null)
-              {
-                setInfobank(true);
-              }
-
-              if(res.data.result.upicode !== null)
-              {
-                setInfoupi(true); 
-              }
-
-
+              if(res.data.result.bankname  !== null && res.data.result.ifcscode !== null && res.data.result.accountnumber  !== null){setInfobank(true);}
+              if(res.data.result.upicode !== null){setInfoupi(true); }
+              setInfopersonal(true);
             }
         }).catch((error) => {
             setLoading(false);
             console.log("GetUserPayoutInfo-", error); 
         });
-        return () => { setMounted(false); }
+        return () => { setMounted2(false); }
     }, []);
  
  
@@ -128,47 +131,15 @@ const handleUpiId = (e) => {
 }
 const handlePersonal= (e) => {
   e.preventDefault();
-  const regexMobile = /^[6789][0-9]{9}$/i;
-  if(username === '') { setErrorName('Name is required');  return }
-  else if(rmn === '') { setErrorRmn('Mobile number is required');  return }
-  else if(rmn?.length !== 10) { setErrorRmn('Mobile number must have 10 Digit');  return }
-  else if(!regexMobile.test(rmn)){ setErrorRmn("Invalid mobile number!");  return }
-  else if(aadhaar === '') { setErrorAadhaar('Aadhaar number is required');  return }
-  else if(aadhaar?.length !== 12) { setErrorAadhaar('Aadhaar number must have 12 Digit');  return }
-  else if(pan === '') { setErrorPan('Pan Number is required');  return }
+  if(pan === '') { setErrorPan('Pan Number is required');  return }
   else if(pan?.length !== 10) { setErrorPan('Pan Number must have 10 Digit');  return }
   else { 
-      setErrorName('');
-      setErrorRmn('');
-      setErrorAadhaar('');
       setErrorPan('');
       setInfopersonal(true);
       setOption('review');
       setStep(4);
     }
 }
-
-const bankSkipHandal = (e) => {
-  e.preventDefault();
-  setErrorBank('');
-  setErrorIfsc('');
-  setErrorAc('');
-  setInfobank(false); 
-  setBankname('');
-  setIfsccode('');
-  setAccountnumber('');
-  setOption('upi');
-  setStep(2);
-} 
-
-const upiSkipHandal = (e) => {
-  e.preventDefault();
-  setErrorUpi('');
-  setInfoupi(false);
-  setUpicode('');
-  setOption('personal');
-  setStep(3);
-} 
 
 const reviewHandlar = (e) => {
   e.preventDefault();
@@ -188,10 +159,10 @@ const savebankdetail = () =>
     ifcscode: ifsccode.trim(),
     accountnumber: accountnumber.trim(),
     upicode: upicode.trim(),
-    aadhaar: aadhaar.trim(),
+    aadhaar: aadhaar,
     pan:pan.trim(),
-    username: username.trim(),
-    rmn: rmn.trim(),
+    username: username,
+    rmn: usermobile,
     locationpage: "/bankdetailsupdate",
     ipaddress: ipInfo,
     osdetails: osInfo,
@@ -279,21 +250,6 @@ const savebankdetail = () =>
  
                 { step === 3 && <form onSubmit={handlePersonal}>
                   <div className="bankInfoField">
-                      <p>Full Name</p>
-                      <input type='text' name="username" maxLength={50} autoComplete="off" value={username || ''} onInput={onInputmaxLength} onChange={(e)=>{setUsername(e.target.value); setErrorName('');}} />
-                      {errorName && <span>{errorName}</span>}
-                  </div>
-                  <div className="bankInfoField">
-                      <p>Mobile Number</p>
-                      <input type='number' name="rmn" min="0" maxLength={10} autoComplete="off" value={rmn || ''} onInput={onInputmaxLength}  onChange={(e)=>{setRmn(e.target.value); setErrorRmn(''); }} />
-                      {errorRmn && <span>{errorRmn}</span>}
-                  </div>
-                  <div className="bankInfoField">
-                      <p>Aadhaar Number</p>
-                      <input type='number' name="aadhaar" min="0" maxLength={12} autoComplete="off" value={aadhaar || ''} onInput={onInputmaxLength}  onChange={(e)=>{setAadhaar(e.target.value); setErrorAadhaar(''); }} />
-                      {errorAadhaar && <span>{errorAadhaar}</span>}
-                  </div>
-                  <div className="bankInfoField">
                       <p>Pan Number</p>
                       <input className='textUppercase' type='text' name="pan" maxLength={10} autoComplete="off" value={pan || ''} onInput={onInputmaxLength}  onChange={(e)=>{setPan(e.target.value); setErrorPan(''); }} />
                       {errorPan && <span>{errorPan}</span>}
@@ -348,14 +304,14 @@ const savebankdetail = () =>
 
                   { infopersonal && <>
                   <div className='bankinfo'>
-                    <h6>Name: <b>{username}</b></h6>
-                    <h6>Mobile Number: <b>{rmn}</b></h6> 
-                    <h6>Aadhaar Number: <b>{aadhaar}</b></h6> 
+                    {/* <h6>Full Name: <b className='textUppercase'>{username}</b></h6>   
+                    <h6>Aadhaar Number: <b className='textUppercase'>{aadhaar}</b></h6> 
+                    <h6>Mobile Number: <b className='textUppercase'>{usermobile}</b></h6>  */}
                     <h6>Pan Number: <b className='textUppercase'>{pan}</b></h6> 
                     <aside  onClick={(e)=>stepHandler('personal')} title="Edit">Edit</aside>
                   </div>
                   </>}
-
+ 
 
                   <div className="bankInfoField">
                     <button className='bankinfobtn' onClick={reviewHandlar}>SAVE CHANGES</button>
