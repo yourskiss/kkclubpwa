@@ -71,7 +71,7 @@ export default function OtpPart3({isMobStatus, getMobNumber, phonenumber}) {
   }
 
   const verifyotp = () => {
-     loginnow(); // tesing
+    loginnow(); // tesing
     /*
       setLoading(true);
       setPagemsg('Verifying OTP');
