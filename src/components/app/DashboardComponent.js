@@ -21,8 +21,9 @@ const DashboardComponent = () => {
     const[productimg, setProductimg] = useState({});
     const[userstatus, setUserstatus] = useState('');
     const[ss, setSS] = useState('');
+    const [windowSize, setWindowSize] = useState(0);
+
     const gtUST = getUserStatus();
- 
     const { push } = useRouter();
     const rewardspoints = parseInt(TotalrewardpointsComponent());
     const redeemminimumpoint = parseInt(process.env.NEXT_PUBLIC_REDEEM_MIN_POINT);
@@ -77,14 +78,17 @@ var settingsDashboardMobile = {
   focusOnSelect: true,
   accessibility: true,
 };
-const windowWidth = useRef(window.innerWidth);
-const windowWidthCurrent = windowWidth.current;
+
+
+ 
+ 
 useEffect(() => {
-  console.log(windowWidth, windowWidthCurrent);
+  setWindowSize(window.innerWidth.current);
+
   setTimeout(function(){
-    windowWidthCurrent > 599 ? setSS(settingsDashboardWeb) : setSS(settingsDashboardMobile)
+    windowSize > 599 ? setSS(settingsDashboardWeb) : setSS(settingsDashboardMobile)
   },1000);
-}, [windowWidthCurrent]);
+}, [windowSize]);
 
   const redeemprompt = () => {
     if(userstatus === "PENDING")
