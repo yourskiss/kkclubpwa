@@ -52,6 +52,7 @@ const DashboardComponent = () => {
   return () => { setMounted2(false); }
 }, []);
 
+
 var settingsDashboardWeb = {
   dots: true,
   arrows:false,
@@ -79,15 +80,9 @@ var settingsDashboardMobile = {
   accessibility: true,
 };
 
-
- 
- 
 useEffect(() => {
   setWindowSize(window.innerWidth.current);
-
-  setTimeout(function(){
-    windowSize > 599 ? setSS(settingsDashboardWeb) : setSS(settingsDashboardMobile)
-  },1000);
+  setTimeout(function() { windowSize > 599 ? setSS(settingsDashboardWeb) : setSS(settingsDashboardMobile) }, 1000);
 }, [windowSize]);
 
   const redeemprompt = () => {
