@@ -99,14 +99,10 @@ export default function ScanqrcodeComponent() {
               toast.error("This coupon code is inactive. Please enter a valid coupon code. ");
               setTimeout(function(){window.location.reload(); },2000);
           } 
-          else if(res.data.resultcode === -100)
+          else // if(res.data.resultcode === -100)
           {
               toast.error("There is an issue while availing the coupon. kindly contact to the support team.");
               setTimeout(function(){window.location.reload(); },2000);
-          }
-          else
-          {
-            window.location.reload();
           }
         }).catch((err) => {
           setLoading(false); 

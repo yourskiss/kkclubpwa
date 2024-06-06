@@ -81,7 +81,7 @@ var settingsDashboardMobile = {
 };
 
 useEffect(() => {
-  setWindowSize(window.innerWidth.current);
+  setWindowSize(window.innerWidth);
   setTimeout(function() { windowSize > 599 ? setSS(settingsDashboardWeb) : setSS(settingsDashboardMobile) }, 1000);
 }, [windowSize]);
 

@@ -33,21 +33,26 @@ export default function GetcouponeComponent() {
   useEffect(() => {
       if(isCC)
       {
+        setLoading(true);
+        setPagemsg('Coupon Checking');
         setCouponecode(getCC);
-       // toast.success("QR code scan successfully.")
        }
        else
        {
-        toast.error("Invalide QR Code...");
-        push("/rewards");
-        removeCouponeCode();
+        push("/scanqrcode");
        }
-  }, [couponecode]);
+  }, []);
  
- 
-  const handleSubmitCode = (e) => 
+  useEffect(() => {
+    if(couponecode !== '')
+    {
+      setTimeout(function(){ handleSubmitCode(); },1000);
+    }
+}, [couponecode]);
+
+
+  const handleSubmitCode = () => 
   {
-    e.preventDefault();
     setLoading(true);
     setPagemsg('Validating Coupon');
     
@@ -62,23 +67,41 @@ export default function GetcouponeComponent() {
     // console.log(qrdata);
         _post("Customer/ValidateCouponAndSave", qrdata)
         .then((res) => {
-          setLoading(false);
-          // console.log(res)
-            if(res.data.result === null)
+            setTimeout(function(){setLoading(false);},2000); 
+            // console.log(res)
+            if(res.data.resultcode === 0)
             {
-              toast.error(res.data.resultmessage);
-              removeCouponeCode();
-              push('/scanqrcode');
-             }
-             else
-             {
-              toast.success("Coupon Successfully Validated.");
-              removeCouponeCode();
-              push(`/scanqrcode/${res.data.result[0].pointid}`);
-             }
+                toast.success("Your code has been successfully scanned ");
+                removeCouponeCode();
+                push(`/scanqrcode/${res.data.result[0].pointid}`);
+            } 
+            else if(res.data.resultcode === -101)
+            {
+                toast.error("This code has already been scanned. Try again.");
+                removeCouponeCode();
+                setTimeout(function(){push("/scanqrcode"); },2000);
+            } 
+            else if(res.data.resultcode === -102)
+            {
+                toast.error("This coupon code is invalid. Please enter a valid coupon code.");
+                removeCouponeCode();
+                setTimeout(function(){push("/scanqrcode"); },2000);
+            } 
+            else if(res.data.resultcode === -103)
+              {
+                toast.error("This coupon code is inactive. Please enter a valid coupon code. ");
+                removeCouponeCode();
+                setTimeout(function(){push("/scanqrcode"); },2000);
+            } 
+            else // if(res.data.resultcode === -100)
+            {
+                toast.error("There is an issue while availing the coupon. kindly contact to the support team.");
+                removeCouponeCode();
+                setTimeout(function(){ push("/scanqrcode"); },2000);
+            }
         }).catch((err) => {
           setLoading(false); 
-          toast.error(err.message);
+          console.log(err.message);
         });
   }
 
@@ -90,7 +113,7 @@ export default function GetcouponeComponent() {
 
           <div className="scanqrcodecontainer">
             <h2>Coupone Code: <span>{couponecode}</span></h2>
-            <form className="scanqrcodeForm" onSubmit={handleSubmitCode} >
+            <form className="scanqrcodeForm" onSubmit={handleSubmitCode} style={{'display':'none'}}>
                 <button>Validate Coupon</button>
             </form>
           </div>
