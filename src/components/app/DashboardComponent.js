@@ -1,7 +1,7 @@
 "use client";
 import Image from 'next/image';
 import { toast } from 'react-toastify';
-import { useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
 import CountUp from 'react-countup';
@@ -11,7 +11,6 @@ import "slick-carousel/slick/slick-theme.css";
 import HeaderDashboard from '../shared/HeaderDashboard';
 import Loader from '../shared/LoaderComponent';
 import { _get } from "@/config/apiClient";
-import Link from 'next/link';
 import FooterComponent from '../shared/FooterComponent';
 import { getUserStatus } from "@/config/userinfo";
  
@@ -21,6 +20,7 @@ const DashboardComponent = () => {
     const [mounted2, setMounted2] = useState(true);
     const[productimg, setProductimg] = useState({});
     const[userstatus, setUserstatus] = useState('');
+    const[ss, setSS] = useState('');
     const gtUST = getUserStatus();
  
     const { push } = useRouter();
@@ -28,14 +28,11 @@ const DashboardComponent = () => {
     const redeemminimumpoint = parseInt(process.env.NEXT_PUBLIC_REDEEM_MIN_POINT);
     const imageUrl = process.env.NEXT_PUBLIC_IMAGE_URL;
     const imageSection = process.env.NEXT_PUBLIC_SECTION_DASHBOARD;
- 
- 
+
 
     useEffect(() => {
       setUserstatus(gtUST);
-  }, []);
-
-  useEffect(() => {
+ 
     setLoading(true);
     setPagemsg('Fatching products');
     _get(`/Cms/ProductBannerImage?section=${imageSection}`)
@@ -54,28 +51,40 @@ const DashboardComponent = () => {
   return () => { setMounted2(false); }
 }, []);
 
-
-
- 
-  var settingsDashboard = {
-    dots: true,
-    arrows:false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 2,
-    slidesToScroll: 1,
-    initialSlide: 0,
-    centerMode: false,
-    centerPadding: '5px',
-    focusOnSelect: true,
-    responsive: [
-      {
-        breakpoint: 599,
-        settings: {slidesToShow: 1,}
-      }
-    ]
-  };
-
+var settingsDashboardWeb = {
+  dots: true,
+  arrows:false,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 2,
+  slidesToScroll: 1,
+  initialSlide: 0,
+  centerMode: false,
+  centerPadding: '5px',
+  focusOnSelect: true,
+  accessibility: true,
+};
+var settingsDashboardMobile = {
+  dots: true,
+  arrows:false,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  initialSlide: 0,
+  centerMode: false,
+  centerPadding: '5px',
+  focusOnSelect: true,
+  accessibility: true,
+};
+const windowWidth = useRef(window.innerWidth);
+const windowWidthCurrent = windowWidth.current;
+useEffect(() => {
+  console.log(windowWidth, windowWidthCurrent);
+  setTimeout(function(){
+    windowWidthCurrent > 599 ? setSS(settingsDashboardWeb) : setSS(settingsDashboardMobile)
+  },1000);
+}, [windowWidthCurrent]);
 
   const redeemprompt = () => {
     if(userstatus === "PENDING")
@@ -131,7 +140,7 @@ const DashboardComponent = () => {
 
             <div className="dashboard_products">
                 <h2>Earn rewards on every purchase</h2>
-                <Slider className="dashboard_slider" {...settingsDashboard}>
+                <Slider className="dashboard_slider" {...ss}>
                 {  
                                productimg && productimg.map && productimg.map((val, index) => <div className="db_item" key={index} data-bannerid={val.bannerid} data-bannerimageid={val.bannerimageid}>
                                     <aside><img src={`${imageUrl}${val.imagepath}`}   alt={val.alternativetext} /></aside>
