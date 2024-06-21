@@ -10,9 +10,8 @@ import { setUserInfo } from '@/config/userinfo';
 export default  function HeaderDashboard() {
   const [mounted, setMounted] = useState(true);
   const [mounted2, setMounted2] = useState(true);
-  const[usershort, setUsershort] = useState('');
-  const[userstatus, setUserstatus] = useState('');
-  const[username, setUsername] = useState('');
+  const [usersinfo, setUsersinfo] = useState('');
+   
   const[notificationCount, setNotificationCount] = useState(0);
   const { push } = useRouter();
   const userToken  =  isUserToken();
@@ -31,9 +30,7 @@ useEffect(() => {
       if (mounted)
       {
         setUserInfo(res.data.result.fullname, res.data.result.shortname, res.data.result.verificationstatus);
-        setUsershort(res.data.result.shortname);
-        setUserstatus(res.data.result.verificationstatus);
-        setUsername(res.data.result.fullname);
+        setUsersinfo(res.data.result);
       }
     }).catch((error) => {
         console.log("UserInfo-",error); 
@@ -69,7 +66,7 @@ return () => { setMounted2(false); }
           <Image onClick={() => push("/dashboard") } src="/assets/images/logo.png" width={270} height={50} alt="logo" quality={99} />
         </aside>
         <section>
-            <Link href="/scanqrcode" className='header_scanqrcode'><Image src="/assets/images/QR.png" width={100} height={100} alt={username} quality={90} /></Link>
+            <Link href="/scanqrcode" className='header_scanqrcode'><Image src="/assets/images/QR.png" width={100} height={100} alt='qr' quality={90} /></Link>
            
         
             <span className='header_notification' onClick={()=> push('/notifications') }>
@@ -78,8 +75,8 @@ return () => { setMounted2(false); }
             </span> 
           
             
-            <aside className={ userstatus === "APPROVE" ? "header_userdp status_approve" : "header_userdp status_pending" } >
-              <span onClick={() => push("/profile") }>{usershort}</span>
+            <aside className={ usersinfo.verificationstatus === "APPROVE" ? "header_userdp status_approve" : "header_userdp status_pending" } >
+              <span onClick={() => push("/profile") }>{usersinfo.shortname}</span>
             </aside>
         </section>
       </header>

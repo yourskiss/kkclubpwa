@@ -16,7 +16,7 @@ export default function BankdetailupdateComponents() {
     const [mounted, setMounted] = useState(true);
     const [mounted2, setMounted2] = useState(true);
  
-    
+    const [accountType, setAccountType] = useState('');
     const [infobank , setInfobank] = useState(false);
     const [infoupi , setInfoupi] = useState(false);
     const [infopersonal , setInfopersonal] = useState(false);
@@ -95,9 +95,12 @@ const onInputmaxLength = (e) => {
     e.target.value = e.target.value.slice(0, e.target.maxLength);
   }
 }
+const changeAccountType = (val) => {
+  setAccountType(val);
+}
 const stepHandler = (val) => {
-  if(val ===  'bank') { setStep(1); setInfobank(false);  }
-  if(val ===  'upi') { setStep(2); setInfoupi(false);  }
+  if(val ===  'bank') { setStep(1); setAccountType('bank'); setInfobank(false);  }
+  if(val ===  'upi') { setStep(1); setAccountType('upi'); setInfoupi(false);  }
   if(val ===  'personal') { setStep(3); setInfopersonal(false); }
   if(val ===  'review') { setStep(4);  }
   setOption(val);
@@ -205,15 +208,24 @@ const savebankdetail = () =>
                  
               {
                 step !== 4 && <ul>
-                  <li className={ option==='bank' ? 'active' : infobank ? 'activated' : null } onClick={()=>stepHandler('bank')}>Bank Details</li>
+                  <li className={ option==='bank' || option==='upi' ? 'active'  : null } onClick={()=>stepHandler('bank')}>Bank Details</li>
                   <li className='normal'><span>//</span></li>
-                  <li className={ option==='upi' ? 'active' :  infoupi ? 'activated' : null } onClick={()=>stepHandler('upi')}>UPI ID</li>
-                  <li className='normal'><span>//</span></li>
-                  <li className={ option==='personal' ? 'active' : infopersonal ? 'activated' : null } onClick={()=>stepHandler('personal')}>Personal Details</li>
+                  <li className={ option==='personal' ? 'active' : null } onClick={()=>stepHandler('personal')}>Personal Details</li>
                 </ul>
               }
+
+                  { step === 1 && <div className="bankTypeField">
+                      <h6>
+                        <input id='accountBank' type='radio' name='accounttype' value='bank' checked={accountType === 'bank'} onChange={()=>changeAccountType('bank')} />
+                        <label htmlFor="accountBank"><span>Add Bank Detail</span></label>
+                      </h6>
+                      <h6>
+                        <input id='accountUpi' type='radio' name='accounttype' value='upi' checked={accountType === 'upi'} onChange={()=>changeAccountType('upi')}  />
+                        <label htmlFor="accountUpi"><span>Add UPI ID</span></label>
+                      </h6>
+                  </div> } 
               
-              { step === 1 && <form onSubmit={handleBankInfo}>
+              { step === 1 && accountType === 'bank' && <form onSubmit={handleBankInfo}>
                   <div className="bankInfoField">
                       <p>Bank Name</p>
                       <input type='text' name="bankname" maxLength={50} autoComplete="off" value={bankname || ''} onInput={onInputmaxLength} onChange={(e)=>{setBankname(e.target.value); setErrorBank('');}} />
@@ -231,12 +243,11 @@ const savebankdetail = () =>
                   </div>
                   <div className="bankInfoField">
                     <button className='bankinfobtn'>Next</button>
-                    {/* <aside onClick={bankSkipHandal}>Skip</aside> */}
                   </div>
                 </form> }
 
 
-                { step === 2 && <form onSubmit={handleUpiId}>
+                { step === 1 && accountType === 'upi' && <form onSubmit={handleUpiId}>
                   <div className="bankInfoField">
                       <p>UPI ID</p>
                       <input type='text' name="upicode" maxLength={50} autoComplete="off" value={upicode || ''} onInput={onInputmaxLength}  onChange={(e)=>{setUpicode(e.target.value); setErrorUpi('')}} />
@@ -244,7 +255,6 @@ const savebankdetail = () =>
                   </div>
                   <div className="bankInfoField">
                     <button className='bankinfobtn'>Next</button>
-                    {/* {infobank ? <aside onClick={upiSkipHandal}>Skip</aside> : <aside onClick={()=>stepHandler('bank')}>Back</aside>} */}
                   </div>
                 </form> }
  
@@ -255,8 +265,7 @@ const savebankdetail = () =>
                       {errorPan && <span>{errorPan}</span>}
                   </div>
                   <div className="bankInfoField">
-                  <button className='bankinfobtn'>NEXT</button>
-                    {/* <aside onClick={()=>stepHandler('upi')}>Back</aside> */}
+                    <button className='bankinfobtn'>NEXT</button>
                   </div>
                 </form> }
 
@@ -304,9 +313,9 @@ const savebankdetail = () =>
 
                   { infopersonal && <>
                   <div className='bankinfo'>
-                    {/* <h6>Full Name: <b className='textUppercase'>{username}</b></h6>   
+                    <h6>Full Name: <b className='textUppercase'>{username}</b></h6>   
                     <h6>Aadhaar Number: <b className='textUppercase'>{aadhaar}</b></h6> 
-                    <h6>Mobile Number: <b className='textUppercase'>{usermobile}</b></h6>  */}
+                    <h6>Mobile Number: <b className='textUppercase'>{usermobile}</b></h6>
                     <h6>Pan Number: <b className='textUppercase'>{pan}</b></h6> 
                     <aside  onClick={(e)=>stepHandler('personal')} title="Edit">Edit</aside>
                   </div>

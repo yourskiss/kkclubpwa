@@ -7,13 +7,10 @@ import Rewardform from '../shared/Rewardform';
 import { useEffect, useState } from 'react';
 import { _get } from "@/config/apiClient";
 import { getUserID } from '@/config/userauth';
-import Loader from '../shared/LoaderComponent';
 import HeaderDashboard from '../shared/HeaderDashboard';
 import FooterComponent from '../shared/FooterComponent';
 
 export default function RedeempointsComponents() {
-    const [pagemsg, setPagemsg] = useState('');
-    const [loading, setLoading] = useState(false);
     const [mounted, setMounted] = useState(true);
     const [resultcode, setResultcode] = useState('');
     const rewardspoints = TotalrewardpointsComponent();
@@ -73,6 +70,5 @@ export default function RedeempointsComponents() {
 
     <FooterComponent />
 
-   <Loader showStatus={loading} message={pagemsg} />  
 </>)
 }

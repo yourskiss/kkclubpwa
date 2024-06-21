@@ -21,6 +21,5 @@ export default function TotalRedeemedPoints() {
             });
             return () => { setMounted(false); }
         }, [userID]);
-
         return points;
   }

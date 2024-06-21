@@ -192,7 +192,7 @@ export default function RegistationComponent() {
  
               { step === 1 && <form onSubmit={handleStep1}>
                 <div className="registerField">
-                  <div className="registertext">First Name - As per Adhaar Card<small>*</small></div>
+                  <div className="registertext">First Name - As per Aadhaar Card<small>*</small></div>
                   <input
                     className="registerinput"
                     type="text"
@@ -206,7 +206,7 @@ export default function RegistationComponent() {
                   {fnErrors && <span className="registerError">{fnErrors}</span> }
                 </div>
                 <div className="registerField">
-                  <div className="registertext">Last Name - As per Adhaar Card<small>*</small></div>
+                  <div className="registertext">Last Name - As per Aadhaar Card<small>*</small></div>
                   <input
                     className="registerinput"
                     type="text"

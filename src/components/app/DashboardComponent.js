@@ -26,7 +26,7 @@ const DashboardComponent = () => {
     const gtUST = getUserStatus();
     const { push } = useRouter();
     const rewardspoints = parseInt(TotalrewardpointsComponent());
-    const redeemminimumpoint = parseInt(process.env.NEXT_PUBLIC_REDEEM_MIN_POINT);
+   // const redeemminimumpoint = parseInt(process.env.NEXT_PUBLIC_REDEEM_MIN_POINT);
     const imageUrl = process.env.NEXT_PUBLIC_IMAGE_URL;
     const imageSection = process.env.NEXT_PUBLIC_SECTION_DASHBOARD;
 
@@ -35,7 +35,7 @@ const DashboardComponent = () => {
       setUserstatus(gtUST);
  
     setLoading(true);
-    setPagemsg('Fatching products');
+    setPagemsg('Fetching products');
     _get(`/Cms/ProductBannerImage?section=${imageSection}`)
     .then((res) => {
         setLoading(false);
@@ -91,11 +91,11 @@ useEffect(() => {
         push("/approval");
         return
     }
-    if(userstatus === "APPROVE" && rewardspoints < redeemminimumpoint)
-    {
-        toast.info(`You can redeem minimum ${redeemminimumpoint} reward points.`); 
-        return
-    }
+    // if(userstatus === "APPROVE" && rewardspoints < redeemminimumpoint)
+    // {
+    //     toast.info(`You can redeem minimum ${redeemminimumpoint} reward points.`); 
+    //     return
+    // }
     push("/redeempoints");
   }
 

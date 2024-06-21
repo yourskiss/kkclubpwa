@@ -8,6 +8,8 @@ import Loader from '../shared/LoaderComponent';
 import { ipaddress, osname  } from "../core/jio";
 import { _get } from "@/config/apiClient";
 import { getUserStatus } from "@/config/userinfo";
+import TotalRedeemedPoints from '../shared/totalredemption';
+
 
 export default function Rewardform() {
     const [pagemsg, setPagemsg] = useState('');
@@ -19,7 +21,7 @@ export default function Rewardform() {
     const[errorMsg, setErrorMsg] = useState(''); 
     const[userstatus, setUserstatus] = useState('');
     const gtUST = getUserStatus();
- 
+    const redeemedpointTotal = parseInt(TotalRedeemedPoints());
     const rewardspoints = parseInt(TotalrewardpointsComponent());
     const pointvalue = parseInt(process.env.NEXT_PUBLIC_POINT_VALUE);
     const redeemminimumpoint = parseInt(process.env.NEXT_PUBLIC_REDEEM_MIN_POINT);
@@ -70,7 +72,7 @@ export default function Rewardform() {
             setErrorMsg('Please enter your reward points'); 
             return;
         }
-        if(redeempoint < redeemminimumpoint)
+        if(redeemedpointTotal === 0 && redeempoint < redeemminimumpoint)
         {  
             setErrorMsg(`You can redeem minimum ${redeemminimumpoint} reward points.`); 
             return;

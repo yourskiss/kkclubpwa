@@ -313,9 +313,9 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 .approvalcontainer dl dt aside { display: inline-block; width:96px; height: 96px; border-radius: 50%; background-color: #b6b5b5; margin: 0; padding:5px; border: none; overflow: hidden; box-sizing: border-box; }
 .approvalcontainer dl dt aside span {  display: flex; justify-content: center; align-items: center; float: left; width: 100%; height:100%; border: solid 3px #fff; border-radius: 50%; margin: 0;padding: 0; box-sizing: border-box; line-height: 1; font-size: 28px; text-transform: uppercase; font-family: var(--font-lneue); color: #fff; letter-spacing: 2px; }
 .approvalcontainer dl dd { list-style: none; width: 100%; float: left; margin: 0;padding: 0; }
-.approvalcontainer dl dd p { padding: 0; width: 100%; float: left; text-align: left; text-transform: none; font-weight: 600;color:#F5F0EB; font-size:36px; font-family: var(--font-lneue); line-height: 1.2; }
+.approvalcontainer dl dd p { padding: 0; width: 100%; float: left; text-align: left; text-transform: none; font-weight: 400; color:#F5F0EB; font-size:30px;  line-height: 1.2; }
 .approvalcontainer dl dd p span { display: block; margin:0 0 1rem 0;  }
-.approvalcontainer dl dd p span b { font-size: 140%; color:#afcdaf;  }
+.approvalcontainer dl dd p span:first-child { font-size: 150%; color:#afcdaf; font-weight: 600; font-family: var(--font-lneue); }
 
 .approvalcontainer article{   width: 100%; float: left; text-align: center; text-transform: none;  font-weight: 500; color:#afcdaf;  font-size:24px;  }
 .approvalcontainer article a { display: inline-block; text-decoration:underline; cursor: pointer; color:#afcdaf;   transition: all 0.5s ease-out;  }
@@ -323,7 +323,7 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 
 .approvalcontainer section { width: 100%; float: left; margin:0;padding: 0; }
 .approvalcontainer section h2 { margin:0 0 2rem 0; padding: 0; width: 100%; float: left; text-align: left; text-transform: none; font-weight: 500; color:rgba(245, 240, 235, 0.6); font-size: 24px;  }
-.approvalcontainer section h3 { margin:0 0 3rem 0; padding: 0; width: 100%; float: left; text-align: left; text-transform: none; font-weight: 500;color:#F5F0EB; font-size: 36px;  }
+.approvalcontainer section h3 { margin:0 0 2rem 0; padding: 0; width: 100%; float: left; text-align: left; text-transform: none; font-weight: 500;  font-size: 36px; font-family: var(--font-lneue); color: #afcdaf; line-height: 1.2; }
 .pc_slider {width: 100%;float: left;overflow: hidden;margin: 0 !important;padding: 0 0 30px 0 !important;}
 .pc_item { position: relative; width: 100%;float: left;height: auto;margin: 0;padding: 0; }
 .pc_item img { display: block; width: 100%; height: auto; float: left;margin: 0;padding: 0;border: 0;}
@@ -522,8 +522,10 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 .profile_status dl dt.status_pending { background: #b6b5b5; }
 .profile_status dl dd { width: 400px; }
 .profile_status dl dd h2 { display: block; width: 100%; float: left; margin:0; padding:0; text-align: left;  font-weight: bold; color: #AFCDAF; font-size:32px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-transform: uppercase; }
-.profile_status dl dd p { display: block; width: 100%; float: left; margin:0; padding:1rem 0 1.2rem 0; text-align: left;  font-weight: 600; color:#AFCDAF; font-size:18px; }
-.profile_status dl dd p b { font-weight: 400; color:#fff;  }
+.profile_status dl dd p { display: block; width: 100%; float: left; margin:0; padding:0.5rem 0 0 0; text-align: left;  font-weight: 600; color:#AFCDAF; font-size:18px; text-transform: uppercase; }
+.profile_status dl dd p b { font-size: 90%; font-weight: 400; color:#fff;  }
+.profile_status dl dd p span.approvedStatus { color:#AFCDAF; }
+.profile_status dl dd p span.pendingStatus { color:#f30; }
 .profile_status dl dd h3 { position: relative;  display: block; width: 100%; height: 12px; float: left; margin:0; padding:0; background-color:#F5F0EB66; border: solid 2px #191919; line-height: 0; font-size: 0; border-radius: 10px; overflow: hidden; }
 .profile_status dl dd h3 span { position: absolute; left: 0; top: 0; background-color:#AFCDAF; border: none; width: auto; height: 100%; }
 .profile_status aside { display: block; width: auto; float: left; margin:0; padding:0; text-align: right;  font-weight: bold; color: #AFCDAF; font-size:22px; transition: all 0.5s ease-out; cursor: pointer;  }
@@ -591,6 +593,17 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 .bankInfoField button:hover { background: #AFCDAF;  color: #191919;   transition: all 0.5s ease-in; }
 .bankInfoField button[disabled], .bankInfoField button:disabled { user-select: none;  pointer-events: none;   opacity: 0.6; }
 .bankInfoField button.bankinfobtn { width:100%;   }
+
+.bankTypeField { margin: 1.5rem 0 1rem 0; width: 100%; float: left; display:flex; justify-content: center; align-items: center; }
+.bankTypeField h6 { position: relative; width: auto; float: left;text-align: left; margin: 0 1rem;   }
+.bankTypeField h6 input[type='radio'] { display: none; }
+.bankTypeField h6 label { position: relative; display: flex; justify-content: flex-start; align-items:center; box-sizing: border-box; width:auto; float: left; padding:0; margin:0; text-align: left;  cursor: pointer; background:transparent; font-weight: 500; font-size: 16px; color:#fff; }
+.bankTypeField h6 input[type='radio'] { display: none; }
+.bankTypeField h6 label span { margin-left: 0.5rem; }
+.bankTypeField h6 label:before { content: ""; padding: 0; margin: 0;  background:none; border-radius:0; height: 16px; width: 16px;  border:solid 2px rgba(245, 240, 235, 0.8); }
+.bankTypeField h6 label:after { opacity:0.1; content: ""; z-index: 2; position:absolute; left: 4px; top:2px; transform: rotate(-45deg); padding: 0; margin: 0;  background:none; border-radius:0; height:6px; width: 16px;  border-left:solid 3px #AFCDAF; border-bottom: solid 3px #AFCDAF; }
+.bankTypeField h6 input[type="radio"]:checked + label:before{ border-color:#AFCDAF; }
+.bankTypeField h6 input[type="radio"]:checked + label:after{  opacity:1; }
 
 
 
@@ -664,7 +677,7 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 .approvalcontainer dl dd p {  font-size: 18px;  }
 .approvalcontainer dl dd p span { margin:0 0 0.5rem 0;  font-size:20px; }
 .approvalcontainer section h2 {   margin:0 0 1rem 0;  font-size: 20px; }
-.approvalcontainer section h3 { margin:0 0 2rem 0;  font-size: 24px;  }
+.approvalcontainer section h3 { margin:0 0 1.5rem 0;  font-size: 24px;  }
 .pc_item p {  font-size:30px; }
 
 
@@ -759,7 +772,7 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 .profile_status dl dt span { border-width:2px; font-size: 20px;  }
 .profile_status dl dd { width: 200px; }
 .profile_status dl dd h2 { font-size:18px;  }
-.profile_status dl dd p { padding:0.5rem 0 0.7rem 0;font-size:14px; }
+.profile_status dl dd p { padding:0.3rem 0 0 0;font-size:14px; }
 .profile_status dl dd h3 {  height:9px; border-width:1px; }
 .profile_status aside { font-size:18px; }
 .profile_menu { padding:2rem 1rem; }

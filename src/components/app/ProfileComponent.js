@@ -9,45 +9,57 @@ import { getUserID, removeUserToken } from '@/config/userauth';
 import { _get } from "@/config/apiClient";
 import { motion } from "framer-motion";
 import FooterComponent from "../shared/FooterComponent";
-import { getUserStatus, getUserName, getUserShort, removeUserInfo } from "@/config/userinfo";
-import {  isUserToken } from "@/config/userauth";
+import { setUserInfo, removeUserInfo } from "@/config/userinfo";
+import {  getUserMobile, isUserToken } from "@/config/userauth";
  
-
 export default function ProfileComponent() {
   const [mounted, setMounted] = useState(true);
-  const [userstatus, setUserstatus] = useState('');
-  const [usershort, setUsershort] = useState('');
-  const [username, setUsername] = useState('');
+  const [mounted2, setMounted2] = useState(true);
+  const [usersinfo, setUsersinfo] = useState('');
 
   const rewardspoints = parseInt(TotalrewardpointsComponent());
-  const redeemminimumpoint = parseInt(process.env.NEXT_PUBLIC_REDEEM_MIN_POINT);
+ // const redeemminimumpoint = parseInt(process.env.NEXT_PUBLIC_REDEEM_MIN_POINT);
   const userid = getUserID();
   const [resultcode, setResultcode] = useState('');
   const Router = useRouter();
   const userToken   =  isUserToken();
-  const gtUST = getUserStatus();
-  const gtUNM = getUserName();
-  const gtUSN = getUserShort();
- 
+  const userMobile = getUserMobile();
+
   useEffect(() => {
     if(!userToken) { Router.push("/login"); return  }
-    setUserstatus(gtUST);
-    setUsershort(gtUSN);
-    setUsername(gtUNM);
   }, []);
+  userMobile
+
+  useEffect(() => {
+    _get("Customer/UserInfo?userid=0&phonenumber="+ userMobile)
+    .then((res) => {
+     // console.log("UserInfo response - ", res);
+      if (mounted2)
+      {
+        setUsersinfo(res.data.result);
+        setUserInfo(res.data.result.fullname, res.data.result.shortname, res.data.result.verificationstatus);
+      }
+    }).catch((error) => {
+        console.log("UserInfo-",error); 
+    });
+   
+  return () => { setMounted2(false); }
+}, []);
+
+
 
 
   const redeemprompt = () => {
-    if(userstatus === "PENDING")
+    if(usersinfo.verificationstatus === "PENDING")
     {
       Router.push("/approval");
       return 
     }
-    if(userstatus === "APPROVE" && rewardspoints < redeemminimumpoint)
-    {
-      toast.info(`You can redeem minimum ${redeemminimumpoint} reward points.`);
-      return 
-    }
+    // if(usersinfo.verificationstatus === "APPROVE" && rewardspoints < redeemminimumpoint)
+    // {
+    //   toast.info(`You can redeem minimum ${redeemminimumpoint} reward points.`);
+    //   return 
+    // }
     Router.push("/redeempoints");
   }
 
@@ -97,15 +109,19 @@ const backbuttonHandal = () => {
     <div className="screenmain screenprofile"> 
         <div className="screencontainer">
            
- 
+        
+
+
+
             <div className="profile_status">
                 <dl>
-                  <dt className={ userstatus === "APPROVE" ? "status_approve" : "status_pending" }>
-                    <span>{usershort}</span>
+                  <dt className={ usersinfo.verificationstatu === "APPROVE" ? "status_approve" : "status_pending" }>
+                    <span>{usersinfo.shortname}</span>
                   </dt>
                   <dd>
-                    <h2>{username}</h2>
-                    <p><b>Status:</b> <span>{userstatus}</span></p>
+                    <h2>{usersinfo.fullname}</h2>
+                    <p><b>Status:</b> <span className={ usersinfo.verificationstatus === "APPROVE" ? "approvedStatus" : "pendingStatus" }>{usersinfo.verificationstatus}</span></p>
+                    <p><b>Aadhaar:</b> <span>{usersinfo.aadhaarinfo}</span></p>
                   </dd>
                 </dl>
                 <aside onClick={()=> Router.push('/update-profile')}>Edit</aside>

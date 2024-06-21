@@ -12,10 +12,11 @@ import FooterComponent from '../shared/FooterComponent';
  
 export default function BankaddComponents() {
     const [pagemsg, setPagemsg] = useState('');
-    const[loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [mounted, setMounted] = useState(true);
     const [backroutepath, setbackroutepath] = useState('');
  
+    const [accountType, setAccountType] = useState('');
     const [infobank, setInfobank] = useState(false);
     const [infoupi, setInfoupi] = useState(false);
     const [infopersonal, setInfopersonal] = useState(false); 
@@ -77,13 +78,18 @@ export default function BankaddComponents() {
         e.target.value = e.target.value.slice(0, e.target.maxLength);
       }
     }
+    const changeAccountType = (val) => {
+      setAccountType(val);
+    }
+
     const stepHandler = (val) => {
-      if(val ===  'bank') { setStep(1); setInfobank(false); }
-      if(val ===  'upi') { setStep(2); setInfoupi(false); }
+      if(val ===  'bank') { setStep(1); setAccountType('bank'); setInfobank(false); }
+      if(val ===  'upi') { setStep(1); setAccountType('upi'); setInfoupi(false); }
       if(val ===  'personal') { setStep(3); setInfopersonal(false); }
       if(val ===  'review') { setStep(4);  }
       setOption(val);
     }
+
     const handleBankInfo = (e) => {
       e.preventDefault();
         if(bankname === '') { setErrorBank('Bank Name is required');  return }
@@ -92,12 +98,14 @@ export default function BankaddComponents() {
         else if(ifsccode?.length < 10) { setErrorIfsc('IFSC Code length must be at least 11 characters long');  return }
         else if(accountnumber === '') { setErrorAc('Account Number is required');  return }
         else { 
+          setUpicode('');
+
           setErrorBank('');
           setErrorIfsc('');
           setErrorAc('');
           setInfobank(true); 
-          setOption('upi');
-          setStep(2); 
+          setOption('personal');
+          setStep(3);
         }
     }
 
@@ -105,6 +113,10 @@ export default function BankaddComponents() {
       e.preventDefault();
       if(upicode === '') { setErrorUpi('UPI ID is required');  return }
       else { 
+        setBankname('');
+        setIfsccode('');
+        setAccountnumber('');
+
         setErrorUpi('');
         setInfoupi(true);
         setOption('personal');
@@ -122,27 +134,6 @@ export default function BankaddComponents() {
           setStep(4);
         }
     }
-
-    const bankSkipHandal = (e) => {
-      e.preventDefault();
-      setErrorBank('');
-      setErrorIfsc('');
-      setErrorAc('');
-      setInfobank(false); 
-      setBankname('');
-      setIfsccode('');
-      setAccountnumber('');
-      setOption('upi');
-      setStep(2);
-    } 
-    const upiSkipHandal = (e) => {
-      e.preventDefault();
-      setErrorUpi('');
-      setInfoupi(false);
-      setUpicode('');
-      setOption('personal');
-      setStep(3);
-    } 
 
     const reviewHandlar = (e) => {
       e.preventDefault();
@@ -210,15 +201,24 @@ export default function BankaddComponents() {
               </h2> 
               {
                 step !== 4 && <ul>
-                  <li className={ option==='bank' ? 'active' : infobank ? 'activated' : null } onClick={()=>stepHandler('bank')}>Bank Details</li>
+                  <li className={ option ==='bank' || option ==='upi' ? 'active' : null } onClick={()=>stepHandler('bank')}>Bank Details</li>
                   <li className='normal'><span>//</span></li>
-                  <li className={ option==='upi' ? 'active' :  infoupi ? 'activated' : null } onClick={()=>stepHandler('upi')}>UPI ID</li>
-                  <li className='normal'><span>//</span></li>
-                  <li className={ option==='personal' ? 'active' : infopersonal ? 'activated' : null } onClick={()=>stepHandler('personal')}>Personal Details</li>
+                  <li className={ option==='personal' ? 'active' : null } onClick={()=>stepHandler('personal')}>Personal Details</li>
                 </ul>
               }
+
+              { step === 1 && <div className="bankTypeField">
+                      <h6>
+                        <input id='accountBank' type='radio' name='accounttype' value='bank' checked={accountType === 'bank'} onChange={()=>changeAccountType('bank')} />
+                        <label htmlFor="accountBank"><span>Add Bank Detail</span></label>
+                      </h6>
+                      <h6>
+                        <input id='accountUpi' type='radio' name='accounttype' value='upi' checked={accountType === 'upi'} onChange={()=>changeAccountType('upi')}  />
+                        <label htmlFor="accountUpi"><span>Add UPI ID</span></label>
+                      </h6>
+                  </div> }
  
-              { step === 1 && <form onSubmit={handleBankInfo}>
+              { step === 1 && accountType === 'bank' && <form onSubmit={handleBankInfo}>
                   <div className="bankInfoField">
                       <p>Bank Name</p>
                       <input type='text' name="bankname" maxLength={50} autoComplete="off" value={bankname} onInput={onInputmaxLength} onChange={(e)=>{setBankname(e.target.value); setErrorBank('');}} />
@@ -235,20 +235,18 @@ export default function BankaddComponents() {
                       {errorAc && <span>{errorAc}</span> }
                   </div>
                   <div className="bankInfoField"> 
-                    <button>Next</button>
-                    <aside onClick={bankSkipHandal}>Skip</aside>
+                    <button className='bankinfobtn'>Next</button>
                   </div>
                 </form>  }
 
-                { step === 2 && <form onSubmit={handleUpiId}>
+                { step === 1 && accountType === 'upi' && <form onSubmit={handleUpiId}>
                   <div className="bankInfoField">
                       <p>UPI ID</p>
                       <input type='text' name="upicode" maxLength={50} autoComplete="off" value={upicode} onInput={onInputmaxLength}  onChange={(e)=>{setUpicode(e.target.value); setErrorUpi('')}} />
                       {errorUpi && <span>{errorUpi}</span>}
                   </div>
                   <div className="bankInfoField">
-                    <button>Next</button>
-                    {infobank ? <aside onClick={upiSkipHandal}>Skip</aside> : <aside onClick={()=>stepHandler('bank')}>Back</aside>}
+                    <button className='bankinfobtn'>Next</button>
                   </div>
                 </form> }
 
@@ -261,16 +259,14 @@ export default function BankaddComponents() {
                       {errorPan && <span>{errorPan}</span>}
                   </div>
                   <div className="bankInfoField">
-                    <button>NEXT</button>
-                    <aside onClick={()=>stepHandler('upi')}>Back</aside>
+                    <button className='bankinfobtn'>NEXT</button>
                   </div>
                 </form> }
 
                 
                 { step === 4 && <>
 
-                 { infobank  && <>
-                  <div className='bankinfo'>
+                 { infobank  && <div className='bankinfo'>
                       <h4>
                           <Image src="/assets/images/icon_bank.png" width={25} height={25} quality={99} alt={bankname} />
                           <span>{bankname}</span>
@@ -278,29 +274,24 @@ export default function BankaddComponents() {
                         <h5>IFSC: {ifsccode}</h5>
                         <h6>A/c: {accountnumber}</h6> 
                         <aside onClick={()=>stepHandler('bank')} title="Edit">Edit</aside>
-                  </div>
-                  </>}
+                  </div>}
 
 
-                  { infoupi && <>
-                  <div className='bankinfo'>
+                  { infoupi && <div className='bankinfo'>
                      <h4>
                           <Image src="/assets/images/icon_upi.png" width={25} height={25} quality={99} alt={upicode} />
                           <span>{upicode}</span>
                       </h4>
                     <aside  onClick={()=>stepHandler('upi')} title="Edit">Edit</aside>
-                  </div>
-                  </>}
+                  </div> }
 
-                  { infopersonal && <>
-                  <div className='bankinfo'>
-                     {/* <h6>Full Name: <b className='textUppercase'>{username}</b></h6>   
+                  { infopersonal &&  <div className='bankinfo'>
+                    <h6>Full Name: <b className='textUppercase'>{username}</b></h6>   
                     <h6>Aadhaar Number: <b className='textUppercase'>{aadhaar}</b></h6> 
-                    <h6>Mobile Number: <b className='textUppercase'>{usermobile}</b></h6>   */}
+                    <h6>Mobile Number: <b className='textUppercase'>{usermobile}</b></h6>
                     <h6>Pan Number: <b className='textUppercase'>{pan}</b></h6> 
                     <aside  onClick={()=>stepHandler('personal')} title="Edit">Edit</aside>
-                  </div>
-                  </>}
+                  </div> }
 
                   
                   <div className="bankInfoField">

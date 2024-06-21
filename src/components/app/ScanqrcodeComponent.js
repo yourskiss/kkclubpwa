@@ -125,7 +125,7 @@ export default function ScanqrcodeComponent() {
                   <button>Validate Coupon</button>
               </form>
             </div>
-            : <div className="scanqrcodesection"><h2>Scan QR code <br /> and win rewards</h2><QrReader onData={handalqrisvailable} onSuccess={getData} /></div>
+            : <div className="scanqrcodesection"><h2>Scan QR code</h2><QrReader onData={handalqrisvailable} onSuccess={getData} /></div>
           } 
 
         </div>
