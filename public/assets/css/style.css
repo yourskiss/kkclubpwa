@@ -611,8 +611,8 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 .bankTypeField h6 label { position: relative; display: flex; justify-content: flex-start; align-items:center; box-sizing: border-box; width:auto; float: left; padding:0; margin:0; text-align: left;  cursor: pointer; background:transparent; font-weight: 500; font-size: 16px; color:#fff; }
 .bankTypeField h6 input[type='radio'] { display: none; }
 .bankTypeField h6 label span { margin-left: 0.5rem; }
-.bankTypeField h6 label:before { content: ""; padding: 0; margin: 0;  background:none; border-radius:0; height: 16px; width: 16px;  border:solid 2px rgba(245, 240, 235, 0.8); }
-.bankTypeField h6 label:after { opacity:0.1; content: ""; z-index: 2; position:absolute; left: 4px; top:2px; transform: rotate(-45deg); padding: 0; margin: 0;  background:none; border-radius:0; height:6px; width: 16px;  border-left:solid 3px #AFCDAF; border-bottom: solid 3px #AFCDAF; }
+.bankTypeField h6 label:before { content: ""; padding: 0; margin: 0;  background:none; border-radius:50%; height: 16px; width: 16px;  border:solid 2px rgba(245, 240, 235, 0.8); }
+.bankTypeField h6 label:after { opacity:0.1; content: ""; z-index: 2; position:absolute; left: 4px; top:2px; transform: rotate(-45deg); padding: 0; margin: 0;  background:none; border-radius:0; height:6px; width: 16px;  border-left:solid 2px #AFCDAF; border-bottom: solid 2px #AFCDAF; }
 .bankTypeField h6 input[type="radio"]:checked + label:before{ border-color:#AFCDAF; }
 .bankTypeField h6 input[type="radio"]:checked + label:after{  opacity:1; }
 
