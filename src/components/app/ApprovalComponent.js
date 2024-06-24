@@ -105,7 +105,7 @@ export default function ApprovalComponent() {
                             <dd>
                                 <p>
                                     <span><b>{username}</b>,</span>
-                                    <span>Registration request submitted and pending for approval. Your branch manager will contact you for further details.</span>
+                                    <span>Your approval request has gone to the local Kerakoll representative. You can start redeeming points onc your profile is approved.</span>
                                 </p>
                             </dd>
                         </dl>    

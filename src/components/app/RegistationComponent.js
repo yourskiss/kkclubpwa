@@ -201,7 +201,7 @@ export default function RegistationComponent() {
                     maxLength={20}
                     value={firstname}
                     onInput={onInputmaxLength}
-                    onChange={(e) => { setFirstname(e.target.value); setfnErrors(''); } }
+                    onChange={(e) => { setFirstname(e.target.value.replace(/[^a-z]/gi, '')); setfnErrors(''); } }
                   />
                   {fnErrors && <span className="registerError">{fnErrors}</span> }
                 </div>
@@ -215,7 +215,7 @@ export default function RegistationComponent() {
                     maxLength={20}
                     value={lastname}
                     onInput={onInputmaxLength}
-                    onChange={(e) => { setLastname(e.target.value); setlnErrors(''); } }
+                    onChange={(e) => { setLastname(e.target.value.replace(/[^a-z]/gi, '')); setlnErrors(''); } }
                   />
                   {lnErrors && <span className="registerError">{lnErrors}</span> }
                 </div> 

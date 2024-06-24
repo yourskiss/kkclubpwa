@@ -16,10 +16,12 @@ import FooterComponent from '../shared/FooterComponent';
 export default function ScanqrcodeComponent() {
   const [pagemsg, setPagemsg] = useState('');
   const [loading, setLoading] = useState(false);
- 
   const [qrcode, setQrcode] = useState(true);
   const [scandata, setScandata] = useState('');
   const [couponecode, setCouponecode] = useState('');
+  const [manualQrCode, setManualQrCode] = useState('');
+  const [manualQrError, setManualQrError] = useState('');
+  
   const { push } = useRouter();
   const userID = getUserID();
   const latInfo = geoLatitude();
@@ -101,7 +103,7 @@ export default function ScanqrcodeComponent() {
           } 
           else // if(res.data.resultcode === -100)
           {
-              toast.error("There is an issue while availing the coupon. kindly contact to the support team.");
+              toast.error("There is an issue while availing the coupon. kindly contact to the support team.");
               setTimeout(function(){window.location.reload(); },2000);
           }
         }).catch((err) => {
@@ -112,21 +114,55 @@ export default function ScanqrcodeComponent() {
 
   }
 
+  const onInputmaxLength = (e) => {
+    if(e.target.value.length > e.target.maxLength)
+    {
+      e.target.value = e.target.value.slice(0, e.target.maxLength);
+    }
+  }
+
+  
+  const handleQrCodeManually = (e) => {
+    e.preventDefault();
+    if(manualQrCode === '')
+    {
+      setManualQrError('Please enter QR code');
+      return;
+    }
+    setManualQrError('');
+    setCouponecode(manualQrCode);
+  }
+
   return (
     <div className='outsidescreen'>
       <HeaderDashboard />
       <div className="screenmain screenqrcode" > 
         <div className="screencontainer">
-           { 
-            couponecode !== '' ? <div className="scanqrcodecontainer">
+          { couponecode !== '' ? <>
+            <div className="scanqrcodecontainer">
               <h1>Scan Data  <span>({scandata})</span></h1>
               <h2>Coupone Code: <span>{couponecode}</span></h2>
               <form className="scanqrcodeForm" onSubmit={handleSubmitCode} style={{'display':'none'}}>
                   <button>Validate Coupon</button>
               </form>
             </div>
-            : <div className="scanqrcodesection"><h2>Scan QR code</h2><QrReader onData={handalqrisvailable} onSuccess={getData} /></div>
-          } 
+          </>:<>
+            <div className="scanqrcodesection">
+                <h2>Scan QR code</h2>
+                <QrReader onData={handalqrisvailable} onSuccess={getData} />
+            </div>
+            <div className='qrcodemanually'>
+                <h6><span>OR</span></h6>
+                <h5>Enter QR Code Manually</h5>
+
+                  <form className='qrcodemanuallyForm' onSubmit={handleQrCodeManually}>
+                    <input type='text' name='manual-enter-copone-code' value={manualQrCode} onChange={(e)=> { setManualQrCode(e.target.val); setManualQrError(''); }} autoComplete="off" maxLength={10} onInput={onInputmaxLength} placeholder='Enter QR Code' />
+                    <button>Submit</button>
+                  </form>
+
+                { manualQrError && <h4>{manualQrError}</h4> }
+            </div>
+          </>} 
 
         </div>
 

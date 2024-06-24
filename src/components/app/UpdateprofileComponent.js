@@ -97,7 +97,15 @@ export default function UpdateprofileComponent() {
      };
 
     const onChangeField = (e) => { 
-        setFormValue({ ...formValue, [e.target.name] : e.target.value }); 
+        if(e.target.name === 'firstname' || e.target.name === 'lastname')
+        {
+            setFormValue({ ...formValue, [e.target.name] : e.target.value.replace(/[^a-z]/gi, '') }); 
+        }
+        else
+        {
+            setFormValue({ ...formValue, [e.target.name] : e.target.value });
+        }
+         
     }
     useEffect(()=>{
         if(Object.keys(formError).length === 0 && isSubmit)
