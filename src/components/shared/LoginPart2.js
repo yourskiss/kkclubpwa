@@ -9,6 +9,7 @@ export default function LoginPart2({isMobStatus, getMobNumber, phonenumber }) {
   const[loading, setLoading] = useState(false);
   const [mobileValues, setMobileValues] = useState(phonenumber || '');
   const [mobileError, setMobileError] = useState('');
+  const exceptThisSymbols = ["e", "E", "+", "-", "."];
 
   const mobileChange = (e) =>{setMobileValues(e.target.value.replace(/[^0-9]/gi, '')); setMobileError(""); }
   const onInputmaxLength = (e) => {
@@ -52,7 +53,7 @@ export default function LoginPart2({isMobStatus, getMobNumber, phonenumber }) {
                   <div className="registertext">To proceed further please enter your mobile number.</div>
                   <div className="registerinputformobile">
                     <span>+91-</span>
-                    <input className="registerinput" type="number" name="mobile" autoComplete="off" min="0" maxLength={10} minLength={10} value={mobileValues} onChange={mobileChange} onInput={onInputmaxLength} />
+                    <input className="registerinput" type="number" name="mobile" autoComplete="off" min="0" maxLength={10} minLength={10} value={mobileValues} onChange={mobileChange} onInput={onInputmaxLength} onKeyDown={(e) => exceptThisSymbols.includes(e.key) && e.preventDefault() } />
                   </div>
                   { mobileError && <span className='registerError'>{mobileError}</span> } 
                 </div>

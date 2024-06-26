@@ -36,7 +36,7 @@ export default function BankdetailupdateComponents() {
     const[username,setUsername] = useState('');
     const[aadhaar,setAadhaar] = useState('');
 
- 
+    const exceptThisSymbols = ["e", "E", "+", "-", "."];
 
     const userid = getUserID();
     const usermobile = getUserMobile();
@@ -218,7 +218,7 @@ const savebankdetail = () =>
                   </div>
                   <div className="bankInfoField">
                       <p>Account Number</p>
-                      <input type='number' name="accountnumber" min="0" maxLength={16} autoComplete="off" value={accountnumber || ''} onInput={onInputmaxLength}   onChange={(e)=>{setAccountnumber(e.target.value.replace(/[^0-9]/gi, '')); setErrorAc(''); }} />
+                      <input type='number' name="accountnumber" min="0" maxLength={16} autoComplete="off" value={accountnumber || ''} onInput={onInputmaxLength}   onChange={(e)=>{setAccountnumber(e.target.value.replace(/[^0-9]/gi, '')); setErrorAc(''); }} onKeyDown={(e) => exceptThisSymbols.includes(e.key) && e.preventDefault() } />
                       {errorAc && <span>{errorAc}</span> }
                   </div>
                   <div className="bankInfoField">

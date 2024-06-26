@@ -45,6 +45,8 @@ export default function BankaddComponents() {
     const osInfo = osdetails();
     const browserInfo = browserdetails();
 
+    const exceptThisSymbols = ["e", "E", "+", "-", "."];
+
     const getpathfrom = searchParams.get('q') ?? "0";
     useEffect(()=>{
       getpathfrom === '1' || getpathfrom === 1 ? setbackroutepath('/redeempoints') : setbackroutepath('/dashboard')
@@ -237,7 +239,7 @@ export default function BankaddComponents() {
                   </div>
                   <div className="bankInfoField">
                       <p>Account Number</p>
-                      <input type='number' name="accountnumber" min="0" maxLength={16} autoComplete="off" value={accountnumber} onInput={onInputmaxLength}  onChange={(e)=>{setAccountnumber(e.target.value.replace(/[^0-9]/gi, '')); setErrorAc(''); }} />
+                      <input type='number' name="accountnumber" min="0" maxLength={16} autoComplete="off" value={accountnumber} onInput={onInputmaxLength}  onChange={(e)=>{setAccountnumber(e.target.value.replace(/[^0-9]/gi, '')); setErrorAc(''); }} onKeyDown={(e) => exceptThisSymbols.includes(e.key) && e.preventDefault() } />
                       {errorAc && <span>{errorAc}</span> }
                   </div>
                   <div className="bankInfoField"> 

@@ -40,6 +40,7 @@ export default function RegistationComponent() {
   const [paninfo, setPaninfo] = useState('');
   const [panErrors, setPanErrors] = useState('');
   
+  const exceptThisSymbols = ["e", "E", "+", "-", "."];
 
   const onInputmaxLength = (e) => {
     if(e.target.value.length > e.target.maxLength)
@@ -280,6 +281,7 @@ export default function RegistationComponent() {
                     value={pincode}
                     onInput={onInputmaxLength}
                     onChange={(e) => { setPincode(e.target.value.replace(/[^0-9]/gi, '')); setPincodeErrors(''); }}
+                    onKeyDown={(e) => exceptThisSymbols.includes(e.key) && e.preventDefault() }
                   />
                   {pincodeErrors && <span className="registerError">{pincodeErrors}</span> }
                 </div>
@@ -306,6 +308,7 @@ export default function RegistationComponent() {
                     value={aadhaarinfo}
                     onInput={onInputmaxLength}
                     onChange={(e) => { setAadhaarinfo(e.target.value.replace(/[^0-9]/gi, '')); setAadhaarErrors('');  }}
+                    onKeyDown={(e) => exceptThisSymbols.includes(e.key) && e.preventDefault() }
                   />
                   <div className="registerLineText">Profile details should match with Aadhaar</div>
                   {aadhaarErrors && <span className="registerError">{aadhaarErrors}</span> }

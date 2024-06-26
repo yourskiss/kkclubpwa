@@ -37,7 +37,7 @@ export default function UpdateprofileComponent() {
     const osInfo = osdetails();
     const browserInfo = browserdetails();
     
-
+    const exceptThisSymbols = ["e", "E", "+", "-", "."];
 
     useEffect(() => {
         setLoading(true);
@@ -257,6 +257,7 @@ export default function UpdateprofileComponent() {
                         onInput={onInputmaxLength}
                         value={ formValue.postalcode || '' }
                         onChange={onChangeField}
+                        onKeyDown={(e) => exceptThisSymbols.includes(e.key) && e.preventDefault() }
                     />
                     <span className="registerError">{ formError.postalcode  ?  formError.postalcode : '' }</span> 
                 </div>

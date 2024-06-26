@@ -241,7 +241,7 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
  .registerTncAccept label span { margin-left: 0.5rem; }
 .registerTncAccept input[type="checkbox"]:checked + label:before{ border-color:#AFCDAF; }
 .registerTncAccept input[type="checkbox"]:checked + label:after{  opacity:1; }
-.registerTncAccept label a { margin-left: 0.5rem; text-decoration: none; color:rgba(245, 240, 235, 0.8); }
+.registerTncAccept label a { margin-left: 0.5rem; text-decoration:underline; color:rgba(245, 240, 235, 0.8); }
 .registerTncAccept label a:hover{ text-decoration: underline; color:#AFCDAF;  }
 
 .registerSubmit { margin-top:2rem;  float: left;  width: 100%;  text-align: center;}
