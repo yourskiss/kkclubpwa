@@ -31,7 +31,7 @@ export default function Rewardform() {
     const { push } = useRouter();
     const ipInfo = ipaddress();
     const osn = osname();
-
+    const exceptThisSymbols = ["e", "E", "+", "-", "."];
     
     useEffect(() => {
         setUserstatus(gtUST);
@@ -57,7 +57,7 @@ export default function Rewardform() {
 
 
     const pointvalueChange = (e) => {
-        setRedeempoint(e.target.value.trim());
+        setRedeempoint(e.target.value);
         setErrorMsg('');
     }
     const pointvalueSubmit = (e) => {
@@ -170,7 +170,7 @@ export default function Rewardform() {
         <div className='redeemforms'>
             <form onSubmit={pointvalueSubmit}>
                 <p>1 POINTS = {pointvalue} INR</p>
-                <input type="number" placeholder="ENTER POINTS" min="0" name="redeempoint" value={redeempoint} onChange={pointvalueChange} />
+                <input type="number" placeholder="ENTER POINTS" min="0" name="redeempoint" value={redeempoint} onChange={pointvalueChange} onKeyDown={(e) => exceptThisSymbols.includes(e.key) && e.preventDefault() }  />
                 { errorMsg && <span>{errorMsg}</span> }
                 <aside>
                     <button type='submit'>Redeem Points</button>
