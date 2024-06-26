@@ -14,10 +14,11 @@ export default function BankaddComponents() {
     const [pagemsg, setPagemsg] = useState('');
     const [loading, setLoading] = useState(false);
     const [mounted, setMounted] = useState(true);
+    const [mounted2, setMounted2] = useState(true);
     const [backroutepath, setbackroutepath] = useState('');
- 
-    const [accountType, setAccountType] = useState('');
-    const [infobank, setInfobank] = useState(false);
+    
+    const [accountType, setAccountType] = useState('bank');
+    const [infobank, setInfobank] = useState(true);
     const [infoupi, setInfoupi] = useState(false);
     const [infopersonal, setInfopersonal] = useState(false); 
 
@@ -25,17 +26,16 @@ export default function BankaddComponents() {
     const [errorIfsc, setErrorIfsc] = useState('');
     const [errorAc, setErrorAc] = useState('');
     const [errorUpi, setErrorUpi] = useState('');
-    const [errorPan, setErrorPan] = useState('');
-
+ 
     const [step, setStep] = useState(1);
-    const[option, setOption] = useState('bank');
     const[bankname,setBankname] = useState('');
     const[ifsccode,setIfsccode] = useState('');
     const[accountnumber,setAccountnumber] = useState('');
     const[upicode,setUpicode] = useState('');
-    const[pan,setPan] = useState('');
+    const[paNumber,setPan] = useState('');
     const[aadhaar,setAadhaar] = useState('');
     const[username,setUsername] = useState('');
+    
  
     const userid = getUserID();
     const usermobile = getUserMobile();
@@ -71,6 +71,23 @@ export default function BankaddComponents() {
       return () => { setMounted(false); }
   }, []);
 
+
+  
+  useEffect(() => {
+    _get("/Payment/GetUserPayoutInfo?userid="+userid)
+    .then((res) => {
+      //  console.log("bank update response - ", res);
+        if(mounted2)
+        {
+          setPan(res.data.result.pan);
+          console.log("pan-",paNumber)
+        }
+    }).catch((error) => {
+        console.log("GetUserPayoutInfo-", error); 
+    });
+    return () => { setMounted2(false); }
+}, []);
+
     
     const onInputmaxLength = (e) => {
       if(e.target.value.length > e.target.maxLength)
@@ -85,9 +102,7 @@ export default function BankaddComponents() {
     const stepHandler = (val) => {
       if(val ===  'bank') { setStep(1); setAccountType('bank'); setInfobank(false); }
       if(val ===  'upi') { setStep(1); setAccountType('upi'); setInfoupi(false); }
-      if(val ===  'personal') { setStep(3); setInfopersonal(false); }
-      if(val ===  'review') { setStep(4);  }
-      setOption(val);
+      if(val ===  'review') {  setStep(4);  }
     }
 
     const handleBankInfo = (e) => {
@@ -103,9 +118,13 @@ export default function BankaddComponents() {
           setErrorBank('');
           setErrorIfsc('');
           setErrorAc('');
+
           setInfobank(true); 
-          setOption('personal');
-          setStep(3);
+          setAccountType('bank'); 
+          setInfoupi(false);
+
+          setStep(4);
+          setInfopersonal(true);
         }
     }
 
@@ -118,27 +137,21 @@ export default function BankaddComponents() {
         setAccountnumber('');
 
         setErrorUpi('');
+
+        setInfobank(false); 
+        setAccountType('upi'); 
         setInfoupi(true);
-        setOption('personal');
-        setStep(3);
+
+
+        setStep(4);
+        setInfopersonal(true);
       }
     }
-    const handlePersonal = (e) => {
-      e.preventDefault();
-        if(pan === '') { setErrorPan('Pan Number is required');  return }
-        else if(pan?.length !== 10) { setErrorPan('Pan Number must have 10 Digit'); return }
-        else { 
-          setErrorPan('');
-          setInfopersonal(true);
-          setOption('review');
-          setStep(4);
-        }
-    }
+ 
 
     const reviewHandlar = (e) => {
       e.preventDefault();
       if(!infobank && !infoupi) { toast.error('Enter bank details/UPI ID');  return }
-      else if(!infopersonal) { toast.error('Personal infomation is required'); stepHandler('personal');  return }
       else
       {
         savebankdetail();
@@ -149,12 +162,12 @@ export default function BankaddComponents() {
     {
       const bankinfo = {
         userid: userid,
-        bankname: bankname.trim(),
-        ifcscode: ifsccode.trim(),
-        accountnumber: accountnumber.trim(),
-        upicode: upicode.trim(),
+        bankname: bankname,
+        ifcscode: ifsccode,
+        accountnumber: accountnumber,
+        upicode: upicode,
         aadhaar: aadhaar,
-        pan:pan.trim(),
+        pan:paNumber,
         username:username,
         rmn: usermobile,
         locationpage: "/bankdetailsadd",
@@ -166,7 +179,7 @@ export default function BankaddComponents() {
        
       setLoading(true);
       setPagemsg('Bank details saving');
-      _post("/Payment/SaveUserPayoutInfo", bankinfo)
+      _post("/Payment/UpdateUserPayoutInfo", bankinfo)
       .then((res) => {
           setLoading(false);
          // console.log("save bank details - ", res);
@@ -184,8 +197,7 @@ export default function BankaddComponents() {
           console.log(error); 
       });
     }
-  
-
+   
 
  
   return (<>
@@ -199,13 +211,7 @@ export default function BankaddComponents() {
                 <em>Add Bank / UPI ID</em>
                 <span>Please share Bank account or UPI details linked to your adhaar and PAN card. </span>
               </h2> 
-              {
-                step !== 4 && <ul>
-                  <li className={ option ==='bank' || option ==='upi' ? 'active' : null } onClick={()=>stepHandler('bank')}>Bank Details</li>
-                  <li className='normal'><span>//</span></li>
-                  <li className={ option==='personal' ? 'active' : null } onClick={()=>stepHandler('personal')}>Personal Details</li>
-                </ul>
-              }
+
 
               { step === 1 && <div className="bankTypeField">
                       <h6>
@@ -221,47 +227,37 @@ export default function BankaddComponents() {
               { step === 1 && accountType === 'bank' && <form onSubmit={handleBankInfo}>
                   <div className="bankInfoField">
                       <p>Bank Name</p>
-                      <input type='text' name="bankname" maxLength={50} autoComplete="off" value={bankname} onInput={onInputmaxLength} onChange={(e)=>{setBankname(e.target.value); setErrorBank('');}} />
+                      <input type='text' name="bankname" maxLength={50} autoComplete="off" value={bankname} onInput={onInputmaxLength} onChange={(e)=>{setBankname(e.target.value.replace(/[^0-9a-z ]/gi, '')); setErrorBank('');}} />
                       {errorBank && <span>{errorBank}</span> }
                   </div>
                   <div className="bankInfoField">
                       <p>IFSC Code</p>
-                      <input type='text' name="ifsccode" maxLength={11} autoComplete="off" value={ifsccode} onInput={onInputmaxLength}  onChange={(e)=>{setIfsccode(e.target.value); setErrorIfsc(''); }} />
+                      <input type='text' name="ifsccode" maxLength={11} autoComplete="off" value={ifsccode} onInput={onInputmaxLength}  onChange={(e)=>{setIfsccode(e.target.value.replace(/[^0-9a-z]/gi, '')); setErrorIfsc(''); }} />
                       {errorIfsc && <span>{errorIfsc}</span> }
                   </div>
                   <div className="bankInfoField">
                       <p>Account Number</p>
-                      <input type='number' name="accountnumber" min="0" maxLength={16} autoComplete="off" value={accountnumber} onInput={onInputmaxLength}  onChange={(e)=>{setAccountnumber(e.target.value); setErrorAc(''); }} />
+                      <input type='number' name="accountnumber" min="0" maxLength={16} autoComplete="off" value={accountnumber} onInput={onInputmaxLength}  onChange={(e)=>{setAccountnumber(e.target.value.replace(/[^0-9]/gi, '')); setErrorAc(''); }} />
                       {errorAc && <span>{errorAc}</span> }
                   </div>
                   <div className="bankInfoField"> 
-                    <button className='bankinfobtn'>Next</button>
+                    <button className='bankinfobtn'>CONTINUE AND REVIEW</button>
                   </div>
                 </form>  }
 
                 { step === 1 && accountType === 'upi' && <form onSubmit={handleUpiId}>
                   <div className="bankInfoField">
                       <p>UPI ID</p>
-                      <input type='text' name="upicode" maxLength={50} autoComplete="off" value={upicode} onInput={onInputmaxLength}  onChange={(e)=>{setUpicode(e.target.value); setErrorUpi('')}} />
+                      <input type='text' name="upicode" maxLength={50} autoComplete="off" value={upicode} onInput={onInputmaxLength}  onChange={(e)=>{setUpicode(e.target.value.replace(/[^0-9a-z@_.-]/gi, '')); setErrorUpi('')}} />
                       {errorUpi && <span>{errorUpi}</span>}
                   </div>
                   <div className="bankInfoField">
-                    <button className='bankinfobtn'>Next</button>
+                    <button className='bankinfobtn'>CONTINUE AND REVIEW</button>
                   </div>
                 </form> }
 
                  
-
-                { step === 3 && <form onSubmit={handlePersonal}>
-                  <div className="bankInfoField">
-                      <p>Pan Number</p>
-                      <input  className='textUppercase' type='text' name="pan" maxLength={10} autoComplete="off" value={pan} onInput={onInputmaxLength}  onChange={(e)=>{setPan(e.target.value); setErrorPan(''); }} />
-                      {errorPan && <span>{errorPan}</span>}
-                  </div>
-                  <div className="bankInfoField">
-                    <button className='bankinfobtn'>NEXT</button>
-                  </div>
-                </form> }
+ 
 
                 
                 { step === 4 && <>
@@ -285,12 +281,12 @@ export default function BankaddComponents() {
                     <aside  onClick={()=>stepHandler('upi')} title="Edit">Edit</aside>
                   </div> }
 
+
                   { infopersonal &&  <div className='bankinfo'>
                     <h6>Full Name: <b className='textUppercase'>{username}</b></h6>   
                     <h6>Aadhaar Number: <b className='textUppercase'>{aadhaar}</b></h6> 
                     <h6>Mobile Number: <b className='textUppercase'>{usermobile}</b></h6>
-                    <h6>Pan Number: <b className='textUppercase'>{pan}</b></h6> 
-                    <aside  onClick={()=>stepHandler('personal')} title="Edit">Edit</aside>
+                    <h6>Pan Number: <b className='textUppercase'>{paNumber}</b></h6> 
                   </div> }
 
                   

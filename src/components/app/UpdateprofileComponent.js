@@ -27,12 +27,7 @@ export default function UpdateprofileComponent() {
     const [stateName, setStateName] = useState('');
     const [cityName, setCityName] = useState('');
 
-    const[bankname,setBankname] = useState('');
-    const[ifsccode,setIfsccode] = useState('');
-    const[accountnumber,setAccountnumber] = useState('');
-    const[upicode,setUpicode] = useState('');
-    const[pan,setPan] = useState('');
-
+    const [payoutinfo,setPayoutinfo] = useState({})
     const [userdata, setUserdata] = useState({});
     
     const { push } = useRouter();
@@ -101,6 +96,10 @@ export default function UpdateprofileComponent() {
         {
             setFormValue({ ...formValue, [e.target.name] : e.target.value.replace(/[^a-z]/gi, '') }); 
         }
+        else if(e.target.name === 'postalcode')
+        {
+            setFormValue({ ...formValue, [e.target.name] : e.target.value.replace(/[^0-9]/gi, '') }); 
+        }
         else
         {
             setFormValue({ ...formValue, [e.target.name] : e.target.value });
@@ -140,8 +139,8 @@ export default function UpdateprofileComponent() {
             .then((res) => {
                // console.log(res);
                 setLoading(false);
-                savebankdetail();
                 setUserInfo(res.data.result.fullname, res.data.result.shortname, res.data.result.verificationstatus);
+                updatebankdetail();
                 res.data.result ? (toast.success("Profile Updated Successfully."),push("/profile")) : toast.warn(res.data.resultmessage);
             }).catch((err) => {
                 setLoading(false); 
@@ -160,31 +159,28 @@ export default function UpdateprofileComponent() {
     useEffect(() => {
         _get("/Payment/GetUserPayoutInfo?userid="+userID)
         .then((res) => {
-            // console.log("bank update response - ", res);
+             console.log("bank update response - ", res);
             if(mounted2)
             {
-              res.data.result.bankname !== null ? setBankname(res.data.result.bankname) : setBankname('');
-              res.data.result.ifcscode !== null ? setIfsccode(res.data.result.ifcscode) : setIfsccode('');
-              res.data.result.accountnumber !== null ? setAccountnumber(res.data.result.accountnumber) : setAccountnumber('');
-              res.data.result.upicode!== null ? setUpicode(res.data.result.upicode) : setUpicode('');
-              setPan(res.data.result.pan);
+                setPayoutinfo(res.data.result);
             }
         }).catch((error) => {
-            console.log("GetUserPayoutInfo-", error); 
+            console.log("update - GetUserPayoutInfo-", error); 
         });
         return () => { setMounted2(false); }
     }, []);
 
-        const savebankdetail = () => 
+
+        const updatebankdetail = () => 
         {
           const bankinfo = {
             userid: userID,
-            bankname: bankname,
-            ifcscode: ifsccode,
-            accountnumber: accountnumber,
-            upicode: upicode,
-            aadhaar: userdata.aadhaarinfo,
-            pan:pan,
+            bankname: payoutinfo.bankname || '',
+            ifcscode: payoutinfo.ifsccode || '',
+            accountnumber: payoutinfo.accountnumber || '',
+            upicode: payoutinfo.upicode || '',
+            aadhaar: userdata.aadhaarinfo || '',
+            pan:payoutinfo.pan || '',
             username: formValue.firstname + " " + formValue.lastname,
             rmn: userMobile,
             locationpage: "/bankdetailsupdate",
@@ -192,10 +188,10 @@ export default function UpdateprofileComponent() {
             osdetails: osInfo,
             browserdetails: browserInfo
           }
-          // console.log(" bank update  -",bankinfo);
+           console.log(" bank update  -",bankinfo);
           _post("/Payment/UpdateUserPayoutInfo", bankinfo)
           .then((res) => {
-             //  console.log("update bank details - ", res);
+             console.log("update -  UpdateUserPayoutInfo - ", res);
           }).catch((error) => {
               console.log(error); 
           });

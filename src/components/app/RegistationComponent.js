@@ -37,6 +37,9 @@ export default function RegistationComponent() {
   const [tnc, setTnc] = useState(false);
   const [tncError, setTncError] = useState('');
   const [mobilenumber, setMobilenumber] = useState('');
+  const [paninfo, setPaninfo] = useState('');
+  const [panErrors, setPanErrors] = useState('');
+  
 
   const onInputmaxLength = (e) => {
     if(e.target.value.length > e.target.maxLength)
@@ -108,15 +111,18 @@ export default function RegistationComponent() {
   const handleStep3 = (e) => {
     e.preventDefault();
     setAadhaarErrors(''); 
-    if (!aadhaarinfo && !tnc) { setAadhaarErrors("Mobile number is required!"); setTncError("Please agree with our Terms & conditions");}
+    if (!aadhaarinfo && !paninfo && !tnc) { setAadhaarErrors("Mobile number is required!"); setPanErrors('Pan is required.'); setTncError("Please agree with our Terms & conditions");}
     if(aadhaarinfo === '') { setAadhaarErrors('Aadhaar is required.'); }
     else if(aadhaarinfo.length !== 12) { setAadhaarErrors('Aadhaar must have at least 12 Digits.'); }
+    else if(paninfo === '') { setPanErrors('Pan is required.'); }
+    else if(paninfo.length !== 10) { setPanErrors('Pan must have at least 10 Digits.'); }
     else if(!tnc) { setTncError("Please agree with our Terms & conditions"); }
     else { 
         handleRegistration();
      }
   } 
 
+   
    
   const handleRegistration = () => 
   {
@@ -155,6 +161,7 @@ export default function RegistationComponent() {
           setUserInfo(res.data.result.fullname, res.data.result.shortname, res.data.result.verificationstatus);
           const userinfo = res.data.result.userid + "|" + res.data.result.phonenumber
           setUserCookies(encryptText(userinfo));
+          savebankdetail(res.data.result.userid, res.data.result.aadhaarinfo, paninfo, res.data.result.fullname, res.data.result.phonenumber);
           removeLoginNumber();
               if(isCC)
               { 
@@ -178,7 +185,33 @@ export default function RegistationComponent() {
       });
   }
 
-
+ 
+  const savebankdetail = (userid, aadhaarinfo, paninfo, fullname, mobilenumber) => 
+    {
+      const bankinfo = {
+        userid: userid,
+        bankname: '',
+        ifcscode: '',
+        accountnumber: '',
+        upicode: '',
+        aadhaar: aadhaarinfo,
+        pan:paninfo,
+        username:fullname,
+        rmn: mobilenumber,
+        locationpage: "/registation",
+        ipaddress: ipInfo,
+        osdetails: osInfo,
+        browserdetails: browserInfo
+      }
+      _post("/Payment/SaveUserPayoutInfo", bankinfo)
+      .then((res) => {
+          console.log("name, aadhaar, pan, mobile, save to SaveUserPayoutInfo  - ", res);
+      }).catch((error) => {
+          console.log(error); 
+      });
+    }
+  
+ 
   return (<>
     <HeaderFirst />
     <div className="screenmain">
@@ -232,7 +265,6 @@ export default function RegistationComponent() {
                           <CityStateComponent scChange={handleOptionChange} nameSC={cityStateName} nameS={stateName} nameC={cityName} />
                       </ErrorBoundary>
                       { citystateErrors && <span className="registerError"> {citystateErrors}</span> } 
-                      {/* <div className="registerLineText">Enter State name to pick nearby City</div> */}
                 </div>
               
 
@@ -247,7 +279,7 @@ export default function RegistationComponent() {
                     maxLength={6}
                     value={pincode}
                     onInput={onInputmaxLength}
-                    onChange={(e) => { setPincode(e.target.value); setPincodeErrors(''); }}
+                    onChange={(e) => { setPincode(e.target.value.replace(/[^0-9]/gi, '')); setPincodeErrors(''); }}
                   />
                   {pincodeErrors && <span className="registerError">{pincodeErrors}</span> }
                 </div>
@@ -273,10 +305,27 @@ export default function RegistationComponent() {
                     maxLength={12}
                     value={aadhaarinfo}
                     onInput={onInputmaxLength}
-                    onChange={(e) => { setAadhaarinfo(e.target.value); setAadhaarErrors('');  }}
+                    onChange={(e) => { setAadhaarinfo(e.target.value.replace(/[^0-9]/gi, '')); setAadhaarErrors('');  }}
                   />
                   <div className="registerLineText">Profile details should match with Aadhaar</div>
                   {aadhaarErrors && <span className="registerError">{aadhaarErrors}</span> }
+                </div>
+
+                <div className="registerField">
+                  <div className="registertext">Pan Number<small>*</small></div>
+                  <input
+                    className="registerinput"
+                    type="text"
+                    name="paninfo"
+                    autoComplete="off"
+                    min="0" 
+                    maxLength={10}
+                    value={paninfo}
+                    onInput={onInputmaxLength}
+                    onChange={(e) => { setPaninfo(e.target.value.replace(/[^0-9a-z]/gi, '')); setPanErrors('');  }}
+                  />
+                  <div className="registerLineText">Pan required for payment verification</div>
+                  {panErrors && <span className="registerError">{panErrors}</span> }
                 </div>
 
                 <div className="registerTncAccept">

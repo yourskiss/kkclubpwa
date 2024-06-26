@@ -10,7 +10,7 @@ export default function LoginPart({isMobStatus, getMobNumber, phonenumber}) {
   const [mobileValues, setMobileValues] = useState(phonenumber || '');
   const [mobileError, setMobileError] = useState('');
 
-  const mobileChange = (e) =>{setMobileValues(e.target.value); setMobileError(""); }
+  const mobileChange = (e) =>{setMobileValues(e.target.value.replace(/[^0-9]/gi, '')); setMobileError(""); }
   const onInputmaxLength = (e) => {
     if(e.target.value.length > e.target.maxLength)
     {

@@ -18,9 +18,8 @@ export default function ProfileComponent() {
   const [usersinfo, setUsersinfo] = useState('');
 
   const rewardspoints = parseInt(TotalrewardpointsComponent());
- // const redeemminimumpoint = parseInt(process.env.NEXT_PUBLIC_REDEEM_MIN_POINT);
   const userid = getUserID();
-  const [resultcode, setResultcode] = useState('');
+  const [resultdata, setResultdata] = useState('');
   const Router = useRouter();
   const userToken   =  isUserToken();
   const userMobile = getUserMobile();
@@ -55,11 +54,6 @@ export default function ProfileComponent() {
       Router.push("/approval");
       return 
     }
-    // if(usersinfo.verificationstatus === "APPROVE" && rewardspoints < redeemminimumpoint)
-    // {
-    //   toast.info(`You can redeem minimum ${redeemminimumpoint} reward points.`);
-    //   return 
-    // }
     Router.push("/redeempoints");
   }
 
@@ -78,13 +72,13 @@ useEffect(() => {
      // console.log(" response - ", res);
       if(mounted)
       {
-        setResultcode(res.data.resultcode);
+        setResultdata(res.data.result);
       }
   }).catch((error) => {
       console.log("GetUserPayoutInfo-",error); 
   });
   return () => { setMounted(false); }
-}, [resultcode]);
+}, [resultdata]);
 
 
 const backbuttonHandal = () => {
@@ -130,7 +124,7 @@ const backbuttonHandal = () => {
             <div className="profile_menu">
                 <ul>
                   {
-                     resultcode === 0 ? <li onClick={()=> Router.push('/bankdetailupdate')}>UPDATE BANK DETAILS</li> : <li onClick={()=> Router.push('/bankdetailsadd?q=0')}>ADD BANK DETAILS</li>
+                     resultdata.bankname === null && resultdata.accountnumber === null && resultdata.upicode === null ? <li onClick={()=> Router.push('/bankdetailsadd?q=0')}>ADD BANK DETAILS</li> : <li onClick={()=> Router.push('/bankdetailupdate')}>UPDATE BANK DETAILS</li>
                   }
                   <li onClick={redeemprompt}>
                     REWARD POINTS <em><CountUp duration={2} start={0}  delay={1}  end={rewardspoints} /> Points</em>

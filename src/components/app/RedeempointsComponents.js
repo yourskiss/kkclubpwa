@@ -12,7 +12,7 @@ import FooterComponent from '../shared/FooterComponent';
 
 export default function RedeempointsComponents() {
     const [mounted, setMounted] = useState(true);
-    const [resultcode, setResultcode] = useState('');
+    const [resultdata, setResultdata] = useState('');
     const rewardspoints = TotalrewardpointsComponent();
     const userid = getUserID();
     const { push } = useRouter();
@@ -23,7 +23,7 @@ export default function RedeempointsComponents() {
           //  console.log("User payout info - ", res);
             if (mounted)
             {
-                setResultcode(res.data.resultcode);
+                setResultdata(res.data.result);
             }
         }).catch((error) => {
             console.log("GetUserPayoutInfo-",error); 
@@ -33,8 +33,8 @@ export default function RedeempointsComponents() {
 
  
     useEffect(() => {
-        resultcode === '' || resultcode === 0 ? null : push('/bankdetailsadd?q=1')
-     }, [resultcode]);
+        resultdata.bankname === null && resultdata.accountnumber === null && resultdata.upicode === null ? push('/bankdetailsadd?q=1') : null
+     }, [mounted]);
 
   return (<>
     <HeaderDashboard />

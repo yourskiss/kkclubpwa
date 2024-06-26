@@ -25,8 +25,8 @@ export default function OtpPart3({isMobStatus, getMobNumber, phonenumber}) {
   const { push } = useRouter();
   const isCC = isCouponeCode();
 
-  const otpChange = (e) =>{setOtpValues(e.target.value); setOtpError(""); }
-  const otpFocuse = (e) =>{setOtpValues(e.target.value);  }
+  const otpChange = (e) =>{setOtpValues(e.target.value.replace(/[^0-9]/gi, '')); setOtpError(""); }
+  const otpFocuse = (e) =>{setOtpValues(e.target.value.replace(/[^0-9]/gi, ''));  }
   const onInputmaxLength = (e) => {
     if(e.target.value.length > e.target.maxLength)
     {
@@ -150,6 +150,8 @@ export default function OtpPart3({isMobStatus, getMobNumber, phonenumber}) {
   const autoFillOTP = async () => {
     if ('OTPCredential' in window) {
       const ac = new AbortController();
+      const input = document.querySelector('input[autocomplete="one-time-code"]');
+      if (!input) return;
       setTimeout(() => { ac.abort(); }, 60 * 1000);
       try 
       {
@@ -158,8 +160,8 @@ export default function OtpPart3({isMobStatus, getMobNumber, phonenumber}) {
           signal: ac.signal
         });
         if (otp) {
-            document.getElementById("otpinputs").value = otp.code;
-            document.getElementById("otpinputs").focus();
+            input.value = otp.code;
+            input.focus();
             ac.abort();
         }
       } catch (err) {

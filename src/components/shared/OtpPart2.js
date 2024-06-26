@@ -25,8 +25,8 @@ export default function OtpPart2({isMobStatus, getMobNumber, phonenumber}) {
   const { push } = useRouter();
   const isCC = isCouponeCode();
 
-  const otpChange = (e) =>{setOtpValues(e.target.value); setOtpError(""); }
-  const otpFocuse = (e) =>{setOtpValues(e.target.value);  }
+  const otpChange = (e) =>{setOtpValues(e.target.value.replace(/[^0-9]/gi, '')); setOtpError(""); }
+  const otpFocuse = (e) =>{setOtpValues(e.target.value.replace(/[^0-9]/gi, ''));  }
   const onInputmaxLength = (e) => {
     if(e.target.value.length > e.target.maxLength)
     {
