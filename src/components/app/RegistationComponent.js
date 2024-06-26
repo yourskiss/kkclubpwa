@@ -322,7 +322,7 @@ export default function RegistationComponent() {
                     maxLength={10}
                     value={paninfo}
                     onInput={onInputmaxLength}
-                    onChange={(e) => { setPaninfo(e.target.value.replace(/[^0-9a-z]/gi, '')); setPanErrors('');  }}
+                    onChange={(e) => { setPaninfo(e.target.value.replace(/[^0-9a-z]/gi, '').toUpperCase()); setPanErrors('');  }}
                   />
                   <div className="registerLineText">Pan required for payment verification</div>
                   {panErrors && <span className="registerError">{panErrors}</span> }

@@ -48,6 +48,8 @@ export default function ProfileComponent() {
 
 
 
+
+
   const redeemprompt = () => {
     if(usersinfo.verificationstatus === "PENDING")
     {
@@ -109,15 +111,16 @@ const backbuttonHandal = () => {
 
             <div className="profile_status">
                 <dl>
-                  <dt className={ usersinfo.verificationstatu === "APPROVE" ? "status_approve" : "status_pending" }>
+                  <dt className={ usersinfo.verificationstatus === "APPROVE" ? "status_approve" : "status_pending" }>
                     <span>{usersinfo.shortname}</span>
                   </dt>
                   <dd>
                     <h2>{usersinfo.fullname}</h2>
                     <p><b>Status:</b> <span className={ usersinfo.verificationstatus === "APPROVE" ? "approvedStatus" : "pendingStatus" }>{usersinfo.verificationstatus}</span></p>
                     <p><b>Aadhaar:</b> <span>{usersinfo.aadhaarinfo}</span></p>
+                    <p><b>Pan:</b> <span>{resultdata.pan}</span></p>
                   </dd>
-                </dl>
+                </dl> 
                 <aside onClick={()=> Router.push('/update-profile')}>Edit</aside>
             </div>
 
