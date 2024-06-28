@@ -29,6 +29,7 @@ export default function LoginPart2({isMobStatus, getMobNumber, phonenumber }) {
       sendotp();
     }
   }
+  /*
   const sendotp = () => {
     setLoading(true);
     setPagemsg('Sending OTP');
@@ -43,6 +44,19 @@ export default function LoginPart2({isMobStatus, getMobNumber, phonenumber }) {
         toast.error(err.message);
         setLoading(false); 
       });
+  }
+  */
+
+  const sendotp = () => {
+    setLoading(true);
+    setPagemsg('Sending OTP');
+    
+    setTimeout(function(){
+        setLoading(false);
+        isMobStatus(true); 
+        getMobNumber(mobileValues);
+        toast.success('OTP sent successfully');
+    },1000);
   }
 
   return (<>
