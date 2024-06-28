@@ -311,11 +311,11 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 .approvalcontainer dl { width: 100%; float: left; margin: 0 0 3rem 0;padding: 0; display: flex; justify-content:center; align-items: flex-start; flex-direction: row-reverse;  }
 .approvalcontainer dl dt {  list-style: none; width: 200px; float: left; margin: 0;padding: 0 0 0 2rem; text-align: right; }
 .approvalcontainer dl dt aside { display: inline-block; width:96px; height: 96px; border-radius: 50%; background-color: #b6b5b5; margin: 0; padding:5px; border: none; overflow: hidden; box-sizing: border-box; }
-.approvalcontainer dl dt aside span {  display: flex; justify-content: center; align-items: center; float: left; width: 100%; height:100%; border: solid 3px #fff; border-radius: 50%; margin: 0;padding: 0; box-sizing: border-box; line-height: 1; font-size: 28px; text-transform: uppercase; font-family: var(--font-lneue); color: #fff; letter-spacing: 2px; }
+.approvalcontainer dl dt aside span {  display: flex; justify-content: center; align-items: center; float: left; width: 100%; height:100%; border: solid 3px #fff; border-radius: 50%; margin: 0;padding: 0; box-sizing: border-box; line-height: 1; font-size: 28px; text-transform: uppercase;  color: #fff; letter-spacing: 2px; }
 .approvalcontainer dl dd { list-style: none; width: 100%; float: left; margin: 0;padding: 0; }
 .approvalcontainer dl dd p { padding: 0; width: 100%; float: left; text-align: left; text-transform: none; font-weight: 400; color:#F5F0EB; font-size:30px;  line-height: 1.2; }
 .approvalcontainer dl dd p span { display: block; margin:0 0 1rem 0;  }
-.approvalcontainer dl dd p span:first-child { font-size: 150%; color:#afcdaf; font-weight: 600; font-family: var(--font-lneue); }
+.approvalcontainer dl dd p span:first-child { font-size: 150%; color:#afcdaf; font-weight: 600; }
 
 .approvalcontainer article{   width: 100%; float: left; text-align: center; text-transform: none;  font-weight: 500; color:#afcdaf;  font-size:24px;  }
 .approvalcontainer article a { display: inline-block; text-decoration:underline; cursor: pointer; color:#afcdaf;   transition: all 0.5s ease-out;  }
@@ -323,7 +323,7 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 
 .approvalcontainer section { width: 100%; float: left; margin:0;padding: 0; }
 .approvalcontainer section h2 { margin:0 0 2rem 0; padding: 0; width: 100%; float: left; text-align: left; text-transform: none; font-weight: 500; color:rgba(245, 240, 235, 0.6); font-size: 24px;  }
-.approvalcontainer section h3 { margin:0 0 2rem 0; padding: 0; width: 100%; float: left; text-align: left; text-transform: none; font-weight: 500;  font-size: 36px; font-family: var(--font-lneue); color: #afcdaf; line-height: 1.2; }
+.approvalcontainer section h3 { margin:0 0 2rem 0; padding: 0; width: 100%; float: left; text-align: left; text-transform: none; font-weight: 500;  font-size: 36px;   color: #afcdaf; line-height: 1.2; }
 .pc_slider {width: 100%;float: left;overflow: hidden;margin: 0 !important;padding: 0 0 30px 0 !important;}
 .pc_item { position: relative; width: 100%;float: left;height: auto;margin: 0;padding: 0; }
 .pc_item img { display: block; width: 100%; height: auto; float: left;margin: 0;padding: 0;border: 0;}

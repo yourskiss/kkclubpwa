@@ -190,7 +190,7 @@ const savebankdetail = () =>
             <div className='bankInfosavecontainer'>
               <h2>
                 <em>Update Bank / UPI ID </em>
-                <span>Please share Bank account or UPI details linked to your adhaar and PAN card. </span>
+                <span>Please share Bank account or UPI details linked to your aadhaar and PAN card. </span>
               </h2>  
                         
  
@@ -208,12 +208,12 @@ const savebankdetail = () =>
               { step === 1 && accountType === 'bank' && <form onSubmit={handleBankInfo}>
                   <div className="bankInfoField">
                       <p>Bank Name</p>
-                      <input type='text' name="bankname" maxLength={50} autoComplete="off" value={bankname || ''} onInput={onInputmaxLength} onChange={(e)=>{setBankname(e.target.value.replace(/[^0-9a-z ]/gi, '')); setErrorBank('');}} />
+                      <input type='text' name="bankname" maxLength={50} autoComplete="off" value={bankname || ''} onInput={onInputmaxLength} onChange={(e)=>{setBankname(e.target.value.replace(/[^0-9a-z ]/gi, '').toUpperCase()); setErrorBank('');}} />
                       {errorBank && <span>{errorBank}</span> }
                   </div>
                   <div className="bankInfoField">
                       <p>IFSC Code</p>
-                      <input type='text' name="ifsccode" maxLength={11} autoComplete="off" value={ifsccode || ''} onInput={onInputmaxLength}   onChange={(e)=>{setIfsccode(e.target.value.replace(/[^0-9a-z]/gi, '')); setErrorIfsc(''); }} />
+                      <input type='text' name="ifsccode" maxLength={11} autoComplete="off" value={ifsccode || ''} onInput={onInputmaxLength}   onChange={(e)=>{setIfsccode(e.target.value.replace(/[^0-9a-z]/gi, '').toUpperCase()); setErrorIfsc(''); }} />
                       {errorIfsc && <span>{errorIfsc}</span> }
                   </div>
                   <div className="bankInfoField">
@@ -283,8 +283,8 @@ const savebankdetail = () =>
                   { infopersonal && <>
                   <div className='bankinfo'>
                     <h6>Full Name: <b className='textUppercase'>{username}</b></h6>   
-                    <h6>Aadhaar Number: <b className='textUppercase'>{aadhaar}</b></h6> 
-                    <h6>Mobile Number: <b className='textUppercase'>{usermobile}</b></h6>
+                    <h6>Aadhaar Number: <b>{aadhaar}</b></h6> 
+                    <h6>Mobile Number: <b>{usermobile}</b></h6>
                     <h6>Pan Number: <b className='textUppercase'>{pan}</b></h6> 
                   </div>
                   </>}

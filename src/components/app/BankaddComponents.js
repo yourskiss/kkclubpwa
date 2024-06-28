@@ -211,7 +211,7 @@ export default function BankaddComponents() {
             <div className='bankInfosavecontainer'>
               <h2>
                 <em>Add Bank / UPI ID</em>
-                <span>Please share Bank account or UPI details linked to your adhaar and PAN card. </span>
+                <span>Please share Bank account or UPI details linked to your aadhaar and PAN card. </span>
               </h2> 
 
 
@@ -229,12 +229,12 @@ export default function BankaddComponents() {
               { step === 1 && accountType === 'bank' && <form onSubmit={handleBankInfo}>
                   <div className="bankInfoField">
                       <p>Bank Name</p>
-                      <input type='text' name="bankname" maxLength={50} autoComplete="off" value={bankname} onInput={onInputmaxLength} onChange={(e)=>{setBankname(e.target.value.replace(/[^0-9a-z ]/gi, '')); setErrorBank('');}} />
+                      <input type='text' name="bankname" maxLength={50} autoComplete="off" value={bankname} onInput={onInputmaxLength} onChange={(e)=>{setBankname(e.target.value.replace(/[^0-9a-z ]/gi, '').toUpperCase()); setErrorBank('');}} />
                       {errorBank && <span>{errorBank}</span> }
                   </div>
                   <div className="bankInfoField">
                       <p>IFSC Code</p>
-                      <input type='text' name="ifsccode" maxLength={11} autoComplete="off" value={ifsccode} onInput={onInputmaxLength}  onChange={(e)=>{setIfsccode(e.target.value.replace(/[^0-9a-z]/gi, '')); setErrorIfsc(''); }} />
+                      <input type='text' name="ifsccode" maxLength={11} autoComplete="off" value={ifsccode} onInput={onInputmaxLength}  onChange={(e)=>{setIfsccode(e.target.value.replace(/[^0-9a-z]/gi, '').toUpperCase()); setErrorIfsc(''); }} />
                       {errorIfsc && <span>{errorIfsc}</span> }
                   </div>
                   <div className="bankInfoField">

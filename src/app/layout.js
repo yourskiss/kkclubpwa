@@ -17,6 +17,7 @@ export const metadata = {
   title: "Kerakoll Club",
   description: "Kerakoll is the international leader in sustainable building",
   manifest:'/manifest.json',
+  robots: { index:false, follow:false },
   icons: [
     {
       rel: 'icon',
@@ -42,15 +43,13 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
-  
       <meta name="background_color" content="#141414"/>
       <meta name="theme-color" content="#000000"/>
-
       <GoogleAnalytics gaId="G-LZYCLF5X2M" />
- 
+      <meta name="google-site-verification" content="r6ZkF2xnlsOl1kVXDNkgMST9upMHFeLAz1Y0WQQDVHk" />
 
       <body className={`${lneue.variable} ${arialmt.variable}`}>
-      <meta name="google-site-verification" content="r6ZkF2xnlsOl1kVXDNkgMST9upMHFeLAz1Y0WQQDVHk" />
+      
 
         <main className="main">
           <Starfield starCount={1000} starColor={[255, 255, 255]} speedFactor={0.05} />
