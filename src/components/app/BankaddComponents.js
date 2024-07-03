@@ -82,7 +82,7 @@ export default function BankaddComponents() {
         if(mounted2)
         {
           setPan(res.data.result.pan);
-          console.log("pan-",paNumber)
+         // console.log("pan-",paNumber)
         }
     }).catch((error) => {
         console.log("GetUserPayoutInfo-", error); 
@@ -92,10 +92,24 @@ export default function BankaddComponents() {
 
     
     const onInputmaxLength = (e) => {
-      if(e.target.value.length > e.target.maxLength)
-      {
-        e.target.value = e.target.value.slice(0, e.target.maxLength);
-      }
+        if(e.target.name === 'accountnumber')
+        {
+            if(e.target.value.length > e.target.maxLength)
+            {
+              e.target.value = e.target.value.replace(/[e\+\-\.]/gi, "").slice(0, e.target.maxLength);
+            }
+            else
+            {
+              e.target.value = e.target.value.replace(/[e\+\-\.]/gi, "")
+            }
+        }
+        else
+        {
+            if(e.target.value.length > e.target.maxLength)
+            {
+              e.target.value = e.target.value.slice(0, e.target.maxLength);
+            }
+        }
     }
     const changeAccountType = (val) => {
       setAccountType(val);
@@ -126,7 +140,7 @@ export default function BankaddComponents() {
           setInfoupi(false);
 
           setStep(4);
-          setInfopersonal(true);
+         // setInfopersonal(true);
         }
     }
 
@@ -146,7 +160,7 @@ export default function BankaddComponents() {
 
 
         setStep(4);
-        setInfopersonal(true);
+       // setInfopersonal(true);
       }
     }
  

@@ -41,12 +41,28 @@ export default function RegistationComponent() {
   const [panErrors, setPanErrors] = useState('');
   
   const exceptThisSymbols = ["e", "E", "+", "-", "."];
+ //  e.target.value.replace(/[e\+\-\.]/gi, "")
+ 
 
   const onInputmaxLength = (e) => {
-    if(e.target.value.length > e.target.maxLength)
-    {
-      e.target.value = e.target.value.slice(0, e.target.maxLength);
-    }
+      if(e.target.name === 'pincode' || e.target.name === 'aadhaarinfo')
+      {
+          if(e.target.value.length > e.target.maxLength)
+          {
+            e.target.value = e.target.value.replace(/[e\+\-\.]/gi, "").slice(0, e.target.maxLength);
+          }
+          else
+          {
+            e.target.value = e.target.value.replace(/[e\+\-\.]/gi, "")
+          }
+      }
+      else
+      {
+          if(e.target.value.length > e.target.maxLength)
+          {
+            e.target.value = e.target.value.slice(0, e.target.maxLength);
+          }
+      }
   }
  
   const ipInfo = ipaddress();
@@ -294,7 +310,6 @@ export default function RegistationComponent() {
               </form> }
               
 
-              
               { step === 3 && <form onSubmit={handleStep3}>
                 <div className="registerField">
                   <div className="registertext">Aadhaar Number<small>*</small></div>

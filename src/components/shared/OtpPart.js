@@ -65,7 +65,8 @@ export default function OtpPart({isMobStatus, getMobNumber, phonenumber}) {
   }
 
   const verifyotp = () => {
-   // loginnow(); // tesing
+    loginnow(); // tesing
+    /*
       setLoading(true);
       setPagemsg('Verifying OTP');
       _get("Sms/VerifyOTP?&mobile="+phonenumber+"&otp="+otpValues)
@@ -85,6 +86,7 @@ export default function OtpPart({isMobStatus, getMobNumber, phonenumber}) {
         toast.error(err.message);
         setLoading(false); 
       });
+    */
   }
 
   

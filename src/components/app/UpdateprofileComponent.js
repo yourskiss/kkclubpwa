@@ -102,6 +102,27 @@ export default function UpdateprofileComponent() {
         // console.log("change update - ", cityStateName, " - ", stateName, " - ", cityName);
      };
 
+     const onInputmaxLength = (e) => {
+            if(e.target.name === 'postalcode')
+            {
+                if(e.target.value.length > e.target.maxLength)
+                {
+                  e.target.value = e.target.value.replace(/[e\+\-\.]/gi, "").slice(0, e.target.maxLength);
+                }
+                else
+                {
+                  e.target.value = e.target.value.replace(/[e\+\-\.]/gi, "")
+                }
+            }
+            else
+            {
+                if(e.target.value.length > e.target.maxLength)
+                {
+                  e.target.value = e.target.value.slice(0, e.target.maxLength);
+                }
+            }
+    }
+
     const onChangeField = (e) => { 
         if(e.target.name === 'firstname' || e.target.name === 'lastname')
         {
@@ -161,12 +182,7 @@ export default function UpdateprofileComponent() {
         }
     },[formError, isSubmit]);
 
-    const onInputmaxLength = (e) => {
-        if(e.target.value.length > e.target.maxLength)
-        {
-          e.target.value = e.target.value.slice(0, e.target.maxLength);
-        }
-    }
+
 
     useEffect(() => {
         _get("/Payment/GetUserPayoutInfo?userid="+userID)
@@ -200,10 +216,10 @@ export default function UpdateprofileComponent() {
             osdetails: osInfo,
             browserdetails: browserInfo
           }
-           console.log(" bank update  -",bankinfo);
+           // console.log(" bank update  -",bankinfo);
           _post("/Payment/UpdateUserPayoutInfo", bankinfo)
           .then((res) => {
-             console.log("update -  UpdateUserPayoutInfo - ", res);
+             console.log("update -  UpdateUserPayoutInfo");
           }).catch((error) => {
               console.log(error); 
           });

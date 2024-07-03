@@ -77,7 +77,7 @@ export default function BankdetailupdateComponents() {
               setPan(res.data.result.pan);
               if(res.data.result.bankname  !== null && res.data.result.ifcscode !== null && res.data.result.accountnumber  !== null){setInfobank(true);}
               if(res.data.result.upicode !== null){setInfoupi(true); }
-              setInfopersonal(true);
+            //  setInfopersonal(true);
             }
         }).catch((error) => {
             setLoading(false);
@@ -89,10 +89,24 @@ export default function BankdetailupdateComponents() {
  
 
 const onInputmaxLength = (e) => {
-  if(e.target.value.length > e.target.maxLength)
-  {
-    e.target.value = e.target.value.slice(0, e.target.maxLength);
-  }
+    if(e.target.name === 'accountnumber')
+    {
+        if(e.target.value.length > e.target.maxLength)
+        {
+          e.target.value = e.target.value.replace(/[e\+\-\.]/gi, "").slice(0, e.target.maxLength);
+        }
+        else
+        {
+          e.target.value = e.target.value.replace(/[e\+\-\.]/gi, "")
+        }
+    }
+    else
+    {
+        if(e.target.value.length > e.target.maxLength)
+        {
+          e.target.value = e.target.value.slice(0, e.target.maxLength);
+        }
+    }
 }
 const changeAccountType = (val) => {
   setAccountType(val);

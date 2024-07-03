@@ -13,10 +13,14 @@ export default function LoginPart3({isMobStatus, getMobNumber, phonenumber}) {
 
   const mobileChange = (e) =>{setMobileValues(e.target.value.replace(/[^0-9]/gi, '')); setMobileError(""); }
   const onInputmaxLength = (e) => {
-    if(e.target.value.length > e.target.maxLength)
-    {
-      e.target.value = e.target.value.slice(0, e.target.maxLength);
-    }
+      if(e.target.value.length > e.target.maxLength)
+      {
+        e.target.value = e.target.value.replace(/[e\+\-\.]/gi, "").slice(0, e.target.maxLength);
+      }
+      else
+      {
+        e.target.value = e.target.value.replace(/[e\+\-\.]/gi, "")
+      }
   }
   const mobileSubmit =(e) =>{
     e.preventDefault();

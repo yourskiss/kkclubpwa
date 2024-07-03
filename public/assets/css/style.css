@@ -535,6 +535,7 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 .profile_status dl dd h2 { display: block; width: 100%; float: left; margin:0; padding:0; text-align: left;  font-weight: bold; color: #AFCDAF; font-size:32px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-transform: uppercase; }
 .profile_status dl dd p { display: block; width: 100%; float: left; margin:0; padding:0.5rem 0 0 0; text-align: left;  font-weight: 600; color:#AFCDAF; font-size:18px; text-transform: uppercase; }
 .profile_status dl dd p b { font-size: 90%; font-weight: 400; color:#fff;  }
+.profile_status dl dd p span { text-transform: uppercase; }
 .profile_status dl dd p span.approvedStatus { color:#AFCDAF; }
 .profile_status dl dd p span.pendingStatus { color:#f30; }
 .profile_status dl dd h3 { position: relative;  display: block; width: 100%; height: 12px; float: left; margin:0; padding:0; background-color:#F5F0EB66; border: solid 2px #191919; line-height: 0; font-size: 0; border-radius: 10px; overflow: hidden; }

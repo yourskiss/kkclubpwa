@@ -15,7 +15,11 @@ export default function LoginPart({isMobStatus, getMobNumber, phonenumber}) {
   const onInputmaxLength = (e) => {
     if(e.target.value.length > e.target.maxLength)
     {
-      e.target.value = e.target.value.slice(0, e.target.maxLength);
+      e.target.value = e.target.value.replace(/[e\+\-\.]/gi, "").slice(0, e.target.maxLength);
+    }
+    else
+    {
+      e.target.value = e.target.value.replace(/[e\+\-\.]/gi, "")
     }
   }
   const mobileSubmit =(e) =>{
@@ -29,6 +33,7 @@ export default function LoginPart({isMobStatus, getMobNumber, phonenumber}) {
       sendotp();
     }
   }
+  /*
   const sendotp = () => {
     setLoading(true);
     setPagemsg('Sending OTP');
@@ -44,7 +49,18 @@ export default function LoginPart({isMobStatus, getMobNumber, phonenumber}) {
         setLoading(false); 
       });
   }
-
+  */
+  const sendotp = () => {
+    setLoading(true);
+    setPagemsg('Sending OTP');
+    
+    setTimeout(function(){
+        setLoading(false);
+        isMobStatus(true); 
+        getMobNumber(mobileValues);
+        toast.success('OTP sent successfully');
+    },1000);
+  }
   return (<>
     <form onSubmit={mobileSubmit}>
               <div className="registercontainer">
