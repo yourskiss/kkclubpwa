@@ -30,7 +30,8 @@ export default function LoginPart({isMobStatus, getMobNumber, phonenumber}) {
     else if(!regexMobile.test(mobileValues)){setMobileError("Invalid mobile number!");}
     else { 
       setMobileError("");  
-        if(mobileValues === 9898989898 || mobileValues === 9876543210 || mobileValues === 9797979797 || mobileValues === 9090909090 || mobileValues === 9111111111 || mobileValues === 9191919191)
+      // console.log("login part", mobileValues);
+        if(mobileValues === '9898989898' || mobileValues === '9876543210' || mobileValues === '9797979797' || mobileValues === '9090909090' || mobileValues === '9111111111' || mobileValues === '9191919191')
         {
           sendDemo();
         }
