@@ -101,7 +101,7 @@ export default function OtpPart2({isMobStatus, getMobNumber, phonenumber}) {
   const verifyDemo = () => {
     setLoading(true);
     setPagemsg('Verifying OTP');
-    setTimeout(function(){ loginnow(); setLoading(false); },1000);
+    setTimeout(function(){ loginnow(); },1000);
   }
   
   function loginnow()
