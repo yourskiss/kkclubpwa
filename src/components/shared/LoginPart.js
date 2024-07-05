@@ -30,10 +30,17 @@ export default function LoginPart({isMobStatus, getMobNumber, phonenumber}) {
     else if(!regexMobile.test(mobileValues)){setMobileError("Invalid mobile number!");}
     else { 
       setMobileError("");  
-      sendotp();
+        if(mobileValues === 9898989898 || mobileValues === 9876543210 || mobileValues === 9797979797 || mobileValues === 9090909090 || mobileValues === 9111111111 || mobileValues === 9191919191)
+        {
+          sendDemo();
+        }
+        else
+        {
+          sendotp();
+        }
     }
   }
-  /*
+
   const sendotp = () => {
     setLoading(true);
     setPagemsg('Sending OTP');
@@ -49,11 +56,10 @@ export default function LoginPart({isMobStatus, getMobNumber, phonenumber}) {
         setLoading(false); 
       });
   }
-  */
-  const sendotp = () => {
+  
+  const sendDemo = () => {
     setLoading(true);
     setPagemsg('Sending OTP');
-    
     setTimeout(function(){
         setLoading(false);
         isMobStatus(true); 
@@ -61,6 +67,8 @@ export default function LoginPart({isMobStatus, getMobNumber, phonenumber}) {
         toast.success('OTP sent successfully');
     },1000);
   }
+
+
   return (<>
     <form onSubmit={mobileSubmit}>
               <div className="registercontainer">
