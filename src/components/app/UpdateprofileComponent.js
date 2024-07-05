@@ -18,8 +18,8 @@ export default function UpdateprofileComponent() {
     const [mounted, setMounted] = useState(true);
     const [mounted2, setMounted2] = useState(true);
 
-     
-    const [salesexecutiveid, setSalesexecutiveid] = useState('');
+   
+    const [agentcode, setAgentcode] = useState('');
 
     const [data, setData] = useState(false);
     const [formValue, setFormValue] = useState({});
@@ -41,21 +41,15 @@ export default function UpdateprofileComponent() {
     const browserInfo = browserdetails();
     
     const exceptThisSymbols = ["e", "E", "+", "-", "."];
-         
-    
-    const setExicutiveID = (values) => { localStorage.setItem('SalesExicutiveID', values); }
-    const getExicutiveID =() => { if (typeof localStorage !== 'undefined') {return localStorage.getItem('SalesExicutiveID');} }
-    const changeExicutiveID = (e) => { const value = e.target.value.replace(/[^0-9a-z]/gi, '').toUpperCase(); setSalesexecutiveid(value);  }
+        
 
-    
     useEffect(() => {
-        setSalesexecutiveid(getExicutiveID());
 
         setLoading(true);
         setPagemsg('Profile details fetching');
         _get("Customer/UserInfo?userid=0&phonenumber="+ userMobile)
         .then((res) => {
-          //  console.log("get---", res.data.result);
+          //  console.log("onload get data: ", res.data.result);
             setLoading(false);
             if (mounted)
             {
@@ -71,10 +65,11 @@ export default function UpdateprofileComponent() {
         });
         return () => { setMounted(false); }
     }, []);
- 
+    
  
     useEffect(() => {
         setFormValue({
+            'agentcode': userdata.agentcode === null ? '' : userdata.agentcode,
             'firstname':  userdata.firstname,
             'lastname':  userdata.lastname,
             'postalcode':userdata.postalcode
@@ -132,6 +127,10 @@ export default function UpdateprofileComponent() {
         {
             setFormValue({ ...formValue, [e.target.name] : e.target.value.replace(/[^0-9]/gi, '') }); 
         }
+        else if(e.target.name === 'agentcode')
+        {
+            setFormValue({ ...formValue, [e.target.name] : e.target.value.replace(/[^a-z0-9]/gi, '') }); 
+         }
         else
         {
             setFormValue({ ...formValue, [e.target.name] : e.target.value });
@@ -159,20 +158,20 @@ export default function UpdateprofileComponent() {
             profilepictureurl: '',
             dateofbirth: "",
             languagepreference: "English",
+            agentcode:formValue.agentcode,
             locationpage: "/update-profile",
             ipaddress: ipInfo,
             osdetails: osInfo,
             browserdetails: browserInfo
           }
-         // console.log("datafinal - ",datafinal);
+          // console.log("datafinal: ",datafinal);
             setLoading(true);
             setPagemsg('Profile details updating');
             _post("Customer/SaveUser", datafinal)
             .then((res) => {
-               // console.log(res);
+              //  console.log("after submit response: ",res);
                 setLoading(false);
                 setUserInfo(res.data.result.fullname, res.data.result.shortname, res.data.result.verificationstatus);
-                setExicutiveID(salesexecutiveid);
                 updatebankdetail();
                 res.data.result ? (toast.success("Profile Updated Successfully."),push("/profile")) : toast.warn(res.data.resultmessage);
             }).catch((err) => {
@@ -187,7 +186,7 @@ export default function UpdateprofileComponent() {
     useEffect(() => {
         _get("/Payment/GetUserPayoutInfo?userid="+userID)
         .then((res) => {
-             console.log("bank update response - ", res);
+            // console.log("bank update response - ", res);
             if(mounted2)
             {
                 setPayoutinfo(res.data.result);
@@ -243,11 +242,11 @@ export default function UpdateprofileComponent() {
                     <input
                         className="registerinput"
                         type="text"
-                        name="salesexecutiveid"
+                        name="agentcode"
                         maxLength={4}
                         onInput={onInputmaxLength}
-                        value={ salesexecutiveid  || ''  }
-                        onChange={changeExicutiveID}
+                        value={ formValue.agentcode  || ''  }
+                        onChange={onChangeField}
                     />
                 </div>
                 

@@ -20,6 +20,9 @@ export default function Rewardform() {
     const[redeempoint, setRedeempoint] = useState(''); 
     const[errorMsg, setErrorMsg] = useState(''); 
     const[userstatus, setUserstatus] = useState('');
+    const[pointsEligible, setPointsEligible] = useState('');
+    const[isEligible, setIsEligible] = useState('');
+
     const gtUST = getUserStatus();
     const redeemedpointTotal = parseInt(TotalRedeemedPoints());
     const rewardspoints = parseInt(TotalrewardpointsComponent());
@@ -36,6 +39,17 @@ export default function Rewardform() {
     useEffect(() => {
         setUserstatus(gtUST);
     }, []);
+
+    const onInputmaxLength = (e) => {
+        if(e.target.value.length > e.target.maxLength)
+        {
+          e.target.value = e.target.value.replace(/[e\+\-\.]/gi, "").slice(0, e.target.maxLength);
+        }
+        else
+        {
+          e.target.value = e.target.value.replace(/[e\+\-\.]/gi, "")
+        }
+      }
 
     useEffect(() => {
         setLoading(true);
@@ -56,15 +70,36 @@ export default function Rewardform() {
     }, [pendingorder]);
 
 
+    const checkEligibility = (valuespoint) => {
+        _get(`/Customer/CheckUserRedemptionEligibility?userid=${userID}&pointstoredeem=${valuespoint}`)
+        .then((res) => {
+           // console.log("CheckUserRedemptionEligibility: ", res.data.result[0]);
+            setPointsEligible(res.data.result[0].pendingpoints);
+            setIsEligible(res.data.result[0].isusereligiblefor2000);            
+        }).catch((error) => {
+            console.log(error); 
+        });
+    }
+
     const pointvalueChange = (e) => {
-        setRedeempoint(e.target.value);
+        const pointval = parseInt(e.target.value)
+        setRedeempoint(pointval);
+        checkEligibility(pointval);
         setErrorMsg('');
     }
     const pointvalueSubmit = (e) => {
         e.preventDefault();
+        console.log(redeempoint);
         if(userstatus !== 'APPROVE')
         {
             setErrorMsg('Reward points will redeem after profile approval.'); 
+            return;
+        }
+        if(pendingorder > 0)
+        {
+            setErrorMsg('');
+            toast.info('Your Previous order is already in pending.'); 
+            push("/redemptionhistory");
             return;
         }
         if(redeempoint === '')
@@ -87,11 +122,9 @@ export default function Rewardform() {
             setErrorMsg(`You can redeem maximum ${redeemmaximumpoint} reward points.`); 
             return;
         }
-        if(pendingorder > 0)
+        if(!isEligible || redeempoint > parseInt(pointsEligible))
         {
-            setErrorMsg('');
-            toast.info('Your Previous order is already in pending.'); 
-            push("/redemptionhistory");
+            setErrorMsg(`You are eligible to redeem up to ${pointsEligible} reward points.`); 
             return;
         }
         
@@ -122,7 +155,7 @@ export default function Rewardform() {
             setLoading(false);
             console.log(error); 
         });
-        
+     
     }
 
     const payoutstatus = (val) => {
@@ -170,7 +203,7 @@ export default function Rewardform() {
         <div className='redeemforms'>
             <form onSubmit={pointvalueSubmit}>
                 <p>1 POINTS = {pointvalue} INR</p>
-                <input type="number" placeholder="ENTER POINTS" min="0" name="redeempoint" value={redeempoint} onChange={pointvalueChange} onKeyDown={(e) => exceptThisSymbols.includes(e.key) && e.preventDefault() }  />
+                <input type="number" placeholder="ENTER POINTS" min="0"  maxLength={4} onInput={onInputmaxLength} name="redeempoint" value={redeempoint} onChange={pointvalueChange}  onKeyDown={(e) => exceptThisSymbols.includes(e.key) && e.preventDefault() }  />
                 { errorMsg && <span>{errorMsg}</span> }
                 <aside>
                     <button type='submit'>Redeem Points</button>

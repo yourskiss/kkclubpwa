@@ -161,6 +161,7 @@ export default function RegistationComponent() {
       profilepictureurl: '',
       dateofbirth: "",
       languagepreference: "English",
+      agentcode:'',
       locationpage: "/register",
       ipaddress: ipInfo,
       osdetails: osInfo,
