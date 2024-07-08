@@ -49,7 +49,7 @@ export default function ScanqrcodeComponent() {
       const sdURL = scandata.split("?") || '';
       if(!qrcode)
       {
-          if(sdURL[0] === process.env.NEXT_PUBLIC_COUPON_URL || sdURL[0] === process.env.NEXT_PUBLIC_COUPON_URL2)
+          if(sdURL[0] === process.env.NEXT_PUBLIC_COUPON_URL)
             {
               
                 const couponvalue = sdURL[1].split("=");
@@ -64,10 +64,8 @@ export default function ScanqrcodeComponent() {
   }, [qrcode]);
 
   useEffect(() => {
-    console.log("outside",couponecode);
     if(couponecode !== '')
     {
-      console.log("inside",couponecode);
       handleSubmitCode();
     }
 }, [couponecode]);
