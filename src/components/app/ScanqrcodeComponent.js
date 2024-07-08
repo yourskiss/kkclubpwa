@@ -19,7 +19,7 @@ export default function ScanqrcodeComponent() {
   const [qrcode, setQrcode] = useState(true);
   const [scandata, setScandata] = useState('');
   const [couponecode, setCouponecode] = useState('');
-  const [manualQrCode, setManualQrCode] = useState('');
+  const [manualQrcode, setManualQrcode] = useState('');
   const [manualQrError, setManualQrError] = useState('');
   
   const { push } = useRouter();
@@ -30,7 +30,14 @@ export default function ScanqrcodeComponent() {
   const osInfo = osdetails();
   const browserInfo = browserdetails();
   const rewardspoints = TotalrewardpointsComponent();
- 
+
+  const onInputmaxLength = (e) => {
+    if(e.target.value.length > e.target.maxLength)
+    {
+      e.target.value = e.target.value.slice(0, e.target.maxLength);
+    }
+  }
+
   const handalqrisvailable = (val) => { 
     setQrcode(val);
   }
@@ -44,6 +51,7 @@ export default function ScanqrcodeComponent() {
       {
           if(sdURL[0] === process.env.NEXT_PUBLIC_COUPON_URL || sdURL[0] === process.env.NEXT_PUBLIC_COUPON_URL2)
             {
+              
                 const couponvalue = sdURL[1].split("=");
                 setCouponecode(couponvalue[1]);
             }
@@ -56,13 +64,30 @@ export default function ScanqrcodeComponent() {
   }, [qrcode]);
 
   useEffect(() => {
+    console.log("outside",couponecode);
     if(couponecode !== '')
     {
+      console.log("inside",couponecode);
       handleSubmitCode();
     }
 }, [couponecode]);
  
+ 
+const changeManual = (e) => {
+  setManualQrError(''); 
+  setManualQrcode(e.target.value); 
+}
 
+const handleQrCodeManually = (e) => {
+  e.preventDefault();
+  if(manualQrcode === '')
+  {
+    setManualQrError('Please enter QR code');
+    return;
+  }
+  setManualQrError('');
+  setCouponecode(manualQrcode);
+}
 
   const handleSubmitCode = () => 
   {
@@ -114,25 +139,6 @@ export default function ScanqrcodeComponent() {
 
   }
 
-  const onInputmaxLength = (e) => {
-    if(e.target.value.length > e.target.maxLength)
-    {
-      e.target.value = e.target.value.slice(0, e.target.maxLength);
-    }
-  }
-
-  
-  const handleQrCodeManually = (e) => {
-    e.preventDefault();
-    if(manualQrCode === '')
-    {
-      setManualQrError('Please enter QR code');
-      return;
-    }
-    setManualQrError('');
-    setCouponecode(manualQrCode);
-  }
-
   return (
     <div className='outsidescreen'>
       <HeaderDashboard />
@@ -155,8 +161,8 @@ export default function ScanqrcodeComponent() {
                 <h6><span>OR</span></h6>
                 <h5>Enter QR Code Manually</h5>
 
-                  <form className='qrcodemanuallyForm' onSubmit={handleQrCodeManually}>
-                    <input type='text' name='manual-enter-copone-code' value={manualQrCode} onChange={(e)=> { setManualQrCode(e.target.val); setManualQrError(''); }} autoComplete="off" maxLength={10} onInput={onInputmaxLength} placeholder='Enter QR Code' />
+                  <form className='qrcodemanuallyForm' onSubmit={handleQrCodeManually}> 
+                    <input type='text' name='manual-enter-copone-code' value={manualQrcode} onChange={changeManual} autoComplete="off" maxLength={10} onInput={onInputmaxLength} placeholder='Enter QR Code' />
                     <button>Submit</button>
                   </form>
 
