@@ -35,7 +35,7 @@ export default function PwaModal() {
       e.preventDefault();
       setPwaPropt(true);
       setInstallModal(false);
-    //  window.location.reload();
+      window.location.reload();
     }
     const handalInstall = (e) => {
       e.preventDefault();
@@ -47,7 +47,7 @@ export default function PwaModal() {
                 if(choiceResult.outcome==="dismissed")
                 {
                     setPwaPropt(true);
-                  //  window.location.reload();
+                    window.location.reload();
                 }
                 else
                 {
