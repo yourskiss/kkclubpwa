@@ -26,7 +26,7 @@ const DashboardComponent = () => {
     const gtUST = getUserStatus();
     const { push } = useRouter();
     const rewardspoints = parseInt(TotalrewardpointsComponent());
-   // const redeemminimumpoint = parseInt(process.env.NEXT_PUBLIC_REDEEM_MIN_POINT);
+    // const redeemminimumpoint = parseInt(process.env.NEXT_PUBLIC_REDEEM_MIN_POINT);
     const imageUrl = process.env.NEXT_PUBLIC_IMAGE_URL;
     const imageSection = process.env.NEXT_PUBLIC_SECTION_DASHBOARD;
 
