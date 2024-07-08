@@ -23,7 +23,7 @@ export default function PwaIOS () {
   const promptInstall = () => {
     setPwaIos(true);
     setShouldShowPrompt(false);
-    window.location.reload();
+   // window.location.reload();
   };
 
  
