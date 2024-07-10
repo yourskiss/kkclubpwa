@@ -31,7 +31,7 @@ export default function LoginPart({isMobStatus, getMobNumber, phonenumber}) {
     else { 
       setMobileError("");  
       // console.log("login part", mobileValues);
-        if(mobileValues === '9898989898' || mobileValues === '9876543210' || mobileValues === '9797979797' || mobileValues === '9090909090' || mobileValues === '9111111111' || mobileValues === '9191919191')
+        if(mobileValues === '9898989898' || mobileValues === '9876543210' || mobileValues === '9797979797' || mobileValues === '9090909090' || mobileValues === '9111111111' || mobileValues === '9191919191' || mobileValues === '9000000000')
         {
           sendDemo();
         }

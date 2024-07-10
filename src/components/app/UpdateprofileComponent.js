@@ -11,6 +11,7 @@ import { _get, _post } from "@/config/apiClient";
 import HeaderDashboard from "../shared/HeaderDashboard";
 import FooterComponent from "../shared/FooterComponent";
 import { setUserInfo } from "@/config/userinfo";
+import SalesExcutiveID from "../shared/SalesExcutiveID";
 
 export default function UpdateprofileComponent() {
     const [pagemsg, setPagemsg] = useState('');
@@ -18,8 +19,9 @@ export default function UpdateprofileComponent() {
     const [mounted, setMounted] = useState(true);
     const [mounted2, setMounted2] = useState(true);
 
-   
-    const [agentcode, setAgentcode] = useState('');
+
+    const [ExcutiveID, setExcutiveID] = useState('');
+ 
 
     const [data, setData] = useState(false);
     const [formValue, setFormValue] = useState({});
@@ -55,9 +57,12 @@ export default function UpdateprofileComponent() {
             {
                 setData(true);
                 setUserdata(res.data.result);
+                
                 setCityStateName(`${res.data.result.city} (${res.data.result.state})`)
                 setStateName(res.data.result.state);
                 setCityName(res.data.result.city);
+
+                setExcutiveID(res.data.result.agentcode);
             }
         }).catch((err) => {
             console.log(err.message);
@@ -69,7 +74,6 @@ export default function UpdateprofileComponent() {
  
     useEffect(() => {
         setFormValue({
-            'agentcode': userdata.agentcode === null ? '' : userdata.agentcode,
             'firstname':  userdata.firstname,
             'lastname':  userdata.lastname,
             'postalcode':userdata.postalcode
@@ -96,6 +100,11 @@ export default function UpdateprofileComponent() {
         setCityName(ct);
         // console.log("change update - ", cityStateName, " - ", stateName, " - ", cityName);
      };
+     const handleIdChange = (sc) => {
+        setExcutiveID(sc);
+       // console.log("change ExcutiveID - ", ExcutiveID);
+     };
+     
 
      const onInputmaxLength = (e) => {
             if(e.target.name === 'postalcode')
@@ -127,10 +136,6 @@ export default function UpdateprofileComponent() {
         {
             setFormValue({ ...formValue, [e.target.name] : e.target.value.replace(/[^0-9]/gi, '') }); 
         }
-        else if(e.target.name === 'agentcode')
-        {
-            setFormValue({ ...formValue, [e.target.name] : e.target.value.replace(/[^a-z0-9]/gi, '') }); 
-         }
         else
         {
             setFormValue({ ...formValue, [e.target.name] : e.target.value });
@@ -158,7 +163,7 @@ export default function UpdateprofileComponent() {
             profilepictureurl: '',
             dateofbirth: "",
             languagepreference: "English",
-            agentcode:formValue.agentcode,
+            agentcode: ExcutiveID,
             locationpage: "/update-profile",
             ipaddress: ipInfo,
             osdetails: osInfo,
@@ -218,7 +223,7 @@ export default function UpdateprofileComponent() {
            // console.log(" bank update  -",bankinfo);
           _post("/Payment/UpdateUserPayoutInfo", bankinfo)
           .then((res) => {
-             console.log("update -  UpdateUserPayoutInfo");
+             console.log("update -  UpdateUserPayoutInfo status", res.status);
           }).catch((error) => {
               console.log(error); 
           });
@@ -236,19 +241,18 @@ export default function UpdateprofileComponent() {
             <div className="registercontainer">
                 <div className="registerHead">Update your profile</div>
 
-                
+
                 <div className="registerField">
-                    <div className="registertext">Sales Executive ID</div>
-                    <input
-                        className="registerinput"
-                        type="text"
-                        name="agentcode"
-                        maxLength={4}
-                        onInput={onInputmaxLength}
-                        value={ formValue.agentcode  || ''  }
-                        onChange={onChangeField}
-                    />
+                      <div className="registertext">Sales Executive ID</div>
+                      { data ? (
+                      <ErrorBoundary>
+                          <SalesExcutiveID seChange={handleIdChange} seID={ExcutiveID} />
+                      </ErrorBoundary>
+                      ) : null }
                 </div>
+
+                
+     
                 
                 <div className="registerField">
                     <div className="registertext">First Name - As per Aadhaar Card<small>*</small></div>
