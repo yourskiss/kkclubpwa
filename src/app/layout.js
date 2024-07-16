@@ -17,7 +17,19 @@ export const metadata = {
   title: "Kerakoll Club",
   description: "Kerakoll is the international leader in sustainable building",
   manifest:'/manifest.json',
-  robots: { index:false, follow:false },
+  robots: {
+    index: false,
+    follow: true,
+    nocache: true,
+    googleBot: {
+      index: true,
+      follow: false,
+      noimageindex: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   icons: [
     {
       rel: 'icon',

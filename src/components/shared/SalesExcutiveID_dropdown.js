@@ -24,23 +24,34 @@ export default function SalesExcutiveID({seChange, seID}) {
         seChange(val.label);
        // console.log("se list change - ", val);
       }
+
+      const customComponents = {
+        DropdownIndicator: () => null,
+      };
+
+      const option = seList.map((entry) => ({ label: entry.agentcode, value: entry.agentcode }))
+
+      const filterOption = (option, seID) => {
+        // Your custom filtering logic here
+        return option.label.toLowerCase().includes(seID.toLowerCase());
+      };
+
+
   return (
  <>
-    <Select
+  <Select
+    components={customComponents}
     defaultValue={{label: seID, value:seID}}
     className="searchableContainer"
     classNamePrefix="searchable"
     Loading
-    searchable 
+    searchable
     Clearable
     name="seList"
-    options={seList.map((entry) => ({
-      label: entry.agentcode,
-      value: entry.agentcode,
-    }))}
+    options={option}
+    filterOption={filterOption}
     onChange={(values) => {onchangevalue(values)}}
-  />
-                       
+  />                     
 </>                   
   )
 }

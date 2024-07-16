@@ -11,17 +11,18 @@ import { _get, _post } from "@/config/apiClient";
 import HeaderDashboard from "../shared/HeaderDashboard";
 import FooterComponent from "../shared/FooterComponent";
 import { setUserInfo } from "@/config/userinfo";
-import SalesExcutiveID from "../shared/SalesExcutiveID";
+ 
 
 export default function UpdateprofileComponent() {
     const [pagemsg, setPagemsg] = useState('');
     const[loading, setLoading] = useState(false);
     const [mounted, setMounted] = useState(true);
     const [mounted2, setMounted2] = useState(true);
-
+    const [mounted3, setMounted3] = useState(true);
 
     const [ExcutiveID, setExcutiveID] = useState('');
- 
+    const [seList, setSeList] = useState([]);
+    
 
     const [data, setData] = useState(false);
     const [formValue, setFormValue] = useState({});
@@ -89,6 +90,7 @@ export default function UpdateprofileComponent() {
         return error;
     }
     const handleSubmit = (e) =>{
+        if(ExcutiveID.length !== 4 ) setExcutiveID('');
         e.preventDefault();
         setFormError(validateHandler(formValue));
         setIsSubmit(true);
@@ -229,8 +231,42 @@ export default function UpdateprofileComponent() {
           });
         }
 
-        
 
+        useEffect(() => {
+            _get("Cms/SEAgentCode")
+            .then((res) => {
+               // console.log("se id list - ", res);
+                if(mounted3)
+                {
+                    setSeList(res.data.result);
+                } 
+            }).catch((err) => {
+                console.log("StateCity add - ", err.message);
+            });
+          return () => { setMounted3(false); }
+        }, []);      
+        const seChangeID = (e) => {
+            setExcutiveID(e.target.value.toUpperCase());
+        }
+        const handalonKeyup = () => {
+            if(ExcutiveID.length === 4)
+            {
+                const filteredResults = filterArrayByInput(seList, ExcutiveID);
+                console.log(filteredResults);
+                if(filteredResults === 0)
+                {
+                    setExcutiveID('');
+                }
+            }
+        }
+        function filterArrayByInput(datafromAPI, searchValue) {
+            const filteredData = datafromAPI.filter(value => {
+                const searchStr = searchValue.toUpperCase();
+                const nameMatches = value.agentcode.toUpperCase().includes(searchStr);
+                return nameMatches;
+            });   
+            return filteredData.length;
+        }
 
   return (
     <>
@@ -243,16 +279,20 @@ export default function UpdateprofileComponent() {
 
 
                 <div className="registerField">
-                      <div className="registertext">Sales Executive ID</div>
-                      { data ? (
-                      <ErrorBoundary>
-                          <SalesExcutiveID seChange={handleIdChange} seID={ExcutiveID} />
-                      </ErrorBoundary>
-                      ) : null }
+                    <div className="registertext">Sales Executive ID</div>
+                    <input
+                        className="registerinput"
+                        type="text"
+                        name="seids"
+                        maxLength={4}
+                        onInput={onInputmaxLength}
+                        value={ ExcutiveID }
+                        onChange={seChangeID}
+                        onKeyUp={handalonKeyup}
+                    />
                 </div>
 
-                
-     
+ 
                 
                 <div className="registerField">
                     <div className="registertext">First Name - As per Aadhaar Card<small>*</small></div>
