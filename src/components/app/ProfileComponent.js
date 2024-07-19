@@ -16,6 +16,7 @@ export default function ProfileComponent() {
   const [mounted, setMounted] = useState(true);
   const [mounted2, setMounted2] = useState(true);
   const [usersinfo, setUsersinfo] = useState('');
+  const [headload, setHeadLoad] = useState(false);
 
   const rewardspoints = parseInt(TotalrewardpointsComponent());
   const userid = getUserID();
@@ -26,8 +27,9 @@ export default function ProfileComponent() {
 
   useEffect(() => {
     if(!userToken) { Router.push("/login"); return  }
+    setTimeout(function(){ setHeadLoad(true); },1000);
   }, []);
-  userMobile
+   
 
   useEffect(() => {
     _get("Customer/UserInfo?userid=0&phonenumber="+ userMobile)
@@ -91,16 +93,14 @@ const backbuttonHandal = () => {
   return (<>
   <motion.div initial={{ x: "100vw" }} animate={{ x:0 }}  transition={{ duration: 1, delay: 0, origin: 1, ease: [0, 0.71, 0.2, 1.01] }}>
  
-
-      <header className='headersection headerProfiles'>
+    { headload && <header className='headersection headerProfiles'>
         <aside className="backarrow">
           <Image src="/assets/images/back-arrow.png" width={65} height={24} alt="back" quality={99} onClick={backbuttonHandal} title='Back' />
         </aside>
         <aside className='scanqrnow'>
             <Image src="/assets/images/QR.png" width={42} height={42} alt="scanqrcode" quality={99} onClick={() => Router.push('/scanqrcode')} title='Scan QR Code' />
         </aside>
-      </header>
-
+      </header> }
     
     <div className="screenmain screenprofile"> 
         <div className="screencontainer">
@@ -117,8 +117,8 @@ const backbuttonHandal = () => {
                   <dd>
                     <h2>{usersinfo.fullname}</h2>
                     <p><b>Status:</b> <span className={ usersinfo.verificationstatus === "APPROVE" ? "approvedStatus" : "pendingStatus" }>{usersinfo.verificationstatus}</span></p>
-                    <p><b>Aadhaar:</b> <span>{usersinfo.aadhaarinfo}</span></p>
                     <p><b>Pan:</b> <span>{resultdata.pan}</span></p>
+                    <p><b>Mobile:</b> <span>{usersinfo.phonenumber}</span></p>
                   </dd>
                 </dl> 
                 <aside onClick={()=> Router.push('/update-profile')}>Edit</aside>

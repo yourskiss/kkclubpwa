@@ -210,12 +210,12 @@ const savebankdetail = () =>
  
                   { step === 1 && <div className="bankTypeField">
                       <h6>
-                        <input id='accountBank' type='radio' name='accounttype' value='bank' checked={accountType === 'bank'} onChange={()=>changeAccountType('bank')} />
-                        <label htmlFor="accountBank"><span>Add Bank Detail</span></label>
-                      </h6>
-                      <h6>
                         <input id='accountUpi' type='radio' name='accounttype' value='upi' checked={accountType === 'upi'} onChange={()=>changeAccountType('upi')}  />
                         <label htmlFor="accountUpi"><span>Add UPI ID</span></label>
+                      </h6>
+                      <h6>
+                        <input id='accountBank' type='radio' name='accounttype' value='bank' checked={accountType === 'bank'} onChange={()=>changeAccountType('bank')} />
+                        <label htmlFor="accountBank"><span>Add Bank Detail</span></label>
                       </h6>
                   </div> } 
               

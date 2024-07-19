@@ -20,6 +20,7 @@ export default function NotificationsComponent() {
   const[notificationCount, setNotificationCount] = useState(0);
   const [notifyList, setNotifyList] = useState({});
   const [notifyCount, setNotifyCount] = useState(0);
+  const [headload, setHeadLoad] = useState(false);
   const Router = useRouter();
   const userID = getUserID();
   const ipInfo = ipaddress();
@@ -31,6 +32,7 @@ export default function NotificationsComponent() {
   useEffect(() => {
     if(!userToken) { Router.push("/login"); return  }
     if(!bearerToken) { Router.push("/"); return  }
+    setTimeout(function(){ setHeadLoad(true); },1000);
   }, []);
 
 
@@ -101,14 +103,14 @@ const readNotification = (e) => {
   } 
 
   return (<>
-    <motion.div initial={{ y: "-250px" }} animate={{ y:0 }} transition={{ duration:2, delay: 0, origin: 1, ease: [0, 0.71, 0.2, 1.01] }}>
+    <motion.div initial={{ y: "-250px" }} animate={{ y:0 }} transition={{ duration:1, delay: 0, origin: 1, ease: [0, 0.71, 0.2, 1.01] }}>
       
-    <header className='headersection headerNotification'>
+    { headload && <header className='headersection headerNotification'>
         <aside className="backarrow">
           <Image src="/assets/images/back-arrow.png" width={65} height={24} alt="back" quality={99} onClick={readNotification} title='Back' />
         </aside>
         <div className='head_notification'>Notifications</div>
-      </header>
+      </header> }
 
     <div className="screenmain screennotification"> 
         <div className="screencontainer">

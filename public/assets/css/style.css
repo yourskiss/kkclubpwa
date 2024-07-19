@@ -135,11 +135,9 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 
 
 /* ################### screen ################### */
-.main { display: flow-root; background-color:#191919; width:100%; max-width:1024px; margin: 0 auto; float: none; }
-
+.main { display: flow-root; background-color:#191919; width:100%; max-width:1024px; margin: 0 auto; float: none; padding:120px 0 0 0; }
 .outsidescreen { width: 100%; min-height:100vh; float: left; padding:0; background-color:#000;  background: url('../images/design_full_black.png') no-repeat center top; background-size:auto 90%;  }
 .outsiderewads { width: 100%; min-height:100vh; float: left; padding:0;   background-image: url('../images/design_bott_part.png'); background-repeat: no-repeat; background-position: center top -70px; background-size: 100% auto;  }
-
 
 .screenmain { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; width: 100%; min-height:calc(100vh - 160px); float: left; background-color: #191919; padding:2rem 3rem 5rem 3rem; box-sizing: border-box; }
 .screenmain.screendashboard { min-height: auto; background-color:transparent;  background: url('../images/dashboard_bg.png') no-repeat center top; background-size:100% 70%;  }
@@ -148,8 +146,11 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 
 .screencontainer { width: 100%; height: auto; float: left; }
 
+
+
+
 /* ################### headersection ################### */
-.headersection {  width: 100%; max-width: 1024px; height: 120px; float: left; padding:0 3rem; display: flex; justify-content:center; align-items: center; box-sizing: border-box; background-color:#191919;  }
+.headersection { z-index:2; position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 1024px; height: 120px; float: left; padding:0 3rem; display: flex; justify-content:center; align-items: center; box-sizing: border-box; background-color:#191919;  }
 .headersection .logo { display: inline-block; float:none;width: 100%; max-width: 270px;  margin: 0; padding:0;}
 .headersection .logo img { width: 100%; height: auto; }
 .backarrow { display: inline-block; float:none; width:auto; margin: 0; padding:0; }
@@ -160,10 +161,10 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 .scanqrnow img:hover { transform: scale(1.05); transition: all 0.5s ease-in;}
 
 
-.headersection.headerProfiles { justify-content: space-between; background-color:transparent;   }
-.headersection.headerNotification { justify-content:flex-start; background-color:transparent;  }
-.headersection.headerAfterlogin { justify-content: flex-start; background-color:transparent;   }
-.headersection.headerDashboard {  justify-content: space-between; background-color:transparent;  }
+.headersection.headerProfiles { justify-content: space-between;   }
+.headersection.headerNotification { justify-content:flex-start;   }
+.headersection.headerAfterlogin { justify-content: flex-start;  }
+.headersection.headerDashboard {  justify-content: space-between;  }
 .headersection.headerDashboard .logo { display: inline-block; float:none;width: 100%; max-width: 260px;  margin: 0; padding:0;}
 .headersection.headerDashboard .logo img { cursor: pointer; width: 100%; height: auto; }
 .headersection.headerDashboard section { position: relative; display: flex; justify-content:flex-end; align-items: center;  }
@@ -525,7 +526,7 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 
 /* ################### profilecontainer ################### */
 .screenmain.screenprofile { position: relative; background-color:transparent;  background-image:url('../images/design_top.png'); background-repeat:no-repeat; background-position:center bottom -450px;  background-size:100% auto; align-items: flex-start; padding:0 0 150px 0;    }
-.profile_status { width: 100%; float: left; margin:0; padding:3rem; display: flex; justify-content:space-between; align-items: center; background-image:url('../images/dashboard_bg.png'); background-repeat:no-repeat; background-position: center bottom;  background-size:100% 100%; }
+.profile_status { width: 100%; float: left; margin:0; padding:0 3rem 3rem 3rem; display: flex; justify-content:space-between; align-items: center; background-image:url('../images/dashboard_bg.png'); background-repeat:no-repeat; background-position: center bottom;  background-size:100% 100%; }
 .profile_status dl {  width: 100%; float: left; margin:0; padding: 0; display: flex; justify-content:flex-start; align-items:center; }
 .profile_status dl dt { display: inline-block; width:120px; height: 120px; border-radius: 50%;  margin: 0 1.5rem 0 0; padding:0.5rem; border: none;   }
 .profile_status dl dt span {  display: flex; justify-content: center; align-items: center; float: left; width: 100%; height:100%; border: solid 3px #191919; border-radius: 50%; margin: 0;padding: 0; box-sizing: border-box; line-height: 1; font-size: 36px; text-transform: uppercase; font-family: var(--font-lneue); color: #191919; letter-spacing: 2px; }
@@ -583,10 +584,10 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 .bankInfosavecontainer ul li.activated { list-style: none; color: #AFCDAF ; user-select: none; pointer-events: none; }
 
 .bankinfo { position: relative; width: 100%; float: left; text-align: center; margin:2rem 0 1rem 0; padding: 0 0 0 0; }
-.bankinfo h4 { position: relative; width: 100%; float: left; text-align: left; display: flex; justify-content: flex-start; align-items: center; font-family:var(--font-lneue); font-weight: normal;color: #AFCDAF; font-size: 24px;   text-transform: uppercase; overflow-wrap: break-word; overflow: hidden; }
+.bankinfo h4 { position: relative; width: 100%; float: left; text-align: left; display: flex; justify-content: flex-start; align-items: center; font-family:var(--font-lneue); font-weight: normal;color: #AFCDAF; font-size: 24px; overflow-wrap: break-word; overflow: hidden; }
 .bankinfo h4 img { max-width:32px; border: 0;  }
 .bankinfo h4 span { margin-left: 0.5rem;}
-.bankinfo h4 small { margin-left: 0.5rem; font-size: 66%; }
+.bankinfo h4 small { margin-left: 0.5rem; font-weight: 400; color: #fff; font-size: 67%; text-transform: none; }
 .bankinfo h5 { margin: 0.8rem 0 0.5rem 0; position: relative; width: 100%; float: left; text-align: left; font-weight: normal;color: #6d6d6d; font-size: 14px;   text-transform: uppercase; overflow-wrap: break-word;}
 .bankinfo h6 {   position: relative; width: 100%; margin-bottom: 0.3rem; float: left; text-align: left; font-weight: 500; color: #F5F0EB; font-size:16px; overflow-wrap: break-word; }
 .bankinfo h6 b { font-weight: normal; font-size:110%; }
@@ -657,10 +658,8 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 @media only screen and (max-width:599px)
 {
 /* ################### screen ################### */
+.main { padding:100px 0 0 0; }
 .outsiderewads {  background-position: center top -50px; background-size: 150% auto;  }
-
-
-/* ################### screen ################### */
 .screenmain { min-height:calc(100vh - 140px); padding:2px 2em 4rem 2rem;  }
 .screenmain.screendashboardbottom { padding-top: 0 !important; }
 
@@ -779,7 +778,7 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 
 /* ################### profilecontainer ################### */
 .screenmain.screenprofile {  background-position:center bottom -170px;  padding:0 0 100px 0;  }
-.profile_status { padding:2rem 1rem;  }
+.profile_status { padding:0 1rem 2rem 1rem;  }
 .profile_status dl dt { width:70px; height: 70px; margin: 0 0.8rem 0 0; padding:0.3rem;   }
 .profile_status dl dt span { border-width:2px; font-size: 20px;  }
 .profile_status dl dd { width: 200px; }
@@ -839,8 +838,8 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 
 @media only screen and (max-width:479px)
 {
- 
 /* ################### screen ################### */
+.main { padding:90px 0 0 0; }
 .screenmain { min-height:calc(100vh - 130px); padding:1px 1rem 2rem 1rem;  }
 .screenmain.screendashboardbottom { padding-top: 0 !important; }
 

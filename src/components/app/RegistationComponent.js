@@ -128,9 +128,9 @@ export default function RegistationComponent() {
   const handleStep3 = (e) => {
     e.preventDefault();
     setAadhaarErrors(''); 
-    if (!aadhaarinfo && !paninfo && !tnc) { setAadhaarErrors("Mobile number is required!"); setPanErrors('Pan is required.'); setTncError("Please agree with our Terms & conditions");}
-    if(aadhaarinfo === '') { setAadhaarErrors('Aadhaar is required.'); }
-    else if(aadhaarinfo.length !== 12) { setAadhaarErrors('Aadhaar must have at least 12 Digits.'); }
+    if (!paninfo && !tnc) { setPanErrors('Pan is required.'); setTncError("Please agree with our Terms & conditions");}
+   // if(aadhaarinfo === '') { setAadhaarErrors('Aadhaar is required.'); }
+   // else if(aadhaarinfo.length !== 12) { setAadhaarErrors('Aadhaar must have at least 12 Digits.'); }
     else if(paninfo === '') { setPanErrors('Pan is required.'); }
     else if(paninfo.length !== 10) { setPanErrors('Pan must have at least 10 Digits.'); }
     else if(!tnc) { setTncError("Please agree with our Terms & conditions"); }
@@ -312,7 +312,7 @@ export default function RegistationComponent() {
               
 
               { step === 3 && <form onSubmit={handleStep3}>
-                <div className="registerField">
+                <div className="registerField" style={{'display':'none'}}>
                   <div className="registertext">Aadhaar Number<small>*</small></div>
                   <input
                     className="registerinput"
