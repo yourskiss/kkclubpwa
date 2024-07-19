@@ -136,8 +136,8 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 
 /* ################### screen ################### */
 .main { display: flow-root; background-color:#191919; width:100%; max-width:1024px; margin: 0 auto; float: none; padding:120px 0 0 0; }
-.outsidescreen { width: 100%; min-height:100vh; float: left; padding:0; background-color:#000;  background: url('../images/design_full_black.png') no-repeat center top; background-size:auto 90%;  }
-.outsiderewads { width: 100%; min-height:100vh; float: left; padding:0;   background-image: url('../images/design_bott_part.png'); background-repeat: no-repeat; background-position: center top -70px; background-size: 100% auto;  }
+.outsidescreen { width: 100%; min-height:calc(100vh - 120px); float: left; padding:0; background-color:#000;  background: url('../images/design_full_black.png') no-repeat center top; background-size:auto 90%;  }
+.outsiderewads { width: 100%; min-height:calc(100vh - 120px); float: left; padding:0;   background-image: url('../images/design_bott_part.png'); background-repeat: no-repeat; background-position: center top -70px; background-size: 100% auto;  }
 
 .screenmain { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; width: 100%; min-height:calc(100vh - 160px); float: left; background-color: #191919; padding:2rem 3rem 5rem 3rem; box-sizing: border-box; }
 .screenmain.screendashboard { min-height: auto; background-color:transparent;  background: url('../images/dashboard_bg.png') no-repeat center top; background-size:100% 70%;  }
@@ -659,9 +659,13 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 {
 /* ################### screen ################### */
 .main { padding:100px 0 0 0; }
+.outsidescreen {  min-height:calc(100vh - 100px); }
+.outsiderewads { min-height:calc(100vh - 100px);  }
 .outsiderewads {  background-position: center top -50px; background-size: 150% auto;  }
 .screenmain { min-height:calc(100vh - 140px); padding:2px 2em 4rem 2rem;  }
 .screenmain.screendashboardbottom { padding-top: 0 !important; }
+
+
 
 
 /* ################### headersection ################### */
@@ -840,6 +844,8 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 {
 /* ################### screen ################### */
 .main { padding:90px 0 0 0; }
+.outsidescreen {  min-height:calc(100vh - 90px); }
+.outsiderewads { min-height:calc(100vh - 90px);  }
 .screenmain { min-height:calc(100vh - 130px); padding:1px 1rem 2rem 1rem;  }
 .screenmain.screendashboardbottom { padding-top: 0 !important; }
 
