@@ -150,7 +150,7 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 
 
 /* ################### headersection ################### */
-.headersection { z-index:2; position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 1024px; height: 120px; float: left; padding:0 3rem; display: flex; justify-content:center; align-items: center; box-sizing: border-box; background-color:#191919;  }
+.headersection { z-index:6; position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 1024px; height: 120px; float: left; padding:0 3rem; display: flex; justify-content:center; align-items: center; box-sizing: border-box; background-color:#191919;  }
 .headersection .logo { display: inline-block; float:none;width: 100%; max-width: 270px;  margin: 0; padding:0;}
 .headersection .logo img { width: 100%; height: auto; }
 .backarrow { display: inline-block; float:none; width:auto; margin: 0; padding:0; }
