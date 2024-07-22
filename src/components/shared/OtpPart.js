@@ -151,33 +151,29 @@ export default function OtpPart({isMobStatus, getMobNumber, phonenumber}) {
 
 
 
-  
+   
 
-  const autoFillOTP = async () => {
-    if ('OTPCredential' in window) {
-      const ac = new AbortController();
-      setTimeout(() => { ac.abort(); }, 60 * 1000);
-      try 
-      {
-        const otp = await navigator.credentials.get({
-          otp: { transport: ['sms'] },
-          signal: ac.signal
-        });
-        if (otp) {
-          setOtpValues(otp.code);
-          ac.abort();
-        }
-      } catch (err) {
-        console.error('Error in OTP autofill:', err);
-        ac.abort();
-      }
-    }
-  };
- 
   useEffect(() => {
-   setTimeout(function(){ autoFillOTP(); }, 2000);
+    if ('OTPCredential' in window) 
+    {
+      const ac = new AbortController();
+      navigator.credentials.get({
+        otp: { transport: ['sms'] },
+        signal: ac.signal
+      }).then((otp) => {
+        setOtpValues(otp.code);
+        ac.abort();
+      }).catch((err) => {
+        ac.abort();
+        setError(err.message);
+        console.error('Error fetching OTP:', err);
+      });
+    } 
+    else 
+    {
+      console.warn('OTPCredential API not supported');
+    }
   }, []);
-
 
 
 

@@ -17,8 +17,6 @@ export default function LoginComponent() {
     const isCC = isCouponeCode();
     const { push } = useRouter();
 
-
-    
     useEffect(() => {
       if(userToken && !isCC) { push("/dashboard"); return }
       if(userToken && isCC) { push("/getcoupone"); return }
@@ -31,25 +29,15 @@ export default function LoginComponent() {
       setPhonenumber(val)
     }
 
-
-    
   return (
   <>
     <HeaderFirst />
-
     <div className='screenmain'>
       <section className="screencontainer">
         { !isMobile ? <LoginPart isMobStatus={isMobStatus} getMobNumber={getMobNumber} phonenumber={phonenumber} /> :  <OtpPart isMobStatus={isMobStatus} getMobNumber={getMobNumber} phonenumber={phonenumber} /> }
       </section>
     </div>
-
-
     <FooterComponent />
-
-    
- 
-
-
   </>
   )
 }
