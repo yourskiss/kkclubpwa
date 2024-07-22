@@ -165,7 +165,6 @@ export default function OtpPart({isMobStatus, getMobNumber, phonenumber}) {
         ac.abort();
       }).catch((err) => {
         ac.abort();
-        setError(err.message);
         console.error('Error fetching OTP:', err);
       });
     } 

@@ -64,13 +64,15 @@ export default function RootLayout({ children }) {
       
 
         <main className="main">
-          <Starfield starCount={1000} starColor={[255, 255, 255]} speedFactor={0.05} />
-          <ToastContainer position="top-center" autoClose={2000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored"  />
+         
             {children}
             
 
             <PwaModal />
             <PwaIOS />
+            <ToastContainer position="top-center" autoClose={2000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored"  />
+            <Starfield starCount={1000} starColor={[255, 255, 255]} speedFactor={0.05} />
+
         </main>
       </body>
     </html>
