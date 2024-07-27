@@ -36,7 +36,7 @@ export default function OtpPart({isMobStatus, getMobNumber, phonenumber}) {
     else{ 
       setOtpError('');
        console.log("otp part", phonenumber);
-      if(phonenumber === '9898989898' || phonenumber === '9876543210' || phonenumber === '9797979797' || phonenumber === '9090909090' || phonenumber === '9111111111' || phonenumber === '9191919191' || phonenumber === '9000000000')
+      if(phonenumber === '9898989898' || phonenumber === '9876543210' || phonenumber === '9797979797' || phonenumber === '9090909090' || phonenumber === '9111111111' || phonenumber === '9191919191' || phonenumber === '9000000000' || phonenumber === '9212672201')
       {
         verifyDemo();
       }
@@ -95,7 +95,7 @@ export default function OtpPart({isMobStatus, getMobNumber, phonenumber}) {
   }
   const verifyDemo = () => {
     setLoading(true);
-    setPagemsg('Verifying OTP');
+    setPagemsg('Verifying demo OTP');
     setTimeout(function(){ loginnow(); },1000);
   }
 

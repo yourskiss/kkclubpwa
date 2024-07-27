@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 import TotalRedeemedPoints from '../shared/totalredemption';
 import HeaderDashboard from '../shared/HeaderDashboard';
 import FooterComponent from '../shared/FooterComponent';
- 
+import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 
 export default function RedemptionhistoryComponemt () {
   const [pagemsg, setPagemsg] = useState('');
@@ -124,7 +124,9 @@ export default function RedemptionhistoryComponemt () {
  
   return (
   <div className="outsiderewads">
-    <HeaderDashboard />
+      <ErrorBoundary>
+        <HeaderDashboard />
+      </ErrorBoundary>
     <div className="screenmain screenrewads"> 
       <div className="screencontainer">
  

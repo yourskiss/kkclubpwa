@@ -7,6 +7,7 @@ import CountUp from 'react-countup';
 import { _get } from "@/config/apiClient";
 import HeaderDashboard from "../shared/HeaderDashboard";
 import FooterComponent from "../shared/FooterComponent";
+import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 
 export default function RewardshistoryComponent () {
   const [pagemsg, setPagemsg] = useState('');
@@ -46,7 +47,9 @@ export default function RewardshistoryComponent () {
  const points = TotalrewardpointsComponent();
   return (
   <div className="outsiderewads">
-    <HeaderDashboard />
+      <ErrorBoundary>
+        <HeaderDashboard />
+      </ErrorBoundary>
     <div className="screenmain screenrewads"> 
       <div className="screencontainer">
  

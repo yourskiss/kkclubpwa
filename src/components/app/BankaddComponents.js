@@ -9,7 +9,8 @@ import Loader from '../shared/LoaderComponent';
 import { ipaddress, osdetails, browserdetails  } from "../core/jio";
 import HeaderDashboard from '../shared/HeaderDashboard';
 import FooterComponent from '../shared/FooterComponent';
- 
+import { ErrorBoundary } from "next/dist/client/components/error-boundary";
+
 export default function BankaddComponents() {
     const [pagemsg, setPagemsg] = useState('');
     const [loading, setLoading] = useState(false);
@@ -217,7 +218,9 @@ export default function BankaddComponents() {
 
  
   return (<>
-    <HeaderDashboard />
+      <ErrorBoundary>
+        <HeaderDashboard />
+      </ErrorBoundary>
 
     <div className="screenmain"> 
         <div className="screencontainer">

@@ -6,12 +6,11 @@ import { getUserID, getUserMobile } from "@/config/userauth";
 import { toast } from 'react-toastify';
 import { ipaddress, osdetails, browserdetails  } from "../core/jio";
 import CitystateUpdateComponent from "../shared/CitystateUpdateComponent";
-import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 import { _get, _post } from "@/config/apiClient";
 import HeaderDashboard from "../shared/HeaderDashboard";
 import FooterComponent from "../shared/FooterComponent";
 import { setUserInfo } from "@/config/userinfo";
- 
+import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 
 export default function UpdateprofileComponent() {
     const [pagemsg, setPagemsg] = useState('');
@@ -270,7 +269,9 @@ export default function UpdateprofileComponent() {
 
   return (
     <>
-    <HeaderDashboard />
+      <ErrorBoundary>
+        <HeaderDashboard />
+      </ErrorBoundary>
     <div className='screenmain'>
         <section className="screencontainer">
         <form onSubmit={handleSubmit}>

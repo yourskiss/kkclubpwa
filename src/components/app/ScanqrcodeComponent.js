@@ -12,6 +12,8 @@ import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
 import { _post } from "@/config/apiClient";
 import HeaderDashboard from '../shared/HeaderDashboard';
 import FooterComponent from '../shared/FooterComponent';
+import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
+
 
 export default function ScanqrcodeComponent() {
   const [pagemsg, setPagemsg] = useState('');
@@ -139,7 +141,9 @@ const handleQrCodeManually = (e) => {
 
   return (
     <div className='outsidescreen'>
-      <HeaderDashboard />
+      <ErrorBoundary>
+        <HeaderDashboard />
+      </ErrorBoundary>
       <div className="screenmain screenqrcode" > 
         <div className="screencontainer">
           { couponecode !== '' ? <>

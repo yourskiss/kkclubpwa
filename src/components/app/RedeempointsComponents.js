@@ -9,6 +9,7 @@ import { _get } from "@/config/apiClient";
 import { getUserID } from '@/config/userauth';
 import HeaderDashboard from '../shared/HeaderDashboard';
 import FooterComponent from '../shared/FooterComponent';
+import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 
 export default function RedeempointsComponents() {
     const [mounted, setMounted] = useState(true);
@@ -37,7 +38,10 @@ export default function RedeempointsComponents() {
      }, [mounted]);
 
   return (<>
-    <HeaderDashboard />
+    <ErrorBoundary>
+        <HeaderDashboard />
+    </ErrorBoundary>
+                    
     <div className="screenmain redeemscreen"> 
         <div className="screencontainer">
 

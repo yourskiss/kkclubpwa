@@ -10,7 +10,7 @@ import { _get } from "@/config/apiClient";
 import Loader from "../shared/LoaderComponent";
 import FooterComponent from "../shared/FooterComponent";
 import { setUserInfo } from "@/config/userinfo";
-
+import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 
 export default function ApprovalComponent() {
     const [pagemsg, setPagemsg] = useState('');
@@ -94,7 +94,10 @@ export default function ApprovalComponent() {
 
   return (
     <>
-    <HeaderDashboard />
+    <ErrorBoundary>
+        <HeaderDashboard />
+    </ErrorBoundary>
+    
     <div className="screenmain"> 
         <div className="screencontainer">
                 <div className="approvalcontainer">

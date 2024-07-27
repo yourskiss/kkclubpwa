@@ -10,6 +10,7 @@ import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
 import { _get } from "@/config/apiClient";
 import HeaderDashboard from '../shared/HeaderDashboard';
 import FooterComponent from '../shared/FooterComponent';
+import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 
 export default function EarnedComponent() {
     const [pagemsg, setPagemsg] = useState('');
@@ -41,7 +42,9 @@ export default function EarnedComponent() {
     }, []);
 
   return (<div className='outsidescreen'>
-      <HeaderDashboard />
+      <ErrorBoundary>
+        <HeaderDashboard />
+      </ErrorBoundary>
       <div className="screenmain screenqrcode" > 
         <div className="screencontainer">
 

@@ -13,7 +13,8 @@ import Loader from '../shared/LoaderComponent';
 import { _get } from "@/config/apiClient";
 import FooterComponent from '../shared/FooterComponent';
 import { getUserStatus } from "@/config/userinfo";
- 
+import { ErrorBoundary } from "next/dist/client/components/error-boundary";
+
 const DashboardComponent = () => {
     const [pagemsg, setPagemsg] = useState('');
     const [loading, setLoading] = useState(false);
@@ -101,7 +102,9 @@ useEffect(() => {
 
  
   return (<>
-    <HeaderDashboard />
+      <ErrorBoundary>
+        <HeaderDashboard />
+      </ErrorBoundary>
     <div className="screenmain screendashboard"> 
       <div className="screencontainer">
    

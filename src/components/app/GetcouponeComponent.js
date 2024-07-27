@@ -13,7 +13,7 @@ import TotalrewardpointsComponent from '../shared/TotalrewardpointsComponent';
 import CountUp from 'react-countup';
 import { removeCouponeCode } from "@/config/validecoupone";
 import FooterComponent from '../shared/FooterComponent';
- 
+import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 
 export default function GetcouponeComponent() {
   const [pagemsg, setPagemsg] = useState('');
@@ -107,7 +107,9 @@ export default function GetcouponeComponent() {
 
   return (
     <div className='outsidescreen'>
-      <HeaderDashboard />
+      <ErrorBoundary>
+        <HeaderDashboard />
+      </ErrorBoundary>
       <div className="screenmain screenqrcode" > 
         <div className="screencontainer">
 
