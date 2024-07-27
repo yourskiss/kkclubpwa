@@ -117,7 +117,7 @@ const backbuttonHandal = () => {
                   <dd>
                     <h2>{usersinfo.fullname}</h2>
                     <p><b>Status:</b> <span className={ usersinfo.verificationstatus === "APPROVE" ? "approvedStatus" : "pendingStatus" }>{usersinfo.verificationstatus}</span></p>
-                    <p><b>Pan:</b> <span>{resultdata.pan}</span></p>
+                    <p><b>Pan:</b> <span>{resultdata.pan === null || resultdata.pan === '' ? 'NA' : resultdata.pan }</span></p>
                     <p><b>Mobile:</b> <span>{usersinfo.phonenumber}</span></p>
                   </dd>
                 </dl> 
