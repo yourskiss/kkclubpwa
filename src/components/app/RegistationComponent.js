@@ -29,6 +29,7 @@ export default function RegistationComponent() {
   const[firstname, setFirstname] = useState('');
   const[fnErrors, setfnErrors] = useState('');
   const[lastname, setLastname] = useState('');
+  const[allName, setAllName] = useState('');
   const[lnErrors, setlnErrors] = useState('');
   const[aadhaarinfo, setAadhaarinfo] = useState('');
   const[aadhaarErrors, setAadhaarErrors] = useState('');
@@ -110,9 +111,9 @@ export default function RegistationComponent() {
     e.preventDefault();
     setfnErrors('');
     setlnErrors('');
-    if(firstname === '' && lastname === '') { setfnErrors('First name is required.'); setlnErrors('Last name is required.');  }
-    else if(firstname === '') { setfnErrors('First name is required.'); }
-    else if(lastname === '') { setlnErrors('Last name is required.'); }
+   // if(firstname === '' && lastname === '') { setfnErrors('First name is required.'); setlnErrors('Last name is required.');  }
+    if(firstname === '') { setfnErrors('First name is required.'); }
+  //  else if(lastname === '') { setlnErrors('Last name is required.'); }
     else { setStep(2); }
   } 
   const handleStep2 = (e) => {
@@ -144,13 +145,22 @@ export default function RegistationComponent() {
    
    
   const handleRegistration = () => 
-  {
+  { 
+    if(lastname === '')
+    {
+      setAllName(firstname);
+    }
+    else
+    {
+      setAllName(firstname + " " + lastname);
+    }
+
     setLoading(true);
     setPagemsg('Information Savings');
     const datafinal = {
       firstname: firstname,
       lastname: lastname,
-      fullname: firstname + " " + lastname,
+      fullname: allName,
       gender: '',
       phonenumber: mobilenumber,
       emailaddress:'',
@@ -259,7 +269,7 @@ export default function RegistationComponent() {
                   {fnErrors && <span className="registerError">{fnErrors}</span> }
                 </div>
                 <div className="registerField">
-                  <div className="registertext">Last Name - As per PAN Card<small>*</small></div>
+                  <div className="registertext">Last Name - As per PAN Card </div>
                   <input
                     className="registerinput"
                     type="text"

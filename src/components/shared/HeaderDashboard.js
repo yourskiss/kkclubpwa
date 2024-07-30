@@ -54,7 +54,7 @@ useEffect(() => {
   });
  
 return () => { setMounted2(false); }
-}, [notificationCount]);
+}, []);
 
 
  

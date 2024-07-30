@@ -19,14 +19,14 @@ export default function UpdateprofileComponent() {
     const [mounted2, setMounted2] = useState(true);
     const [mounted3, setMounted3] = useState(true);
 
-    const [ExcutiveID, setExcutiveID] = useState('');
     const [seList, setSeList] = useState([]);
     
-
     const [data, setData] = useState(false);
     const [formValue, setFormValue] = useState({});
     const [formError, setFormError] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
+
+    const[allName, setAllName] = useState('');
 
     const [cityStateName, setCityStateName] = useState('');
     const [stateName, setStateName] = useState('');
@@ -46,7 +46,6 @@ export default function UpdateprofileComponent() {
         
 
     useEffect(() => {
-
         setLoading(true);
         setPagemsg('Profile details fetching');
         _get("Customer/UserInfo?userid=0&phonenumber="+ userMobile)
@@ -62,6 +61,8 @@ export default function UpdateprofileComponent() {
                 setStateName(res.data.result.state);
                 setCityName(res.data.result.city);
 
+                setAllName(res.data.result.fullname);
+
                 setExcutiveID(res.data.result.agentcode);
             }
         }).catch((err) => {
@@ -74,6 +75,7 @@ export default function UpdateprofileComponent() {
  
     useEffect(() => {
         setFormValue({
+            'agentcode': userdata.agentcode,
             'firstname':  userdata.firstname,
             'lastname':  userdata.lastname,
             'postalcode':userdata.postalcode
@@ -82,14 +84,14 @@ export default function UpdateprofileComponent() {
 
     const validateHandler =(val) =>{
         const error = {};
+        if(val.agentcode !=='' && val.agentcode.length !== 4){ error.agentcode = "Please enter valid Sales Executive ID.";  }
         if(val.firstname===''){error.firstname = "First name is required."}
-        if(val.lastname===''){error.lastname = "Last name is required."}
+      //  if(val.lastname===''){error.lastname = "Last name is required."}
         if(val.postalcode===''){error.postalcode = "Postal code is required"}
         else if(val.postalcode.length !== 6){error.postalcode = "Postal code have at least 6 Digit"}
         return error;
     }
     const handleSubmit = (e) =>{
-        if(ExcutiveID.length !== 4 ) setExcutiveID('');
         e.preventDefault();
         setFormError(validateHandler(formValue));
         setIsSubmit(true);
@@ -101,10 +103,7 @@ export default function UpdateprofileComponent() {
         setCityName(ct);
         // console.log("change update - ", cityStateName, " - ", stateName, " - ", cityName);
      };
-     const handleIdChange = (sc) => {
-        setExcutiveID(sc);
-       // console.log("change ExcutiveID - ", ExcutiveID);
-     };
+ 
      
 
      const onInputmaxLength = (e) => {
@@ -133,6 +132,14 @@ export default function UpdateprofileComponent() {
         {
             setFormValue({ ...formValue, [e.target.name] : e.target.value.replace(/[^a-z]/gi, '') }); 
         }
+        else if(e.target.name === 'agentcode')
+        {
+            setFormValue({ ...formValue, [e.target.name] : e.target.value });
+            if(e.target.value.length > 0)
+            {
+                setFormError({...formError, [e.target.name] : "" });
+            }
+        }
         else if(e.target.name === 'postalcode')
         {
             setFormValue({ ...formValue, [e.target.name] : e.target.value.replace(/[^0-9]/gi, '') }); 
@@ -146,12 +153,21 @@ export default function UpdateprofileComponent() {
     useEffect(()=>{
         if(Object.keys(formError).length === 0 && isSubmit)
         {
+            if(formValue.lastname === '')
+            {
+                setAllName(formValue.firstname);
+            }
+            else
+            {
+                setAllName(formValue.firstname + " " + formValue.lastname);
+            }
+
            const datafinal = 
            {
             userid: userID,
             firstname: formValue.firstname,
             lastname: formValue.lastname,
-            fullname: formValue.firstname + " " + formValue.lastname,
+            fullname: allName,
             gender: "",
             phonenumber: userMobile,
             emailaddress: "",
@@ -164,7 +180,7 @@ export default function UpdateprofileComponent() {
             profilepictureurl: '',
             dateofbirth: "",
             languagepreference: "English",
-            agentcode: ExcutiveID,
+            agentcode: formValue.agentcode,
             locationpage: "/update-profile",
             ipaddress: ipInfo,
             osdetails: osInfo,
@@ -214,7 +230,7 @@ export default function UpdateprofileComponent() {
             upicode: payoutinfo.upicode || '',
             aadhaar: userdata.aadhaarinfo || '',
             pan:payoutinfo.pan || '',
-            username: formValue.firstname + " " + formValue.lastname,
+            username: allName || '',
             rmn: userMobile,
             locationpage: "/bankdetailsupdate",
             ipaddress: ipInfo,
@@ -243,18 +259,28 @@ export default function UpdateprofileComponent() {
                 console.log("StateCity add - ", err.message);
             });
           return () => { setMounted3(false); }
-        }, []);      
-        const seChangeID = (e) => {
-            setExcutiveID(e.target.value.toUpperCase());
-        }
-        const handalonKeyup = () => {
-            if(ExcutiveID.length === 4)
+        }, []); 
+
+ 
+        const handalonKeyup = (e) => {
+           // debugger;
+            if(e.target.value.length === 4)
             {
-                const filteredResults = filterArrayByInput(seList, ExcutiveID);
+                setLoading(true);
+                setPagemsg('Validating Sales Executive ID.');
+                const filteredResults = filterArrayByInput(seList, e.target.value);
                 console.log(filteredResults);
                 if(filteredResults === 0)
                 {
-                    setExcutiveID('');
+                    setTimeout(function(){setLoading(false); }, 500);
+                    setFormError({...formError, [e.target.name] : "Invalid Sales Executive ID" });
+                    setFormValue({ ...formValue, [e.target.name] : '' });
+                }
+                else 
+                {
+                    setTimeout(function(){setLoading(false); }, 500);
+                    setFormError({...formError, [e.target.name] : "" });
+                    setFormValue({ ...formValue, [e.target.name] : e.target.value });
                 }
             }
         }
@@ -284,13 +310,14 @@ export default function UpdateprofileComponent() {
                     <input
                         className="registerinput"
                         type="text"
-                        name="seids"
+                        name="agentcode"
                         maxLength={4}
                         onInput={onInputmaxLength}
-                        value={ ExcutiveID }
-                        onChange={seChangeID}
+                        value={ formValue.agentcode || '' }
+                        onChange={onChangeField}
                         onKeyUp={handalonKeyup}
                     />
+                    <span className="registerError">{ formError.agentcode  ?  formError.agentcode : '' }</span>
                 </div>
 
  
@@ -310,7 +337,7 @@ export default function UpdateprofileComponent() {
                 </div>
 
                 <div className="registerField">
-                    <div className="registertext">Last Name - As per PAN Card<small>*</small></div>
+                    <div className="registertext">Last Name - As per PAN Card </div>
                     <input
                         className="registerinput"
                         type="text"
