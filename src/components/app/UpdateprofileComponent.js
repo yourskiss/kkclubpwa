@@ -271,7 +271,7 @@ export default function UpdateprofileComponent() {
                 if(filteredResults === 0)
                 {
                     setTimeout(function(){setLoading(false); }, 500);
-                    setFormError({...formError, [e.target.name] : "Invalid Sales Executive ID" });
+                    setFormError({...formError, [e.target.name] : "Please enter valid Sales Executive ID." });
                     setFormValue({ ...formValue, [e.target.name] : '' });
                 }
                 else 
