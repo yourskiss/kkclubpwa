@@ -62,8 +62,6 @@ export default function UpdateprofileComponent() {
                 setCityName(res.data.result.city);
 
                 setAllName(res.data.result.fullname);
-
-                setExcutiveID(res.data.result.agentcode);
             }
         }).catch((err) => {
             console.log(err.message);
