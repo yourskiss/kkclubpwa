@@ -110,7 +110,7 @@ export default function RegistationComponent() {
     e.preventDefault();
     setfnErrors('');
     setlnErrors('');
-    if(firstname === '' && lastname === '') { setfnErrors('First name is required.'); setlnErrors('Last name is required.'); }
+    if(firstname === '' && lastname === '') { setfnErrors('First name is required.'); setlnErrors('Last name is required.');  }
     else if(firstname === '') { setfnErrors('First name is required.'); }
     else if(lastname === '') { setlnErrors('Last name is required.'); }
     else { setStep(2); }
@@ -128,11 +128,13 @@ export default function RegistationComponent() {
   const handleStep3 = (e) => {
     e.preventDefault();
     setAadhaarErrors(''); 
+    const regexPan = /^[a-z]{5}[0-9]{4}[a-z]{1}$/i;
     if (!paninfo && !tnc) { setPanErrors('Pan is required.'); setTncError("Please agree with our Terms & conditions");}
    // if(aadhaarinfo === '') { setAadhaarErrors('Aadhaar is required.'); }
    // else if(aadhaarinfo.length !== 12) { setAadhaarErrors('Aadhaar must have at least 12 Digits.'); }
     else if(paninfo === '') { setPanErrors('Pan is required.'); }
     else if(paninfo.length !== 10) { setPanErrors('Pan must have at least 10 Digits.'); }
+    else if(!regexPan.test(paninfo)){setPanErrors("Invalid PAN Number!");}
     else if(!tnc) { setTncError("Please agree with our Terms & conditions"); }
     else { 
         handleRegistration();
@@ -243,7 +245,7 @@ export default function RegistationComponent() {
  
               { step === 1 && <form onSubmit={handleStep1}>
                 <div className="registerField">
-                  <div className="registertext">First Name - As per Aadhaar Card<small>*</small></div>
+                  <div className="registertext">First Name - As per PAN Card<small>*</small></div>
                   <input
                     className="registerinput"
                     type="text"
@@ -257,7 +259,7 @@ export default function RegistationComponent() {
                   {fnErrors && <span className="registerError">{fnErrors}</span> }
                 </div>
                 <div className="registerField">
-                  <div className="registertext">Last Name - As per Aadhaar Card<small>*</small></div>
+                  <div className="registertext">Last Name - As per PAN Card<small>*</small></div>
                   <input
                     className="registerinput"
                     type="text"
