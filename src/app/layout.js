@@ -2,8 +2,8 @@
 // const inter = Inter({ subsets: ["latin"] });
  
 import localFont from 'next/font/local';
-const lneue = localFont({ weight: 'normal', variable: '--font-lneue', src: './LarishNeueSemiboldRegular.woff2' });
-const arialmt = localFont({ weight: 'normal', variable: '--font-arialmt', src: './arialmt.woff2' });
+const lneue = localFont({ weight: 'normal', variable: '--font-lneue', src: '../../public/assets/fonts/LarishNeueSemiboldRegular.woff2' });
+const arialmt = localFont({ weight: 'normal', variable: '--font-arialmt', src: '../../public/assets/fonts/arialmt.woff2' });
  
 import "./globals.css";
 import { ToastContainer } from 'react-toastify';

@@ -93,14 +93,14 @@ const backbuttonHandal = () => {
   return (<>
   <motion.div initial={{ x: "100vw" }} animate={{ x:0 }}  transition={{ duration: 1, delay: 0, origin: 1, ease: [0, 0.71, 0.2, 1.01] }}>
  
-    { headload && <header className='headersection headerProfiles'>
+    { headload && <div className='headercontainer'><header className='headersection headerProfiles'>
         <aside className="backarrow">
           <Image src="/assets/images/back-arrow.png" width={65} height={24} alt="back" quality={99} onClick={backbuttonHandal} title='Back' />
         </aside>
         <aside className='scanqrnow'>
             <Image src="/assets/images/QR.png" width={42} height={42} alt="scanqrcode" quality={99} onClick={() => Router.push('/scanqrcode')} title='Scan QR Code' />
         </aside>
-      </header> }
+      </header></div> }
     
     <div className="screenmain screenprofile"> 
         <div className="screencontainer">

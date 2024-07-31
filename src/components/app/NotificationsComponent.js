@@ -105,12 +105,12 @@ const readNotification = (e) => {
   return (<>
     <motion.div initial={{ y: "-250px" }} animate={{ y:0 }} transition={{ duration:1, delay: 0, origin: 1, ease: [0, 0.71, 0.2, 1.01] }}>
       
-    { headload && <header className='headersection headerNotification'>
+    { headload && <div className='headercontainer'><header className='headersection headerNotification'>
         <aside className="backarrow">
           <Image src="/assets/images/back-arrow.png" width={65} height={24} alt="back" quality={99} onClick={readNotification} title='Back' />
         </aside>
         <div className='head_notification'>Notifications</div>
-      </header> }
+      </header></div> }
 
     <div className="screenmain screennotification"> 
         <div className="screencontainer">
