@@ -16,7 +16,7 @@ export default function Rewardform() {
     const [loading, setLoading] = useState(false);
     const [mounted, setMounted] = useState(true);
     const [pendingorder, setPendingorder] = useState(0);
-    const [userOrderID, setUserOrderID] = useState('');
+   // const [userOrderID, setUserOrderID] = useState('');
     const[redeempoint, setRedeempoint] = useState(''); 
     const[errorMsg, setErrorMsg] = useState(''); 
     const[userstatus, setUserstatus] = useState('');
@@ -60,39 +60,48 @@ export default function Rewardform() {
            // console.log("Previous order - ", res.data.result[0].pendingorder,  res);
             if(mounted)
             {
-                setPendingorder(res.data.result[0].pendingorder);
+                setPendingorder(parseInt(res.data.result[0].pendingorder));
             }
         }).catch((error) => {
             setLoading(false);
             console.log(error); 
         });
         return () => { setMounted(false); }
-    }, [pendingorder]);
+    }, []);
 
 
     const checkEligibility = (valuespoint) => {
-        _get(`/Customer/CheckUserRedemptionEligibility?userid=${userID}&pointstoredeem=${valuespoint}`)
-        .then((res) => {
-           // console.log("CheckUserRedemptionEligibility: ", res.data.result[0]);
-            setPointsEligible(res.data.result[0].pendingpoints);
-            setIsEligible(res.data.result[0].isusereligiblefor2000);            
-        }).catch((error) => {
-            console.log(error); 
-        });
+        debugger;
+        if(valuespoint === '' || valuespoint === ' ' || valuespoint === '0' || valuespoint === 'NaN' || parseInt(valuespoint) === 0 || parseInt(valuespoint) === NaN)
+        {
+           return
+        }
+
+            _get(`/Customer/CheckUserRedemptionEligibility?userid=${userID}&pointstoredeem=${valuespoint}`)
+            .then((res) => {
+               // console.log("CheckUserRedemptionEligibility: ", res.data.result[0]);
+                setPointsEligible(res.data.result[0].pendingpoints);
+                setIsEligible(res.data.result[0].isusereligiblefor2000);            
+            }).catch((error) => {
+                console.log(error); 
+            });
+        
     }
 
     const pointvalueChange = (e) => {
-        const pointval = parseInt(e.target.value)
+        const pointval = e.target.value;
         setRedeempoint(pointval);
         checkEligibility(pointval);
         setErrorMsg('');
     }
     const pointvalueSubmit = (e) => {
         e.preventDefault();
-        console.log(redeempoint);
+       // console.log(redeempoint);
         if(userstatus !== 'APPROVE')
         {
-            setErrorMsg('Reward points will redeem after profile approval.'); 
+            setErrorMsg('');
+            toast.info('Reward points will redeem after profile approval.'); 
+            push("/approval");
             return;
         }
         if(pendingorder > 0)
@@ -102,27 +111,27 @@ export default function Rewardform() {
             push("/redemptionhistory");
             return;
         }
-        if(redeempoint === '')
+        if(redeempoint === '0' || redeempoint === '' || redeempoint === ' ' || redeempoint == NaN || parseInt(redeempoint) === 0 || parseInt(redeempoint) === NaN)
         {
             setErrorMsg('Please enter your reward points'); 
             return;
         }
-        if(redeemedpointTotal === 0 && redeempoint < redeemminimumpoint)
+        if(redeemedpointTotal === 0 && parseInt(redeempoint) < redeemminimumpoint)
         {  
             setErrorMsg(`You can redeem minimum ${redeemminimumpoint} reward points.`); 
             return;
         }
-        if(redeempoint > rewardspoints)
+        if(parseInt(redeempoint) > rewardspoints)
         {
             setErrorMsg(`You can redeem maximum ${rewardspoints} reward points.`); 
             return;
         }
-        if(redeempoint > redeemmaximumpoint)
+        if(parseInt(redeempoint) > redeemmaximumpoint)
         {
             setErrorMsg(`You can redeem maximum ${redeemmaximumpoint} reward points.`); 
             return;
         }
-        if(!isEligible || redeempoint > parseInt(pointsEligible))
+        if(!isEligible || parseInt(redeempoint) > parseInt(pointsEligible))
         {
             setErrorMsg(`You are eligible to redeem up to ${pointsEligible} reward points.`); 
             return;
@@ -130,7 +139,7 @@ export default function Rewardform() {
         
         setLoading(true);
         setPagemsg('Payment Initiation');
-        _get(`/Payment/UserPayout?userID=${userID}&points=${redeempoint}&amount=${redeempoint * pointvalue}&ipaddress=${ipInfo}&osdetails=${osn}`)
+        _get(`/Payment/UserPayout?userID=${userID}&points=${parseInt(redeempoint)}&amount=${parseInt(redeempoint) * pointvalue}&ipaddress=${ipInfo}&osdetails=${osn}`)
         .then((res) => {
             setLoading(false);
           // console.log("Payout request - ", res);
@@ -148,7 +157,7 @@ export default function Rewardform() {
             else
             {
                 setErrorMsg('');
-                setUserOrderID(res.data.userorderid);
+               // setUserOrderID(res.data.userorderid);
                 payoutstatus(res.data.userorderid);
             }
         }).catch((error) => {
@@ -159,43 +168,50 @@ export default function Rewardform() {
     }
 
     const payoutstatus = (val) => {
-            if(val !== undefined || val !== null || val !== '')
+            if(val === undefined || val === null || val === '' || val === ' ')
             {
+                return
+            }
+                setLoading(true);
+                setPagemsg('Payment Initiating');
                 _get(`/Payment/UserPayoutStatus?userID=${userID}&orderID=${val}`)
                 .then((res) => {   
-                   // console.log("Payout Status - ", res.data.isclose, res.data.ispayment, res.data.pgrequeystatus, res); 
+                  //  console.log("Payout Status - ", res); 
+                   setTimeout(() => {
+                       setLoading(false);
+                       toast.success("Payment Initiated"); 
+                       push("/redemptionhistory");    
+                   }, 5000);
                 }).catch((error) => {
+                    setLoading(false);
                     console.log(error); 
                 });
-            }
+            
     }
  
-    useEffect(() => {
-        if(userOrderID === '' || userOrderID === ' ' || userOrderID === undefined || userOrderID === null) 
-        {
-            // nothing
-        }
-        else 
-        {
-            setLoading(true);
-            setPagemsg('Payment Initiating');
-            const interval = setInterval(() => {
-                payoutstatus(userOrderID);
-            }, 5000);  
+    // useEffect(() => {
+    //     if(userOrderID === '' || userOrderID === ' ' || userOrderID === undefined || userOrderID === null) 
+    //     {
+    //         return
+    //     }
+    //         setLoading(true);
+    //         setPagemsg('Payment Initiating');
+    //         const interval = setInterval(() => {
+    //             payoutstatus(userOrderID);
+    //         }, 5000);  
         
-            setTimeout(() => {
-                setLoading(false);
-                clearInterval(interval);
-                toast.success("Payment Initiated"); 
-                push("/redemptionhistory");    
-            }, 30000);
+    //         setTimeout(() => {
+    //             setLoading(false);
+    //             clearInterval(interval);
+    //             toast.success("Payment Initiated"); 
+    //             push("/redemptionhistory");    
+    //         }, 30000);
         
-            return () => {
-                setLoading(false);
-                clearInterval(interval); 
-            };
-        }
-    }, [userOrderID]);
+    //         return () => {
+    //             setLoading(false);
+    //             clearInterval(interval); 
+    //         };
+    // }, [userOrderID]);
 
  
     

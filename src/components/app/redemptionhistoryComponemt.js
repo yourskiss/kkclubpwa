@@ -36,6 +36,7 @@ export default function RedemptionhistoryComponemt () {
             if(res.data.result.length !== 0)
             {
               setPointhistory(res.data.result)
+              previousOrderStatusUpdate();
             }
             else
             {
@@ -49,16 +50,14 @@ export default function RedemptionhistoryComponemt () {
     return () => { setMounted(false); }
   }, []);
 
-  useEffect(() => {
+const previousOrderStatusUpdate = () => {
     _get(`/Payment/UserPendingOrder?userID=${userID}`)
     .then((res) => {
             // console.log("Previous order - ", res.data.result[0].pendingorder,  res.data.result[0].orderid, res);
-            if(res.data.result[0].pendingorder !== '0' && res.data.result[0].orderid !== '')
+            if(res.data.result[0].pendingorder !== '0' || res.data.result[0].pendingorder !== 0)
             {
               setLoading(true);
               setPagemsg('Updating payment status');
-              if(mounted2)
-              {
                 _get(`/Payment/UserPayoutStatus?userID=${userID}&orderID=${res.data.result[0].orderid}`)
                 .then((dataa) => { 
                   // console.log("UserPayoutStatus - ",  dataa);
@@ -77,13 +76,11 @@ export default function RedemptionhistoryComponemt () {
                     setLoading(false);
                     console.log("UserPayoutStatus-",error); 
                 });
-              }
-        }
+            }
     }).catch((error) => {
       console.log("UserPendingOrder-",error); 
     });
-    return () => { setMounted2(false); }
-  }, []);
+  }
 
 
 
