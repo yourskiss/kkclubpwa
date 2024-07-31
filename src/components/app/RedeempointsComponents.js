@@ -34,7 +34,10 @@ export default function RedeempointsComponents() {
 
  
     useEffect(() => {
-        resultdata.bankname === null && resultdata.accountnumber === null && resultdata.upicode === null ? push('/bankdetailsadd?q=1') : null
+        if(!mounted) 
+        {
+            resultdata.bankname === null && resultdata.accountnumber === null && resultdata.upicode === null ? push('/bankdetailsadd?q=1') : null
+        }
      }, [mounted]);
 
   return (<>

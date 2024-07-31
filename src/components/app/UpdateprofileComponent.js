@@ -189,7 +189,7 @@ export default function UpdateprofileComponent() {
             setPagemsg('Profile details updating');
             _post("Customer/SaveUser", datafinal)
             .then((res) => {
-                console.log("after submit response: ",res);
+              //  console.log("after submit response: ",res);
                 setLoading(false);
                 setUserInfo(res.data.result.fullname, res.data.result.shortname, res.data.result.verificationstatus);
                 updatebankdetail();

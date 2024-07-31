@@ -16,7 +16,6 @@ export default function Rewardform() {
     const [loading, setLoading] = useState(false);
     const [mounted, setMounted] = useState(true);
     const [pendingorder, setPendingorder] = useState(0);
-   // const [userOrderID, setUserOrderID] = useState('');
     const[redeempoint, setRedeempoint] = useState(''); 
     const[errorMsg, setErrorMsg] = useState(''); 
     const[userstatus, setUserstatus] = useState('');
@@ -71,7 +70,7 @@ export default function Rewardform() {
 
 
     const checkEligibility = (valuespoint) => {
-        debugger;
+        // debugger;
         if(valuespoint === '' || valuespoint === ' ' || valuespoint === '0' || valuespoint === 'NaN' || parseInt(valuespoint) === 0 || parseInt(valuespoint) === NaN)
         {
            return
@@ -157,7 +156,6 @@ export default function Rewardform() {
             else
             {
                 setErrorMsg('');
-               // setUserOrderID(res.data.userorderid);
                 payoutstatus(res.data.userorderid);
             }
         }).catch((error) => {
@@ -199,14 +197,12 @@ export default function Rewardform() {
     //         const interval = setInterval(() => {
     //             payoutstatus(userOrderID);
     //         }, 5000);  
-        
     //         setTimeout(() => {
     //             setLoading(false);
     //             clearInterval(interval);
     //             toast.success("Payment Initiated"); 
     //             push("/redemptionhistory");    
     //         }, 30000);
-        
     //         return () => {
     //             setLoading(false);
     //             clearInterval(interval); 
