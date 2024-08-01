@@ -50,7 +50,7 @@ export default function UpdateprofileComponent() {
         setPagemsg('Profile details fetching');
         _get("Customer/UserInfo?userid=0&phonenumber="+ userMobile)
         .then((res) => {
-            console.log("onload get data: ", res.data);
+          //  console.log("onload get data: ", res.data);
             setLoading(false);
             if (mounted)
             {
