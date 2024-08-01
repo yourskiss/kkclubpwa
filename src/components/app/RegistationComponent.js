@@ -31,7 +31,6 @@ export default function RegistationComponent() {
   const[lastname, setLastname] = useState('');
   const[allName, setAllName] = useState('');
   const[lnErrors, setlnErrors] = useState('');
-  const[aadhaarErrors, setAadhaarErrors] = useState('');
   const[pincode, setPincode] = useState('');
   const[pincodeErrors, setPincodeErrors] = useState('');
   const [tnc, setTnc] = useState(false);
@@ -127,7 +126,8 @@ export default function RegistationComponent() {
   } 
   const handleStep3 = (e) => {
     e.preventDefault();
-    setAadhaarErrors(''); 
+    setPanErrors(""); 
+    setTncError("");
     const regexPan = /^[a-z]{5}[0-9]{4}[a-z]{1}$/i;
     if (!paninfo && !tnc) { setPanErrors('Pan is required.'); setTncError("Please agree with our Terms & conditions");}
     else if(paninfo === '') { setPanErrors('Pan is required.'); }
@@ -161,7 +161,7 @@ export default function RegistationComponent() {
       gender: '',
       phonenumber: mobilenumber,
       emailaddress:'',
-      aadhaarinfo: null,
+      aadhaarinfo: '',
       addressline1: "",
       city: cityName,
       state: stateName,
@@ -188,7 +188,7 @@ export default function RegistationComponent() {
           setUserInfo(res.data.result.fullname, res.data.result.shortname, res.data.result.verificationstatus);
           const userinfo = res.data.result.userid + "|" + res.data.result.phonenumber
           setUserCookies(encryptText(userinfo));
-          savebankdetail(res.data.result.userid, res.data.result.aadhaarinfo, paninfo, res.data.result.fullname, res.data.result.phonenumber);
+          savebankdetail(res.data.result.userid, '', paninfo, allName, mobilenumber);
           removeLoginNumber();
               if(isCC)
               { 
@@ -213,7 +213,7 @@ export default function RegistationComponent() {
   }
 
  
-  const savebankdetail = (userid, aadhaarno, paninfo, fullname, mobilenumber) => 
+  const savebankdetail = (userid, aadhaarno, paninfo, fullname, mobileno) => 
     {
       const bankinfo = {
         userid: userid,
@@ -224,7 +224,7 @@ export default function RegistationComponent() {
         aadhaar: aadhaarno,
         pan:paninfo,
         username:fullname,
-        rmn: mobilenumber,
+        rmn: mobileno,
         locationpage: "/registation",
         ipaddress: ipInfo,
         osdetails: osInfo,
