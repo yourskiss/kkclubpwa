@@ -161,7 +161,7 @@ export default function RegistationComponent() {
       gender: '',
       phonenumber: mobilenumber,
       emailaddress:'',
-      aadhaarinfo: '',
+      aadhaarinfo: null,
       addressline1: "",
       city: cityName,
       state: stateName,
@@ -232,7 +232,7 @@ export default function RegistationComponent() {
       }
       _post("/Payment/SaveUserPayoutInfo", bankinfo)
       .then((res) => {
-          console.log("name, aadhaar, pan, mobile, save to SaveUserPayoutInfo  - ", res);
+          console.log(" SaveUserPayoutInfo  - ");
       }).catch((error) => {
           console.log(error); 
       });
