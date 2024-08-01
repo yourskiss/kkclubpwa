@@ -31,7 +31,6 @@ export default function RegistationComponent() {
   const[lastname, setLastname] = useState('');
   const[allName, setAllName] = useState('');
   const[lnErrors, setlnErrors] = useState('');
-  const[aadhaarinfo, setAadhaarinfo] = useState('');
   const[aadhaarErrors, setAadhaarErrors] = useState('');
   const[pincode, setPincode] = useState('');
   const[pincodeErrors, setPincodeErrors] = useState('');
@@ -46,7 +45,7 @@ export default function RegistationComponent() {
  
 
   const onInputmaxLength = (e) => {
-      if(e.target.name === 'pincode' || e.target.name === 'aadhaarinfo')
+      if(e.target.name === 'pincode')
       {
           if(e.target.value.length > e.target.maxLength)
           {
@@ -131,8 +130,6 @@ export default function RegistationComponent() {
     setAadhaarErrors(''); 
     const regexPan = /^[a-z]{5}[0-9]{4}[a-z]{1}$/i;
     if (!paninfo && !tnc) { setPanErrors('Pan is required.'); setTncError("Please agree with our Terms & conditions");}
-   // if(aadhaarinfo === '') { setAadhaarErrors('Aadhaar is required.'); }
-   // else if(aadhaarinfo.length !== 12) { setAadhaarErrors('Aadhaar must have at least 12 Digits.'); }
     else if(paninfo === '') { setPanErrors('Pan is required.'); }
     else if(paninfo.length !== 10) { setPanErrors('Pan must have at least 10 Digits.'); }
     else if(!regexPan.test(paninfo)){setPanErrors("Invalid PAN Number!");}
@@ -164,7 +161,7 @@ export default function RegistationComponent() {
       gender: '',
       phonenumber: mobilenumber,
       emailaddress:'',
-      aadhaarinfo: aadhaarinfo,
+      aadhaarinfo: '',
       addressline1: "",
       city: cityName,
       state: stateName,
@@ -216,7 +213,7 @@ export default function RegistationComponent() {
   }
 
  
-  const savebankdetail = (userid, aadhaarinfo, paninfo, fullname, mobilenumber) => 
+  const savebankdetail = (userid, aadhaarno, paninfo, fullname, mobilenumber) => 
     {
       const bankinfo = {
         userid: userid,
@@ -224,7 +221,7 @@ export default function RegistationComponent() {
         ifcscode: '',
         accountnumber: '',
         upicode: '',
-        aadhaar: aadhaarinfo,
+        aadhaar: aadhaarno,
         pan:paninfo,
         username:fullname,
         rmn: mobilenumber,
@@ -324,23 +321,7 @@ export default function RegistationComponent() {
               
 
               { step === 3 && <form onSubmit={handleStep3}>
-                <div className="registerField" style={{'display':'none'}}>
-                  <div className="registertext">Aadhaar Number<small>*</small></div>
-                  <input
-                    className="registerinput"
-                    type="number"
-                    name="aadhaarinfo"
-                    autoComplete="off"
-                    min="0"
-                    maxLength={12}
-                    value={aadhaarinfo}
-                    onInput={onInputmaxLength}
-                    onChange={(e) => { setAadhaarinfo(e.target.value.replace(/[^0-9]/gi, '')); setAadhaarErrors('');  }}
-                    onKeyDown={(e) => exceptThisSymbols.includes(e.key) && e.preventDefault() }
-                  />
-                  <div className="registerLineText">Profile details should match with Aadhaar</div>
-                  {aadhaarErrors && <span className="registerError">{aadhaarErrors}</span> }
-                </div>
+ 
 
                 <div className="registerField">
                   <div className="registertext">Pan Number<small>*</small></div>

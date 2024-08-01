@@ -50,7 +50,7 @@ export default function UpdateprofileComponent() {
         setPagemsg('Profile details fetching');
         _get("Customer/UserInfo?userid=0&phonenumber="+ userMobile)
         .then((res) => {
-          //  console.log("onload get data: ", res.data.result);
+            console.log("onload get data: ", res.data);
             setLoading(false);
             if (mounted)
             {
@@ -171,10 +171,10 @@ export default function UpdateprofileComponent() {
             emailaddress: "",
             aadhaarinfo: userdata.aadhaarinfo,
             addressline1: "",
-            city: cityName,
-            state: stateName,
-            country: "India",
-            postalcode: formValue.postalcode,
+            city: userdata.city, // cityName,
+            state: userdata.state, // stateName,
+            country: userdata.country,
+            postalcode: userdata.postalcode, // formValue.postalcode,
             profilepictureurl: '',
             dateofbirth: "",
             languagepreference: "English",
@@ -349,7 +349,7 @@ export default function UpdateprofileComponent() {
                 </div>
  
  
-                <div className="registerField">
+                <div className="registerField" style={{'userSelect':'none','pointerEvents':'none'}}>
                       <div className="registertext">City of work area<small>*</small></div>
                       { data ? (
                       <ErrorBoundary>
@@ -366,6 +366,7 @@ export default function UpdateprofileComponent() {
                         type="number"
                         name="postalcode"
                         min="0"
+                        readOnly
                         maxLength={6}
                         onInput={onInputmaxLength}
                         value={ formValue.postalcode || '' }
