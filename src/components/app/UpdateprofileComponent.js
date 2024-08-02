@@ -50,7 +50,7 @@ export default function UpdateprofileComponent() {
         setPagemsg('Profile details fetching');
         _get("Customer/UserInfo?userid=0&phonenumber="+ userMobile)
         .then((res) => {
-          //  console.log("onload get data: ", res.data);
+            console.log("UserInfo onload: ", res.data);
             setLoading(false);
             if (mounted)
             {
@@ -192,8 +192,8 @@ export default function UpdateprofileComponent() {
               //  console.log("after submit response: ",res);
                 setLoading(false);
                 setUserInfo(res.data.result.fullname, res.data.result.shortname, res.data.result.verificationstatus);
-                updatebankdetail();
-                res.data.result ? (toast.success("Profile Updated Successfully."),push("/profile")) : toast.warn(res.data.resultmessage);
+                updatebankdetail(allName);
+              //  res.data.result ? (toast.success("Profile Updated Successfully."),push("/profile")) : toast.warn(res.data.resultmessage);
             }).catch((err) => {
                 setLoading(false); 
                 toast.error(err.message);
@@ -206,7 +206,7 @@ export default function UpdateprofileComponent() {
     useEffect(() => {
         _get("/Payment/GetUserPayoutInfo?userid="+userID)
         .then((res) => {
-            // console.log("bank update response - ", res);
+             console.log("GetUserPayoutInfo on load ", res);
             if(mounted2)
             {
                 setPayoutinfo(res.data.result);
@@ -218,7 +218,7 @@ export default function UpdateprofileComponent() {
     }, []);
 
 
-        const updatebankdetail = () => 
+        const updatebankdetail = (namevalue) => 
         {
           const bankinfo = {
             userid: userID,
@@ -226,19 +226,19 @@ export default function UpdateprofileComponent() {
             ifcscode: payoutinfo.ifsccode || '',
             accountnumber: payoutinfo.accountnumber || '',
             upicode: payoutinfo.upicode || '',
-            aadhaar: userdata.aadhaarinfo || '',
+            aadhaar: '',
             pan:payoutinfo.pan || '',
-            username: allName || '',
+            username: namevalue || '',
             rmn: userMobile,
             locationpage: "/bankdetailsupdate",
             ipaddress: ipInfo,
             osdetails: osInfo,
             browserdetails: browserInfo
           }
-           // console.log(" bank update  -",bankinfo);
+            console.log("UpdateUserPayoutInfo after update -",bankinfo);
           _post("/Payment/UpdateUserPayoutInfo", bankinfo)
           .then((res) => {
-             console.log("update -  UpdateUserPayoutInfo status", res.status);
+             console.log("update -  UpdateUserPayoutInfo status", res);
           }).catch((error) => {
               console.log(error); 
           });
