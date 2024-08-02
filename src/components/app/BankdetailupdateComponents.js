@@ -54,7 +54,7 @@ export default function BankdetailupdateComponents() {
           if (mounted)
           {
             setUsername(`${res.data.result.firstname} ${res.data.result.lastname}`)
-            setAadhaar(res.data.result.aadhaarinfo);
+            res.data.result.aadhaarinfo !== null ? setAadhaar(res.data.result.aadhaarinfo) : setAadhaar('');
           }
       }).catch((err) => {
           console.log(err.message);
@@ -74,8 +74,8 @@ export default function BankdetailupdateComponents() {
               res.data.result.bankname !== null ? setBankname(res.data.result.bankname) : setBankname('');
               res.data.result.ifcscode !== null ? setIfsccode(res.data.result.ifcscode) : setIfsccode('');
               res.data.result.accountnumber !== null ? setAccountnumber(res.data.result.accountnumber) : setAccountnumber('');
-              res.data.result.upicode!== null ? setUpicode(res.data.result.upicode) : setUpicode('');
-              setPan(res.data.result.pan);
+              res.data.result.upicode !== null ? setUpicode(res.data.result.upicode) : setUpicode('');
+              res.data.result.pan !== null ? setPan(res.data.result.pan) : setPan('');
               if(res.data.result.bankname  !== null && res.data.result.ifcscode !== null && res.data.result.accountnumber  !== null){setInfobank(true);}
               if(res.data.result.upicode !== null){setInfoupi(true); }
             //  setInfopersonal(true);
@@ -161,12 +161,12 @@ const savebankdetail = () =>
 {
   const bankinfo = {
     userid: userid,
-    bankname: bankname.trim(),
-    ifcscode: ifsccode.trim(),
-    accountnumber: accountnumber.trim(),
-    upicode: upicode.trim(),
+    bankname: bankname,
+    ifcscode: ifsccode,
+    accountnumber: accountnumber,
+    upicode: upicode,
     aadhaar: aadhaar,
-    pan:pan.trim(),
+    pan:pan,
     username: username,
     rmn: usermobile,
     locationpage: "/bankdetailsupdate",
@@ -181,7 +181,7 @@ const savebankdetail = () =>
   _post("/Payment/UpdateUserPayoutInfo", bankinfo)
   .then((res) => {
       setLoading(false);
-      // console.log("update bank details - ", res);
+    //  console.log("update bank details - ", res);
       if(res.data.result === null)
       {
         toast.error(res.data.resultmessage);

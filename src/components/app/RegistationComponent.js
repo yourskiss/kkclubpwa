@@ -181,14 +181,14 @@ export default function RegistationComponent() {
  
       _post("Customer/SaveUser", datafinal)
       .then((res) => {
-       // console.log(res);
+       // console.log("SaveUser ", res);
         setLoading(false);
         if(res.data.result)
         {
           setUserInfo(res.data.result.fullname, res.data.result.shortname, res.data.result.verificationstatus);
           const userinfo = res.data.result.userid + "|" + res.data.result.phonenumber
           setUserCookies(encryptText(userinfo));
-          savebankdetail(res.data.result.userid, '', paninfo, allName, mobilenumber);
+          savebankdetail(res.data.result.userid, paninfo, res.data.result.fullname, mobilenumber);
           removeLoginNumber();
               if(isCC)
               { 
@@ -213,7 +213,7 @@ export default function RegistationComponent() {
   }
 
  
-  const savebankdetail = (userid, aadhaarno, paninfo, fullname, mobileno) => 
+  const savebankdetail = (userid, paninfo, fullname, mobileno) => 
     {
       const bankinfo = {
         userid: userid,
@@ -221,7 +221,7 @@ export default function RegistationComponent() {
         ifcscode: '',
         accountnumber: '',
         upicode: '',
-        aadhaar: aadhaarno,
+        aadhaar: '',
         pan:paninfo,
         username:fullname,
         rmn: mobileno,
@@ -232,7 +232,7 @@ export default function RegistationComponent() {
       }
       _post("/Payment/SaveUserPayoutInfo", bankinfo)
       .then((res) => {
-          console.log(" SaveUserPayoutInfo  - ");
+          console.log("SaveUserPayoutInfo save - ", res);
       }).catch((error) => {
           console.log(error); 
       });

@@ -20,21 +20,31 @@ export default function UpdateprofileComponent() {
     const [mounted3, setMounted3] = useState(true);
 
     const [seList, setSeList] = useState([]);
-    
-    const [data, setData] = useState(false);
-    const [formValue, setFormValue] = useState({});
-    const [formError, setFormError] = useState({});
-    const [isSubmit, setIsSubmit] = useState(false);
+    const [userdata, setUserdata] = useState({});
 
-    const[allName, setAllName] = useState('');
-
+    const [agentcode, setAgentcode] = useState('');
+    const [erroragentcode, setErroragentcode] = useState('');
+    const [firstname, setFirstname] = useState('');
+    const [errorfirstname, setErrorfirstname] = useState('');
+    const [lastname, setLastname] = useState('');
+    const [errorlastname, setErrorlastname] = useState('');
+    const [postalcode, setPostalcode] = useState('');
+    const [errorpostalcode, setErrorpostalcode] = useState('');
+    const [pan, setPan] = useState('');
+    const [aadhaar, setAadhaar] = useState('');
+    const [errorpan, setErrorpan] = useState('');
+    const[fullname, setFullname] = useState('');
     const [cityStateName, setCityStateName] = useState('');
     const [stateName, setStateName] = useState('');
     const [cityName, setCityName] = useState('');
+    const [citymount, setCitymount] = useState(false);
 
-    const [payoutinfo,setPayoutinfo] = useState({})
-    const [userdata, setUserdata] = useState({});
-    
+
+    const [bankname,setBankname] = useState('');  
+    const [ifcscode,setIfcscode] = useState('');       
+    const [accountnumber,setAccountnumber] = useState('');  
+    const [upicode,setUpicode] = useState('');     
+        
     const { push } = useRouter();
     const userID = getUserID();
     const userMobile = getUserMobile();
@@ -43,28 +53,33 @@ export default function UpdateprofileComponent() {
     const browserInfo = browserdetails();
     
     const exceptThisSymbols = ["e", "E", "+", "-", "."];
-        
 
     useEffect(() => {
         setLoading(true);
         setPagemsg('Profile details fetching');
         _get("Customer/UserInfo?userid=0&phonenumber="+ userMobile)
         .then((res) => {
-            console.log("UserInfo onload: ", res);
+            // console.log("UserInfo onload ", res);
             setLoading(false);
-            if (mounted)
+            if(mounted)
             {
-                setData(true);
+                setCitymount(true);
                 setUserdata(res.data.result);
-                
+
+                res.data.result.agentcode !== null ? setAgentcode(res.data.result.agentcode) : setAgentcode('');
+                res.data.result.fullname !== null ? setFullname(res.data.result.fullname) : setFullname('');
+                res.data.result.firstname !== null ? setFirstname(res.data.result.firstname) : setFirstname('');
+                res.data.result.lastname !== null ? setLastname(res.data.result.lastname) : setLastname('');
+                res.data.result.postalcode !== null ? setPostalcode(res.data.result.postalcode) : setPostalcode('');
+                res.data.result.aadhaarinfo !== null ? setAadhaar(res.data.result.aadhaarinfo) : setAadhaar('');
+ 
                 setCityStateName(`${res.data.result.city} (${res.data.result.state})`)
                 setStateName(res.data.result.state);
                 setCityName(res.data.result.city);
 
-                setAllName(res.data.result.fullname);
             }
         }).catch((err) => {
-            console.log("UserInfo onload: ", err.message);
+            console.log("UserInfo onload ", err.message);
             setLoading(false); 
         });
         return () => { setMounted(false); }
@@ -73,11 +88,15 @@ export default function UpdateprofileComponent() {
 
     useEffect(() => {
         _get("/Payment/GetUserPayoutInfo?userid="+userID)
-        .then((res) => {
-             console.log("GetUserPayoutInfo onload ", res);
+        .then((respons) => {
+            // console.log("GetUserPayoutInfo onload ", respons.data.result.pan, respons);
             if(mounted2)
             {
-                setPayoutinfo(res.data.result);
+                respons.data.result.pan !== null ? setPan(respons.data.result.pan) : setPan('');
+                respons.data.result.bankname !== null ? setBankname(respons.data.result.bankname) : setBankname('');
+                respons.data.result.ifsccode !== null ? setIfcscode(respons.data.result.ifsccode) : setIfcscode('');
+                respons.data.result.accountnumber !== null ? setAccountnumber(respons.data.result.accountnumber) : setAccountnumber('');
+                respons.data.result.upicode !== null ? setUpicode(respons.data.result.upicode) : setUpicode('');
             }
         }).catch((error) => {
             console.log("GetUserPayoutInfo onload ", error); 
@@ -85,115 +104,104 @@ export default function UpdateprofileComponent() {
         return () => { setMounted2(false); }
     }, []);
     
- 
-    useEffect(() => {
-        setFormValue({
-            'agentcode': userdata.agentcode,
-            'firstname':  userdata.firstname,
-            'lastname':  userdata.lastname,
-            'postalcode':userdata.postalcode
-        });
-    }, [data]);
 
-    const validateHandler =(val) =>{
-        const error = {};
-        if(val.agentcode !=='' && val.agentcode.length !== 4){ error.agentcode = "Please enter valid Sales Executive ID.";  }
-        if(val.firstname===''){error.firstname = "First name is required."}
-      //  if(val.lastname===''){error.lastname = "Last name is required."}
-        if(val.postalcode===''){error.postalcode = "Postal code is required"}
-        else if(val.postalcode.length !== 6){error.postalcode = "Postal code have at least 6 Digit"}
-        return error;
-    }
-    const handleSubmit = (e) =>{
-        e.preventDefault();
-        setFormError(validateHandler(formValue));
-        setIsSubmit(true);
-       // console.log("formValue on submit", formValue);
-    }
+    useEffect(() => {
+        _get("Cms/SEAgentCode")
+        .then((res) => {
+           // console.log("SEAgentCode - ", res);
+            if(mounted3)
+            {
+                setSeList(res.data.result);
+            } 
+        }).catch((err) => {
+            console.log("StateCity add - ", err.message);
+        });
+      return () => { setMounted3(false); }
+    }, []); 
+
     const handleOptionChange = (sc, st, ct) => {
         setCityStateName(sc);
         setStateName(st);
         setCityName(ct);
         // console.log("change update - ", cityStateName, " - ", stateName, " - ", cityName);
      };
- 
-     
 
-     const onInputmaxLength = (e) => {
-            if(e.target.name === 'postalcode')
+    const handalonKeyup = (e) => {
+       // debugger;
+        if(e.target.value.length === 4)
+        {
+            setLoading(true);
+            setPagemsg('Validating Sales Executive ID.');
+            const filteredResults = filterArrayByInput(seList, e.target.value);
+           // console.log(filteredResults);
+            if(filteredResults === 0)
             {
-                if(e.target.value.length > e.target.maxLength)
-                {
-                  e.target.value = e.target.value.replace(/[e\+\-\.]/gi, "").slice(0, e.target.maxLength);
-                }
-                else
-                {
-                  e.target.value = e.target.value.replace(/[e\+\-\.]/gi, "")
-                }
+                setTimeout(function(){ setLoading(false); }, 500);
+                setErroragentcode("Please enter valid Sales Executive ID.");
+                setAgentcode('');
             }
-            else
+            else 
             {
-                if(e.target.value.length > e.target.maxLength)
-                {
-                  e.target.value = e.target.value.slice(0, e.target.maxLength);
-                }
+                setTimeout(function(){ setLoading(false); }, 500);
+                setErroragentcode("");
+                setAgentcode(e.target.value);
             }
+        }
     }
-
-    const onChangeField = (e) => { 
-        if(e.target.name === 'firstname' || e.target.name === 'lastname')
-        {
-            setFormValue({ ...formValue, [e.target.name] : e.target.value.replace(/[^a-z]/gi, '') }); 
-        }
-        else if(e.target.name === 'agentcode')
-        {
-            setFormValue({ ...formValue, [e.target.name] : e.target.value });
-            if(e.target.value.length > 0)
-            {
-                setFormError({...formError, [e.target.name] : "" });
-            }
-        }
-        else if(e.target.name === 'postalcode')
-        {
-            setFormValue({ ...formValue, [e.target.name] : e.target.value.replace(/[^0-9]/gi, '') }); 
-        }
+    function filterArrayByInput(datafromAPI, searchValue) {
+        const filteredData = datafromAPI.filter(value => {
+            const searchStr = searchValue.toUpperCase();
+            const nameMatches = value.agentcode.toUpperCase().includes(searchStr);
+            return nameMatches;
+        });   
+        return filteredData.length;
+    }
+ 
+    const handleSubmit = (e) =>{
+        e.preventDefault();
+        const regexPan = /^[a-z]{5}[0-9]{4}[a-z]{1}$/i;
+        if(agentcode !=='' && agentcode?.length !== 4) { setErroragentcode("Please enter valid Sales Executive ID."); return }
+        else if(firstname==='') { setErrorfirstname("First name is required."); return }
+        else if(pan==='') { setErrorpan("PAN number is required");  return }
+        else if(pan?.length !== 10) { setErrorpan("Please enter valid PAN number"); return }
+        else if(!regexPan.test(pan)){setErrorpan("Invalid PAN Number!");}
         else
         {
-            setFormValue({ ...formValue, [e.target.name] : e.target.value });
-        }
-         
-    }
-    useEffect(()=>{
-        if(Object.keys(formError).length === 0 && isSubmit)
-        {
-            if(formValue.lastname === '')
+            if(lastname === '' || lastname === null)
             {
-                setAllName(formValue.firstname);
+                setFullname(firstname);
             }
             else
             {
-                setAllName(formValue.firstname + " " + formValue.lastname);
+                setFullname(firstname + " " + lastname);
             }
+            updateuserinfo();
+        }
+    }
 
+   
+
+    
+    const updateuserinfo = () => {
            const datafinal = 
            {
             userid: userID,
-            firstname: formValue.firstname,
-            lastname: formValue.lastname,
-            fullname: allName,
+            firstname: firstname,
+            lastname: lastname,
+            fullname: fullname,
             gender: "",
             phonenumber: userMobile,
             emailaddress: "",
-            aadhaarinfo: userdata.aadhaarinfo,
+            aadhaarinfo: aadhaar,
             addressline1: "",
-            city: userdata.city, // cityName,
-            state: userdata.state, // stateName,
-            country: userdata.country,
-            postalcode: userdata.postalcode, // formValue.postalcode,
+            city: cityName,
+            state: stateName,
+            country: 'India',
+            postalcode: postalcode,
             profilepictureurl: '',
             dateofbirth: "",
             languagepreference: "English",
-            agentcode: formValue.agentcode,
+            agentcode: agentcode,
             locationpage: "/update-profile",
             ipaddress: ipInfo,
             osdetails: osInfo,
@@ -204,98 +212,61 @@ export default function UpdateprofileComponent() {
             setPagemsg('Profile details updating');
             _post("Customer/SaveUser", datafinal)
             .then((res) => {
-              //  console.log("after submit response: ",res);
-                setLoading(false);
+               // console.log("SaveUser update ",res);
                 if(res.data.result)
                 {
-                    setUserInfo(res.data.result.fullname, res.data.result.shortname, res.data.result.verificationstatus);
-                    updatebankdetail(res.data.result.fullname);
+                    setUserInfo(res.data.result.fullname, res.data.result.shortname, res.data.result.verificationstatus);  
                     toast.success("Profile Updated Successfully.");
-                    push("/profile");
+                    updatebankdetail();
                 }
                 else
                 {
+                    setLoading(false);
                     toast.warn(res.data.resultmessage)
                 }
             }).catch((err) => {
                 setLoading(false); 
                 toast.error(err.message);
             });
-        }
-    },[formError, isSubmit]);
+    }
 
-        const updatebankdetail = (namevalue) => 
+        const updatebankdetail = () => 
         {
           const bankinfo = {
             userid: userID,
-            bankname: payoutinfo.bankname || '',
-            ifcscode: payoutinfo.ifsccode || '',
-            accountnumber: payoutinfo.accountnumber || '',
-            upicode: payoutinfo.upicode || '',
-            aadhaar: '',
-            pan:payoutinfo.pan || '',
-            username: namevalue,
+            bankname: bankname,
+            ifcscode: ifcscode,
+            accountnumber: accountnumber,
+            upicode: upicode,
+            aadhaar: aadhaar,
+            pan: pan,
+            username: fullname,
             rmn: userMobile,
-            locationpage: "/bankdetailsupdate",
+            locationpage: "/update-profile",
             ipaddress: ipInfo,
             osdetails: osInfo,
             browserdetails: browserInfo
           }
-           // console.log("UpdateUserPayoutInfo after update -",bankinfo);
+           console.log("UpdateUserPayoutInfo string - ",bankinfo);
           _post("/Payment/UpdateUserPayoutInfo", bankinfo)
           .then((res) => {
-             console.log("UpdateUserPayoutInfo status", res);
+            // console.log("UpdateUserPayoutInfo update ", res);
+             setLoading(false);
+            if(res.data.result === null)
+            {
+                toast.error(res.data.resultmessage);
+            }
+            else
+            {
+                push('/profile');
+            }
           }).catch((error) => {
               console.log(error); 
           });
         }
 
 
-        useEffect(() => {
-            _get("Cms/SEAgentCode")
-            .then((res) => {
-               // console.log("se id list - ", res);
-                if(mounted3)
-                {
-                    setSeList(res.data.result);
-                } 
-            }).catch((err) => {
-                console.log("StateCity add - ", err.message);
-            });
-          return () => { setMounted3(false); }
-        }, []); 
-
- 
-        const handalonKeyup = (e) => {
-           // debugger;
-            if(e.target.value.length === 4)
-            {
-                setLoading(true);
-                setPagemsg('Validating Sales Executive ID.');
-                const filteredResults = filterArrayByInput(seList, e.target.value);
-                console.log(filteredResults);
-                if(filteredResults === 0)
-                {
-                    setTimeout(function(){setLoading(false); }, 500);
-                    setFormError({...formError, [e.target.name] : "Please enter valid Sales Executive ID." });
-                    setFormValue({ ...formValue, [e.target.name] : '' });
-                }
-                else 
-                {
-                    setTimeout(function(){setLoading(false); }, 500);
-                    setFormError({...formError, [e.target.name] : "" });
-                    setFormValue({ ...formValue, [e.target.name] : e.target.value });
-                }
-            }
-        }
-        function filterArrayByInput(datafromAPI, searchValue) {
-            const filteredData = datafromAPI.filter(value => {
-                const searchStr = searchValue.toUpperCase();
-                const nameMatches = value.agentcode.toUpperCase().includes(searchStr);
-                return nameMatches;
-            });   
-            return filteredData.length;
-        }
+        
 
   return (
     <>
@@ -316,14 +287,13 @@ export default function UpdateprofileComponent() {
                         type="text"
                         name="agentcode"
                         maxLength={4}
-                        onInput={onInputmaxLength}
-                        value={ formValue.agentcode || '' }
-                        onChange={onChangeField}
+                        onInput={(e)=> e.target.value = e.target.value.slice(0, e.target.maxLength) }
+                        value={ agentcode || '' }
+                        onChange={(e)=>{setAgentcode(e.target.value);setErroragentcode("");} }
                         onKeyUp={handalonKeyup}
                     />
-                    <span className="registerError">{ formError.agentcode  ?  formError.agentcode : '' }</span>
+                    <span className="registerError">{ erroragentcode  &&  erroragentcode }</span>
                 </div>
-
  
                 
                 <div className="registerField">
@@ -333,11 +303,11 @@ export default function UpdateprofileComponent() {
                         type="text"
                         name="firstname"
                         maxLength={25}
-                        onInput={onInputmaxLength}
-                        value={ formValue.firstname  || ''  }
-                        onChange={onChangeField}
+                        onInput={(e)=> e.target.value = e.target.value.slice(0, e.target.maxLength) }
+                        value={ firstname  || ''  }
+                        onChange={(e)=> {setFirstname(e.target.value.replace(/[^a-z]/gi, '')); setErrorfirstname('');}}
                     />
-                    <span className="registerError">{ formError.firstname  ?  formError.firstname : '' }</span>
+                    <span className="registerError">{ errorfirstname  && errorfirstname }</span>
                 </div>
 
                 <div className="registerField">
@@ -347,21 +317,20 @@ export default function UpdateprofileComponent() {
                         type="text"
                         name="lastname"
                         maxLength={25}
-                        onInput={onInputmaxLength}
-                        value={ formValue.lastname  || ''  }
-                        onChange={onChangeField}
+                        onInput={(e)=> e.target.value = e.target.value.slice(0, e.target.maxLength) }
+                        value={ lastname  || ''  }
+                        onChange={(e)=> {setLastname(e.target.value.replace(/[^a-z]/gi, '')); setErrorlastname('');}}
                     />
-                   <span className="registerError">{formError.lastname  ?  formError.lastname : '' }</span>
+                   <span className="registerError">{ errorlastname &&  errorlastname }</span>
                 </div>
  
  
                 <div className="registerField" style={{'userSelect':'none','pointerEvents':'none'}}>
                       <div className="registertext">City of work area<small>*</small></div>
-                      { data ? (
-                      <ErrorBoundary>
+                      { citymount && <ErrorBoundary>
                           <CitystateUpdateComponent scChange={handleOptionChange} nameSC={cityStateName} nameS={stateName} nameC={cityName} />
-                      </ErrorBoundary>
-                      ) : null }
+                      </ErrorBoundary>}
+                      
                       {/* <div className="registerLineText">Enter State name to pick nearby City</div> */}
                 </div>
 
@@ -374,12 +343,28 @@ export default function UpdateprofileComponent() {
                         min="0"
                         readOnly
                         maxLength={6}
-                        onInput={onInputmaxLength}
-                        value={ formValue.postalcode || '' }
-                        onChange={onChangeField}
+                        onInput={(e)=> e.target.value = e.target.value.slice(0, e.target.maxLength) }
+                        value={ postalcode || '' }
+                        onChange={(e)=> {setPostalcode(e.target.value.replace(/[^a-z0-9]/gi, '')); setErrorpostalcode('');}}
                         onKeyDown={(e) => exceptThisSymbols.includes(e.key) && e.preventDefault() }
                     />
-                    <span className="registerError">{ formError.postalcode  ?  formError.postalcode : '' }</span> 
+                    <span className="registerError">{ errorpostalcode  &&  errorpostalcode }</span> 
+                </div> 
+
+                <div className="registerField">
+                    <div className="registertext">PAN Number<small>*</small></div>
+                    <input
+                        className="registerinput"
+                        type="text"
+                        name="pan"
+                        min="0"
+                        maxLength={10}
+                        onInput={(e)=> e.target.value = e.target.value.slice(0, e.target.maxLength) }
+                        value={ pan || '' }
+                        onChange={(e)=> { setPan(e.target.value.replace(/[^a-z0-9]/gi, '').toUpperCase()); setErrorpan('');}}
+                        onKeyDown={(e) => exceptThisSymbols.includes(e.key) && e.preventDefault() }
+                    />
+                    <span className="registerError">{ errorpan && errorpan }</span> 
                 </div>
 
        

@@ -132,7 +132,8 @@ export default function Rewardform() {
         }
         if(!isEligible || parseInt(redeempoint) > parseInt(pointsEligible))
         {
-            setErrorMsg(`You are eligible to redeem up to ${pointsEligible} reward points.`); 
+            // setErrorMsg(`You are eligible to redeem up to ${pointsEligible} reward points.`); 
+            setErrorMsg(`You have exceeded redemption limit of ${redeemmaximumpoint} points in a day. Please come back tomorrow.`); 
             return;
         }
         

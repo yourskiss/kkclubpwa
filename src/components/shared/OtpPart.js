@@ -35,7 +35,7 @@ export default function OtpPart({isMobStatus, getMobNumber, phonenumber}) {
     else if(!regexOTP.test(otpValues)){setOtpError("Invalid otp");}
     else{ 
       setOtpError('');
-      if(phonenumber === '9898989898' || phonenumber === '9876543210' || phonenumber === '9090909090' || phonenumber === '9111111111' || phonenumber === '9191919191' || phonenumber === '6111111111') // || phonenumber === '9990499606' || phonenumber === '9212672201')
+      if(phonenumber === '9898989898' || phonenumber === '9876543210' || phonenumber === '9090909090' || phonenumber === '9111111111' || phonenumber === '9191919191' || phonenumber === '6111111116') // || phonenumber === '9990499606' || phonenumber === '9212672201')
       {
         verifyDemo();
       }

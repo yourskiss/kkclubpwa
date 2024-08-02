@@ -65,7 +65,7 @@ export default function BankaddComponents() {
           if (mounted)
           {
               setUsername(`${res.data.result.firstname} ${res.data.result.lastname}`)
-              setAadhaar(res.data.result.aadhaarinfo);
+              res.data.result.aadhaarinfo !== null ? setAadhaar(res.data.result.aadhaarinfo) : setAadhaar('');
           }
       }).catch((err) => {
           setLoading(false);
@@ -82,7 +82,7 @@ export default function BankaddComponents() {
       //  console.log("bank update response - ", res);
         if(mounted2)
         {
-          setPan(res.data.result.pan);
+          res.data.result.pan !== null ? setPan(res.data.result.pan) : setPan('');
          // console.log("pan-",paNumber)
         }
     }).catch((error) => {
