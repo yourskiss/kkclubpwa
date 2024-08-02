@@ -41,7 +41,7 @@ export default function UpdateprofileComponent() {
 
 
     const [bankname,setBankname] = useState('');  
-    const [ifcscode,setIfcscode] = useState('');       
+    const [bankcode,setBankcode] = useState('');       
     const [accountnumber,setAccountnumber] = useState('');  
     const [upicode,setUpicode] = useState('');     
         
@@ -65,7 +65,7 @@ export default function UpdateprofileComponent() {
             {
                 setCitymount(true);
                 setUserdata(res.data.result);
-
+                
                 res.data.result.agentcode !== null ? setAgentcode(res.data.result.agentcode) : setAgentcode('');
                 res.data.result.fullname !== null ? setFullname(res.data.result.fullname) : setFullname('');
                 res.data.result.firstname !== null ? setFirstname(res.data.result.firstname) : setFirstname('');
@@ -91,10 +91,10 @@ export default function UpdateprofileComponent() {
         .then((respons) => {
             // console.log("GetUserPayoutInfo onload ", respons.data.result.pan, respons);
             if(mounted2)
-            {
+            { 
                 respons.data.result.pan !== null ? setPan(respons.data.result.pan) : setPan('');
                 respons.data.result.bankname !== null ? setBankname(respons.data.result.bankname) : setBankname('');
-                respons.data.result.ifsccode !== null ? setIfcscode(respons.data.result.ifsccode) : setIfcscode('');
+                respons.data.result.ifcscode !== null ? setBankcode(respons.data.result.ifcscode) : setBankcode('');
                 respons.data.result.accountnumber !== null ? setAccountnumber(respons.data.result.accountnumber) : setAccountnumber('');
                 respons.data.result.upicode !== null ? setUpicode(respons.data.result.upicode) : setUpicode('');
             }
@@ -235,7 +235,7 @@ export default function UpdateprofileComponent() {
           const bankinfo = {
             userid: userID,
             bankname: bankname,
-            ifcscode: ifcscode,
+            ifcscode: bankcode,
             accountnumber: accountnumber,
             upicode: upicode,
             aadhaar: aadhaar,
@@ -247,7 +247,7 @@ export default function UpdateprofileComponent() {
             osdetails: osInfo,
             browserdetails: browserInfo
           }
-           console.log("UpdateUserPayoutInfo string - ",bankinfo);
+          // console.log("UpdateUserPayoutInfo string - ",bankinfo);
           _post("/Payment/UpdateUserPayoutInfo", bankinfo)
           .then((res) => {
             // console.log("UpdateUserPayoutInfo update ", res);

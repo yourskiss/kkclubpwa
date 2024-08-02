@@ -30,7 +30,7 @@ export default function BankdetailupdateComponents() {
     const [step, setStep] = useState(4);
     const [option, setOption] = useState('review');
     const[bankname,setBankname] = useState('');
-    const[ifsccode,setIfsccode] = useState('');
+    const[bankcode,setBankcode] = useState('');
     const[accountnumber,setAccountnumber] = useState('');
     const[upicode,setUpicode] = useState('');
     const[pan,setPan] = useState('');
@@ -72,7 +72,7 @@ export default function BankdetailupdateComponents() {
             if(mounted2)
             {
               res.data.result.bankname !== null ? setBankname(res.data.result.bankname) : setBankname('');
-              res.data.result.ifcscode !== null ? setIfsccode(res.data.result.ifcscode) : setIfsccode('');
+              res.data.result.ifcscode !== null ? setBankcode(res.data.result.ifcscode) : setBankcode('');
               res.data.result.accountnumber !== null ? setAccountnumber(res.data.result.accountnumber) : setAccountnumber('');
               res.data.result.upicode !== null ? setUpicode(res.data.result.upicode) : setUpicode('');
               res.data.result.pan !== null ? setPan(res.data.result.pan) : setPan('');
@@ -124,8 +124,8 @@ const handleBankInfo = (e) => {
   e.preventDefault();
   if(bankname === '') { setErrorBank('Bank Name is required');  return }
   else if(bankname?.length < 5) { setErrorBank('Bank Name length must be at least 5 characters long');  return }
-  else if(ifsccode === '') { setErrorIfsc('IFSC Code is required');  return }
-  else if(ifsccode?.length < 11) { setErrorIfsc('IFSC Code length must be at least 11 characters long');  return }
+  else if(bankcode === '') { setErrorIfsc('IFSC Code is required');  return }
+  else if(bankcode?.length < 11) { setErrorIfsc('IFSC Code length must be at least 11 characters long');  return }
   else if(accountnumber === '') { setErrorAc('Account Number is required');  return }
   else { 
       setErrorBank('');
@@ -162,7 +162,7 @@ const savebankdetail = () =>
   const bankinfo = {
     userid: userid,
     bankname: bankname,
-    ifcscode: ifsccode,
+    ifcscode: bankcode,
     accountnumber: accountnumber,
     upicode: upicode,
     aadhaar: aadhaar,
@@ -230,7 +230,7 @@ const savebankdetail = () =>
                   </div>
                   <div className="bankInfoField">
                       <p>IFSC Code</p>
-                      <input type='text' name="ifsccode" maxLength={11} autoComplete="off" value={ifsccode || ''} onInput={onInputmaxLength}   onChange={(e)=>{setIfsccode(e.target.value.replace(/[^0-9a-z]/gi, '').toUpperCase()); setErrorIfsc(''); }} />
+                      <input type='text' name="bankcode" maxLength={11} autoComplete="off" value={bankcode || ''} onInput={onInputmaxLength}   onChange={(e)=>{setBankcode(e.target.value.replace(/[^0-9a-z]/gi, '').toUpperCase()); setErrorIfsc(''); }} />
                       {errorIfsc && <span>{errorIfsc}</span> }
                   </div>
                   <div className="bankInfoField">
@@ -255,7 +255,7 @@ const savebankdetail = () =>
                   </div>
                 </form> }
  
-
+                
                 { step === 4 && <>
                   { infobank  ? <>
                   <div className='bankinfo'>
@@ -263,7 +263,7 @@ const savebankdetail = () =>
                           <Image src="/assets/images/icon_bank.png" width={25} height={25} quality={99} alt={bankname} />
                           <span>{bankname}</span>
                         </h4>
-                        <h5>IFSC: {ifsccode}</h5>
+                        <h5>IFSC: {bankcode}</h5>
                         <h6>A/c: {accountnumber}</h6> 
                         <aside onClick={()=>stepHandler('bank')} title="Edit">Edit</aside>
                   </div>
