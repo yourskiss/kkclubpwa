@@ -50,7 +50,7 @@ export default function UpdateprofileComponent() {
         setPagemsg('Profile details fetching');
         _get("Customer/UserInfo?userid=0&phonenumber="+ userMobile)
         .then((res) => {
-            console.log("UserInfo onload: ", res.data);
+            console.log("UserInfo onload: ", res);
             setLoading(false);
             if (mounted)
             {
@@ -64,10 +64,25 @@ export default function UpdateprofileComponent() {
                 setAllName(res.data.result.fullname);
             }
         }).catch((err) => {
-            console.log(err.message);
+            console.log("UserInfo onload: ", err.message);
             setLoading(false); 
         });
         return () => { setMounted(false); }
+    }, []);
+
+
+    useEffect(() => {
+        _get("/Payment/GetUserPayoutInfo?userid="+userID)
+        .then((res) => {
+             console.log("GetUserPayoutInfo onload ", res);
+            if(mounted2)
+            {
+                setPayoutinfo(res.data.result);
+            }
+        }).catch((error) => {
+            console.log("GetUserPayoutInfo onload ", error); 
+        });
+        return () => { setMounted2(false); }
     }, []);
     
  
@@ -191,32 +206,23 @@ export default function UpdateprofileComponent() {
             .then((res) => {
               //  console.log("after submit response: ",res);
                 setLoading(false);
-                setUserInfo(res.data.result.fullname, res.data.result.shortname, res.data.result.verificationstatus);
-                updatebankdetail(allName);
-              //  res.data.result ? (toast.success("Profile Updated Successfully."),push("/profile")) : toast.warn(res.data.resultmessage);
+                if(res.data.result)
+                {
+                    setUserInfo(res.data.result.fullname, res.data.result.shortname, res.data.result.verificationstatus);
+                    updatebankdetail(res.data.result.fullname);
+                    toast.success("Profile Updated Successfully.");
+                    push("/profile");
+                }
+                else
+                {
+                    toast.warn(res.data.resultmessage)
+                }
             }).catch((err) => {
                 setLoading(false); 
                 toast.error(err.message);
             });
         }
     },[formError, isSubmit]);
-
-
-
-    useEffect(() => {
-        _get("/Payment/GetUserPayoutInfo?userid="+userID)
-        .then((res) => {
-             console.log("GetUserPayoutInfo on load ", res);
-            if(mounted2)
-            {
-                setPayoutinfo(res.data.result);
-            }
-        }).catch((error) => {
-            console.log("update - GetUserPayoutInfo-", error); 
-        });
-        return () => { setMounted2(false); }
-    }, []);
-
 
         const updatebankdetail = (namevalue) => 
         {
@@ -228,17 +234,17 @@ export default function UpdateprofileComponent() {
             upicode: payoutinfo.upicode || '',
             aadhaar: '',
             pan:payoutinfo.pan || '',
-            username: namevalue || '',
+            username: namevalue,
             rmn: userMobile,
             locationpage: "/bankdetailsupdate",
             ipaddress: ipInfo,
             osdetails: osInfo,
             browserdetails: browserInfo
           }
-            console.log("UpdateUserPayoutInfo after update -",bankinfo);
+           // console.log("UpdateUserPayoutInfo after update -",bankinfo);
           _post("/Payment/UpdateUserPayoutInfo", bankinfo)
           .then((res) => {
-             console.log("update -  UpdateUserPayoutInfo status", res);
+             console.log("UpdateUserPayoutInfo status", res);
           }).catch((error) => {
               console.log(error); 
           });
