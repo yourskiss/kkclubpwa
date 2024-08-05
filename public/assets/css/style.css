@@ -229,6 +229,11 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
   input::-webkit-inner-spin-button {-webkit-appearance: none;margin: 0;}
 .registerField .registerinput {  float: left;  width: 100%;  padding: 0.5rem 1rem;  border: 0; border-bottom: solid 2px #F5F0EB; outline: none;  background:transparent;  border-radius: 0;  text-align: left; font-weight: 500;  color: rgba(245, 240, 235,0.6);  font-size: 24px;  box-shadow:none; box-sizing: border-box; }
 .registerField .registerinput:disabled {user-select: none; pointer-events: none;}
+
+.registerField.disabled {  user-select: none; pointer-events: none; }
+.registerField.disabled .registertext {  color: rgba(212, 212, 212, 0.4);  }
+.registerField.disabled .registerinput { border-bottom-color:#4b4948; color: rgba(212, 212, 212, 0.4); }
+
 .registerField .registerSelect  {  float: left;  width: 100%;  padding:0.5rem 1rem;  border: 0; border-bottom: solid 2px #F5F0EB; outline: none;  background:transparent;  border-radius: 0;  text-align: left; font-weight: 500;  color: rgba(245, 240, 235,0.6); font-size: 24px;  box-shadow:none;  text-indent: 0; text-overflow: "";-webkit-appearance: none; appearance: none; box-sizing: border-box; background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGBAMAAAAI3hL1AAAAAXNSR0IB2cksfwAAAAlwSFlzAAAAnQAAAJ0Bj3LnbgAAACRQTFRF////////////AAAA////////////////////////////////OT+Z1gAAAAx0Uk5TCIcKAAGRwgy8mZO95nqVkAAAAC1JREFUeJxjZFQS+H+P0VXpzNccRhMlGfFdjMbihS/7GY0ZVV99YDRmEHzPAADT/wuH1cAZOAAAAABJRU5ErkJggg=='); background-repeat: no-repeat;  background-position: right 1rem center; }
 .registerField .registerSelect  option { color: #191919;}
 .registerField .registerSelect:disabled {user-select: none; pointer-events: none;}
@@ -306,12 +311,12 @@ body { background-color: #191919; margin:0;padding:0;box-sizing:border-box;line-
 .reactcropperbutton { width:auto; display: inline-block;  margin: 0 auto; margin-top: 1rem; padding:1rem 2rem; box-sizing: border-box; text-align: center;  background: #AFCDAF;  font-weight: 400;  font-size: 16px;  color:#383C3D;  border: solid 1px #383C3D; transition: all 0.5s ease-out;  border-radius: 0;  text-decoration: none;   cursor: pointer;  text-transform: none; }
 .reactcropperbutton:hover { background: #383C3D;  color: #fff;  border-color: #AFCDAF; transition: all 0.5s ease-in; }
  
-
+ 
 .searchableContainer { float: left;  width: 100%;  padding:0;  border: 0; margin:0; padding: 0; background-color:none; }
-.searchable__control { padding: 0.5rem !important; border: 0 !important; border-bottom: solid 2px #F5F0EB !important; outline: none !important; background: transparent !important; border-radius: 0 !important; box-shadow: none !important;}
+.searchable__control { padding: 0.5rem !important; border: 0 !important; border-bottom: solid 2px #4b4948 !important; outline: none !important; background: transparent !important; border-radius: 0 !important; box-shadow: none !important;}
 .searchable__value-container { margin: 0 !important; padding: 0 !important; }
-.searchable__placeholder, .searchable__single-value, .searchable__input-container {  margin: 0 !important; padding: 0 !important; text-align: left !important;font-weight: 500 !important; color: rgba(245, 240, 235, 0.6) !important;font-size: 20px !important; }
-
+.searchable__placeholder, .searchable__single-value, .searchable__input-container {  margin: 0 !important; padding: 0 !important; text-align: left !important;font-weight: 500 !important; color: rgba(212, 212, 212, 0.4) !important;font-size: 20px !important; }
+ 
 
 /* ################### approvalcontainer ################### */
 .approvalcontainer { width: 100%; float: left; margin-top: 1rem; }

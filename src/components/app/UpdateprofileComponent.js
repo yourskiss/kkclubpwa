@@ -5,7 +5,7 @@ import Loader from "../shared/LoaderComponent";
 import { getUserID, getUserMobile } from "@/config/userauth";
 import { toast } from 'react-toastify';
 import { ipaddress, osdetails, browserdetails  } from "../core/jio";
-import CitystateUpdateComponent from "../shared/CitystateUpdateComponent";
+// import CitystateUpdateComponent from "../shared/CitystateUpdateComponent";
 import { _get, _post } from "@/config/apiClient";
 import HeaderDashboard from "../shared/HeaderDashboard";
 import FooterComponent from "../shared/FooterComponent";
@@ -37,7 +37,7 @@ export default function UpdateprofileComponent() {
     const [cityStateName, setCityStateName] = useState('');
     const [stateName, setStateName] = useState('');
     const [cityName, setCityName] = useState('');
-    const [citymount, setCitymount] = useState(false);
+   // const [citymount, setCitymount] = useState(false);
 
 
     const [bankname,setBankname] = useState('');  
@@ -52,8 +52,8 @@ export default function UpdateprofileComponent() {
     const osInfo = osdetails();
     const browserInfo = browserdetails();
     
-    const exceptThisSymbols = ["e", "E", "+", "-", "."];
-    const SymbolsExcept = ["+", "-", "."];
+    // const exceptThisSymbols = ["e", "E", "+", "-", "."];
+    // const SymbolsExcept = ["+", "-", "."];
 
     useEffect(() => {
         setLoading(true);
@@ -64,7 +64,7 @@ export default function UpdateprofileComponent() {
             setLoading(false);
             if(mounted)
             {
-                setCitymount(true);
+               // setCitymount(true);
                 setUserdata(res.data.result);
                 
                 res.data.result.agentcode !== null ? setAgentcode(res.data.result.agentcode) : setAgentcode('');
@@ -115,17 +115,16 @@ export default function UpdateprofileComponent() {
                 setSeList(res.data.result);
             } 
         }).catch((err) => {
-            console.log("StateCity add - ", err.message);
+            console.log("SEAgentCode error - ", err.message);
         });
       return () => { setMounted3(false); }
     }, []); 
 
-    const handleOptionChange = (sc, st, ct) => {
-        setCityStateName(sc);
-        setStateName(st);
-        setCityName(ct);
-        // console.log("change update - ", cityStateName, " - ", stateName, " - ", cityName);
-     };
+    // const handleOptionChange = (sc, st, ct) => {
+    //     setCityStateName(sc);
+    //     setStateName(st);
+    //     setCityName(ct);
+    //  };
 
     const handalonKeyup = (e) => {
        // debugger;
@@ -326,16 +325,24 @@ export default function UpdateprofileComponent() {
                 </div>
  
  
-                <div className="registerField" style={{'userSelect':'none','pointerEvents':'none'}}>
+                <div className="registerField disabled">
                       <div className="registertext">City of work area<small>*</small></div>
-                      { citymount && <ErrorBoundary>
-                          <CitystateUpdateComponent scChange={handleOptionChange} nameSC={cityStateName} nameS={stateName} nameC={cityName} />
-                      </ErrorBoundary>}
-                      
-                      {/* <div className="registerLineText">Enter State name to pick nearby City</div> */}
+                      <input
+                        className="registerinput"
+                        type="text"
+                        name="citystate"
+                        min="0"
+                        readOnly
+                      //  onInput={(e)=> e.target.value = e.target.value.slice(0, e.target.maxLength) }
+                        value={ cityStateName || '' }
+                        onChange={(e)=> {setCityStateName(cityStateName); }}
+                       />
+                      {/* { citymount && <ErrorBoundary>
+                          <CitystateUpdateComponent scChange={handleOptionChange} nameSC={cityStateName} nameS={stateName} nameC={cityName}  style={{'userSelect':'none','pointerEvents':'none'}} />
+                      </ErrorBoundary>} */}
                 </div>
 
-                <div className="registerField">
+                <div className="registerField disabled">
                     <div className="registertext">Pincode of work area<small>*</small></div>
                     <input
                         className="registerinput"
@@ -344,29 +351,31 @@ export default function UpdateprofileComponent() {
                         min="0"
                         readOnly
                         maxLength={6}
-                        onInput={(e)=> e.target.value = e.target.value.slice(0, e.target.maxLength) }
+                       // onInput={(e)=> e.target.value = e.target.value.slice(0, e.target.maxLength) }
                         value={ postalcode || '' }
-                        onChange={(e)=> {setPostalcode(e.target.value.replace(/[^a-z0-9]/gi, '')); setErrorpostalcode('');}}
-                        onKeyDown={(e) => exceptThisSymbols.includes(e.key) && e.preventDefault() }
+                        onChange={(e)=> {setPostalcode(postalcode); /* e.target.value.replace(/[^a-z0-9]/gi, '')); */ setErrorpostalcode('');}}
+                      //  onKeyDown={(e) => exceptThisSymbols.includes(e.key) && e.preventDefault() }
                     />
                     <span className="registerError">{ errorpostalcode  &&  errorpostalcode }</span> 
                 </div> 
 
-                <div className="registerField">
+            
+                {/* <div className="registerField disabled">
                     <div className="registertext">PAN Number<small>*</small></div>
                     <input
                         className="registerinput"
                         type="text"
                         name="pan"
                         min="0"
+                        readOnly
                         maxLength={10}
-                        onInput={(e)=> e.target.value = e.target.value.slice(0, e.target.maxLength) }
+                        // onInput={(e)=> e.target.value = e.target.value.slice(0, e.target.maxLength) }
                         value={ pan || '' }
                         onChange={(e)=> { setPan(e.target.value.replace(/[^a-z0-9]/gi, '').toUpperCase()); setErrorpan(''); }}
-                        onKeyDown={(e) => SymbolsExcept.includes(e.key) && e.preventDefault() }
+                       // onKeyDown={(e) => SymbolsExcept.includes(e.key) && e.preventDefault() }
                     />
                     <span className="registerError">{ errorpan && errorpan }</span> 
-                </div>
+                </div> */}
 
        
                 <div className="registerSubmit">
