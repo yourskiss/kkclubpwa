@@ -337,7 +337,7 @@ export default function RegistationComponent() {
                     onChange={(e) => { setPaninfo(e.target.value.replace(/[^0-9a-z]/gi, '').toUpperCase()); setPanErrors('');  }}
                     onKeyDown={(e) => SymbolsExcept.includes(e.key) && e.preventDefault() }
                   />
-                  <div className="registerLineText">Pan required for payment verification</div>
+                  <div className="registerLineText">PAN required for payment verification</div>
                   {panErrors && <span className="registerError">{panErrors}</span> }
                 </div>
 
