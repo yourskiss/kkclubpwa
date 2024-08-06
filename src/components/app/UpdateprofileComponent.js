@@ -162,9 +162,10 @@ export default function UpdateprofileComponent() {
         const regexPan = /^[a-z]{5}[0-9]{4}[a-z]{1}$/i;
         if(agentcode !=='' && agentcode?.length !== 4) { setErroragentcode("Please enter valid Sales Executive ID."); return }
         else if(firstname==='') { setErrorfirstname("First name is required."); return }
-        else if(pan==='') { setErrorpan("PAN number is required");  return }
-        else if(pan?.length !== 10) { setErrorpan("Please enter valid PAN number"); return }
-        else if(!regexPan.test(pan)){setErrorpan("Invalid PAN Number!");}
+        else if(lastname==='') { setErrorlastname("Last name is required."); return }
+      //  else if(pan==='') { setErrorpan("PAN number is required");  return }
+      //  else if(pan?.length !== 10) { setErrorpan("Please enter valid PAN number"); return }
+      //  else if(!regexPan.test(pan)){setErrorpan("Invalid PAN Number!");}
         else
         {
             if(lastname === '' || lastname === null)
@@ -311,7 +312,7 @@ export default function UpdateprofileComponent() {
                 </div>
 
                 <div className="registerField">
-                    <div className="registertext">Last Name - As per PAN Card </div>
+                    <div className="registertext">Last Name - As per PAN Card<small>*</small></div>
                     <input
                         className="registerinput"
                         type="text"
