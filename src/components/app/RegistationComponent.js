@@ -109,9 +109,9 @@ export default function RegistationComponent() {
     e.preventDefault();
     setfnErrors('');
     setlnErrors('');
-    if(firstname === '' && lastname === '') { setfnErrors('First name is required.'); setlnErrors('Last name is required.');  }
+   // if(firstname === '' && lastname === '') { setfnErrors('First name is required.'); setlnErrors('Last name is required.');  }
     if(firstname === '') { setfnErrors('First name is required.'); }
-    else if(lastname === '') { setlnErrors('Last name is required.'); }
+   // else if(lastname === '') { setlnErrors('Last name is required.'); }
     else { setStep(2); }
   } 
   const handleStep2 = (e) => {
@@ -266,7 +266,7 @@ export default function RegistationComponent() {
                   {fnErrors && <span className="registerError">{fnErrors}</span> }
                 </div>
                 <div className="registerField">
-                  <div className="registertext">Last Name - As per PAN Card<small>*</small></div>
+                  <div className="registertext">Last Name - As per PAN Card</div>
                   <input
                     className="registerinput"
                     type="text"
