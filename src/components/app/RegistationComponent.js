@@ -29,7 +29,6 @@ export default function RegistationComponent() {
   const[firstname, setFirstname] = useState('');
   const[fnErrors, setfnErrors] = useState('');
   const[lastname, setLastname] = useState('');
-  const[allName, setAllName] = useState('');
   const[lnErrors, setlnErrors] = useState('');
   const[pincode, setPincode] = useState('');
   const[pincodeErrors, setPincodeErrors] = useState('');
@@ -143,21 +142,14 @@ export default function RegistationComponent() {
    
   const handleRegistration = () => 
   { 
-    if(lastname === '' || lastname === null)
-    {
-      setAllName(firstname);
-    }
-    else
-    {
-      setAllName(firstname + " " + lastname);
-    }
+ 
 
     setLoading(true);
     setPagemsg('Information Savings');
     const datafinal = {
       firstname: firstname,
       lastname: lastname,
-      fullname: allName,
+      fullname: firstname + " " + lastname,
       gender: '',
       phonenumber: mobilenumber,
       emailaddress:'',

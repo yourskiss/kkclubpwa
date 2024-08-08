@@ -33,7 +33,6 @@ export default function UpdateprofileComponent() {
     const [pan, setPan] = useState('');
     const [aadhaar, setAadhaar] = useState('');
     const [errorpan, setErrorpan] = useState('');
-    const[fullname, setFullname] = useState('');
     const [cityStateName, setCityStateName] = useState('');
     const [stateName, setStateName] = useState('');
     const [cityName, setCityName] = useState('');
@@ -68,7 +67,6 @@ export default function UpdateprofileComponent() {
                 setUserdata(res.data.result);
                 
                 res.data.result.agentcode !== null ? setAgentcode(res.data.result.agentcode) : setAgentcode('');
-                res.data.result.fullname !== null ? setFullname(res.data.result.fullname) : setFullname('');
                 res.data.result.firstname !== null ? setFirstname(res.data.result.firstname) : setFirstname('');
                 res.data.result.lastname !== null ? setLastname(res.data.result.lastname) : setLastname('');
                 res.data.result.postalcode !== null ? setPostalcode(res.data.result.postalcode) : setPostalcode('');
@@ -168,14 +166,6 @@ export default function UpdateprofileComponent() {
       //  else if(!regexPan.test(pan)){setErrorpan("Invalid PAN Number!");}
         else
         {
-            if(lastname === '' || lastname === null)
-            {
-                setFullname(firstname);
-            }
-            else
-            {
-                setFullname(firstname + " " + lastname);
-            }
             updateuserinfo();
         }
     }
@@ -189,7 +179,7 @@ export default function UpdateprofileComponent() {
             userid: userID,
             firstname: firstname,
             lastname: lastname,
-            fullname: fullname,
+            fullname: firstname + " " + lastname,
             gender: "",
             phonenumber: userMobile,
             emailaddress: "",
@@ -208,7 +198,7 @@ export default function UpdateprofileComponent() {
             osdetails: osInfo,
             browserdetails: browserInfo
           }
-          // console.log("datafinal: ",datafinal);
+          // console.log("SaveUser datafinal: ",datafinal);
             setLoading(true);
             setPagemsg('Profile details updating');
             _post("Customer/SaveUser", datafinal)
@@ -218,7 +208,7 @@ export default function UpdateprofileComponent() {
                 {
                     setUserInfo(res.data.result.fullname, res.data.result.shortname, res.data.result.verificationstatus);  
                     toast.success("Profile Updated Successfully.");
-                    updatebankdetail();
+                    updatebankdetail(res.data.result.fullname);
                 }
                 else
                 {
@@ -231,7 +221,7 @@ export default function UpdateprofileComponent() {
             });
     }
 
-        const updatebankdetail = () => 
+        const updatebankdetail = (fullname) => 
         {
           const bankinfo = {
             userid: userID,
