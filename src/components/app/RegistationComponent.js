@@ -149,7 +149,7 @@ export default function RegistationComponent() {
     const datafinal = {
       firstname: firstname,
       lastname: lastname,
-      fullname: firstname + " " + lastname,
+      fullname: (firstname + " " + lastname).trim(),
       gender: '',
       phonenumber: mobilenumber,
       emailaddress:'',
@@ -170,7 +170,6 @@ export default function RegistationComponent() {
     }
     // console.log(datafinal);
 
- 
       _post("Customer/SaveUser", datafinal)
       .then((res) => {
        // console.log("SaveUser ", res);

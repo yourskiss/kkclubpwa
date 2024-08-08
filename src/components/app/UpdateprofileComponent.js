@@ -179,7 +179,7 @@ export default function UpdateprofileComponent() {
             userid: userID,
             firstname: firstname,
             lastname: lastname,
-            fullname: firstname + " " + lastname,
+            fullname: (firstname + " " + lastname).trim(),
             gender: "",
             phonenumber: userMobile,
             emailaddress: "",
@@ -238,7 +238,7 @@ export default function UpdateprofileComponent() {
             osdetails: osInfo,
             browserdetails: browserInfo
           }
-          // console.log("UpdateUserPayoutInfo string - ",bankinfo);
+           // console.log("UpdateUserPayoutInfo string - ",bankinfo);
           _post("/Payment/UpdateUserPayoutInfo", bankinfo)
           .then((res) => {
             // console.log("UpdateUserPayoutInfo update ", res);
