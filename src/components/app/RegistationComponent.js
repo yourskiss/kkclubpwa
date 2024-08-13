@@ -263,10 +263,10 @@ export default function RegistationComponent() {
                     type="text"
                     name="lastname"
                     autoComplete="off"
-                    maxLength={20}
+                    maxLength={40}
                     value={lastname}
                     onInput={onInputmaxLength}
-                    onChange={(e) => { setLastname(e.target.value.replace(/[^a-z]/gi, '')); setlnErrors(''); } }
+                    onChange={(e) => { setLastname(e.target.value.replace(/[^a-z ]/gi, '')); setlnErrors(''); } }
                   />
                   {lnErrors && <span className="registerError">{lnErrors}</span> }
                 </div> 

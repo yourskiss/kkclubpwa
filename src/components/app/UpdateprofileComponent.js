@@ -66,11 +66,11 @@ export default function UpdateprofileComponent() {
                // setCitymount(true);
                 setUserdata(res.data.result);
                 
-                res.data.result.agentcode !== null ? setAgentcode(res.data.result.agentcode) : setAgentcode('');
-                res.data.result.firstname !== null ? setFirstname(res.data.result.firstname) : setFirstname('');
-                res.data.result.lastname !== null ? setLastname(res.data.result.lastname) : setLastname('');
-                res.data.result.postalcode !== null ? setPostalcode(res.data.result.postalcode) : setPostalcode('');
-                res.data.result.aadhaarinfo !== null ? setAadhaar(res.data.result.aadhaarinfo) : setAadhaar('');
+                res.data.result.agentcode === null ? setAgentcode('') : setAgentcode(res.data.result.agentcode);
+                res.data.result.firstname === null ? setFirstname('') : setFirstname(res.data.result.firstname);
+                res.data.result.lastname === null ? setLastname('') : setLastname(res.data.result.lastname);
+                res.data.result.postalcode === null ? setPostalcode('') : setPostalcode(res.data.result.postalcode);
+                res.data.result.aadhaarinfo === null ? setAadhaar('') : setAadhaar(res.data.result.aadhaarinfo);
  
                 setCityStateName(`${res.data.result.city} (${res.data.result.state})`)
                 setStateName(res.data.result.state);
@@ -91,11 +91,11 @@ export default function UpdateprofileComponent() {
             // console.log("GetUserPayoutInfo onload ", respons.data.result.pan, respons);
             if(mounted2)
             { 
-                respons.data.result.pan !== null ? setPan(respons.data.result.pan) : setPan('');
-                respons.data.result.bankname !== null ? setBankname(respons.data.result.bankname) : setBankname('');
-                respons.data.result.ifcscode !== null ? setBankcode(respons.data.result.ifcscode) : setBankcode('');
-                respons.data.result.accountnumber !== null ? setAccountnumber(respons.data.result.accountnumber) : setAccountnumber('');
-                respons.data.result.upicode !== null ? setUpicode(respons.data.result.upicode) : setUpicode('');
+                respons.data.result.pan === null ? setPan('') : setPan(respons.data.result.pan);
+                respons.data.result.bankname === null ? setBankname('') : setBankname(respons.data.result.bankname);
+                respons.data.result.ifcscode === null ? setBankcode('') : setBankcode(respons.data.result.ifcscode);
+                respons.data.result.accountnumber === null ? setAccountnumber('') : setAccountnumber(respons.data.result.accountnumber);
+                respons.data.result.upicode === null ? setUpicode('') : setUpicode(respons.data.result.upicode);
             }
         }).catch((error) => {
             console.log("GetUserPayoutInfo onload ", error); 
@@ -157,7 +157,7 @@ export default function UpdateprofileComponent() {
  
     const handleSubmit = (e) =>{
         e.preventDefault();
-        const regexPan = /^[a-z]{5}[0-9]{4}[a-z]{1}$/i;
+       // const regexPan = /^[a-z]{5}[0-9]{4}[a-z]{1}$/i;
         if(agentcode !=='' && agentcode?.length !== 4) { setErroragentcode("Please enter valid Sales Executive ID."); return }
         else if(firstname==='') { setErrorfirstname("First name is required."); return }
       //  else if(lastname==='') { setErrorlastname("Last name is required."); return }
@@ -307,10 +307,10 @@ export default function UpdateprofileComponent() {
                         className="registerinput"
                         type="text"
                         name="lastname"
-                        maxLength={20}
+                        maxLength={40}
                         onInput={(e)=> e.target.value = e.target.value.slice(0, e.target.maxLength) }
                         value={ lastname  || ''  }
-                        onChange={(e)=> {setLastname(e.target.value.replace(/[^a-z]/gi, '')); setErrorlastname('');}}
+                        onChange={(e)=> {setLastname(e.target.value.replace(/[^a-z ]/gi, '')); setErrorlastname('');}}
                     />
                    <span className="registerError">{ errorlastname &&  errorlastname }</span>
                 </div>

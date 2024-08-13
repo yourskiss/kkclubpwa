@@ -54,7 +54,7 @@ export default function BankdetailupdateComponents() {
           if (mounted)
           {
             setUsername(`${res.data.result.firstname} ${res.data.result.lastname}`)
-            res.data.result.aadhaarinfo !== null ? setAadhaar(res.data.result.aadhaarinfo) : setAadhaar('');
+            res.data.result.aadhaarinfo === null ? setAadhaar('') : setAadhaar(res.data.result.aadhaarinfo);
           }
       }).catch((err) => {
           console.log(err.message);
@@ -71,12 +71,12 @@ export default function BankdetailupdateComponents() {
             // console.log("bank update response - ", res);
             if(mounted2)
             {
-              res.data.result.bankname !== null ? setBankname(res.data.result.bankname) : setBankname('');
-              res.data.result.ifcscode !== null ? setBankcode(res.data.result.ifcscode) : setBankcode('');
-              res.data.result.accountnumber !== null ? setAccountnumber(res.data.result.accountnumber) : setAccountnumber('');
-              res.data.result.upicode !== null ? setUpicode(res.data.result.upicode) : setUpicode('');
-              res.data.result.pan !== null ? setPan(res.data.result.pan) : setPan('');
-              if(res.data.result.bankname  !== null && res.data.result.ifcscode !== null && res.data.result.accountnumber  !== null){setInfobank(true);}
+              res.data.result.bankname === null ? setBankname('') : setBankname(res.data.result.bankname);
+              res.data.result.ifcscode === null ? setBankcode('') : setBankcode(res.data.result.ifcscode);
+              res.data.result.accountnumber === null ? setAccountnumber('') : setAccountnumber(res.data.result.accountnumber);
+              res.data.result.upicode === null ? setUpicode('') : setUpicode(res.data.result.upicode);
+              res.data.result.pan === null ? setPan('') : setPan(res.data.result.pan);
+              if(res.data.result.bankname !== null && res.data.result.ifcscode !== null && res.data.result.accountnumber  !== null){setInfobank(true);}
               if(res.data.result.upicode !== null){setInfoupi(true); }
             //  setInfopersonal(true);
             }
