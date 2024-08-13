@@ -293,7 +293,7 @@ export default function UpdateprofileComponent() {
                         className="registerinput"
                         type="text"
                         name="firstname"
-                        maxLength={25}
+                        maxLength={20}
                         onInput={(e)=> e.target.value = e.target.value.slice(0, e.target.maxLength) }
                         value={ firstname  || ''  }
                         onChange={(e)=> {setFirstname(e.target.value.replace(/[^a-z]/gi, '')); setErrorfirstname('');}}
@@ -307,7 +307,7 @@ export default function UpdateprofileComponent() {
                         className="registerinput"
                         type="text"
                         name="lastname"
-                        maxLength={25}
+                        maxLength={20}
                         onInput={(e)=> e.target.value = e.target.value.slice(0, e.target.maxLength) }
                         value={ lastname  || ''  }
                         onChange={(e)=> {setLastname(e.target.value.replace(/[^a-z]/gi, '')); setErrorlastname('');}}

@@ -9,8 +9,8 @@ const bt = getBearerToken();
 
 const apiClient = axios.create({
     baseURL: apiURL,
-    timeout: 2500,
-    headers: { 'authorization': 'Bearer '+ bt },
+    timeout: 3000,
+    headers: { authorization: `Bearer ${bt}` },
 });
 const _post = (url, data = {}, config = {}) => {
   return apiClient.post(url, data, config);
