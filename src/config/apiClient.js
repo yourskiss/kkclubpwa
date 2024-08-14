@@ -4,9 +4,6 @@ import { getBearerToken } from './bearerauth';
 const apiURL = process.env.NEXT_PUBLIC_BASE_URL;
 const bt = getBearerToken();
 
-
-
-
 const apiClient = axios.create({
     baseURL: apiURL,
     timeout: 3000,
