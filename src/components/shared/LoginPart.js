@@ -30,6 +30,7 @@ export default function LoginPart({isMobStatus, getMobNumber, phonenumber}) {
     else if(!regexMobile.test(mobileValues)){setMobileError("Invalid mobile number!");}
     else { 
       setMobileError("");  
+      
         if(mobileValues === '9898989898' || mobileValues === '9000000009' || mobileValues === '6012345678' || mobileValues === '7012345678' ||  mobileValues === '9012345678' || mobileValues === '8012345678')
         {
           sendDemo();
